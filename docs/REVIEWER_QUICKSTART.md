@@ -18,6 +18,11 @@ python -m pip install -r environment/requirements-replay.txt
 For a CUDA machine, install the matching official PyTorch CUDA wheel before the
 requirements file. Do not change the scientific seeds, budgets or replicate counts.
 
+Python 3.11 compatibility note: the immutable Drive-era T-series sources retain their
+original `isic-cli==12.5.2` bytes and hashes. Runtime-adapted copies substitute
+`isic-cli==12.4.0`, the last release compatible with Python 3.11; this changes only
+the acquisition client version, not scientific seeds, budgets or source commitments.
+
 ## 2. Integrity audit (no data download)
 
 ```bash
