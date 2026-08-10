@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "raw_data_in_git": false,
+    "restricted_data_in_portable_bundle": false,
+    "downloaded_bytes_are_runtime_hashed": true,
+    "reviewer_must_accept_provider_terms": true,
+    "u9_eicu_default": "EXCLUDED_CREDENTIALLED_OPTIONAL_STAGE"
+  },
+  "datasets": [
+    {
+      "id": "ISIC_UDA1",
+      "name": "ISIC UDA1 collection 292",
+      "stage": "Stage8",
+      "official_url": "https://api.isic-archive.com/collections/292/",
+      "acquisition": "automatic",
+      "license": "provider collection terms; verify at download",
+      "redistribution": "metadata/code only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "ISIC_MSK1",
+      "name": "ISIC MSK1 collection 289",
+      "stage": "Stage8",
+      "official_url": "https://api.isic-archive.com/collections/289/",
+      "acquisition": "automatic",
+      "license": "provider collection terms; verify at download",
+      "redistribution": "metadata/code only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "HAM10000",
+      "name": "HAM10000 ISIC collection 66",
+      "stage": "Stage8",
+      "official_url": "https://api.isic-archive.com/collections/66/",
+      "acquisition": "automatic",
+      "license": "CC BY-NC 4.0",
+      "redistribution": "do not bundle raw; downloader and provenance only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "MONTGOMERY_CXR",
+      "name": "Montgomery County chest X-ray set",
+      "stage": "Stage8B",
+      "official_url": "https://lhncbc.nlm.nih.gov/LHC-downloads/downloads.html#tuberculosis-image-data-sets",
+      "acquisition": "automatic",
+      "license": "NLM dataset terms",
+      "redistribution": "downloader only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "SHENZHEN_CXR",
+      "name": "Shenzhen Hospital chest X-ray set",
+      "stage": "Stage8B",
+      "official_url": "https://lhncbc.nlm.nih.gov/LHC-downloads/downloads.html#tuberculosis-image-data-sets",
+      "acquisition": "automatic",
+      "license": "NLM dataset terms",
+      "redistribution": "downloader only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "TBX11K",
+      "name": "TBX11K",
+      "stage": "Stage8",
+      "official_url": "https://drive.google.com/file/d/1r-oNYTPiPCOUzSjChjCIYTdkjBTugqxR/view",
+      "acquisition": "automatic",
+      "license": "author release terms; verify at download",
+      "redistribution": "do not bundle raw",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "BUS_BRA_2024",
+      "name": "BUS-BRA",
+      "stage": "Stage10-11",
+      "official_url": "https://zenodo.org/records/8231412",
+      "persistent_id": "10.5281/zenodo.8231412",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0",
+      "redistribution": "prefer official downloader",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "BUSI_WHU_2025_V3",
+      "name": "BUSI-WHU version 3",
+      "stage": "Stage10-11",
+      "official_url": "https://data.mendeley.com/datasets/k6cpmwybk3/3",
+      "persistent_id": "10.17632/k6cpmwybk3.3",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0",
+      "redistribution": "prefer official downloader",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "BREAST_LESIONS_USG_2024",
+      "name": "Breast Lesions USG",
+      "stage": "Stage10-11/T2",
+      "official_url": "https://www.cancerimagingarchive.net/collection/breast-lesions-usg/",
+      "persistent_id": "10.7937/9WKK-Q141",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0",
+      "redistribution": "prefer TCIA official client",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "BUS_UCLM_2025_V3",
+      "name": "BUS-UCLM version 3",
+      "stage": "Stage10-11",
+      "official_url": "https://data.mendeley.com/datasets/7fvgj4jsp7/3",
+      "persistent_id": "10.17632/7fvgj4jsp7.3",
+      "acquisition": "automatic",
+      "license": "CC BY-NC 3.0",
+      "redistribution": "do not bundle raw",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "RODRIGUES_BUI_2017",
+      "name": "Rodrigues breast ultrasound images",
+      "stage": "Stage10-11",
+      "official_url": "https://data.mendeley.com/datasets/wmy84gzngw/1",
+      "persistent_id": "10.17632/wmy84gzngw.1",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0",
+      "redistribution": "prefer official downloader",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "BUSI_CAIRO_2019",
+      "name": "BUSI Cairo locked-blind historical target",
+      "stage": "Stage10 historical governance",
+      "official_url": "https://scholar.cu.edu.eg/?q=afahmy/pages/dataset",
+      "persistent_id": "10.1016/j.dib.2019.104863",
+      "acquisition": "manual_official",
+      "license": "CC BY 4.0 per data article",
+      "redistribution": "do not bundle; historical replay only",
+      "required_for": []
+    },
+    {
+      "id": "OASBUD_2017",
+      "name": "OASBUD locked-blind historical target",
+      "stage": "Stage10 historical governance",
+      "official_url": "https://zenodo.org/records/545928",
+      "persistent_id": "10.5281/zenodo.545928",
+      "acquisition": "manual_official",
+      "license": "CC BY-NC 4.0",
+      "redistribution": "do not bundle; historical replay only",
+      "required_for": []
+    },
+    {
+      "id": "DERM7PT_2019",
+      "name": "Derm7pt locked-blind historical target",
+      "stage": "Stage10 historical governance",
+      "official_url": "https://derm.cs.sfu.ca/",
+      "acquisition": "manual_official",
+      "license": "CC BY-NC-SA 4.0",
+      "redistribution": "do not bundle; historical replay only",
+      "required_for": []
+    },
+    {
+      "id": "HISBREAST_V2",
+      "name": "HiSBreast version 2",
+      "stage": "T2-I/T2-KR",
+      "official_url": "https://data.mendeley.com/",
+      "acquisition": "automatic",
+      "license": "Mendeley record terms; runtime audit required",
+      "redistribution": "do not bundle the approximately 1 GB archive",
+      "expected_mount": "00_Data_Acquisition/Cross_Modal_Independent_Target_Expansion_v0.2/HISBREAST_V2/00_Raw_Inbox/HiSBreast_Version 2.zip",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "ISIC_RELEASES_AND_PROVIDERS",
+      "name": "ISIC 2017-2020 release and provider targets",
+      "stage": "T2-L/T2-MN",
+      "official_url": "https://challenge.isic-archive.com/data/",
+      "acquisition": "automatic",
+      "license": "release-specific ISIC terms",
+      "redistribution": "metadata and downloader only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "RFMID2_0",
+      "name": "RFMiD 2.0 audit-only acquisition",
+      "stage": "T2-L",
+      "official_url": "https://zenodo.org/records/7505822",
+      "acquisition": "automatic",
+      "license": "Zenodo record terms",
+      "redistribution": "downloader only",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "TB_CXR_PAKISTAN_2026",
+      "name": "Pakistan TB chest-radiograph dataset version 3",
+      "stage": "T2-L",
+      "official_url": "https://data.mendeley.com/datasets/8j2g3csprk/3",
+      "persistent_id": "10.17632/8j2g3csprk.3",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0",
+      "redistribution": "prefer official downloader",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "PH2",
+      "name": "PH2 optional provider target",
+      "stage": "T2-L/T2-MN",
+      "official_url": "https://www.fc.up.pt/addi/ph2%20database.html",
+      "acquisition": "manual_official",
+      "license": "research and education registration terms",
+      "redistribution": "never bundle",
+      "expected_mount": "00_Data_Acquisition/Cross_Modal_Independent_Target_Expansion_v0.2/PH2/00_Raw_Inbox",
+      "required_for": []
+    },
+    {
+      "id": "CIFAR10",
+      "name": "CIFAR-10",
+      "stage": "U2",
+      "official_url": "https://www.cs.toronto.edu/~kriz/cifar.html",
+      "acquisition": "automatic",
+      "license": "dataset terms on official page",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "CIFAR10_1",
+      "name": "CIFAR-10.1 v6",
+      "stage": "U2",
+      "official_url": "https://github.com/modestyachts/CIFAR-10.1",
+      "acquisition": "automatic",
+      "license": "MIT repository; dataset provenance in repository",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "CIFAR10_C",
+      "name": "CIFAR-10-C",
+      "stage": "U2",
+      "official_url": "https://zenodo.org/records/2535967",
+      "persistent_id": "10.5281/zenodo.2535967",
+      "acquisition": "automatic",
+      "license": "CC0-1.0",
+      "redistribution": "download at runtime; official MD5 checked by U2",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "PACS",
+      "name": "PACS flwrlabs pinned Hugging Face snapshot",
+      "stage": "U3C",
+      "official_url": "https://huggingface.co/datasets/flwrlabs/pacs",
+      "acquisition": "automatic",
+      "license": "dataset card and upstream PACS terms",
+      "redistribution": "download pinned revision at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "AMAZON_MDS",
+      "name": "Multi-Domain Sentiment Dataset",
+      "stage": "U3C",
+      "official_url": "https://www.cs.jhu.edu/~mdredze/datasets/sentiment/",
+      "acquisition": "automatic",
+      "license": "official research dataset terms",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "TORCHVISION_DIGITS",
+      "name": "MNIST, USPS, SVHN, QMNIST and EMNIST digits",
+      "stage": "U4C",
+      "official_url": "https://pytorch.org/vision/stable/datasets.html",
+      "acquisition": "automatic",
+      "license": "dataset-specific upstream terms",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "MULTINLI",
+      "name": "MultiNLI",
+      "stage": "U4C",
+      "official_url": "https://cims.nyu.edu/~sbowman/multinli/",
+      "acquisition": "automatic",
+      "license": "MIT",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "ACS_PUMS",
+      "name": "American Community Survey PUMS via Folktables",
+      "stage": "U4C/U5B/U6",
+      "official_url": "https://www.census.gov/programs-surveys/acs/microdata.html",
+      "acquisition": "automatic",
+      "license": "United States Census public data terms",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "MEDMNIST",
+      "name": "MedMNIST v2 collections",
+      "stage": "U5B/U6",
+      "official_url": "https://medmnist.com/",
+      "persistent_id": "10.5281/zenodo.10519652",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0 for MedMNIST collection; source-dataset terms also apply",
+      "redistribution": "download pinned package records at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "UCI_DIABETES_296",
+      "name": "Diabetes 130-US hospitals 1999-2008",
+      "stage": "U7/smoke",
+      "official_url": "https://archive.ics.uci.edu/dataset/296/diabetes+130+us+hospitals+for+years+1999+2008",
+      "acquisition": "automatic",
+      "license": "CC BY 4.0 on UCI repository",
+      "redistribution": "download at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "NHANES",
+      "name": "NHANES five-cycle public-use files",
+      "stage": "U8",
+      "official_url": "https://wwwn.cdc.gov/nchs/nhanes/",
+      "acquisition": "automatic",
+      "license": "CDC public-use data terms",
+      "redistribution": "download official XPT files at runtime",
+      "required_for": ["full-claim", "historical-replay"]
+    },
+    {
+      "id": "IDRID",
+      "name": "Indian Diabetic Retinopathy Image Dataset",
+      "stage": "historical retinal branch",
+      "official_url": "https://idrid.grand-challenge.org/Data/",
+      "persistent_id": "10.3390/data3030025",
+      "acquisition": "manual_acceptance",
+      "license": "CC BY 4.0 for the published dataset; challenge access workflow applies",
+      "redistribution": "do not place raw images in GitHub bundle",
+      "expected_mount": "11_External_Data/Retinal_DR/IDRiD",
+      "required_for": ["historical-replay"]
+    },
+    {
+      "id": "DEEPDRID",
+      "name": "DeepDRiD v1.1",
+      "stage": "historical retinal branch",
+      "official_url": "https://github.com/deepdrdoc/DeepDRiD",
+      "acquisition": "manual_official",
+      "license": "official repository/challenge terms must be confirmed before redistribution",
+      "redistribution": "never bundle until license audit is resolved",
+      "expected_mount": "11_External_Data/Retinal_DR/DeepDRiD/DeepDRiD-v1.1.zip",
+      "required_for": ["historical-replay"]
+    },
+    {
+      "id": "EYEPACS",
+      "name": "EyePACS diabetic retinopathy detection competition data",
+      "stage": "historical retinal branch",
+      "official_url": "https://www.kaggle.com/c/diabetic-retinopathy-detection/data",
+      "acquisition": "account_gated",
+      "license": "Kaggle competition rules and EyePACS terms",
+      "redistribution": "prohibited from public package; reviewer obtains independently",
+      "expected_mount": "11_External_Data/Retinal_DR/EyePACS",
+      "required_for": ["historical-replay"]
+    },
+    {
+      "id": "EICU_CRD",
+      "name": "eICU Collaborative Research Database v2.0",
+      "stage": "U9 optional",
+      "official_url": "https://physionet.org/content/eicu-crd/2.0/",
+      "acquisition": "credentialed_excluded",
+      "license": "PhysioNet Credentialed Health Data License and DUA",
+      "redistribution": "strictly excluded",
+      "required_for": []
+    }
+  ]
+}

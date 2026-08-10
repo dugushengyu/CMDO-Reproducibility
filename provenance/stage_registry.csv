@@ -1,0 +1,15 @@
+stage,authority,runtime,repository_status,matlab_status,sealed,default_action
+U0-U1,Universal Observability Law discovery notebook v0.1,Python notebook,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Do not treat as MATLAB-equivalent yet
+U2,StageU2 v0.1.7.2 notebook + v0.1 pipeline,Python/notebook,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Use original only for golden fixtures
+U3A,Universality Classes v0.1 notebook,Python notebook,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Use original only for golden fixtures
+U3C,Authorised Prospective Reserve v1.0.1 FINAL,Python notebook,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Consume canonical outputs; no automatic rerun
+U4A,Evidence Component Expiry Safe Audit v1.0,Python/notebook,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Use original only for golden fixtures
+U4C,Prospective audit v1.0 + QMNIST v1.1.1 + final corrections v1.1.2,Python,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Consume StageU4C canonical v1.1 records
+U5B,Sentinel observability reserve v1.0.2,Python,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Consume canonical outputs; no automatic rerun
+U5D,Observer hardening v1.0.1,Python,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Consume canonical outputs for figures
+U5E,Pair-complete cross-fitted observer v1.0,Python,IMPORTED_LEGACY,PORT_PENDING_GOLDEN_TEST,false,Consume canonical outputs for figures
+U5F,Final observer freeze and U6 preregistration v1.0,Python,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Preserve frozen observer specification
+U6,Independent pair-complete observer reserve v1.0,Python/notebook,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Consume canonical outputs; no automatic rerun
+U7,General performance observability and clinical deployment v1.0/v1.0.1,Python/notebook,IMPORTED_LEGACY,PORT_REQUIRES_SEAL_AWARE_REGRESSION,true,Consume canonical outputs; no automatic rerun
+U8,NHANES complete post-unseal package v1.1.0,MATLAB,MATLAB_NATIVE,NATIVE_AUTHORIZED_RERUN_PACKAGE,true,Explicit confirmation required
+U9,eICU multicentre decision observability v1.0,MATLAB,MATLAB_NATIVE,NATIVE_PREOUTCOME_WORKFLOW,true,Self-test safe; ADAPT/PREPARE/UNSEAL remain ordered stage-local actions

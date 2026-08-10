@@ -1,0 +1,16 @@
+--- v1.0.1/cmdo_execute_frozen_evaluation
++++ v1.0.2-recovery/cmdo_execute_frozen_evaluation
+@@
+     repTable = struct2table(repRecords);
+     targetTable = struct2table(targetRecords);
++    % Authorized post-unseal implementation correction v1.0.2.
++    % Container normalization only; no analytical value is changed.
++    repTable.cycle = string(repTable.cycle);
++    targetTable.cycle = string(targetTable.cycle);
+     stateRecords = repmat(cmdo_empty_state_record(), 0, 1);
+@@
+     stateTable = struct2table(stateRecords);
++    stateTable.cycle = string(stateTable.cycle);
+
+No other line in `cmdo_execute_frozen_evaluation` differs from the reviewed
+v1.0.1 analytical core.

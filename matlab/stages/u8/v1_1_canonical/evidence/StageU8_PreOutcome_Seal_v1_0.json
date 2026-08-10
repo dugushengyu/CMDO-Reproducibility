@@ -1,0 +1,236 @@
+{
+  "stage": "U8",
+  "version": "v1.0",
+  "protocol_name": "CERTIFIABLE_NATURAL_PREVALENCE_TEMPORAL_RESERVE",
+  "created_at_singapore": "2026-08-09 17:27:44 +0800",
+  "decision": "SEAL_FEATURES_MODEL_SCORES_AND_GATES_KEEP_RESERVE_OUTCOMES_PROHIBITED",
+  "source_cycle": "NHANES_2011_2012",
+  "transparent_historical_cycle": "NHANES_2013_2014",
+  "reserve_cycles": [
+    "NHANES_2015_2016",
+    "NHANES_2017_2018",
+    "NHANES_2021_2023"
+  ],
+  "reserve_outcome_status": "NOT_ACCESSED_OR_DOWNLOADED_BY_THIS_PIPELINE",
+  "code_sha256": "f963ff0b3d1ec692cc18c1954cee6b748c2b527a83a30b17aa20b9aef49898b2",
+  "protocol_sha256": "c1fffe15415b3fcde2e7976e82013f1ec4952c5ecc87c4694808f8758faaeb7b",
+  "config_sha256": "e92138a16b3249cce0ae3655bfbc97f3860b4205157693546b5dca7394cd9d99",
+  "model_sha256": "8a119002d752d4a11b1fdb4ca92fd62ad2929974b0d40003e9c0216f0e98b527",
+  "history_sha256": "7fa5ac7eeb799be7082c298f87e8ee5a19d5eb5ca6f0c434a5bdd0bc0d593f37",
+  "target_scores_sha256": "7a67146ee0b8cc48c925636cad162d7835c293e7ce1bab0b0a8ed868287dce12",
+  "target_score_rows": 19097,
+  "historical_accuracy": 0.72051186943620182,
+  "historical_auc": 0.81271405453711087,
+  "frozen_threshold": 0.37699440129204337,
+  "budgets": [
+    128,
+    256,
+    512,
+    1024
+  ],
+  "replicates": 200,
+  "delta_block": 0.0125,
+  "max_transport_weight": 0.35,
+  "successful_rerun": "PROHIBITED",
+  "legacy_stage12_and_locked_assets": "UNCHANGED_AND_PROHIBITED",
+  "official_input_manifest": [
+    {
+      "cycle": "NHANES_2011_2012",
+      "role": "SOURCE",
+      "component": "DEMO",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/DEMO_G.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2011_2012\\DEMO_G.XPT",
+      "sha256": "eaf0525d1952626885af3e935415a1f66ad62c18698080e7354789c125af252d",
+      "size_bytes": 3.75376E+6
+    },
+    {
+      "cycle": "NHANES_2011_2012",
+      "role": "SOURCE",
+      "component": "BMX",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BMX_G.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2011_2012\\BMX_G.XPT",
+      "sha256": "4814bfc3047ed400b9d43d285f8c3ea7c940ac6489404a9b699579715d158ec3",
+      "size_bytes": 1.94672E+6
+    },
+    {
+      "cycle": "NHANES_2011_2012",
+      "role": "SOURCE",
+      "component": "BPQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/BPQ_G.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2011_2012\\BPQ_G.XPT",
+      "sha256": "39c5a0ee1d76e6f3df867c0057986a21f4a028038002c43214c5af8bdec83cae",
+      "size_bytes": 743920
+    },
+    {
+      "cycle": "NHANES_2011_2012",
+      "role": "SOURCE",
+      "component": "SMQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SMQ_G.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2011_2012\\SMQ_G.XPT",
+      "sha256": "69f2375f036a815082b1e97110e79c505b91e0985c61696f8eaacf94828115dc",
+      "size_bytes": 1.94696E+6
+    },
+    {
+      "cycle": "NHANES_2011_2012",
+      "role": "SOURCE",
+      "component": "GHB",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/GHB_G.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2011_2012\\GHB_G.XPT",
+      "sha256": "8ff7cc95461fdfd47d2c9640b944a2bcd45926a3c0e64c98a09a4cef6c0f88d7",
+      "size_bytes": 105840
+    },
+    {
+      "cycle": "NHANES_2013_2014",
+      "role": "DEVELOPMENT",
+      "component": "DEMO",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DEMO_H.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2013_2014\\DEMO_H.XPT",
+      "sha256": "f8f0cbb3085a323d4cde22349b164878fea1e64dbc404e65b5815c7816b547d7",
+      "size_bytes": 3.8332E+6
+    },
+    {
+      "cycle": "NHANES_2013_2014",
+      "role": "DEVELOPMENT",
+      "component": "BMX",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/BMX_H.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2013_2014\\BMX_H.XPT",
+      "sha256": "fd5e9fc6e6aab0a4aee6e699f51497bbc9b62101f7f43aee924c473e38fd9442",
+      "size_bytes": 2.04552E+6
+    },
+    {
+      "cycle": "NHANES_2013_2014",
+      "role": "DEVELOPMENT",
+      "component": "BPQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/BPQ_H.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2013_2014\\BPQ_H.XPT",
+      "sha256": "aa6ddeab80c73b074ccfd04ad010da404ecb91c048476a194594ce9552d03d49",
+      "size_bytes": 726720
+    },
+    {
+      "cycle": "NHANES_2013_2014",
+      "role": "DEVELOPMENT",
+      "component": "SMQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/SMQ_H.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2013_2014\\SMQ_H.XPT",
+      "sha256": "86d74bb8842ce6d60350944417cbd3e9ee39dd5a9fa1bda33426f276b673861f",
+      "size_bytes": 2.17E+6
+    },
+    {
+      "cycle": "NHANES_2013_2014",
+      "role": "DEVELOPMENT",
+      "component": "GHB",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/GHB_H.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2013_2014\\GHB_H.XPT",
+      "sha256": "0695894ad55ac96f315a8415401977b0856c402d16762115b534bcd5dfeae89e",
+      "size_bytes": 112720
+    },
+    {
+      "cycle": "NHANES_2015_2016",
+      "role": "RESERVE",
+      "component": "DEMO",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/DEMO_I.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2015_2016\\DEMO_I.XPT",
+      "sha256": "c9297c6c37ae8f78f29be9568fa2a03cf3b112616a39afee04030fc775a66a0d",
+      "size_bytes": 3.75648E+6
+    },
+    {
+      "cycle": "NHANES_2015_2016",
+      "role": "RESERVE",
+      "component": "BMX",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/BMX_I.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2015_2016\\BMX_I.XPT",
+      "sha256": "d31da84e14212b4e58e8340598a5b8e2144fac83333563e966eb1b332e4141d6",
+      "size_bytes": 1.9896E+6
+    },
+    {
+      "cycle": "NHANES_2015_2016",
+      "role": "RESERVE",
+      "component": "BPQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/BPQ_I.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2015_2016\\BPQ_I.XPT",
+      "sha256": "7f7e51cd0497eb648f64eaafaf7ed07825d617c32b2cd6853ed249fce1143a38",
+      "size_bytes": 559120
+    },
+    {
+      "cycle": "NHANES_2015_2016",
+      "role": "RESERVE",
+      "component": "SMQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/SMQ_I.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2015_2016\\SMQ_I.XPT",
+      "sha256": "529ce1c407e99dce937ca75d14c8c630e0c9c30a4a9a851760cd2884bbb28fe0",
+      "size_bytes": 2.68104E+6
+    },
+    {
+      "cycle": "NHANES_2017_2018",
+      "role": "RESERVE",
+      "component": "DEMO",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DEMO_J.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2017_2018\\DEMO_J.XPT",
+      "sha256": "c0b46e0345ea19404928656277c8b0d10b0cca348a9b2fe4fc3c67e8b7ee73ec",
+      "size_bytes": 3.41272E+6
+    },
+    {
+      "cycle": "NHANES_2017_2018",
+      "role": "RESERVE",
+      "component": "BMX",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BMX_J.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2017_2018\\BMX_J.XPT",
+      "sha256": "8d675e42d8826ac98714b2c3dd4c5138a5e353fb4424f7eff5e6db4a01ce838a",
+      "size_bytes": 1.466E+6
+    },
+    {
+      "cycle": "NHANES_2017_2018",
+      "role": "RESERVE",
+      "component": "BPQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/BPQ_J.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2017_2018\\BPQ_J.XPT",
+      "sha256": "63cfe1c331a1e7d3534328ac86312a21ffee3e01aa189bc1f74d06855239e5aa",
+      "size_bytes": 544560
+    },
+    {
+      "cycle": "NHANES_2017_2018",
+      "role": "RESERVE",
+      "component": "SMQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SMQ_J.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2017_2018\\SMQ_J.XPT",
+      "sha256": "73c3708e540cbf520a566508aa629c3e4ba53cad77dae9388ca36384646455f4",
+      "size_bytes": 2.3056E+6
+    },
+    {
+      "cycle": "NHANES_2021_2023",
+      "role": "RESERVE",
+      "component": "DEMO",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/DEMO_L.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2021_2023\\DEMO_L.XPT",
+      "sha256": "ca4374a158b493b8b0163e1388da21d57a18d1b9cecff2aa4e2fa2bec494fe23",
+      "size_bytes": 2.58216E+6
+    },
+    {
+      "cycle": "NHANES_2021_2023",
+      "role": "RESERVE",
+      "component": "BMX",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2021_2023\\BMX_L.XPT",
+      "sha256": "44440c416d9ad709e8b1708a5975378ab4d5b18edc39eb5015c2ae7186500170",
+      "size_bytes": 1.5632E+6
+    },
+    {
+      "cycle": "NHANES_2021_2023",
+      "role": "RESERVE",
+      "component": "BPQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BPQ_L.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2021_2023\\BPQ_L.XPT",
+      "sha256": "0acde3af0526c375942fe0735e3bf69a0422bcbc606f98a478209d2f47baa4b5",
+      "size_bytes": 409680
+    },
+    {
+      "cycle": "NHANES_2021_2023",
+      "role": "RESERVE",
+      "component": "SMQ",
+      "url": "https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/SMQ_L.XPT",
+      "local_path": "F:\\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\\u8_package\\CMDO_U8_NHANES_Workdir_v1_0\\00_Raw_Official_NHANES\\NHANES_2021_2023\\SMQ_L.XPT",
+      "sha256": "abbefebfa5585b1e19c079fa14be20c113a4649318070197214b258d05b93c50",
+      "size_bytes": 651120
+    }
+  ]
+}

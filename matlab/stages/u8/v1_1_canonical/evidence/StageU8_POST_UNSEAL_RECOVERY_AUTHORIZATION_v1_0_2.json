@@ -1,0 +1,19 @@
+{
+  "stage": "U8",
+  "protocol_version": "v1.0",
+  "recovery_version": "v1.0.2",
+  "decision": "AUTHORIZE_POST_UNSEAL_DETERMINISTIC_RECOVERY_AFTER_CELL_STRING_TYPE_ERROR",
+  "preoutcome_seal_sha256": "5b6cab9bddd614b610a3acf5e69af0e1c304f14c4f38c55b62808be3835579cf",
+  "original_code_sha256": "f963ff0b3d1ec692cc18c1954cee6b748c2b527a83a30b17aa20b9aef49898b2",
+  "original_protocol_sha256": "c1fffe15415b3fcde2e7976e82013f1ec4952c5ecc87c4694808f8758faaeb7b",
+  "original_execution_authorization_sha256": "ffd8bcb9263d66a5b4edb08e33100a565554a2d7e80c18021c13d49201da90ac",
+  "recovery_code_sha256": "d63ae2ee8dab74ac9b73fbe58e5d35472b96ba304e23c344922463125ff2f38d",
+  "recovery_protocol_sha256": "b96b31dcb83f67ac41f9f7156fe917d4cd913e4385ca55ce62f9147ceaa79925",
+  "analytical_core_diff_sha256": "512937fc1a935ef8214b6f31a39983f84b23604001ac3e8846e8ce18e037b47d",
+  "permitted_change": "CYCLE_IDENTIFIER_CONTAINER_NORMALIZATION_CELL_TO_STRING_ONLY",
+  "frozen_witness_count": 2400,
+  "network_access": "PROHIBITED_AND_NOT_USED_BY_RECOVERY",
+  "second_recovery": "PROHIBITED",
+  "authorised_at_singapore": "2026-08-09 17:48:32 +0800",
+  "note": "Issued after the original authorized reserve access stopped at the disclosed MATLAB cell-array comparison error and before any U8 aggregate result was produced. Recovery is a deterministic reconstruction of the unchanged frozen analysis, not an outcome-blind first execution."
+}

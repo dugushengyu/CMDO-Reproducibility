@@ -1,0 +1,1422 @@
+{
+  "roots": [
+    {
+      "id": "1o-L8gwKCdApEQFu38bUp9OUwsYd0Tyq4",
+      "path": "05_Code"
+    },
+    {
+      "id": "1G5p1UQapW2mOPNpaAe_-HqCATbRFwhCC",
+      "path": "07_Experiments"
+    },
+    {
+      "id": "1lk3ZhmUqfaYxk9OAnIcro2C9yoQA8VEO",
+      "path": "09_Figures"
+    },
+    {
+      "id": "18hW0sWhyjuHVTZgEXtyf-ixBJpQYf4wv",
+      "path": "12_Governance"
+    },
+    {
+      "id": "1-UC3Gxnupb5RPAgS6s30XGIlFCtdNwhR",
+      "path": "00_Storage_Migration"
+    }
+  ],
+  "folders": [
+    {
+      "id": "1o-L8gwKCdApEQFu38bUp9OUwsYd0Tyq4",
+      "path": "05_Code",
+      "count": 6
+    },
+    {
+      "id": "1G5p1UQapW2mOPNpaAe_-HqCATbRFwhCC",
+      "path": "07_Experiments",
+      "count": 1
+    },
+    {
+      "id": "1lk3ZhmUqfaYxk9OAnIcro2C9yoQA8VEO",
+      "path": "09_Figures",
+      "count": 4
+    },
+    {
+      "id": "18hW0sWhyjuHVTZgEXtyf-ixBJpQYf4wv",
+      "path": "12_Governance",
+      "count": 6
+    },
+    {
+      "id": "1-UC3Gxnupb5RPAgS6s30XGIlFCtdNwhR",
+      "path": "00_Storage_Migration",
+      "count": 7
+    },
+    {
+      "id": "1JbCqg6xVB0cmh-RwXMppSAbYjQpSvot4",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0",
+      "count": 4
+    },
+    {
+      "id": "12I2eC2PyLY5QcXBwPoXClKjG58mRgvAS",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0",
+      "count": 7
+    },
+    {
+      "id": "1ubsm-KPg9lbcF8Slxsw3djiXn6SCp9ZT",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0",
+      "count": 5
+    },
+    {
+      "id": "1HctwEIYqPWVfzMz36dnLXh7kenTYmX7m",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0",
+      "count": 6
+    },
+    {
+      "id": "1wbxo08IjumFfLcrRTU99IrN63_w-837N",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0",
+      "count": 11
+    },
+    {
+      "id": "1lLKFugbHuxKXjMLCIGdkOqnXnIoDfRFQ",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0",
+      "count": 6
+    },
+    {
+      "id": "1uJwP2qdboEyjKO0OQOdtZdVDRCIxXMm8",
+      "path": "07_Experiments/Cross_Modal",
+      "count": 2
+    },
+    {
+      "id": "1tNDoOEsjqJDRaIZL2I84ORjn1jfzVV10",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time",
+      "count": 1
+    },
+    {
+      "id": "1drKyIwkvDOCX50HxILTzw06TjVZ1VK8p",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT",
+      "count": 20
+    },
+    {
+      "id": "1BmcqNhgjugVKmm38WCk0uy1gQGkEpIiJ",
+      "path": "09_Figures/Canonical_Records_All_Figures",
+      "count": 7
+    },
+    {
+      "id": "1zv-5R8Oq-cUe6ONgsGfxF2EyoThuorCE",
+      "path": "09_Figures/00_Current_Figure_Source_Package",
+      "count": 8
+    },
+    {
+      "id": "1CKAgC4pc0I5J_5npwI5yz6ExxCx9-YNR",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility",
+      "count": 4
+    },
+    {
+      "id": "1YMdsGzqJuN7ZtkJ02YlJ6haKFbwdbhYt",
+      "path": "12_Governance/04_Invalidated_And_Superseded_Execution_Records",
+      "count": 0
+    },
+    {
+      "id": "1AWJI98S0bnqHpRffSa_jclcmKwxUdpU1",
+      "path": "12_Governance/03_Release_Manifests_And_Environment_Locks",
+      "count": 0
+    },
+    {
+      "id": "1QWRNNHsnKr-3SzLiegM_dUNYv8q4qK9P",
+      "path": "12_Governance/02_Discovery_And_Falsification_Ledger",
+      "count": 1
+    },
+    {
+      "id": "1M-SNg57gXvPrJuBNqptbdifuRJbWCCw5",
+      "path": "12_Governance/01_Protocol_Hash_And_Decision_Chain",
+      "count": 2
+    },
+    {
+      "id": "19IfJiOkj_yphfvQXtdFRCB2C6L5j7hjk",
+      "path": "12_Governance/00_Authoritative_Indexes",
+      "count": 1
+    },
+    {
+      "id": "1RWrWDMDGa2r7YI55iPj475sCDYoXgg3x",
+      "path": "00_Storage_Migration/04_Drive_Cleanup_Audit_2026-07-31",
+      "count": 1
+    },
+    {
+      "id": "15pakSKZqvt-lqXimqIWlT5epqphiyGGz",
+      "path": "00_Storage_Migration/03_Reviewed_Publish_Archive",
+      "count": 0
+    },
+    {
+      "id": "1veFaJLHbgRtilQnUA6BfM8-YFVnkv2AB",
+      "path": "00_Storage_Migration/02_Local_Publish_Inbox",
+      "count": 0
+    },
+    {
+      "id": "18EiIK9EuExtKJMNTUQH6HXj6KyNCDo6v",
+      "path": "00_Storage_Migration/01_Local_First_Workspace_v1.1",
+      "count": 3
+    },
+    {
+      "id": "17v0K_LbX2YztzXOxNiyj5ApoNukmiYlZ",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0/__pycache__",
+      "count": 1
+    },
+    {
+      "id": "1fTuiTw0jCMT4LTYdUs3sKqujGODOAsSM",
+      "path": "07_Experiments/Cross_Modal/StageU3_Observability_Universality_Classes_And_Prospective_Reserve",
+      "count": 3
+    },
+    {
+      "id": "1L0AyIcS1byoWrTkiRxeGZnu-Rv67XCCM",
+      "path": "07_Experiments/Cross_Modal/StageU2_Mechanism_Multimetric_LabelEfficiency_External_NonBiomedical_v0.1",
+      "count": 3
+    },
+    {
+      "id": "1bTc5OBZ8rz11XHQq8y2G2Zurz_gxLGgw",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1",
+      "count": 7
+    },
+    {
+      "id": "16P6SMmcK8Bww4ZzuGArOVk9f4DDGhljg",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT",
+      "count": 16
+    },
+    {
+      "id": "1IuWcBD1ED2zYSaLiBNvw0bwVcx-gHjC5",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT",
+      "count": 8
+    },
+    {
+      "id": "1mqphTV2A6WW2vPiCDZxZPxv4Q_49vhq_",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/03_U5D_Release_Index",
+      "count": 0
+    },
+    {
+      "id": "10DkO31oj7uQMThGXXSzeaws3-oYjAL1w",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/02_Current_Result_And_Claim_Synthesis",
+      "count": 0
+    },
+    {
+      "id": "1lZOKhbmBtuNKCb-1HcyyLW_z-IL6o8eY",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/01_Release_Manifests_And_Data_Dictionaries",
+      "count": 2
+    },
+    {
+      "id": "1uR1nERNcTlyuPj54f4lIcXiI3trqyIdN",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/00_Master_Index",
+      "count": 2
+    },
+    {
+      "id": "1cyxsfqzFO-7baJ7NkXmsM1ZIDw70Y9vw",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT",
+      "count": 11
+    }
+  ],
+  "files": [
+    {
+      "id": "1BWOh02l9rxpP5k-NcnhjQds7A7tPhWVc",
+      "title": "README_FIRST_CMDO_LOCAL_FIRST_v1.1.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 768,
+      "url": "https://drive.google.com/file/d/1BWOh02l9rxpP5k-NcnhjQds7A7tPhWVc/view?usp=drivesdk",
+      "path": "00_Storage_Migration/README_FIRST_CMDO_LOCAL_FIRST_v1.1.txt"
+    },
+    {
+      "id": "17ftPT2qTk8W0VaMHazjzU52gPG42kdNo2mPS4WLqFUQ",
+      "title": "CMDO_Copy_To_F_PowerShell_v1.0_LEGACY",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 3694,
+      "url": "https://docs.google.com/document/d/17ftPT2qTk8W0VaMHazjzU52gPG42kdNo2mPS4WLqFUQ/edit?usp=drivesdk",
+      "path": "00_Storage_Migration/CMDO_Copy_To_F_PowerShell_v1.0_LEGACY"
+    },
+    {
+      "id": "194cNTf465kNJB0nwHGwjny5b2sPaJAO_hzsfgfd-w7Q",
+      "title": "README_FIRST_CMDO_MIGRATION_v1.0_LEGACY",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 2435,
+      "url": "https://docs.google.com/document/d/194cNTf465kNJB0nwHGwjny5b2sPaJAO_hzsfgfd-w7Q/edit?usp=drivesdk",
+      "path": "00_Storage_Migration/README_FIRST_CMDO_MIGRATION_v1.0_LEGACY"
+    },
+    {
+      "id": "1TBaaIb2xLIV0vtLdpoJ7vIn0TnArQcsX",
+      "title": "CrossModal_StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0.1.ipynb",
+      "type": "file",
+      "mime": "application/vnd.google.colaboratory",
+      "size": 14473,
+      "url": "https://colab.research.google.com/drive/1TBaaIb2xLIV0vtLdpoJ7vIn0TnArQcsX",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0/CrossModal_StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0.1.ipynb"
+    },
+    {
+      "id": "1rOtwbEIUig8pvRE0KL2yfwCSZ16nrgXM",
+      "title": "U7_IMPLEMENTATION_AMENDMENT_v1.0.1.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1210,
+      "url": "https://drive.google.com/file/d/1rOtwbEIUig8pvRE0KL2yfwCSZ16nrgXM/view?usp=drivesdk",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0/U7_IMPLEMENTATION_AMENDMENT_v1.0.1.json"
+    },
+    {
+      "id": "1SjgGLRbWDYMJv0ff5044ACJZVn2D_2Gn",
+      "title": "StageU7_General_Performance_Observability_And_Natural_Clinical_Deployment_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 49715,
+      "url": "https://drive.google.com/file/d/1SjgGLRbWDYMJv0ff5044ACJZVn2D_2Gn/view?usp=drivesdk",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0/StageU7_General_Performance_Observability_And_Natural_Clinical_Deployment_v1.0.py"
+    },
+    {
+      "id": "17Uv-tLkD41IX419L98VP2xv0kopXBWDQ",
+      "title": "CrossModal_StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 365561,
+      "url": "https://drive.google.com/file/d/17Uv-tLkD41IX419L98VP2xv0kopXBWDQ/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/CrossModal_StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.ipynb"
+    },
+    {
+      "id": "1Pq89Tq1RbMhAOmHm_FN6xfOpdvAuSpKt",
+      "title": "CMDO_U6_Release_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1914,
+      "url": "https://drive.google.com/file/d/1Pq89Tq1RbMhAOmHm_FN6xfOpdvAuSpKt/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/CMDO_U6_Release_Manifest_v1.0.json"
+    },
+    {
+      "id": "1HMTbUE9Lu0Uzb2jBVJejN16yN3MmtEE1",
+      "title": "StageU5F_Frozen_Observer_Specification_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1915,
+      "url": "https://drive.google.com/file/d/1HMTbUE9Lu0Uzb2jBVJejN16yN3MmtEE1/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/StageU5F_Frozen_Observer_Specification_v1.0.json"
+    },
+    {
+      "id": "1PI6uiorr-t-JfHUMHn1EQNYAOn0FhnS9",
+      "title": "CMDO_v4.5_Independent_Observer_Confirmation.html",
+      "type": "file",
+      "mime": "text/html",
+      "size": 1980,
+      "url": "https://drive.google.com/file/d/1PI6uiorr-t-JfHUMHn1EQNYAOn0FhnS9/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/CMDO_v4.5_Independent_Observer_Confirmation.html"
+    },
+    {
+      "id": "1oSMinymys2w8ILhpVX3SMov5dppKLSdU",
+      "title": "U6_INDEPENDENT_RESERVE_AUTHORIZATION_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 841,
+      "url": "https://drive.google.com/file/d/1oSMinymys2w8ILhpVX3SMov5dppKLSdU/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/U6_INDEPENDENT_RESERVE_AUTHORIZATION_v1.0.json"
+    },
+    {
+      "id": "1w9xB56uvLD8tLwKDCkynYnd_ZeQI1VW6",
+      "title": "StageU6_Independent_Reserve_Protocol_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 2817,
+      "url": "https://drive.google.com/file/d/1w9xB56uvLD8tLwKDCkynYnd_ZeQI1VW6/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/StageU6_Independent_Reserve_Protocol_v1.0.txt"
+    },
+    {
+      "id": "1FUkPcPTPPfRFJcw62CEICNM0-8NSTjuQ",
+      "title": "StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 52560,
+      "url": "https://drive.google.com/file/d/1FUkPcPTPPfRFJcw62CEICNM0-8NSTjuQ/view?usp=drivesdk",
+      "path": "05_Code/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.py"
+    },
+    {
+      "id": "1ANpFKvUCQ53Vy4FU7s5Jjtlm0OuBdAI9",
+      "title": "CMDO_U5F_Release_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1642,
+      "url": "https://drive.google.com/file/d/1ANpFKvUCQ53Vy4FU7s5Jjtlm0OuBdAI9/view?usp=drivesdk",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0/CMDO_U5F_Release_Manifest_v1.0.json"
+    },
+    {
+      "id": "1atitzQXwYT_HgbwpBs2wtTU9o3JbTEbw",
+      "title": "CMDO_v4.4_Final_Observer_Freeze.html",
+      "type": "file",
+      "mime": "text/html",
+      "size": 2196,
+      "url": "https://drive.google.com/file/d/1atitzQXwYT_HgbwpBs2wtTU9o3JbTEbw/view?usp=drivesdk",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0/CMDO_v4.4_Final_Observer_Freeze.html"
+    },
+    {
+      "id": "18ECTpZqJPL2-tTtMlIbL5I5rkubM0bD9",
+      "title": "U5F_OBSERVER_FREEZE_AUTHORIZATION_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 731,
+      "url": "https://drive.google.com/file/d/18ECTpZqJPL2-tTtMlIbL5I5rkubM0bD9/view?usp=drivesdk",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0/U5F_OBSERVER_FREEZE_AUTHORIZATION_v1.0.json"
+    },
+    {
+      "id": "1-z9TmPdyIrgz-sVCATLb5RFsO6GKS6-e",
+      "title": "StageU5F_Observer_Freeze_Protocol_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 1290,
+      "url": "https://drive.google.com/file/d/1-z9TmPdyIrgz-sVCATLb5RFsO6GKS6-e/view?usp=drivesdk",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0/StageU5F_Observer_Freeze_Protocol_v1.0.txt"
+    },
+    {
+      "id": "1iFw3mcu4cjmT_IglCJtjmmE-bH_DmbD2",
+      "title": "StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 22390,
+      "url": "https://drive.google.com/file/d/1iFw3mcu4cjmT_IglCJtjmmE-bH_DmbD2/view?usp=drivesdk",
+      "path": "05_Code/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0.py"
+    },
+    {
+      "id": "1eZ9yKO2kaXR2ABgXFfHQRL17elVqvlwc",
+      "title": "StageU5E_Run_Identity_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 687,
+      "url": "https://drive.google.com/file/d/1eZ9yKO2kaXR2ABgXFfHQRL17elVqvlwc/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/StageU5E_Run_Identity_v1.0.txt"
+    },
+    {
+      "id": "1gKDzRjId-ob3q09U54y-mC8DR1RoAXub",
+      "title": "CMDO_U5E_Release_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1670,
+      "url": "https://drive.google.com/file/d/1gKDzRjId-ob3q09U54y-mC8DR1RoAXub/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/CMDO_U5E_Release_Manifest_v1.0.json"
+    },
+    {
+      "id": "19FX9k-Ys5-rAY9MtXNnDtxRB5wTDcWzt",
+      "title": "CMDO_v4.3_Pair_Complete_Cross_Fitted_Observer.html",
+      "type": "file",
+      "mime": "text/html",
+      "size": 3432,
+      "url": "https://drive.google.com/file/d/19FX9k-Ys5-rAY9MtXNnDtxRB5wTDcWzt/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/CMDO_v4.3_Pair_Complete_Cross_Fitted_Observer.html"
+    },
+    {
+      "id": "1ZtE__TF5V_yKc4IHvEXhUfgfMn0CNTOA",
+      "title": "U5E_PAIR_COMPLETE_OBSERVER_AUTHORIZATION_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 851,
+      "url": "https://drive.google.com/file/d/1ZtE__TF5V_yKc4IHvEXhUfgfMn0CNTOA/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/U5E_PAIR_COMPLETE_OBSERVER_AUTHORIZATION_v1.0.json"
+    },
+    {
+      "id": "1CnjazZW-aFbya2wmc9yh3P1sx5pkmKqJ",
+      "title": "StageU5E_Pair_Complete_Observer_Protocol_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 1862,
+      "url": "https://drive.google.com/file/d/1CnjazZW-aFbya2wmc9yh3P1sx5pkmKqJ/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/StageU5E_Pair_Complete_Observer_Protocol_v1.0.txt"
+    },
+    {
+      "id": "1-sICNn-kV61kqoMSBxQIZdOMCnwoo_8u",
+      "title": "StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 40168,
+      "url": "https://drive.google.com/file/d/1-sICNn-kV61kqoMSBxQIZdOMCnwoo_8u/view?usp=drivesdk",
+      "path": "05_Code/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0.py"
+    },
+    {
+      "id": "1tgEwVhcsQyUWaj3I4lziKRhExElHGCTa",
+      "title": "CMDO_U5D_Implementation_Fix_Manifest_v1.0.1.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 2117,
+      "url": "https://drive.google.com/file/d/1tgEwVhcsQyUWaj3I4lziKRhExElHGCTa/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/CMDO_U5D_Implementation_Fix_Manifest_v1.0.1.json"
+    },
+    {
+      "id": "1Oh_I7w7kKrbpINs5M-NSvsx_xB1SGukY",
+      "title": "U5D_OBSERVER_HARDENING_IMPLEMENTATION_AMENDMENT_AUTHORIZATION_v1.0.1.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 848,
+      "url": "https://drive.google.com/file/d/1Oh_I7w7kKrbpINs5M-NSvsx_xB1SGukY/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/U5D_OBSERVER_HARDENING_IMPLEMENTATION_AMENDMENT_AUTHORIZATION_v1.0.1.json"
+    },
+    {
+      "id": "1ipjHNwQX4zvPzPDkftfEq7P4qEoGkp4M",
+      "title": "StageU5D_Transparent_Implementation_Amendment_v1.0.1.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 1080,
+      "url": "https://drive.google.com/file/d/1ipjHNwQX4zvPzPDkftfEq7P4qEoGkp4M/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5D_Transparent_Implementation_Amendment_v1.0.1.txt"
+    },
+    {
+      "id": "18XVWzowIVFo6G7bFfZSP3Ixr3tN-6WbU",
+      "title": "StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.1.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 28160,
+      "url": "https://drive.google.com/file/d/18XVWzowIVFo6G7bFfZSP3Ixr3tN-6WbU/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.1.py"
+    },
+    {
+      "id": "1-FC6dc72jMf2MUCvwlSUPNGur3Qru76m",
+      "title": "StageU5D_Run_Identity_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 635,
+      "url": "https://drive.google.com/file/d/1-FC6dc72jMf2MUCvwlSUPNGur3Qru76m/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5D_Run_Identity_v1.0.txt"
+    },
+    {
+      "id": "14v5KkJRRC-GZQ46x4Vx8pm4FTm-3LZsf",
+      "title": "CMDO_v4.2_Confidence_Bounded_Observer_Hardening.html",
+      "type": "file",
+      "mime": "text/html",
+      "size": 4247,
+      "url": "https://drive.google.com/file/d/14v5KkJRRC-GZQ46x4Vx8pm4FTm-3LZsf/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/CMDO_v4.2_Confidence_Bounded_Observer_Hardening.html"
+    },
+    {
+      "id": "1UF9AcMFsU0az0sNkUMkPcnwQu97OJRB7",
+      "title": "StageU5B_AUTHORISED_Sentinel_Observability_Prospective_Reserve_v1.0.2.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 65920,
+      "url": "https://drive.google.com/file/d/1UF9AcMFsU0az0sNkUMkPcnwQu97OJRB7/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5B_AUTHORISED_Sentinel_Observability_Prospective_Reserve_v1.0.2.py"
+    },
+    {
+      "id": "1b8l-ycJroqVtlj0uxxnoiBYQKOpjS3In",
+      "title": "CMDO_U5D_Release_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1946,
+      "url": "https://drive.google.com/file/d/1b8l-ycJroqVtlj0uxxnoiBYQKOpjS3In/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/CMDO_U5D_Release_Manifest_v1.0.json"
+    },
+    {
+      "id": "1DnLwdz-psT7EJQfl_Qho52K9nFh88NOU",
+      "title": "U5D_OBSERVER_HARDENING_AUTHORIZATION_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 923,
+      "url": "https://drive.google.com/file/d/1DnLwdz-psT7EJQfl_Qho52K9nFh88NOU/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/U5D_OBSERVER_HARDENING_AUTHORIZATION_v1.0.json"
+    },
+    {
+      "id": "1NNpTi-U6bFS-UcN03vVo9TnMlB-dUVlH",
+      "title": "StageU5D_Observer_Hardening_Protocol_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 1600,
+      "url": "https://drive.google.com/file/d/1NNpTi-U6bFS-UcN03vVo9TnMlB-dUVlH/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5D_Observer_Hardening_Protocol_v1.0.txt"
+    },
+    {
+      "id": "1bzRqm7rBSXeE5X8ebORjU05n4mnNZP_J",
+      "title": "StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 27956,
+      "url": "https://drive.google.com/file/d/1bzRqm7rBSXeE5X8ebORjU05n4mnNZP_J/view?usp=drivesdk",
+      "path": "05_Code/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.py"
+    },
+    {
+      "id": "1ZQb3JJIYIl4MLO1aZYbNdLGKL_STjk3R",
+      "title": "CrossModal_StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0_SELF_CONTAINED.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 74329,
+      "url": "https://drive.google.com/file/d/1ZQb3JJIYIl4MLO1aZYbNdLGKL_STjk3R/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/CrossModal_StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0_SELF_CONTAINED.ipynb"
+    },
+    {
+      "id": "1wtg6RWVqC9PJRiOPQgaUA92OKdoZBUiB",
+      "title": "CMDO_StageU4A_Preparation_Release_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 1415,
+      "url": "https://drive.google.com/file/d/1wtg6RWVqC9PJRiOPQgaUA92OKdoZBUiB/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/CMDO_StageU4A_Preparation_Release_Manifest_v1.0.json"
+    },
+    {
+      "id": "1v3ZEliK8KJoYmrN2GKKAYzk_E2mielg4",
+      "title": "CMDO_Manuscript_Rebuild_Strategy_v0.5.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 3918,
+      "url": "https://drive.google.com/file/d/1v3ZEliK8KJoYmrN2GKKAYzk_E2mielg4/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/CMDO_Manuscript_Rebuild_Strategy_v0.5.txt"
+    },
+    {
+      "id": "10H6ZRA1bS2ZVso8JVLLfbSfoIIVsjXMA",
+      "title": "Stage_U4A_Transparent_Development_Protocol_v1.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 3916,
+      "url": "https://drive.google.com/file/d/10H6ZRA1bS2ZVso8JVLLfbSfoIIVsjXMA/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/Stage_U4A_Transparent_Development_Protocol_v1.0.txt"
+    },
+    {
+      "id": "1fSMhAfs5dc1fr5LF9kPyO4e4Q34dAMuS",
+      "title": "CMDO_Evidence_Component_Universality_and_Safe_Sequential_Auditing_Theory_v2.0.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 8589,
+      "url": "https://drive.google.com/file/d/1fSMhAfs5dc1fr5LF9kPyO4e4Q34dAMuS/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/CMDO_Evidence_Component_Universality_and_Safe_Sequential_Auditing_Theory_v2.0.txt"
+    },
+    {
+      "id": "1FEuP0wEhGLogVApw_G12bWLzlpA6eANz",
+      "title": "StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0.py",
+      "type": "file",
+      "mime": "text/x-python",
+      "size": 51395,
+      "url": "https://drive.google.com/file/d/1FEuP0wEhGLogVApw_G12bWLzlpA6eANz/view?usp=drivesdk",
+      "path": "05_Code/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0.py"
+    },
+    {
+      "id": "1uEikiDhIhworaptOQkvKp1qrHlHHeBiY",
+      "title": "CMDO_Figure2_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 49077,
+      "url": "https://drive.google.com/file/d/1uEikiDhIhworaptOQkvKp1qrHlHHeBiY/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure2_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1G586uWwvc_SmHG-3XIxS5ibwCGZpMwL6",
+      "title": "CMDO_Figure2_Editable_Colab_BEFORE_TARGET_STYLE_2026-07-30.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 41888,
+      "url": "https://drive.google.com/file/d/1G586uWwvc_SmHG-3XIxS5ibwCGZpMwL6/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure2_Editable_Colab_BEFORE_TARGET_STYLE_2026-07-30.ipynb"
+    },
+    {
+      "id": "1fuTrfNbUEUd5R96yqiZ9d8tfIulJUFfZ",
+      "title": "CMDO_Figure1_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 444685,
+      "url": "https://drive.google.com/file/d/1fuTrfNbUEUd5R96yqiZ9d8tfIulJUFfZ/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure1_Editable_Colab.ipynb"
+    },
+    {
+      "id": "16_05n5vihzW3BtmPfbh6M2cdMviyvOT9",
+      "title": "README_ONE_FIGURE_COLABS_STATUS.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 776,
+      "url": "https://drive.google.com/file/d/16_05n5vihzW3BtmPfbh6M2cdMviyvOT9/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/README_ONE_FIGURE_COLABS_STATUS.txt"
+    },
+    {
+      "id": "1CpfnY8YqPh4h4Nuy59HK2bYV9wC2AVis",
+      "title": "README_FIRST.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 599,
+      "url": "https://drive.google.com/file/d/1CpfnY8YqPh4h4Nuy59HK2bYV9wC2AVis/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/README_FIRST.txt"
+    },
+    {
+      "id": "1MTeDLKg3WBFp36L_5TbyCNhmhaj9I4fX",
+      "title": "CMDO_One_Figure_Colabs_Manifest.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 2702,
+      "url": "https://drive.google.com/file/d/1MTeDLKg3WBFp36L_5TbyCNhmhaj9I4fX/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_One_Figure_Colabs_Manifest.csv"
+    },
+    {
+      "id": "1hPWi_nG_y24auz_vu_5gbyrDP0VIhttu",
+      "title": "CMDO_ED10_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 20112,
+      "url": "https://drive.google.com/file/d/1hPWi_nG_y24auz_vu_5gbyrDP0VIhttu/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED10_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1S4rJHrxa-tsP60btrzKVZrD6aubp98E9",
+      "title": "CMDO_ED9_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19538,
+      "url": "https://drive.google.com/file/d/1S4rJHrxa-tsP60btrzKVZrD6aubp98E9/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED9_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1e8l9fbsdul4DRmpQlgt6gSl2BkKXqoFw",
+      "title": "CMDO_ED8_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19434,
+      "url": "https://drive.google.com/file/d/1e8l9fbsdul4DRmpQlgt6gSl2BkKXqoFw/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED8_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1t7d9Dt_0J1NH9TWGGrbZUdB9yT0Ij_JG",
+      "title": "CMDO_ED7_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19423,
+      "url": "https://drive.google.com/file/d/1t7d9Dt_0J1NH9TWGGrbZUdB9yT0Ij_JG/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED7_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1cipSWDmExjUWcKXCY04js1HZ_htQAJYr",
+      "title": "CMDO_ED6_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19735,
+      "url": "https://drive.google.com/file/d/1cipSWDmExjUWcKXCY04js1HZ_htQAJYr/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED6_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1MZkk9RBmSdCZ12f0kVWdfT7IshK1leEq",
+      "title": "CMDO_ED5_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 20384,
+      "url": "https://drive.google.com/file/d/1MZkk9RBmSdCZ12f0kVWdfT7IshK1leEq/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED5_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1mL-0HtFSE21BnD6jNJqI250fujzlH4it",
+      "title": "CMDO_ED4_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19705,
+      "url": "https://drive.google.com/file/d/1mL-0HtFSE21BnD6jNJqI250fujzlH4it/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED4_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1kpcJmr4OVLx6lpydinabmNLMloFORfzg",
+      "title": "CMDO_ED3_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19470,
+      "url": "https://drive.google.com/file/d/1kpcJmr4OVLx6lpydinabmNLMloFORfzg/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED3_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1hoqV_5EXpR_MJTGawP1m8mzGcC4uEtEo",
+      "title": "CMDO_ED2_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19796,
+      "url": "https://drive.google.com/file/d/1hoqV_5EXpR_MJTGawP1m8mzGcC4uEtEo/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED2_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1eroInILIC5D3EhLWfFWad2Qm2rxkHqE_",
+      "title": "CMDO_ED1_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 20841,
+      "url": "https://drive.google.com/file/d/1eroInILIC5D3EhLWfFWad2Qm2rxkHqE_/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_ED1_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1jQRgF6xpGpEH9-TLSwDU6A4LQsFgsInG",
+      "title": "CMDO_Figure6_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 21158,
+      "url": "https://drive.google.com/file/d/1jQRgF6xpGpEH9-TLSwDU6A4LQsFgsInG/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure6_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1lKMouSQyiveiKp6KmgElBuf3arHWJunu",
+      "title": "CMDO_Figure5_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 21132,
+      "url": "https://drive.google.com/file/d/1lKMouSQyiveiKp6KmgElBuf3arHWJunu/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure5_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1DEU8h3QcoGhAQZM_c7XICU8OPtSK8Ane",
+      "title": "CMDO_Figure4_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 25547,
+      "url": "https://drive.google.com/file/d/1DEU8h3QcoGhAQZM_c7XICU8OPtSK8Ane/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure4_Editable_Colab.ipynb"
+    },
+    {
+      "id": "1tAXjyyFK_niDsqqYeRgYcdvQL1KqV3PJ",
+      "title": "CMDO_Figure3_Editable_Colab.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 25756,
+      "url": "https://drive.google.com/file/d/1tAXjyyFK_niDsqqYeRgYcdvQL1KqV3PJ/view?usp=drivesdk",
+      "path": "09_Figures/00_One_Figure_Colabs_CURRENT/CMDO_Figure3_Editable_Colab.ipynb"
+    },
+    {
+      "id": "10dQ_SO7p0baefgVSt-D1wlhUNqItgTfw",
+      "title": "StageU7_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 4029669,
+      "url": "https://drive.google.com/file/d/10dQ_SO7p0baefgVSt-D1wlhUNqItgTfw/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU7_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "1etwn8FjfbkxkNvgud-A7mCnOXGa2qWbG",
+      "title": "StageU6_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 1411997,
+      "url": "https://drive.google.com/file/d/1etwn8FjfbkxkNvgud-A7mCnOXGa2qWbG/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU6_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "1y0vuAuwgn-dSn-rgTglk5suIo7OJNQYd",
+      "title": "StageU5E_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 6643109,
+      "url": "https://drive.google.com/file/d/1y0vuAuwgn-dSn-rgTglk5suIo7OJNQYd/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU5E_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "1nFjDceHIscK-fftlp0sW-ZZ1r-FebSeg",
+      "title": "StageU5D_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 11299949,
+      "url": "https://drive.google.com/file/d/1nFjDceHIscK-fftlp0sW-ZZ1r-FebSeg/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU5D_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "13-xTSRc8KYKtPAnGSRe1KV7VQLndIug4",
+      "title": "StageU5B_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 1625430,
+      "url": "https://drive.google.com/file/d/13-xTSRc8KYKtPAnGSRe1KV7VQLndIug4/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU5B_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "13nymleFDMgG6MG-h2FZRi4sB441xROc5",
+      "title": "StageU4C_Canonical_Records_v1.1.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 1323868,
+      "url": "https://drive.google.com/file/d/13nymleFDMgG6MG-h2FZRi4sB441xROc5/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU4C_Canonical_Records_v1.1.zip"
+    },
+    {
+      "id": "16EkM5b7kXHz_Jposc7vHgHPCbqwuKBvy",
+      "title": "StageU5F_Canonical_Records_v1.0.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 17118,
+      "url": "https://drive.google.com/file/d/16EkM5b7kXHz_Jposc7vHgHPCbqwuKBvy/view?usp=drivesdk",
+      "path": "09_Figures/Canonical_Records_All_Figures/StageU5F_Canonical_Records_v1.0.zip"
+    },
+    {
+      "id": "1oLNCxAGUYRs-cSOm1AdJU0Tfk5BLi6gn",
+      "title": "Figure5_Certified_Weight_Trajectories_Draft.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 85941,
+      "url": "https://drive.google.com/file/d/1oLNCxAGUYRs-cSOm1AdJU0Tfk5BLi6gn/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/Figure5_Certified_Weight_Trajectories_Draft.png"
+    },
+    {
+      "id": "1qLFonn4gS9WJhhikeOCpc3l9dCVs4V-8",
+      "title": "Figure4_Efficiency_Tail_Safety_Frontier_Draft.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 60378,
+      "url": "https://drive.google.com/file/d/1qLFonn4gS9WJhhikeOCpc3l9dCVs4V-8/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/Figure4_Efficiency_Tail_Safety_Frontier_Draft.png"
+    },
+    {
+      "id": "1cGAlcjwT3rZYYxIZmd_zqlezyxoID4xb",
+      "title": "Figure3_Sentinel_Bias_Sensing_Draft.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 84996,
+      "url": "https://drive.google.com/file/d/1cGAlcjwT3rZYYxIZmd_zqlezyxoID4xb/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/Figure3_Sentinel_Bias_Sensing_Draft.png"
+    },
+    {
+      "id": "1d4Yr9M3MMKqAS6PKsrXR39jbkl3SDtSx",
+      "title": "Figure2_Prospective_Falsification_Draft.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 95068,
+      "url": "https://drive.google.com/file/d/1d4Yr9M3MMKqAS6PKsrXR39jbkl3SDtSx/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/Figure2_Prospective_Falsification_Draft.png"
+    },
+    {
+      "id": "1k9C8G4G94n18cJL3t48V5ApRireV-47V",
+      "title": "Figure1_Observability_Barrier_Draft.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 73174,
+      "url": "https://drive.google.com/file/d/1k9C8G4G94n18cJL3t48V5ApRireV-47V/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/Figure1_Observability_Barrier_Draft.png"
+    },
+    {
+      "id": "1to8d5klYovPKOU9tzWgLwe9apmqQQP7J",
+      "title": "CMDO_v4_Figure_Source_Map.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 902,
+      "url": "https://drive.google.com/file/d/1to8d5klYovPKOU9tzWgLwe9apmqQQP7J/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_v4_Figure_Source_Map.csv"
+    },
+    {
+      "id": "1WaiLnMkMBgP1xgI8aII3K7qpBgrpPeJTtSbPtzNA6T0",
+      "title": "CMDO Falsification-Guided Discovery Ledger v0.1 — Governance Copy",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 5411,
+      "url": "https://docs.google.com/document/d/1WaiLnMkMBgP1xgI8aII3K7qpBgrpPeJTtSbPtzNA6T0/edit?usp=drivesdk",
+      "path": "12_Governance/02_Discovery_And_Falsification_Ledger/CMDO Falsification-Guided Discovery Ledger v0.1 — Governance Copy"
+    },
+    {
+      "id": "1nVHQOS_9_vX4_qXg4jK_bMmRRU75vFJdQdbw38zTbfc",
+      "title": "CMDO Reorganisation Log 2026-07-24",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 1637,
+      "url": "https://docs.google.com/document/d/1nVHQOS_9_vX4_qXg4jK_bMmRRU75vFJdQdbw38zTbfc/edit?usp=drivesdk",
+      "path": "12_Governance/01_Protocol_Hash_And_Decision_Chain/CMDO Reorganisation Log 2026-07-24"
+    },
+    {
+      "id": "1ZWy0iiOvm7ewPJQYYhyLYID-rZkne4xr5jcYj-ESe3M",
+      "title": "CMDO Result Authority and Claim Boundary Map v0.1 — Governance Copy",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 5002,
+      "url": "https://docs.google.com/document/d/1ZWy0iiOvm7ewPJQYYhyLYID-rZkne4xr5jcYj-ESe3M/edit?usp=drivesdk",
+      "path": "12_Governance/01_Protocol_Hash_And_Decision_Chain/CMDO Result Authority and Claim Boundary Map v0.1 — Governance Copy"
+    },
+    {
+      "id": "1QtKPxOW5CUkEM8gyJAIYTwLIBLYlB4FCMoF1zFUtRl4",
+      "title": "CMDO Current Authoritative Project Map v1.0",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 2921,
+      "url": "https://docs.google.com/document/d/1QtKPxOW5CUkEM8gyJAIYTwLIBLYlB4FCMoF1zFUtRl4/edit?usp=drivesdk",
+      "path": "12_Governance/00_Authoritative_Indexes/CMDO Current Authoritative Project Map v1.0"
+    },
+    {
+      "id": "1nELLXZr6uAA-kd0Sy3_fso9r4UPM7JCa",
+      "title": "DRIVE_CLEANUP_AUDIT_2026-07-31_LOCAL_PASS.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 1639,
+      "url": "https://drive.google.com/file/d/1nELLXZr6uAA-kd0Sy3_fso9r4UPM7JCa/view?usp=drivesdk",
+      "path": "00_Storage_Migration/04_Drive_Cleanup_Audit_2026-07-31/DRIVE_CLEANUP_AUDIT_2026-07-31_LOCAL_PASS.csv"
+    },
+    {
+      "id": "1OpMswRwdMcMcbgCG0Eeo_aYqU6XeRt_5",
+      "title": "PACKAGE_MANIFEST.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 4625,
+      "url": "https://drive.google.com/file/d/1OpMswRwdMcMcbgCG0Eeo_aYqU6XeRt_5/view?usp=drivesdk",
+      "path": "00_Storage_Migration/01_Local_First_Workspace_v1.1/PACKAGE_MANIFEST.json"
+    },
+    {
+      "id": "1O3A6cn35YUdKCc3FJsCRJyZjR70mJ4MW",
+      "title": "README_LOCAL_FIRST_WORKFLOW_2026-07-30.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 768,
+      "url": "https://drive.google.com/file/d/1O3A6cn35YUdKCc3FJsCRJyZjR70mJ4MW/view?usp=drivesdk",
+      "path": "00_Storage_Migration/01_Local_First_Workspace_v1.1/README_LOCAL_FIRST_WORKFLOW_2026-07-30.txt"
+    },
+    {
+      "id": "1PyQyoH9ruBTYUq5ewK51f0OANa9EOn4Y",
+      "title": "CMDO_Local_First_Workspace_v1.1.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 21716,
+      "url": "https://drive.google.com/file/d/1PyQyoH9ruBTYUq5ewK51f0OANa9EOn4Y/view?usp=drivesdk",
+      "path": "00_Storage_Migration/01_Local_First_Workspace_v1.1/CMDO_Local_First_Workspace_v1.1.zip"
+    },
+    {
+      "id": "1nYKUdziQ9JfvqiHmeuvKCiSB-vU_gFQV",
+      "title": "StageU7_General_Performance_Observability_And_Natural_Clinical_Deployment_v1.0.cpython-312.pyc",
+      "type": "file",
+      "mime": "application/x-python-code",
+      "size": 72103,
+      "url": "https://drive.google.com/file/d/1nYKUdziQ9JfvqiHmeuvKCiSB-vU_gFQV/view?usp=drivesdk",
+      "path": "05_Code/StageU7_General_Observability_And_Natural_Clinical_Deployment_v1.0/__pycache__/StageU7_General_Performance_Observability_And_Natural_Clinical_Deployment_v1.0.cpython-312.pyc"
+    },
+    {
+      "id": "1cxzEbQTQpJyTcY3Ka-XCfVVKDtTbnX8P",
+      "title": "CrossModal_StageU3C_AUTHORISED_Prospective_Reserve_v1.0.1_FINAL.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 65683,
+      "url": "https://drive.google.com/file/d/1cxzEbQTQpJyTcY3Ka-XCfVVKDtTbnX8P/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU3_Observability_Universality_Classes_And_Prospective_Reserve/CrossModal_StageU3C_AUTHORISED_Prospective_Reserve_v1.0.1_FINAL.ipynb"
+    },
+    {
+      "id": "1In3g_Aw_ZR_gM_HV82NiHEziQ0_CTUO7",
+      "title": "99_SUPERSEDED_CrossModal_StageU3C_AUTHORISED_PreFinal.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 19934,
+      "url": "https://drive.google.com/file/d/1In3g_Aw_ZR_gM_HV82NiHEziQ0_CTUO7/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU3_Observability_Universality_Classes_And_Prospective_Reserve/99_SUPERSEDED_CrossModal_StageU3C_AUTHORISED_PreFinal.ipynb"
+    },
+    {
+      "id": "1mOeL5NuAG8IqN5SJzCTdoWAk2EqYfIpB",
+      "title": "CrossModal_StageU3A_Observability_Universality_Classes_v0.1_SELF_CONTAINED.ipynb",
+      "type": "file",
+      "mime": "application/x-ipynb+json",
+      "size": 17886,
+      "url": "https://drive.google.com/file/d/1mOeL5NuAG8IqN5SJzCTdoWAk2EqYfIpB/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU3_Observability_Universality_Classes_And_Prospective_Reserve/CrossModal_StageU3A_Observability_Universality_Classes_v0.1_SELF_CONTAINED.ipynb"
+    },
+    {
+      "id": "1Wr8lzdgEw7mytbIy5syEqk-W1mD2BTWD",
+      "title": "StageU2_External_Dataset_And_Reserve_Policy_v0.1.md",
+      "type": "file",
+      "mime": "text/markdown",
+      "size": 1270,
+      "url": "https://drive.google.com/file/d/1Wr8lzdgEw7mytbIy5syEqk-W1mD2BTWD/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU2_Mechanism_Multimetric_LabelEfficiency_External_NonBiomedical_v0.1/StageU2_External_Dataset_And_Reserve_Policy_v0.1.md"
+    },
+    {
+      "id": "1LqAccxNThMysUj7xoSCSclGo1tewEyaH",
+      "title": "StageU2_Prerregistration_v0.1.md",
+      "type": "file",
+      "mime": "text/markdown",
+      "size": 2615,
+      "url": "https://drive.google.com/file/d/1LqAccxNThMysUj7xoSCSclGo1tewEyaH/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU2_Mechanism_Multimetric_LabelEfficiency_External_NonBiomedical_v0.1/StageU2_Prerregistration_v0.1.md"
+    },
+    {
+      "id": "1xcOI52nyRnl7s7qRyiH-j74eEEA30147",
+      "title": "StageU2_Run_All_And_Dataset_Acquisition_Guide_v0.1.md",
+      "type": "file",
+      "mime": "text/markdown",
+      "size": 2148,
+      "url": "https://drive.google.com/file/d/1xcOI52nyRnl7s7qRyiH-j74eEEA30147/view?usp=drivesdk",
+      "path": "07_Experiments/Cross_Modal/StageU2_Mechanism_Multimetric_LabelEfficiency_External_NonBiomedical_v0.1/StageU2_Run_All_And_Dataset_Acquisition_Guide_v0.1.md"
+    },
+    {
+      "id": "1-j3fIdPBgO1ax6QwYKpFh2-q5dIDLwMi",
+      "title": "CMDO_All_Figures_Run_Manifest.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 549,
+      "url": "https://drive.google.com/file/d/1-j3fIdPBgO1ax6QwYKpFh2-q5dIDLwMi/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/CMDO_All_Figures_Run_Manifest.json"
+    },
+    {
+      "id": "1Wdx20VMgbWnBlTjvx5JdQ3ky2D4l56-K",
+      "title": "Figure1_Blind_Spot_Outcome_Sensing_And_Validation.pdf",
+      "type": "file",
+      "mime": "application/pdf",
+      "size": 72318,
+      "url": "https://drive.google.com/file/d/1Wdx20VMgbWnBlTjvx5JdQ3ky2D4l56-K/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_Outcome_Sensing_And_Validation.pdf"
+    },
+    {
+      "id": "1wnMDSrUa1t0xK_t9xcxNSlGIlrKY4_ZG",
+      "title": "Figure1_Blind_Spot_Outcome_Sensing_And_Validation.tiff",
+      "type": "file",
+      "mime": "image/tiff",
+      "size": 79526366,
+      "url": "https://drive.google.com/file/d/1wnMDSrUa1t0xK_t9xcxNSlGIlrKY4_ZG/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_Outcome_Sensing_And_Validation.tiff"
+    },
+    {
+      "id": "1BsLGxNa7tpiDzrzJFU-ikWd8-w3wX7PW",
+      "title": "Figure1_Blind_Spot_Outcome_Sensing_And_Validation.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 1048372,
+      "url": "https://drive.google.com/file/d/1BsLGxNa7tpiDzrzJFU-ikWd8-w3wX7PW/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_Outcome_Sensing_And_Validation.png"
+    },
+    {
+      "id": "1-mmsfC9CtR-7l8_rP01g60v0-9CpeIMl",
+      "title": "Figure1_Blind_Spot_And_Falsification.pdf",
+      "type": "file",
+      "mime": "application/pdf",
+      "size": 35101,
+      "url": "https://drive.google.com/file/d/1-mmsfC9CtR-7l8_rP01g60v0-9CpeIMl/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_And_Falsification.pdf"
+    },
+    {
+      "id": "11gNav9-Ar27lbiINST2pfSopWuDjHLtC",
+      "title": "Figure1_Blind_Spot_And_Falsification.tiff",
+      "type": "file",
+      "mime": "image/tiff",
+      "size": 54163510,
+      "url": "https://drive.google.com/file/d/11gNav9-Ar27lbiINST2pfSopWuDjHLtC/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_And_Falsification.tiff"
+    },
+    {
+      "id": "1TRGJMSh3AhXr9Z65ssaIApZXsNCgET80",
+      "title": "Figure1_Blind_Spot_And_Falsification.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 608360,
+      "url": "https://drive.google.com/file/d/1TRGJMSh3AhXr9Z65ssaIApZXsNCgET80/view?usp=drivesdk",
+      "path": "09_Figures/Rendered_One_Figure_At_A_Time/Figure1/Figure1_Blind_Spot_And_Falsification.png"
+    },
+    {
+      "id": "1yEs16P2HiyL4aJixxmGqNhNrbSaMoa_Y",
+      "title": "CMDO_MATLAB_Figure_Source_2026-08-01.zip",
+      "type": "file",
+      "mime": "application/zip",
+      "size": 101561,
+      "url": "https://drive.google.com/file/d/1yEs16P2HiyL4aJixxmGqNhNrbSaMoa_Y/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/CMDO_MATLAB_Figure_Source_2026-08-01.zip"
+    },
+    {
+      "id": "19A2qftGfaB1omXAsFLOaC_7SkkgzJk64",
+      "title": "CMDO_MATLAB_Source_Combined_Archive_2026-08-01.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 188640,
+      "url": "https://drive.google.com/file/d/19A2qftGfaB1omXAsFLOaC_7SkkgzJk64/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/CMDO_MATLAB_Source_Combined_Archive_2026-08-01.txt"
+    },
+    {
+      "id": "1KGyZ197qnZLA4wu99GXsixMO90GgaSVC",
+      "title": "MANIFEST_SHA256.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 1778,
+      "url": "https://drive.google.com/file/d/1KGyZ197qnZLA4wu99GXsixMO90GgaSVC/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/MANIFEST_SHA256.csv"
+    },
+    {
+      "id": "1rbaVvLNfI3vnjduACljY-oA1bffxoyer",
+      "title": "PACKAGING_CHANGES.md",
+      "type": "file",
+      "mime": "text/markdown",
+      "size": 477,
+      "url": "https://drive.google.com/file/d/1rbaVvLNfI3vnjduACljY-oA1bffxoyer/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/PACKAGING_CHANGES.md"
+    },
+    {
+      "id": "1JKUAqtWaXcEjxZg3V9EHCtDhdnueGp9K",
+      "title": "DEPENDENCIES_REQUIRED.txt",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 437,
+      "url": "https://drive.google.com/file/d/1JKUAqtWaXcEjxZg3V9EHCtDhdnueGp9K/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/DEPENDENCIES_REQUIRED.txt"
+    },
+    {
+      "id": "1aCt4AKR4pSW0_9p5WpJi8lqtD1o8oCkg",
+      "title": "README.md",
+      "type": "file",
+      "mime": "text/markdown",
+      "size": 1927,
+      "url": "https://drive.google.com/file/d/1aCt4AKR4pSW0_9p5WpJi8lqtD1o8oCkg/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/README.md"
+    },
+    {
+      "id": "1jex9KZbX9GlW6F5PZAFERh_gB1tWjjkH",
+      "title": "ED6.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 19896,
+      "url": "https://drive.google.com/file/d/1jex9KZbX9GlW6F5PZAFERh_gB1tWjjkH/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED6.m"
+    },
+    {
+      "id": "1sTC3pbMPteasQ6GOa_fIi4RHk4X184LO",
+      "title": "ED5.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 9547,
+      "url": "https://drive.google.com/file/d/1sTC3pbMPteasQ6GOa_fIi4RHk4X184LO/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED5.m"
+    },
+    {
+      "id": "1HHHWLIE5HTWhR4vP_bqmytRRILyu-DxQ",
+      "title": "ED4.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 20461,
+      "url": "https://drive.google.com/file/d/1HHHWLIE5HTWhR4vP_bqmytRRILyu-DxQ/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED4.m"
+    },
+    {
+      "id": "19syIrfB92scvzmYDFAA36EJwko6WhW4P",
+      "title": "ED3.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 24633,
+      "url": "https://drive.google.com/file/d/19syIrfB92scvzmYDFAA36EJwko6WhW4P/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED3.m"
+    },
+    {
+      "id": "1osCc1_fHy2SaqJ7YfZ7rKoLO01DJvcb_",
+      "title": "ED2.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 10057,
+      "url": "https://drive.google.com/file/d/1osCc1_fHy2SaqJ7YfZ7rKoLO01DJvcb_/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED2.m"
+    },
+    {
+      "id": "14Ua_P4pLMCycTrdNxNNkbx_AY2c1YeHh",
+      "title": "ED1.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 11388,
+      "url": "https://drive.google.com/file/d/14Ua_P4pLMCycTrdNxNNkbx_AY2c1YeHh/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/ED1.m"
+    },
+    {
+      "id": "1xVMvcTgVn0o0oXWdGtLt2eALWC9CE7Yn",
+      "title": "Figure6.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 18797,
+      "url": "https://drive.google.com/file/d/1xVMvcTgVn0o0oXWdGtLt2eALWC9CE7Yn/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/Figure6.m"
+    },
+    {
+      "id": "1imPF8wxCOHHA4xp_zqFLceP7AhSPYY1h",
+      "title": "Figure5.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 22382,
+      "url": "https://drive.google.com/file/d/1imPF8wxCOHHA4xp_zqFLceP7AhSPYY1h/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/Figure5.m"
+    },
+    {
+      "id": "1qhGJQToS3avFMF--1wDtBaxXZlmL4MN7",
+      "title": "Figure4.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 23115,
+      "url": "https://drive.google.com/file/d/1qhGJQToS3avFMF--1wDtBaxXZlmL4MN7/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/Figure4.m"
+    },
+    {
+      "id": "1j3a6ZwiWbs09A_qo5y3glFvUoH_wTIQj",
+      "title": "Figure3.m",
+      "type": "file",
+      "mime": "text/plain",
+      "size": 28373,
+      "url": "https://drive.google.com/file/d/1j3a6ZwiWbs09A_qo5y3glFvUoH_wTIQj/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/MATLAB_Source_CURRENT/Figure3.m"
+    },
+    {
+      "id": "1wSHVgMZNV9um8W8ODI0FAnhJzR8dEwOk",
+      "title": "CMDO_v3_Main_Figure_Manifest.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 478,
+      "url": "https://drive.google.com/file/d/1wSHVgMZNV9um8W8ODI0FAnhJzR8dEwOk/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/CMDO_v3_Main_Figure_Manifest.csv"
+    },
+    {
+      "id": "1ZC41VHwcLYw0R4MvaDegihSWUwYm1edd",
+      "title": "Figure6_U7_Clinical_And_Multimetric.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 344415,
+      "url": "https://drive.google.com/file/d/1ZC41VHwcLYw0R4MvaDegihSWUwYm1edd/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure6_U7_Clinical_And_Multimetric.png"
+    },
+    {
+      "id": "1x1tCaa2Pv4BIK0d3X97ilWHLU83JPzSM",
+      "title": "Figure5_U6_Independent_Confirmation.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 430016,
+      "url": "https://drive.google.com/file/d/1x1tCaa2Pv4BIK0d3X97ilWHLU83JPzSM/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure5_U6_Independent_Confirmation.png"
+    },
+    {
+      "id": "1p0v9IR4vFZehOrwONSJiw9luTw0S-c2M",
+      "title": "Figure4_Pair_Complete_Observer.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 286430,
+      "url": "https://drive.google.com/file/d/1p0v9IR4vFZehOrwONSJiw9luTw0S-c2M/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure4_Pair_Complete_Observer.png"
+    },
+    {
+      "id": "14aGvNqf2hUZ6rCnPjteg4YyhQEFU8Exs",
+      "title": "Figure3_Failure_Bias_And_Safety_Frontier.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 327763,
+      "url": "https://drive.google.com/file/d/14aGvNqf2hUZ6rCnPjteg4YyhQEFU8Exs/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure3_Failure_Bias_And_Safety_Frontier.png"
+    },
+    {
+      "id": "1HkQMmZ-kLkL2GD_88GbbVP7491JYA5lW",
+      "title": "Figure2_Observability_And_Information_Cost.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 418895,
+      "url": "https://drive.google.com/file/d/1HkQMmZ-kLkL2GD_88GbbVP7491JYA5lW/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure2_Observability_And_Information_Cost.png"
+    },
+    {
+      "id": "1vXQ-eo5VAfKO5cb1ft1qQx6MGEbMPVra",
+      "title": "Figure1_Blind_Spot_And_Falsification.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 342488,
+      "url": "https://drive.google.com/file/d/1vXQ-eo5VAfKO5cb1ft1qQx6MGEbMPVra/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Figure1_Blind_Spot_And_Falsification.png"
+    },
+    {
+      "id": "1c4oDIE_1no1BlkhbqvmNdgtcNFUVuJeI",
+      "title": "CMDO_v4_Consolidated_Drive_Manifest_v1.0.json",
+      "type": "file",
+      "mime": "application/json",
+      "size": 4219,
+      "url": "https://drive.google.com/file/d/1c4oDIE_1no1BlkhbqvmNdgtcNFUVuJeI/view?usp=drivesdk",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/01_Release_Manifests_And_Data_Dictionaries/CMDO_v4_Consolidated_Drive_Manifest_v1.0.json"
+    },
+    {
+      "id": "1Lzijcsr3huGDC5ERr0q6YMUMEw7Ply3D",
+      "title": "CMDO_v4_Master_Index_And_Reproducibility_Workbook_v1.0.xlsx",
+      "type": "file",
+      "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "size": 27017,
+      "url": "https://docs.google.com/spreadsheets/d/1Lzijcsr3huGDC5ERr0q6YMUMEw7Ply3D/edit?usp=drivesdk&ouid=100840932707917424907&rtpof=true&sd=true",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/01_Release_Manifests_And_Data_Dictionaries/CMDO_v4_Master_Index_And_Reproducibility_Workbook_v1.0.xlsx"
+    },
+    {
+      "id": "1cWdBv0HXlsyTuC7LTXaKNJxmqG21N78Bn3ursVx3qlM",
+      "title": "CMDO v4 Master Index and Reproducibility Workbook v1.0",
+      "type": "file",
+      "mime": "application/vnd.google-apps.spreadsheet",
+      "size": 13430,
+      "url": "https://docs.google.com/spreadsheets/d/1cWdBv0HXlsyTuC7LTXaKNJxmqG21N78Bn3ursVx3qlM/edit?usp=drivesdk",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/00_Master_Index/CMDO v4 Master Index and Reproducibility Workbook v1.0"
+    },
+    {
+      "id": "19n1p8csYnNEpyrd36lG1Op80f42eIq3t0GWSf8qpYGQ",
+      "title": "CMDO v4 — Master README and File Map",
+      "type": "file",
+      "mime": "application/vnd.google-apps.document",
+      "size": 5919,
+      "url": "https://docs.google.com/document/d/19n1p8csYnNEpyrd36lG1Op80f42eIq3t0GWSf8qpYGQ/edit?usp=drivesdk",
+      "path": "12_Governance/CMDO_v4_Master_Index_And_Reproducibility/00_Master_Index/CMDO v4 — Master README and File Map"
+    },
+    {
+      "id": "1HEhuSS3rwqp2qAeyH4wwcTUS0FJQz3vg",
+      "title": "CMDO_v3_Extended_Data_Manifest.csv",
+      "type": "file",
+      "mime": "text/csv",
+      "size": 569,
+      "url": "https://drive.google.com/file/d/1HEhuSS3rwqp2qAeyH4wwcTUS0FJQz3vg/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/CMDO_v3_Extended_Data_Manifest.csv"
+    },
+    {
+      "id": "1ZKUinAELnXkHUcXgDpvTPRBMgUoSYjNs",
+      "title": "ExtendedData10_General_Performance_Claim_Boundary.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 151096,
+      "url": "https://drive.google.com/file/d/1ZKUinAELnXkHUcXgDpvTPRBMgUoSYjNs/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData10_General_Performance_Claim_Boundary.png"
+    },
+    {
+      "id": "1heEoGeD1auzhW6nj_MbmbpqXWC3AdAVI",
+      "title": "ExtendedData9_U7_Clinical_Stratum_Budget_Surface.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 168690,
+      "url": "https://drive.google.com/file/d/1heEoGeD1auzhW6nj_MbmbpqXWC3AdAVI/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData9_U7_Clinical_Stratum_Budget_Surface.png"
+    },
+    {
+      "id": "1fm7F1ULAjW7EuURVLZxLpp1voEyz6KnA",
+      "title": "ExtendedData8_U6_Target_Budget_Surface.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 178914,
+      "url": "https://drive.google.com/file/d/1fm7F1ULAjW7EuURVLZxLpp1voEyz6KnA/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData8_U6_Target_Budget_Surface.png"
+    },
+    {
+      "id": "1aQC2-gi9nWvzxxc0PVI22eNGD5c1MmiM",
+      "title": "ExtendedData7_Hardening_And_Freeze.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 78316,
+      "url": "https://drive.google.com/file/d/1aQC2-gi9nWvzxxc0PVI22eNGD5c1MmiM/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData7_Hardening_And_Freeze.png"
+    },
+    {
+      "id": "1bvTlALaU-2ENWT0BwIGKE1Z1BEFYVURB",
+      "title": "ExtendedData6_Efficiency_Tail_Safety_Frontier.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 125889,
+      "url": "https://drive.google.com/file/d/1bvTlALaU-2ENWT0BwIGKE1Z1BEFYVURB/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData6_Efficiency_Tail_Safety_Frontier.png"
+    },
+    {
+      "id": "1BPPYwNrHzzBfYKJne8rUx9WK8myW-9vr",
+      "title": "ExtendedData5_U5B_Transport_Regimes.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 103042,
+      "url": "https://drive.google.com/file/d/1BPPYwNrHzzBfYKJne8rUx9WK8myW-9vr/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData5_U5B_Transport_Regimes.png"
+    },
+    {
+      "id": "1ycDcg_mrWlLxzxAohSbzkWr-pdaMcceV",
+      "title": "ExtendedData4_U4_Prospective_Falsification.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 116817,
+      "url": "https://drive.google.com/file/d/1ycDcg_mrWlLxzxAohSbzkWr-pdaMcceV/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData4_U4_Prospective_Falsification.png"
+    },
+    {
+      "id": "1KeMz4Ns2jAkdhWYGA0gRwIKgBfoBNbcg",
+      "title": "ExtendedData3_Complexity_Does_Not_Replace_Evidence.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 82521,
+      "url": "https://drive.google.com/file/d/1KeMz4Ns2jAkdhWYGA0gRwIKgBfoBNbcg/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData3_Complexity_Does_Not_Replace_Evidence.png"
+    },
+    {
+      "id": "1Gf8sTiFtXlwH1KiU6Pq3KHWxZ7O_AN-x",
+      "title": "ExtendedData2_Development_Versus_Locked_Blind.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 89706,
+      "url": "https://drive.google.com/file/d/1Gf8sTiFtXlwH1KiU6Pq3KHWxZ7O_AN-x/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData2_Development_Versus_Locked_Blind.png"
+    },
+    {
+      "id": "10JkGJKVw85LC7IhC4zcM8I_fVSya2UpU",
+      "title": "ExtendedData1_Falsification_Lineage.png",
+      "type": "file",
+      "mime": "image/png",
+      "size": 132324,
+      "url": "https://drive.google.com/file/d/10JkGJKVw85LC7IhC4zcM8I_fVSya2UpU/view?usp=drivesdk",
+      "path": "09_Figures/00_Current_Figure_Source_Package/CMDO_Nature_Main_Figures_v3.0_REBUILT/Extended_Data_v3.0_REBUILT/ExtendedData1_Falsification_Lineage.png"
+    }
+  ],
+  "complete": true,
+  "calls": 37,
+  "remaining": 0
+}

@@ -1,0 +1,37 @@
+# CMDO replay baseline. Python 3.11 is the primary tested interpreter.
+# Install a CUDA-specific PyTorch wheel first when GPU replay is intended;
+# otherwise these pins install the standard PyPI build.
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+scikit-learn==1.5.2
+matplotlib==3.9.2
+seaborn==0.13.2
+Pillow==11.0.0
+scikit-image==0.24.0
+opencv-python-headless==4.10.0.84
+requests==2.32.3
+beautifulsoup4==4.12.3
+tqdm==4.67.1
+joblib==1.4.2
+openpyxl==3.1.5
+nbformat==5.10.4
+nbclient==0.10.1
+jupyter==1.1.1
+torch==2.6.0
+torchvision==0.21.0
+datasets==3.1.0
+huggingface-hub==0.26.5
+pyarrow==18.1.0
+tensorflow-datasets==4.9.7
+medmnist==3.0.2
+folktables==0.0.12
+ucimlrepo==0.0.7
+isic-cli==12.5.2
+gdown==5.2.0
+kaggle==1.6.17
+kagglehub==0.3.4
+pydicom==3.0.1
+py7zr==0.22.0
+mat73==0.65
+cryptography==44.0.0

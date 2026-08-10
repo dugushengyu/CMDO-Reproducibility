@@ -1,0 +1,38 @@
+# Local machine configuration (contains absolute paths)
+config/local_paths.json
+
+# Raw or canonical data stay on local storage, not in Git
+data/*
+!data/README.md
+data/canonical_records/
+*.xpt
+*.sas7bdat
+*.parquet
+*.feather
+*.zip
+*.csv.gz
+*.mat
+*.tif
+*.tiff
+**/00_RESTRICTED_DO_NOT_SHARE/
+
+# Generated results and caches
+outputs/*
+!outputs/README.md
+dist/
+**/_cache/
+**/cache/
+**/.ready
+*.fig
+
+# Python/MATLAB/editor transient files
+__pycache__/
+*.py[cod]
+*.asv
+*.autosave
+*.m~
+.DS_Store
+Thumbs.db
+
+# Workspace-only migration scratch
+.tmp/

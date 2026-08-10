@@ -1,0 +1,10 @@
+{
+  "stage": "U8",
+  "protocol_version": "v1.0",
+  "decision": "DO_NOT_USE_TEMPLATE_AS_AUTHORIZATION",
+  "preoutcome_seal_sha256": "TO_BE_FILLED_ONLY_AFTER_SEAL_REVIEW",
+  "code_sha256": "TO_BE_FILLED_ONLY_AFTER_SEAL_REVIEW",
+  "authorised_at_singapore": "TO_BE_FILLED_ONLY_AFTER_SEAL_REVIEW",
+  "note": "This template intentionally cannot authorize UNSEAL. A real hash-matched file must be issued after PREPARE review."
+}
+

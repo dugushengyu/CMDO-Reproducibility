@@ -1,0 +1,48 @@
+{
+  "interpretation": "Notebook containers can drift when Colab outputs or metadata are saved. The extracted embedded pipeline is the execution authority when its release-manifest SHA-256 matches.",
+  "records": [
+    {
+      "container_path": "legacy/original_authoritative/t_series/CrossModal_StageT3-X_Transparent_Blind_Failure_Autopsy_And_Observability_Decomposition_v0.1_SELF_CONTAINED.ipynb",
+      "container_status": "DRIVE_CONTAINER_REVISION_DRIFT",
+      "current_container_bytes": 580319,
+      "current_container_sha256": "0f2b1b84e8387c4757764bd63cffd02ca4716ac4702b6c73a7ac6ea1615d7fb0",
+      "execution_authority": "EXTRACTED_PIPELINE",
+      "extracted_pipeline_path": "legacy/extracted_authoritative/t_series/StageT3X_pipeline_v0.1.py",
+      "extracted_pipeline_sha256": "d7cb0547a558b085efd2b1f459454f2fda8cb4229245b8e314ccb4b0702041d2",
+      "pipeline_status": "BYTE_VERIFIED",
+      "release_container_bytes": 27600,
+      "release_container_sha256": "fb48f74bca6c942d3becece988a388303f5b2d48571acedfa0d1c13dc68045ef",
+      "release_pipeline_sha256": "d7cb0547a558b085efd2b1f459454f2fda8cb4229245b8e314ccb4b0702041d2",
+      "stage": "T3-X"
+    },
+    {
+      "container_path": "legacy/original_authoritative/t_series/CrossModal_StageT4-DE_Baseline_Anchored_MultiFunctional_Audit_v0.1_SELF_CONTAINED.ipynb",
+      "container_status": "DRIVE_CONTAINER_REVISION_DRIFT",
+      "current_container_bytes": 25394,
+      "current_container_sha256": "697e1f5371143522199f75da262ac5cc252ba881e5c281d6ef684ca2c638d78f",
+      "execution_authority": "EXTRACTED_PIPELINE",
+      "extracted_pipeline_path": "legacy/extracted_authoritative/t_series/StageT4DE_pipeline_v0.1.py",
+      "extracted_pipeline_sha256": "965670a5fc2f2a8588f9f9a65c24eaeae5e1a4214767ade0c09f151414df065f",
+      "pipeline_status": "BYTE_VERIFIED",
+      "release_container_bytes": null,
+      "release_container_sha256": "331995852fe242868840108a16d6f78da3dc6f57933a8acc5188ee488a7e93bd",
+      "release_pipeline_sha256": "965670a5fc2f2a8588f9f9a65c24eaeae5e1a4214767ade0c09f151414df065f",
+      "stage": "T4-DE"
+    },
+    {
+      "container_path": "legacy/original_authoritative/t_series/CrossModal_StageT4-FG_MethodV3_v0.1.3_CANONICAL_ZIP_LOADER_SELF_CONTAINED.ipynb",
+      "container_status": "DRIVE_CONTAINER_REVISION_DRIFT",
+      "current_container_bytes": 17137,
+      "current_container_sha256": "9d2626a31d4d24a1383ffd21a6139548705ebec174ffca3ad3f73b162081ba1f",
+      "execution_authority": "EXTRACTED_PIPELINE",
+      "extracted_pipeline_path": "legacy/extracted_authoritative/t_series/StageT4FG_pipeline_v0.1.3.py",
+      "extracted_pipeline_sha256": "dfc9b497c2244735563a8ad44d70b49c4d16f1c7b4bc71894d13469fd67c7859",
+      "pipeline_status": "BYTE_VERIFIED",
+      "release_container_bytes": null,
+      "release_container_sha256": "af8771a4fa86e70c16b5ce8a57ff39f71a0f45527e27e8483ffd18f4250dbefc",
+      "release_pipeline_sha256": "dfc9b497c2244735563a8ad44d70b49c4d16f1c7b4bc71894d13469fd67c7859",
+      "stage": "T4-FG"
+    }
+  ],
+  "schema_version": 1
+}

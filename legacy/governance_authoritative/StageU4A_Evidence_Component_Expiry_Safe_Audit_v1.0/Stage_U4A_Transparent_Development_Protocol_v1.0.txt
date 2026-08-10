@@ -1,0 +1,105 @@
+STAGE U4A — EVIDENCE-COMPONENT UNIVERSALITY, EVIDENCE EXPIRY AND SAFE SEQUENTIAL AUDITING
+TRANSPARENT DEVELOPMENT PROTOCOL v1.0
+
+STATUS
+TRANSPARENT REVEALED-RESERVE DEVELOPMENT ONLY.
+
+PARENT RESULT
+Stage U3C final record SHA-256:
+2b6e7efbd1e897bc5c6b0c589a79a6d6392a0ef7fcf4d38fc1222f936e29e9e6
+
+Stage U3C canonical ZIP SHA-256:
+9082c6fcf29f508e27c77af9020533d0e0dde40e7edea464b8c6f973180c4d17
+
+Stage U3C remains a partial/failed prospective result. U4A may not alter, replace, subset, retune or reinterpret it.
+
+OBJECTIVES
+
+1. Test whether a non-negative component-mixture law provides a better transparent account of finite-budget trajectories than the rejected hard exponent classes.
+2. Derive budget-dependent effective exponents.
+3. quantify empirical transport-evidence validity horizons.
+4. develop a reliability-gated, budget-adaptive, no-harm sequential AUC audit.
+5. create a draft U4B prospective protocol without authorising a new blind reserve.
+
+INPUTS
+
+Only the already revealed U3C canonical records:
+- prospective trajectory predictions;
+- target exponents;
+- target true metrics;
+- label-free shift descriptors and frozen transport predictions;
+- AUC direct/fusion replicate witnesses;
+- fixed-fusion label leverage.
+
+No new dataset, target or outcome may be accessed.
+
+THEORY ANALYSIS
+
+For every metric/evidence/target stream fit
+
+E(b)=c0+c1/2(b/8)^(-1/2)+c1(b/8)^(-1),
+
+with non-negative coefficients.
+
+Primary development comparison:
+fit the component model using budgets 8, 16 and 32; predict budgets 64 and 128; compare against:
+- the frozen U3B hard-class exponent;
+- root-n;
+- descriptive free power fits.
+
+METHOD DEVELOPMENT
+
+Outer loop:
+leave one U3C target completely out.
+
+Inner loop:
+using the other five targets, choose the globally defined adaptive-audit parameters by leave-one-target-out validation.
+
+Target outcome isolation:
+the outer held target's true AUC is never used for transport-bias or transport-risk calibration, parameter selection, or support calibration.
+
+Allowed target information:
+- its frozen label-free descriptors;
+- its frozen transport prediction;
+- its direct target witness at the current budget;
+- a bootstrap-valid estimate of direct uncertainty. In U4A, the 200 preregistered U3C replicates are used as a development surrogate for this bootstrap uncertainty.
+
+CANDIDATE ADAPTIVE RULE
+
+1. optional partial correction of global transport optimism;
+2. cross-fitted transport residual scale;
+3. descriptor-support gate;
+4. direct-transport disagreement gate;
+5. variance/risk-based adaptive weight;
+6. no-harm fallback to direct-only;
+7. weight cap and automatic withdrawal as direct uncertainty decreases.
+
+DEVELOPMENT GATES
+
+G1. Parent U3C integrity passes.
+G2. Early-budget component prediction improves over the frozen hard-class law.
+G3. Early-budget component prediction improves over root-n.
+G4. Effective exponent range demonstrates non-constant finite-budget behavior.
+G5. Evidence expiry is observed in at least four of six targets.
+G6. Nested-LOTO adaptive MAE is no worse than direct-only by more than 2%.
+G7. Adaptive audit improves over frozen fixed fusion.
+G8. Adaptive audit improves budget-8 estimation in at least four of six targets.
+G9. Median transport weight is non-increasing with budget.
+G10. No new blind is accessed and Stage 12 remains prohibited.
+
+DECISION POLICY
+
+If all scientific development gates pass:
+authorise preparation of a final U4B preregistration only.
+
+If one or more fail:
+retain all results and continue transparent theory/method refinement. Do not create a final preregistration and do not access another reserve.
+
+Under no outcome may U4A itself authorise U4C execution or Stage 12.
+
+PIPELINE SHA-256
+fede52ad47ebd5ac2296e81256a096b2a197bdec72a28a861da3977b2d697c8a
+
+RUN INSTRUCTION
+Open CrossModal_StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0_SELF_CONTAINED.ipynb in Colab and choose Runtime → Run all.
+

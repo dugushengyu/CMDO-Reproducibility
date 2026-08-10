@@ -1,0 +1,14 @@
+{
+  "base_u5_pipeline_sha256": "5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde",
+  "created_utc": "2026-07-24T12:03:34.358760+00:00",
+  "new_blind_access_authorised": false,
+  "record_type": "U5D_OBSERVER_HARDENING_AUTHORIZATION_V1_0",
+  "scope": "Transparent raw-data reconstruction and same-budget observer hardening on the already revealed U5 targets.",
+  "stage12_authorised": false,
+  "u5_final_record_sha256": "0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721",
+  "u5_or_u5c_result_change_authorised": false,
+  "u5c_final_record_sha256": "cd796c8d3e54cb26fb1fe269bac3b3c528d61bc59770d533361dcf4956f1b4f7",
+  "u5d_pipeline_sha256": "e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce",
+  "u5d_protocol_sha256": "ea448bbdd742591c6cf40fc7ab186948ca86b5cae1d74dcbcdd92e0b148ea53d",
+  "u5d_theory_sha256": "2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc"
+}

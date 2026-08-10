@@ -1,0 +1,10 @@
+{
+  "projectRoot": "F:\\CMDO",
+  "dataRoot": "F:\\CMDO_DATA",
+  "canonicalRecordDir": "F:\\CMDO\\09_Figures\\Canonical_Records_All_Figures",
+  "outputRoot": "F:\\CMDO_OUTPUTS",
+  "cacheRoot": "F:\\CMDO_CACHE",
+  "pythonExecutable": "python",
+  "enableGPU": true,
+  "allowSealedReexecution": false
+}

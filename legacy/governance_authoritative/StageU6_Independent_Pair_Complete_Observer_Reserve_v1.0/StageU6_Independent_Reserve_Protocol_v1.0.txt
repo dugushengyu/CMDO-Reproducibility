@@ -1,0 +1,86 @@
+STAGE U6 — INDEPENDENT PAIR-COMPLETE OBSERVER RESERVE PROTOCOL v1.0
+
+STATUS
+OUTCOME-BLIND ONE-SHOT PROSPECTIVE RESERVE.
+ONLY THE U5F-FROZEN PC_PAIRED_HOEFFDING OBSERVER IS PERMITTED.
+NO TARGET-SPECIFIC TUNING.
+NO CANDIDATE SWITCHING.
+NO RERUN AFTER COMPLETION.
+STAGE 12 PROHIBITED.
+
+PARENT U5F FINAL RECORD
+2267c0a5891cb3ae93777605cceedac1398dcfac3f3c452116014116c1bf7f59
+
+FROZEN OBSERVER SPECIFICATION SHA-256
+cd88e72099be68258baa64fd7ff78137670b33b2deae3abf82a6a5d83dd2720f
+
+TARGET ROSTER
+1-6: DermaMNIST melanoma-versus-rest test environments:
+clean, Gaussian noise 0.08, Gaussian blur 1.0, gamma 1.4,
+JPEG quality 35, downsample-to-14-and-restore.
+
+7-11: CIFAR-10 cat-versus-dog test environments:
+clean, grayscale, Gaussian noise 0.10, Gaussian blur 1.2,
+JPEG quality 30.
+
+12-16: ACS 2024 1-Year Public Coverage:
+source NY; targets TX, FL, IL, PA and OH.
+
+DATASET AND SOFTWARE IDENTITIES
+- medmnist==3.0.2
+- torchvision runtime CIFAR10 official dataset loader
+- folktables==0.0.12
+- ACS survey year 2024, horizon 1-Year, person survey
+
+SOURCE MODELS
+- Image families: StandardScaler + SGDClassifier(log_loss), deterministic.
+- ACS: StandardScaler + SGDClassifier(log_loss), deterministic.
+- Source labels are permitted.
+- Target labels are prohibited until the runtime pre-outcome seal.
+
+TRANSPORT ESTIMATE
+Frozen score-distribution descriptors:
+histogram overlap, mean shift, standard-deviation shift and 0.1/0.5/0.9
+quantile shift.
+support_gate = overlap * exp(-mean_shift).
+transport_risk_proxy = 0.01 * capped shift energy.
+transport_auc = source_auc - [0.40*(1-overlap)+0.20*mean_shift+
+0.10*quantile_shift], clipped to [0.5,0.999].
+
+WITNESS PROTOCOL
+Budgets: 8, 16, 32, 64, 128.
+Replicates: 200.
+Balanced positive/negative sampling without replacement.
+Four complete pair blocks AA, AB, BA and BB.
+Each block is weighted using the sample-disjoint opposite-block paired sensor.
+Paired Hoeffding delta_total=0.10; delta_per_block=0.025.
+Maximum transport weight 0.35.
+Risk coefficient 8.0.
+No variance gate.
+Zero weights exactly reproduce full-direct AUC.
+
+PRIMARY GATES
+- at least 16 targets and 3 families;
+- exact pair-complete identity residual <1e-12;
+- mean simultaneous coverage >=0.90;
+- minimum target-budget coverage >=0.85;
+- minimum block no-harm rate >=0.999;
+- worst target-budget regret <=0.005;
+- worst family regret <=0.005;
+- pooled MAE no worse than full direct;
+- at least 9/16 targets improve and mean weight >0;
+- target-level bias-observability Spearman >=0.75.
+
+EXECUTION IDENTITY
+Pipeline SHA-256:
+38a7d16fe9238de1c2f59e9c9f72dc75795d2daf83d96514b244d099e7cc0098
+
+Theory SHA-256:
+4b1b686deddc1fdb5362496d1875d59051e7736c03e00d2597b1b227c5877d0f
+
+Target labels may be accessed only after the runtime pre-outcome seal is written
+and its SHA-256 printed.
+
+Stage 12 authorised:
+FALSE.
+

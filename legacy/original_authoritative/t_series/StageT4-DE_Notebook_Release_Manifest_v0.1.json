@@ -1,0 +1,10 @@
+{
+  "stage": "StageT4-DE",
+  "notebook_name": "CrossModal_StageT4-DE_Baseline_Anchored_MultiFunctional_Audit_v0.1_SELF_CONTAINED.ipynb",
+  "notebook_sha256": "331995852fe242868840108a16d6f78da3dc6f57933a8acc5188ee488a7e93bd",
+  "embedded_pipeline_sha256": "965670a5fc2f2a8588f9f9a65c24eaeae5e1a4214767ade0c09f151414df065f",
+  "parent_t4abc_final_record_sha256": "f35d2f06a05f732d2b46922cdd200117cd02339ae349c9b54b9f1fddd5d5a58c",
+  "transparent_development_only": true,
+  "new_blind_access_authorised": false,
+  "stage12_authorised": false
+}

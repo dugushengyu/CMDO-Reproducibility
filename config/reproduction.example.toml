@@ -1,0 +1,10 @@
+[run]
+# Optional. If blank, each run creates an isolated project-shaped work tree.
+project_root = ""
+
+[datasets]
+# Only manual/account-gated sources belong here. Do not commit a filled copy.
+IDRID = ""
+DEEPDRID = ""
+EYEPACS = ""
+PH2 = ""

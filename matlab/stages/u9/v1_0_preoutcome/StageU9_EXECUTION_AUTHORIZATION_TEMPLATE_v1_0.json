@@ -1,0 +1,12 @@
+{
+  "stage": "U9",
+  "protocol_version": "v1.0",
+  "decision": "DO_NOT_USE_TEMPLATE_AS_AUTHORIZATION",
+  "preoutcome_seal_sha256": "REVIEWER_MUST_COPY_FROM_VERIFIED_SEAL",
+  "code_sha256": "REVIEWER_MUST_COPY_FROM_VERIFIED_SEAL",
+  "reserve_outcome_vault_sha256": "REVIEWER_MUST_COPY_FROM_VERIFIED_SEAL",
+  "issued_by": "INDEPENDENT_REVIEWER_REQUIRED",
+  "issued_at_singapore": "PENDING",
+  "review_note": "This template is non-authorizing. UNSEAL accepts only the exact decision AUTHORIZE_ONE_TIME_RESERVE_OUTCOME_ACCESS with matching hashes."
+}
+

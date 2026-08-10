@@ -1,0 +1,39 @@
+{
+  "authorisation_sha256": "b5341f2d6a5d4399145691467e5d84ed260273b5d892fb00224ef5eca05393b7",
+  "base_u5_pipeline_sha256": "5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde",
+  "created_utc": "2026-07-24T12:03:34.453245+00:00",
+  "files": {
+    "CMDO_v4.2_Confidence_Bounded_Observer_Hardening.html": {
+      "sha256": "2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc",
+      "size_bytes": 4247
+    },
+    "CrossModal_StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.ipynb": {
+      "sha256": "874c03df7a68afa7c9dc0a2b1d645c62c2c1f649bcf7a274e939083184fd0be6",
+      "size_bytes": 43122
+    },
+    "StageU5B_AUTHORISED_Sentinel_Observability_Prospective_Reserve_v1.0.2.py": {
+      "sha256": "5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde",
+      "size_bytes": 65920
+    },
+    "StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.py": {
+      "sha256": "e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce",
+      "size_bytes": 27956
+    },
+    "StageU5D_Observer_Hardening_Protocol_v1.0.txt": {
+      "sha256": "ea448bbdd742591c6cf40fc7ab186948ca86b5cae1d74dcbcdd92e0b148ea53d",
+      "size_bytes": 1600
+    },
+    "U5D_OBSERVER_HARDENING_AUTHORIZATION_v1.0.json": {
+      "sha256": "b5341f2d6a5d4399145691467e5d84ed260273b5d892fb00224ef5eca05393b7",
+      "size_bytes": 923
+    }
+  },
+  "new_blind_accessed": false,
+  "pipeline_sha256": "e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce",
+  "protocol_sha256": "ea448bbdd742591c6cf40fc7ab186948ca86b5cae1d74dcbcdd92e0b148ea53d",
+  "release": "CMDO U5D confidence-bounded observer hardening v1.0",
+  "stage12_authorised": false,
+  "theory_sha256": "2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc",
+  "u5_final_record_sha256": "0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721",
+  "u5c_final_record_sha256": "cd796c8d3e54cb26fb1fe269bac3b3c528d61bc59770d533361dcf4956f1b4f7"
+}

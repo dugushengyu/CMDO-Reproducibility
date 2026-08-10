@@ -1,0 +1,14 @@
+{
+  "candidate_switching_authorised": false,
+  "created_utc": "2026-07-24T14:08:06.813236+00:00",
+  "frozen_observer_id": "PC_PAIRED_HOEFFDING",
+  "frozen_observer_specification_sha256": "cd88e72099be68258baa64fd7ff78137670b33b2deae3abf82a6a5d83dd2720f",
+  "parent_u5f_final_record_sha256": "2267c0a5891cb3ae93777605cceedac1398dcfac3f3c452116014116c1bf7f59",
+  "record_type": "U6_INDEPENDENT_RESERVE_AUTHORIZATION_V1_0",
+  "rerun_after_completion_authorised": false,
+  "stage12_authorised": false,
+  "target_label_access_authorised_only_after_preoutcome_seal": true,
+  "u6_pipeline_sha256": "38a7d16fe9238de1c2f59e9c9f72dc75795d2daf83d96514b244d099e7cc0098",
+  "u6_protocol_sha256": "fc65b08ad9c10cc3ce138c620ee8acf13fb03ff255baf2deb1d9710c81dc810b",
+  "u6_theory_sha256": "4b1b686deddc1fdb5362496d1875d59051e7736c03e00d2597b1b227c5877d0f"
+}

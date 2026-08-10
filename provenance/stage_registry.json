@@ -1,0 +1,131 @@
+{
+  "generated": "2026-08-10",
+  "stages": [
+    {
+      "stage": "U0-U1",
+      "authority": "Universal Observability Law discovery notebook v0.1",
+      "runtime": "Python notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Do not treat as MATLAB-equivalent yet"
+    },
+    {
+      "stage": "U2",
+      "authority": "StageU2 v0.1.7.2 notebook + v0.1 pipeline",
+      "runtime": "Python/notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Use original only for golden fixtures"
+    },
+    {
+      "stage": "U3A",
+      "authority": "Universality Classes v0.1 notebook",
+      "runtime": "Python notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Use original only for golden fixtures"
+    },
+    {
+      "stage": "U3C",
+      "authority": "Authorised Prospective Reserve v1.0.1 FINAL",
+      "runtime": "Python notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Consume canonical outputs; no automatic rerun"
+    },
+    {
+      "stage": "U4A",
+      "authority": "Evidence Component Expiry Safe Audit v1.0",
+      "runtime": "Python/notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Use original only for golden fixtures"
+    },
+    {
+      "stage": "U4C",
+      "authority": "Prospective audit v1.0 + QMNIST v1.1.1 + final corrections v1.1.2",
+      "runtime": "Python",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Consume StageU4C canonical v1.1 records"
+    },
+    {
+      "stage": "U5B",
+      "authority": "Sentinel observability reserve v1.0.2",
+      "runtime": "Python",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Consume canonical outputs; no automatic rerun"
+    },
+    {
+      "stage": "U5D",
+      "authority": "Observer hardening v1.0.1",
+      "runtime": "Python",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Consume canonical outputs for figures"
+    },
+    {
+      "stage": "U5E",
+      "authority": "Pair-complete cross-fitted observer v1.0",
+      "runtime": "Python",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_PENDING_GOLDEN_TEST",
+      "sealed": false,
+      "default_action": "Consume canonical outputs for figures"
+    },
+    {
+      "stage": "U5F",
+      "authority": "Final observer freeze and U6 preregistration v1.0",
+      "runtime": "Python",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Preserve frozen observer specification"
+    },
+    {
+      "stage": "U6",
+      "authority": "Independent pair-complete observer reserve v1.0",
+      "runtime": "Python/notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Consume canonical outputs; no automatic rerun"
+    },
+    {
+      "stage": "U7",
+      "authority": "General performance observability and clinical deployment v1.0/v1.0.1",
+      "runtime": "Python/notebook",
+      "repository_status": "IMPORTED_LEGACY",
+      "matlab_status": "PORT_REQUIRES_SEAL_AWARE_REGRESSION",
+      "sealed": true,
+      "default_action": "Consume canonical outputs; no automatic rerun"
+    },
+    {
+      "stage": "U8",
+      "authority": "NHANES complete post-unseal package v1.1.0",
+      "runtime": "MATLAB",
+      "repository_status": "MATLAB_NATIVE",
+      "matlab_status": "NATIVE_AUTHORIZED_RERUN_PACKAGE",
+      "sealed": true,
+      "default_action": "Explicit confirmation required"
+    },
+    {
+      "stage": "U9",
+      "authority": "eICU multicentre decision observability v1.0",
+      "runtime": "MATLAB",
+      "repository_status": "MATLAB_NATIVE",
+      "matlab_status": "NATIVE_PREOUTCOME_WORKFLOW",
+      "sealed": true,
+      "default_action": "Self-test safe; ADAPT/PREPARE/UNSEAL remain ordered stage-local actions"
+    }
+  ]
+}

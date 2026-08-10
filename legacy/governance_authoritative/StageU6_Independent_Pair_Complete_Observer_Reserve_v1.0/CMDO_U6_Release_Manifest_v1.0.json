@@ -1,0 +1,40 @@
+{
+  "authorization_sha256": "46ea98b060fcac734e88ae4cda07be18f1075602ffcc24ad52dbe778f0c87d41",
+  "candidate_switching_authorised": false,
+  "created_utc": "2026-07-24T14:08:06.822395+00:00",
+  "family_count": 3,
+  "files": {
+    "CMDO_v4.5_Independent_Observer_Confirmation.html": {
+      "sha256": "4b1b686deddc1fdb5362496d1875d59051e7736c03e00d2597b1b227c5877d0f",
+      "size_bytes": 1980
+    },
+    "CrossModal_StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.ipynb": {
+      "sha256": "480fe9d9d222f275b5f3766f9f545019216d3fddd5f5988ae0269bd88ce6fdcd",
+      "size_bytes": 29102
+    },
+    "StageU5F_Frozen_Observer_Specification_v1.0.json": {
+      "sha256": "cd88e72099be68258baa64fd7ff78137670b33b2deae3abf82a6a5d83dd2720f",
+      "size_bytes": 1915
+    },
+    "StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.py": {
+      "sha256": "38a7d16fe9238de1c2f59e9c9f72dc75795d2daf83d96514b244d099e7cc0098",
+      "size_bytes": 52560
+    },
+    "StageU6_Independent_Reserve_Protocol_v1.0.txt": {
+      "sha256": "fc65b08ad9c10cc3ce138c620ee8acf13fb03ff255baf2deb1d9710c81dc810b",
+      "size_bytes": 2817
+    },
+    "U6_INDEPENDENT_RESERVE_AUTHORIZATION_v1.0.json": {
+      "sha256": "46ea98b060fcac734e88ae4cda07be18f1075602ffcc24ad52dbe778f0c87d41",
+      "size_bytes": 841
+    }
+  },
+  "frozen_observer_specification_sha256": "cd88e72099be68258baa64fd7ff78137670b33b2deae3abf82a6a5d83dd2720f",
+  "parent_u5f_final_record_sha256": "2267c0a5891cb3ae93777605cceedac1398dcfac3f3c452116014116c1bf7f59",
+  "pipeline_sha256": "38a7d16fe9238de1c2f59e9c9f72dc75795d2daf83d96514b244d099e7cc0098",
+  "protocol_sha256": "fc65b08ad9c10cc3ce138c620ee8acf13fb03ff255baf2deb1d9710c81dc810b",
+  "release": "CMDO Stage U6 independent pair-complete observer reserve v1.0",
+  "stage12_authorised": false,
+  "target_count": 16,
+  "theory_sha256": "4b1b686deddc1fdb5362496d1875d59051e7736c03e00d2597b1b227c5877d0f"
+}

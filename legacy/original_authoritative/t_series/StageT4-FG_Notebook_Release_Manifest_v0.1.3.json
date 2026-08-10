@@ -1,0 +1,11 @@
+{
+  "release": "StageT4-FG Method v3 v0.1.3 canonical-ZIP loader fix",
+  "notebook": "CrossModal_StageT4-FG_MethodV3_v0.1.3_CANONICAL_ZIP_LOADER_SELF_CONTAINED.ipynb",
+  "notebook_sha256": "af8771a4fa86e70c16b5ce8a57ff39f71a0f45527e27e8483ffd18f4250dbefc",
+  "pipeline_sha256": "dfc9b497c2244735563a8ad44d70b49c4d16f1c7b4bc71894d13469fd67c7859",
+  "scientific_protocol_changed": false,
+  "loader_change": "Resolve StageT2-N and StageT4-DE frozen parents from exact-name, exact-SHA256 canonical ZIP members when ordinary files are absent.",
+  "dry_run_decision": "SEAL_T4FG_METHOD_V3_DYNAMIC_DIRECT_TRANSPORT_FUSION_AUTHORISE_NEW_RESERVE_DESIGN_ONLY",
+  "new_blind_accessed": false,
+  "stage12_authorised": false
+}

@@ -1,0 +1,7 @@
+CMDO U8 PREPARE COMPLETE
+Reserve outcomes remain unopened.
+Pre-outcome seal: F:\CMDO_U8_NHANES_PreOutcome_MATLAB_v1_0_1\u8_package\CMDO_U8_NHANES_Workdir_v1_0\01_PreOutcome_Seal\StageU8_PreOutcome_Seal_v1_0.json
+Pre-outcome seal SHA-256: 5b6cab9bddd614b610a3acf5e69af0e1c304f14c4f38c55b62808be3835579cf
+Code SHA-256: f963ff0b3d1ec692cc18c1954cee6b748c2b527a83a30b17aa20b9aef49898b2
+Target-score SHA-256: 7a67146ee0b8cc48c925636cad162d7835c293e7ce1bab0b0a8ed868287dce12
+DO NOT RUN UNSEAL before a matching authorization file is issued.

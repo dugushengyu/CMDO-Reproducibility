@@ -1,0 +1,31 @@
+{
+  "files": {
+    "CMDO_Evidence_Component_Universality_and_Safe_Sequential_Auditing_Theory_v2.0.txt": {
+      "sha256": "293bc4430886216f1360e020c820e3ff9b74228d394044e8406007db1a3216a7",
+      "size_bytes": 8589
+    },
+    "CMDO_Manuscript_Rebuild_Strategy_v0.5.txt": {
+      "sha256": "14d0d9067b884ee6662e91e0d36587cb782a4335d7143af22f86e3fe97711c6d",
+      "size_bytes": 3918
+    },
+    "CrossModal_StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0_SELF_CONTAINED.ipynb": {
+      "sha256": "57425671af59488ed7787d73cfe014d0627dc08d0418a2e388cfd35c617e52c3",
+      "size_bytes": 70552
+    },
+    "StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0.py": {
+      "sha256": "fede52ad47ebd5ac2296e81256a096b2a197bdec72a28a861da3977b2d697c8a",
+      "size_bytes": 51395
+    },
+    "Stage_U4A_Transparent_Development_Protocol_v1.0.txt": {
+      "sha256": "2c62abbbd318c21f7bbafc6e2f3324d4253efc86130813c496922e084f9731b3",
+      "size_bytes": 3916
+    }
+  },
+  "new_blind_authorised": false,
+  "parent_u3c_canonical_zip_sha256": "9082c6fcf29f508e27c77af9020533d0e0dde40e7edea464b8c6f973180c4d17",
+  "parent_u3c_final_record_sha256": "2b6e7efbd1e897bc5c6b0c589a79a6d6392a0ef7fcf4d38fc1222f936e29e9e6",
+  "pipeline_sha256": "fede52ad47ebd5ac2296e81256a096b2a197bdec72a28a861da3977b2d697c8a",
+  "release": "CMDO Stage U4A preparation release v1.0",
+  "stage12_authorised": false,
+  "status": "READY_FOR_USER_RUN_ALL"
+}

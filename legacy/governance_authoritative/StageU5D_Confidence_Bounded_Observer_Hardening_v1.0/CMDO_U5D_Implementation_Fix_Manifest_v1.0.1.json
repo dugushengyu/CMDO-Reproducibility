@@ -1,0 +1,45 @@
+{
+  "authorization_sha256": "27f6038dfcaccd9d060d4f59bed9a0449c8d75d53733c1d53941248e92e8bf79",
+  "corrected_pipeline_sha256": "66a8361359f676eba93d02fd3633bd948caacdb9bd0a12472f8cf92c6f097657",
+  "created_utc": "2026-07-24T12:55:25.092726+00:00",
+  "files": {
+    "CMDO_v4.2_Confidence_Bounded_Observer_Hardening.html": {
+      "sha256": "2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc",
+      "size_bytes": 4247
+    },
+    "CrossModal_StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.1.ipynb": {
+      "sha256": "c8be0a9365f01da6f6713a62902efa725c3725e6c352c9433ff20a011d15c005",
+      "size_bytes": 45283
+    },
+    "StageU5B_AUTHORISED_Sentinel_Observability_Prospective_Reserve_v1.0.2.py": {
+      "sha256": "5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde",
+      "size_bytes": 65920
+    },
+    "StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.1.py": {
+      "sha256": "66a8361359f676eba93d02fd3633bd948caacdb9bd0a12472f8cf92c6f097657",
+      "size_bytes": 28160
+    },
+    "StageU5D_Observer_Hardening_Protocol_v1.0.txt": {
+      "sha256": "ea448bbdd742591c6cf40fc7ab186948ca86b5cae1d74dcbcdd92e0b148ea53d",
+      "size_bytes": 1600
+    },
+    "StageU5D_Transparent_Implementation_Amendment_v1.0.1.txt": {
+      "sha256": "27354efc3663d0e7909e6efd8ef4157e0d0003d3bcd80bd9703c4ccc2b0e9000",
+      "size_bytes": 1080
+    },
+    "StageU5D_v1.0.1_Regression_Test.json": {
+      "sha256": "5e4407f14c08dbc33e13352257f30566e06f20f95a6ee77a3a3e961384c53af9",
+      "size_bytes": 103
+    },
+    "U5D_OBSERVER_HARDENING_IMPLEMENTATION_AMENDMENT_AUTHORIZATION_v1.0.1.json": {
+      "sha256": "27f6038dfcaccd9d060d4f59bed9a0449c8d75d53733c1d53941248e92e8bf79",
+      "size_bytes": 848
+    }
+  },
+  "implementation_amendment_sha256": "27354efc3663d0e7909e6efd8ef4157e0d0003d3bcd80bd9703c4ccc2b0e9000",
+  "new_blind_accessed": false,
+  "release": "CMDO U5D transparent implementation correction v1.0.1",
+  "scientific_method_or_gate_changed": false,
+  "stage12_authorised": false,
+  "superseded_pipeline_sha256": "e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce"
+}

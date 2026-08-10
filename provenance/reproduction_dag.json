@@ -1,0 +1,770 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "audit": {
+      "description": "License-free source, seal, manifest and adapter integrity checks",
+      "claim_scope": "engineering integrity only"
+    },
+    "smoke": {
+      "description": "Minutes-scale public download, preprocessing, training, evaluation and figure smoke test",
+      "claim_scope": "engineering smoke test; not a manuscript result"
+    },
+    "frozen": {
+      "description": "Fast reviewer route from byte-verified canonical records to publication figures",
+      "claim_scope": "verifies and renders frozen records; does not retrain models"
+    },
+    "full-claim": {
+      "description": "Disclosed retrospective reconstruction of the accepted raw-data-to-U8 claim path",
+      "claim_scope": "retrospective replay; never a new prospective validation"
+    },
+    "historical-replay": {
+      "description": "Full claim path plus superseded and failed discovery-history branches",
+      "claim_scope": "historical audit only"
+    }
+  },
+  "stages": [
+    {
+      "id": "audit_repository",
+      "title": "Verify imported sources, sealed MATLAB packages and repository structure",
+      "kind": "internal",
+      "profiles": ["audit", "smoke", "frozen", "full-claim", "historical-replay"],
+      "depends_on": [],
+      "action": "repository_integrity",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "under 1 minute"
+    },
+    {
+      "id": "audit_extracted_sources",
+      "title": "Re-extract and byte-check embedded authoritative pipelines",
+      "kind": "internal",
+      "profiles": ["audit", "smoke", "frozen", "full-claim", "historical-replay"],
+      "depends_on": ["audit_repository"],
+      "action": "extracted_source_integrity",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "under 1 minute"
+    },
+    {
+      "id": "audit_provenance",
+      "title": "Verify generated provenance and frozen-asset manifests",
+      "kind": "internal",
+      "profiles": ["audit", "smoke", "frozen", "full-claim", "historical-replay"],
+      "depends_on": ["audit_extracted_sources"],
+      "action": "provenance_integrity",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "under 1 minute"
+    },
+    {
+      "id": "audit_adapters",
+      "title": "Build non-destructive local adapters and compile every selected source",
+      "kind": "internal",
+      "profiles": ["audit", "smoke", "frozen", "full-claim", "historical-replay"],
+      "depends_on": ["audit_provenance"],
+      "action": "adapted_source_static_check",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "1-3 minutes"
+    },
+    {
+      "id": "smoke_public_loop",
+      "title": "UCI-296 sample download, preprocess, train, AUC evaluation and ROC figure",
+      "kind": "internal",
+      "profiles": ["smoke"],
+      "depends_on": ["audit_adapters"],
+      "action": "smoke_loop",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "2-8 minutes"
+    },
+    {
+      "id": "frozen_verify",
+      "title": "Byte-verify all seven figure canonical archives",
+      "kind": "internal",
+      "profiles": ["frozen"],
+      "depends_on": ["audit_adapters"],
+      "action": "canonical_integrity",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "under 2 minutes"
+    },
+    {
+      "id": "frozen_figures",
+      "title": "Render all main and extended publication figures from frozen records",
+      "kind": "internal",
+      "profiles": ["frozen"],
+      "depends_on": ["frozen_verify"],
+      "action": "frozen_figures",
+      "governance": "transparent",
+      "runtime": "MATLAB",
+      "estimated": "5-20 minutes"
+    },
+    {
+      "id": "full_preflight",
+      "title": "Resolve license gates, manual assets, runtimes and retrospective replay boundary",
+      "kind": "internal",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["audit_adapters"],
+      "action": "full_preflight",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "under 2 minutes"
+    },
+    {
+      "id": "s08_edge_library",
+      "title": "Stage 8 public cross-modality acquisition, preprocessing, frozen embeddings and edge library",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["full_preflight"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_And_Protocol_Seal_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours; network and GPU dependent"
+    },
+    {
+      "id": "s08b_nlm_repair",
+      "title": "Stage 8B official NLM chest-radiography route completion",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s08_edge_library"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage8B_NLM_Chest_Radiography_Access_Completion_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "1-4 hours"
+    },
+    {
+      "id": "s09_specification",
+      "title": "Stage 9 hierarchical DDO2 specification freeze replay",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s08b_nlm_repair"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "s10_role_registry",
+      "title": "Stage 10 preassigned development and locked-blind role registry replay",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s09_specification"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage10_Preassigned_Development_And_Locked_Blind_Registry_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "s11_acquisition",
+      "title": "Stage 11 development extension acquisition and source-recoverability gates",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s10_role_registry"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11_Development_Extension_Acquisition_And_Source_Recoverability_Gates_v0.2.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11a_hold_audit",
+      "title": "Stage 11A typed hold and unavailable-cause audit",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11_acquisition"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11A_Hold_And_Unavailable_Cause_Audit_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "s11b_reacquisition",
+      "title": "Stage 11B protocol-conformant reacquisition and patient-grouping repair",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11a_hold_audit"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11B_Protocol_Conformant_Reacquisition_And_Patient_Grouping_Repair_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11_amendment",
+      "title": "Protocol Amendment A1 official-route recovery replay",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11b_reacquisition"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "s11c_route_recovery",
+      "title": "Stage 11C original-first route recovery and outcome-free reserve screening",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11_amendment"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11C_Amended_Original_First_Official_Route_Recovery_And_Outcome_Free_Reserve_Screening_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11cr_receipt",
+      "title": "Stage 11C-R manual official-receipt validation",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11c_route_recovery"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11C-R_Manual_Official_Receipt_Validation_And_Typed_Hold_Readjudication_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes to hours"
+    },
+    {
+      "id": "s11cr2_recursive",
+      "title": "Stage 11C-R2 recursive payload and provider-evidence readjudication",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11cr_receipt"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11C-R2_Recursive_Payload_And_Provider_Evidence_Readjudication_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes to hours"
+    },
+    {
+      "id": "s11dr_dedup",
+      "title": "Stage 11D-R cross-roster deduplication and grouped split freeze",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11cr2_recursive"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11D-R_Cross_Roster_Dedup_Exact_Manifest_And_Grouped_Split_Freeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11er_axes",
+      "title": "Stage 11E-R development source-recoverability models and axis freeze",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11dr_dedup"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11fr_edges",
+      "title": "Stage 11F-R development directed-edge assembly",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11er_axes"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11F-R_Development_Only_Directed_Edge_Assembly_And_Fit_Readiness_v0.2.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "s11gr_viability",
+      "title": "Stage 11G-R development-only DDO2 viability kill test",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11fr_edges"],
+      "source": "legacy/original_authoritative/t_series/upstream_history/CrossModal_Stage11G-R_Development_Only_DDO2_Decisive_Viability_Kill_Test_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t1r_kill_test",
+      "title": "T1-R development-only DDET mechanism kill test",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["s11gr_viability"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT1-R_Development_Only_DDET_Mechanism_Kill_Test_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2d_witness",
+      "title": "T2-D active minimal-witness certificate",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t1r_kill_test"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2e_baselines",
+      "title": "T2-E paper-grade baselines, ablations and applicability",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2d_witness"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-E_Development_Only_Paper_Grade_Baselines_Ablations_Applicability_And_Blind_Readiness_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2f_covariate_balance",
+      "title": "T2-F risk-adaptive covariate balance and blind refreeze",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2e_baselines"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-F_Development_Only_RA-CB-AMW-DDET_Risk_Adaptive_Covariate_Balance_And_Blind_Refreeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2g_hierarchy",
+      "title": "T2-G predictive observability hierarchy and budget forecasting",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2f_covariate_balance"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-G_Development_Only_Predictive_Observability_Hierarchy_And_Budget_Forecasting_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2h_deployability",
+      "title": "T2-H single-pilot deployability and sequential forecast freeze",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2g_hierarchy"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-H_Development_Only_Single_Pilot_Deployability_And_Sequential_Forecast_Freeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2i_registry",
+      "title": "T2-I independent-target expansion registry and acquisition",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2h_deployability"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-I_Independent_Target_Expansion_Registry_Acquisition_And_Harmonisation_v0.2.ipynb",
+      "governance": "transparent",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours to days"
+    },
+    {
+      "id": "t2j_route_repair",
+      "title": "T2-J expansion harmonisation, deduplication and public-route repair",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2i_registry"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT2-J_Expansion_Harmonisation_Dedup_And_Public_Route_Repair_v0.1.ipynb",
+      "governance": "transparent",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "t2kr_expansion",
+      "title": "T2-KR HiSBreast schema adapter and CPU continuation",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2j_route_repair"],
+      "source": "legacy/extracted_authoritative/t_series/StageT2KR_CPU_pipeline_v0.4.py",
+      "governance": "transparent",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours to days"
+    },
+    {
+      "id": "t2l_regime_expansion",
+      "title": "T2-L independent target-regime expansion and multi-budget analysis",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2kr_expansion"],
+      "source": "legacy/extracted_authoritative/t_series/StageT2L_pipeline_v0.1.py",
+      "governance": "transparent",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours to days"
+    },
+    {
+      "id": "t2mn_provider_extension",
+      "title": "T2-MN censored model freeze and provider-prospective extension",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2l_regime_expansion"],
+      "source": "legacy/extracted_authoritative/t_series/StageT2MN_pipeline_v0.3.py",
+      "governance": "sealed_replay",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours to days"
+    },
+    {
+      "id": "t3pf_preflight",
+      "title": "T3-PF outcome-free preregistration and asset preflight",
+      "kind": "notebook",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t2mn_provider_extension"],
+      "source": "legacy/original_authoritative/t_series/CrossModal_StageT3-PF_Outcome-Free_Preregistration_And_Asset_Preflight_v1.0.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "t3a_blind_replay",
+      "title": "T3-A locked blind sentinel scenario replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t3pf_preflight"],
+      "source": "legacy/extracted_authoritative/t_series/StageT3A_pipeline_v0.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t3x_failure_autopsy",
+      "title": "T3-X transparent blind-failure autopsy",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t3a_blind_replay"],
+      "source": "legacy/extracted_authoritative/t_series/StageT3X_pipeline_v0.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t4abc_method_v1",
+      "title": "T4-ABC decomposed observability and Method v1 validation",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t3x_failure_autopsy"],
+      "source": "legacy/extracted_authoritative/t_series/StageT4ABC_pipeline_v0.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t4de_audit",
+      "title": "T4-DE baseline-anchored multifunctional audit",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t4abc_method_v1"],
+      "source": "legacy/extracted_authoritative/t_series/StageT4DE_pipeline_v0.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "t4fg_method_v3",
+      "title": "T4-FG accepted Method v3, 21 targets and 51 edges",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t4de_audit"],
+      "source": "legacy/extracted_authoritative/t_series/StageT4FG_pipeline_v0.1.3.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u0u1_observability",
+      "title": "U0-U1 universal observability-law discovery from accepted T records",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["t4fg_method_v3"],
+      "source": "legacy/extracted_authoritative/u0_u1/StageU0U1_pipeline_v0.1.py",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u2_train_replay",
+      "title": "U2 fresh CIFAR training, external environment inference and evidence-scaling replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u0u1_observability"],
+      "source": "legacy/original_authoritative/u2/StageU2_pipeline_v0.1.7.2_CORRECTED_FROZEN_MODEL_DUAL_BACKEND.py",
+      "entrypoint": "continuation_main",
+      "env": {
+        "CMDO_U2_EXTERNAL": "1",
+        "CMDO_U2_TRAIN_EPOCHS": "12"
+      },
+      "governance": "transparent",
+      "runtime": "python-gpu-strongly-recommended",
+      "estimated": "hours to days"
+    },
+    {
+      "id": "u3a_classes",
+      "title": "U3A observability universality classes",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u2_train_replay"],
+      "source": "legacy/extracted_authoritative/u3/StageU3A_pipeline_v0.1.py",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u3c_reserve_replay",
+      "title": "U3C PACS and Amazon prospective-reserve disclosed replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u3a_classes"],
+      "source": "legacy/extracted_authoritative/u3/StageU3C_pipeline_v1.0.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "u4a_expiry_audit",
+      "title": "U4A evidence-component expiry-safe audit",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u3c_reserve_replay"],
+      "source": "legacy/original_authoritative/u4/StageU4A_Evidence_Component_Expiry_Safe_Audit_v1.0.py",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u4c_reserve_replay",
+      "title": "U4C prospective component-expiry safe-audit disclosed replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u4a_expiry_audit"],
+      "source": "legacy/original_authoritative/u4/StageU4C_AUTHORISED_Prospective_Component_Expiry_Safe_Audit_v1.0.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u4c_qmnist_correction",
+      "title": "U4C disclosed QMNIST correction replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u4c_reserve_replay"],
+      "source": "legacy/original_authoritative/u4/StageU4C_CONTINUE_PostSeal_QMNIST_Correction_v1.1.1.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u4c_final_correction",
+      "title": "U4C final disclosed post-seal correction replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u4c_qmnist_correction"],
+      "source": "legacy/original_authoritative/u4/StageU4C_CONTINUE_PostSeal_Corrections_v1.1.2.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u5b_reserve_replay",
+      "title": "U5B sentinel-observability prospective reserve disclosed replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u4c_final_correction"],
+      "source": "legacy/original_authoritative/u5/StageU5B_AUTHORISED_Sentinel_Observability_Prospective_Reserve_v1.0.2.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u5d_hardening",
+      "title": "U5D confidence-bounded observer hardening",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u5b_reserve_replay"],
+      "source": "legacy/original_authoritative/u5/StageU5D_Confidence_Bounded_Observer_Hardening_v1.0.1.py",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "u5e_pair_complete",
+      "title": "U5E pair-complete cross-fitted observer",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u5d_hardening"],
+      "source": "legacy/original_authoritative/u5/StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0.py",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u5f_freeze",
+      "title": "U5F final observer freeze and U6 preregistration replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u5e_pair_complete"],
+      "source": "legacy/original_authoritative/u5/StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0.py",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "u6_reserve_replay",
+      "title": "U6 independent pair-complete observer reserve disclosed replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u5f_freeze"],
+      "source": "legacy/original_authoritative/u6/StageU6_Independent_Pair_Complete_Observer_Reserve_v1.0.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u7_clinical",
+      "title": "U7 general observability and natural clinical deployment replay",
+      "kind": "python",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u6_reserve_replay"],
+      "source": "legacy/original_authoritative/u7/StageU7_General_Performance_Observability_And_Natural_Clinical_Deployment_v1.0.py",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "u8_nhanes_reconstruction",
+      "title": "U8 official NHANES complete disclosed post-unseal reconstruction",
+      "kind": "matlab_package",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u7_clinical"],
+      "package": "matlab/stages/u8/v1_1_canonical",
+      "script": "RUN_COMPLETE_POST_UNSEAL_RERUN.m",
+      "governance": "post_unseal_replay",
+      "runtime": "MATLAB",
+      "estimated": "hours"
+    },
+    {
+      "id": "collect_replay_records",
+      "title": "Collect replay U4C-U7 canonical records into an isolated figure input set",
+      "kind": "internal",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["u8_nhanes_reconstruction"],
+      "action": "collect_replay_records",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "compare_replay",
+      "title": "Compare replay outputs with frozen records using declared deterministic/tolerance rules",
+      "kind": "internal",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["collect_replay_records"],
+      "action": "compare_replay",
+      "governance": "transparent",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "replay_figures",
+      "title": "Render all publication figures from replay canonical records",
+      "kind": "internal",
+      "profiles": ["full-claim", "historical-replay"],
+      "depends_on": ["compare_replay"],
+      "action": "replay_figures",
+      "governance": "transparent",
+      "runtime": "MATLAB",
+      "estimated": "5-20 minutes"
+    },
+    {
+      "id": "history_retinal_online",
+      "title": "Historical retinal online smoke branch",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["full_preflight"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Online_Smoke_Test_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "history_retinal_deepdrid",
+      "title": "Historical DeepDRiD smoke branch",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_online"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_DeepDRiD_Smoke_Test_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_baseline",
+      "title": "Historical retinal frozen-representation baseline",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_deepdrid"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Frozen_Representation_Baseline_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_locality",
+      "title": "Historical retinal locality kill test",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_baseline"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Locality_Kill_Test_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_fine_structure",
+      "title": "Historical retinal fine-structure dissection",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_locality"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Fine_Structure_Dissection_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_external_audit",
+      "title": "Historical retinal external-replication protocol and failure audit",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_fine_structure"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_External_Replication_Failure_Audit_v0.1.ipynb",
+      "governance": "historical_only",
+      "runtime": "python",
+      "estimated": "minutes"
+    },
+    {
+      "id": "history_retinal_stage5b",
+      "title": "Historical retinal Stage 5B blind label-free scoring and prediction freeze",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_external_audit"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Stage5B_Blind_LabelFree_Scoring_And_Prediction_Freeze_v0.1.ipynb",
+      "governance": "sealed_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_stage6",
+      "title": "Historical retinal Stage 6 one-time unsealing disclosed replay",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_stage5b"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Stage6_One_Time_Unsealing_And_External_Validation_v0.1_R1.ipynb",
+      "governance": "post_unseal_replay",
+      "runtime": "python",
+      "estimated": "hours"
+    },
+    {
+      "id": "history_retinal_stage7",
+      "title": "Historical retinal Stage 7 four-domain transportability discovery",
+      "kind": "notebook",
+      "profiles": ["historical-replay"],
+      "depends_on": ["history_retinal_stage6"],
+      "source": "legacy/original_authoritative/retinal_dr/Retinal_DR_Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1.ipynb",
+      "governance": "post_unseal_replay",
+      "runtime": "python-gpu-preferred",
+      "estimated": "hours"
+    }
+  ]
+}

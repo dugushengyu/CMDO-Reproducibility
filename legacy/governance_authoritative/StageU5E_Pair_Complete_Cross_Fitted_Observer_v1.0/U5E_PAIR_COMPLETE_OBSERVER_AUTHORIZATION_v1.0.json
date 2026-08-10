@@ -1,0 +1,13 @@
+{
+  "created_utc": "2026-07-24T13:31:44.009940+00:00",
+  "new_blind_access_authorised": false,
+  "parent_result_change_authorised": false,
+  "parent_u5_final_record_sha256": "0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721",
+  "parent_u5d_final_record_sha256": "d50e5749bb2cf53f8d83c819ab4a832e07c89303d81c142e0012567d13850620",
+  "record_type": "U5E_PAIR_COMPLETE_OBSERVER_AUTHORIZATION_V1_0",
+  "scope": "Transparent pair-complete opposite-block observer development using only the exact U5D reconstructed target records.",
+  "stage12_authorised": false,
+  "u5e_pipeline_sha256": "a0a488456a62e87744b95440bc7f7242585d6b33d7666b8d5d00e2f426d02205",
+  "u5e_protocol_sha256": "f19fb19b6b7d54cecbd89c7c33b13c30c8974de1659aa759da98ff2abf37db1f",
+  "u5e_theory_sha256": "3e4e0d6576fb4a11ab217a25c225b6ccc6573b240b03ee5c01d94b2d6cb4a599"
+}

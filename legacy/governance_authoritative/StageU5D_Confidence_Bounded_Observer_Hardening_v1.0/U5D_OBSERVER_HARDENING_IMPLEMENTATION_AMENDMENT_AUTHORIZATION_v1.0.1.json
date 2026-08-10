@@ -1,0 +1,13 @@
+{
+  "base_u5_pipeline_sha256": "5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde",
+  "created_utc": "2026-07-24T12:55:24.993456+00:00",
+  "new_blind_access_authorised": false,
+  "record_type": "U5D_OBSERVER_HARDENING_IMPLEMENTATION_AMENDMENT_AUTHORIZATION_V1_0_1",
+  "scientific_method_or_gate_changed": false,
+  "stage12_authorised": false,
+  "superseded_u5d_pipeline_sha256": "e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce",
+  "u5d_implementation_amendment_sha256": "27354efc3663d0e7909e6efd8ef4157e0d0003d3bcd80bd9703c4ccc2b0e9000",
+  "u5d_pipeline_sha256": "66a8361359f676eba93d02fd3633bd948caacdb9bd0a12472f8cf92c6f097657",
+  "u5d_protocol_sha256": "ea448bbdd742591c6cf40fc7ab186948ca86b5cae1d74dcbcdd92e0b148ea53d",
+  "u5d_theory_sha256": "2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc"
+}

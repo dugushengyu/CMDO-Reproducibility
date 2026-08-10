@@ -1,0 +1,34 @@
+CMDO U9 STATIC / SYNTHETIC QA REPORT
+Version: v1.0
+Date: 2026-08-10
+
+STATUS: PASSED
+
+Validation performed before delivery
+------------------------------------
+- 73,988 atomic assertions across 31 named checks.
+- All 58 local MATLAB helper calls resolved to a unique definition.
+- MATLAB block and bracket structures balanced after lexical removal of strings/comments.
+- One-shot marker verified to precede the first reserve-outcome table read.
+- PREPARE verified not to pass the reserve vault to readtable; it hashes the vault as bytes only.
+- Code, protocol, adapter, config, model, role, roster, development-outcome, history,
+  calibration, telemetry, pair, target-score and reserve-vault hash assertions present.
+- Canonical ZIP filename denylist present; delivery package contains no eICU data file.
+- 4,000 frozen reserve replicate seeds are unique.
+- 6,720 independent Python-mirror synthetic guard witnesses tested at budgets 64/128/256,
+  seven target accuracies and four historical accuracies.
+- Exact direct fallback residual was zero in every synthetic witness.
+- All synthetic transport weights were in [0,0.35].
+- Zero covered-event no-harm-cap violations in the independent mirror.
+- Empirical four-fold simultaneous coverage in the mirror: 0.9783.
+- Clopper-Pearson bounds tested exhaustively for fold sizes 16, 32 and 64.
+- Excel template contract verified: nine expected worksheets.
+- Initial package manifest file set, byte counts and SHA-256 hashes verified.
+- Protocol DOCX package verified and rendered to six complete pages.
+- DOCX accessibility audit: 0 high, 0 medium, 6 low findings (raw-URL display text only).
+
+Important runtime boundary
+--------------------------
+No licensed MATLAB runtime was available in the build environment. Native execution therefore
+remains to be confirmed by running RUN_SELFTEST.m in the user's MATLAB installation before eICU
+adaptation. This report is not a substitute for that native self-test or for the sealed reserve run.

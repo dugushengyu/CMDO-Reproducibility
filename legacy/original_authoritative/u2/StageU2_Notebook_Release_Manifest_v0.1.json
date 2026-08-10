@@ -1,0 +1,19 @@
+{
+  "stage": "StageU2",
+  "version": "v0.1",
+  "notebook_filename": "CrossModal_StageU2_Mechanism_Multimetric_LabelEfficiency_External_NonBiomedical_v0.1_SELF_CONTAINED.ipynb",
+  "notebook_sha256": "3786c360db468d4277de8bb0999b583a951408df83db4b92269720d24d8ccaa7",
+  "pipeline_filename": "StageU2_pipeline_v0.1.py",
+  "pipeline_sha256": "4975a13419c96033d308afbcfb0202452688f5c2c5d8f0d9d6e8d9cb426a1f60",
+  "notebook_bytes": 20461,
+  "pipeline_bytes": 51824,
+  "parent_final_record_sha256": "e18602ed16b242cfe5a220539ef46c525ca3c2f2046c16476afbaeb2cf8f5556",
+  "external_datasets": [
+    "CIFAR-10",
+    "CIFAR-10.1 v6",
+    "CIFAR-10-C selected 12 corruption families x severities 1/3/5"
+  ],
+  "manual_download_expected": false,
+  "new_blind_accessed": false,
+  "stage12_authorised": false
+}

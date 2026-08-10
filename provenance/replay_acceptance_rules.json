@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "principle": "Deterministic structure and governance fields must match exactly. Retrained floating-point metrics use declared tolerances; model-byte identity is never required.",
+  "archive_csv": {
+    "absolute_tolerance": 0.000001,
+    "relative_tolerance": 0.0001,
+    "minimum_common_csv_files": 1,
+    "minimum_member_overlap_fraction": 0.9
+  },
+  "governance_key_pattern": "decision|authori[sz]ed|stage12|blind|observer_id|execution_status",
+  "ignored_json_key_pattern": "time|timestamp|runtime|elapsed|created|updated|path|sha256|bytes",
+  "u2_fresh_training": {
+    "identity_columns": ["target", "family", "n", "prevalence"],
+    "metric_columns": ["auc", "auprc", "balanced_accuracy", "brier", "log_loss"],
+    "absolute_tolerance": 0.03,
+    "relative_tolerance": 0.05,
+    "checkpoint_sha256_must_match": false,
+    "expected_targets": 38
+  },
+  "u8": {
+    "expected_execution_status": "COMPLETED_BY_DISCLOSED_POST_UNSEAL_DETERMINISTIC_RECONSTRUCTION",
+    "expected_target_rows": 19097
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "created_utc": "2026-07-24T13:48:36.866333+00:00",
+  "new_blind_access_authorised": false,
+  "parent_u5e_final_record_sha256": "cdfc1a03ebb4ae81d44f5deae459dffb9fc05bcc19915a778844b1fb01e1ea53",
+  "record_type": "U5F_OBSERVER_FREEZE_AUTHORIZATION_V1_0",
+  "scope": "Transparent post-outcome selection and freeze of one U5E candidate for future independent U6 validation.",
+  "stage12_authorised": false,
+  "u5f_pipeline_sha256": "831fdd5f557e4aa1b063b38bbd78dfb8a9cfaab4eea1123f3c604c54e28abbb3",
+  "u5f_protocol_sha256": "5aba7222134894ba6016790d7810fce2145d3fde3415daa4141fdaeeb77a608f",
+  "u5f_theory_sha256": "96f39a44ab7993a1364d95ade121345337a72562f2cba575cf89bdfbaf5e44d8",
+  "u6_target_label_access_authorised": false
+}

@@ -1,0 +1,55 @@
+{
+  "aggregation": "Average the four blockwise shrinkage estimates with equal weight.",
+  "balanced_sampling": true,
+  "bias_sensor": "For each estimation block, use matched positive-negative comparisons from its sample-disjoint opposite block.",
+  "confidence_rule": {
+    "bias_upper_sq": "min(1, abs(sensor_auc-transport_auc)+radius)^2",
+    "delta_per_block": 0.025,
+    "delta_total": 0.1,
+    "radius": "sqrt(log(2/delta_per_block)/(2*n_paired_sensor))"
+  },
+  "development_selection_metrics": {
+    "fallback_rate": 0.0,
+    "mean_simultaneous_coverage": 0.9998125,
+    "mean_weight": 0.016870742595730744,
+    "minimum_block_no_harm_rate": 1.0,
+    "minimum_simultaneous_coverage": 0.99,
+    "pooled_direct_mae": 0.0642932456119092,
+    "pooled_gain": 0.023135485261168265,
+    "pooled_mae": 0.06280579017566221,
+    "positive_targets": 14,
+    "selected_method": "PC_PAIRED_HOEFFDING",
+    "target_count": 16,
+    "worst_target_budget_regret": 0.0004556653652165
+  },
+  "direct_identity": "The arithmetic mean of AA, AB, BA and BB block AUCs equals the full balanced-witness AUC exactly.",
+  "max_weight": 0.35,
+  "observer_id": "PC_PAIRED_HOEFFDING",
+  "observer_name": "CMDO Pair-Complete Opposite-Block Hoeffding Observer",
+  "opposite_block_map": {
+    "AA": "BB",
+    "AB": "BA",
+    "BA": "AB",
+    "BB": "AA"
+  },
+  "pair_blocks": [
+    "AA",
+    "AB",
+    "BA",
+    "BB"
+  ],
+  "partition": "Split positive and negative witness samples independently into equal A/B halves.",
+  "permitted_change_before_u6": "NONE",
+  "risk_coefficient": 8.0,
+  "selection_status": "TRANSPARENT_POST_OUTCOME_SELECTION_FOR_FUTURE_INDEPENDENT_VALIDATION",
+  "variance_gate": false,
+  "weight_rule": "support_gate * min(0.35, V_block / (V_block + bias_upper_sq + 8*transport_risk_proxy + 1e-12))",
+  "witness_budgets": [
+    8,
+    16,
+    32,
+    64,
+    128
+  ],
+  "zero_weight_fallback": "Exactly full direct AUC."
+}

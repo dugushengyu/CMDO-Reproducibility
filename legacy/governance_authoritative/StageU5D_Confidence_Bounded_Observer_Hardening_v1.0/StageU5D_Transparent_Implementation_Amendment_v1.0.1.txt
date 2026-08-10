@@ -1,0 +1,13 @@
+STAGE U5D — TRANSPARENT IMPLEMENTATION AMENDMENT v1.0.1
+
+IMPLEMENTATION-ONLY CORRECTION. NO SCIENTIFIC METHOD, TARGET, PARAMETER, SEED, GATE OR DECISION CHANGED. NO NEW BLIND EXISTS OR WAS ACCESSED. STAGE 12 REMAINS PROHIBITED.
+
+The v1.0 run completed raw reconstruction, cross-fitting and sequential analysis, then failed during serialization. sequential_summary() assigned the target-summary DataFrame to `target`; the following group loop reused `target` as a target-name string. The function returned a string instead of the DataFrame, causing AttributeError: 'str' object has no attribute 'to_csv'.
+
+Authorised correction: rename the DataFrame to `target_summary`, the loop scalar to `target_name`, and the accumulator to `stop_rows`; return `(target_summary, stops)`. The corrected run recomputes all results from the beginning.
+
+Superseded pipeline SHA-256: e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce
+Corrected pipeline SHA-256: 66a8361359f676eba93d02fd3633bd948caacdb9bd0a12472f8cf92c6f097657
+New blind accessed: FALSE.
+Stage 12 authorised: FALSE.
+

@@ -1,0 +1,12 @@
+{
+  "notebook_name": "CrossModal_StageT3-X_Transparent_Blind_Failure_Autopsy_And_Observability_Decomposition_v0.1_SELF_CONTAINED.ipynb",
+  "notebook_sha256": "fb48f74bca6c942d3becece988a388303f5b2d48571acedfa0d1c13dc68045ef",
+  "notebook_bytes": 27600,
+  "decoded_source_sha256": "d7cb0547a558b085efd2b1f459454f2fda8cb4229245b8e314ccb4b0702041d2",
+  "decoded_source_bytes": 72609,
+  "external_payload_required": false,
+  "manual_download_required": false,
+  "expected_parent_bundle_sha256": "8f1a4165136afc09d92ea9c2a1e4d8dee275dd3e7d732d426b664f97ae59ff00",
+  "static_compile": "PASS",
+  "stage_t3a_reinterpretation_prohibited": true
+}

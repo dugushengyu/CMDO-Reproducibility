@@ -1,0 +1,64 @@
+STAGE U5E — PAIR-COMPLETE CROSS-FITTED OBSERVER PROTOCOL v1.0
+
+STATUS
+TRANSPARENT POST-U5D DEVELOPMENT.
+NO NEW BLIND ACCESS.
+NO CHANGE TO U5B, U5C OR U5D RECORDS.
+STAGE 12 PROHIBITED.
+
+PARENTS
+U5B final record:
+0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721
+
+U5D final record:
+d50e5749bb2cf53f8d83c819ab4a832e07c89303d81c142e0012567d13850620
+
+METHOD
+Each balanced witness is split into positive A/B and negative A/B halves.
+All four AUC pair blocks AA, AB, BA and BB are retained.
+Each block's transport weight is determined by the disjoint opposite block.
+
+Exact identity:
+D_full = mean(D_AA,D_AB,D_BA,D_BB).
+
+Frozen parameters:
+budgets = 8,16,32,64,128;
+replicates = 200;
+total delta = 0.10;
+block delta = 0.025;
+maximum weight = 0.35;
+risk coefficient = 8.0;
+seed = 20260724.
+
+PRIMARY METHOD
+PC_DELONG_VARGATE.
+
+The primary method uses opposite-block DeLong-normal bias upper bounds and
+sets every transport weight to zero when the average conservative block-risk
+proxy exceeds the full-direct DeLong variance estimate.
+
+GATES
+- exact 16-target parent roster;
+- maximum pair-complete/full-direct identity residual < 1e-12;
+- strict paired-Hoeffding mean simultaneous coverage >= 0.90 and minimum >= 0.85;
+- strict blockwise no-harm geometry >= 0.999;
+- primary pooled MAE <= full-direct pooled MAE;
+- primary worst target-budget regret <= 0.005;
+- primary worst regret <= half the U5D DeLong regret;
+- primary mean weight > 0 and at least 9/16 positive targets.
+
+This is transparent method development. Passing authorises observer freeze and
+U6 preregistration only; it does not constitute prospective confirmation.
+
+Pipeline SHA-256:
+a0a488456a62e87744b95440bc7f7242585d6b33d7666b8d5d00e2f426d02205
+
+Theory SHA-256:
+3e4e0d6576fb4a11ab217a25c225b6ccc6573b240b03ee5c01d94b2d6cb4a599
+
+New blind accessed:
+FALSE.
+
+Stage 12 authorised:
+FALSE.
+

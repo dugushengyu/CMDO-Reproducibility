@@ -1,0 +1,9 @@
+{
+  "inventory_date": "2026-08-10",
+  "scope": "Targeted migration inventory: 05_Code, 07_Experiments, 09_Figures, 12_Governance, 00_Storage_Migration",
+  "root_count": 5,
+  "folder_count": 37,
+  "file_count": 134,
+  "total_file_bytes": 168031510,
+  "note": "This is not a deletion authorization and not a full raw-data inventory."
+}

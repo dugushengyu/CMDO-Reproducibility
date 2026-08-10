@@ -1,0 +1,40 @@
+STAGE U5D — CONFIDENCE-BOUNDED OBSERVER HARDENING PROTOCOL v1.0
+
+STATUS
+TRANSPARENT POST-U5/U5C DEVELOPMENT.
+NO NEW BLIND ACCESS.
+NO CHANGE TO U5 OR U5C RECORDS.
+STAGE 12 PROHIBITED.
+
+PARENTS
+U5 final: 0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721
+U5C final: cd796c8d3e54cb26fb1fe269bac3b3c528d61bc59770d533361dcf4956f1b4f7
+Base U5 executable SHA-256: 5ff064f1bb1581f6ed99eb6958fb14e53e54acac0db3e214f3d7528d3835bcde
+
+OBJECTIVES
+1. Reconstruct all 16 U5 targets from public raw data and require exact sealed score hashes.
+2. Perform same-total-budget raw-sample two-fold cross-fitting.
+3. Compare paired Hoeffding, paired empirical Bernstein, full-U-statistic McDiarmid and DeLong-normal bias bounds.
+4. Report certified split-direct risk geometry separately from empirical comparison to full direct.
+5. Build an anytime paired-Hoeffding confidence sequence and target-specific stopping records.
+6. Persist reconstructed scores/labels, replicate-level results, state summaries, figures and canonical records.
+
+BUDGETS
+8,16,32,64,128 total balanced target labels.
+200 replicates per target-budget.
+
+FROZEN WEIGHT
+w=S min(0.35, V/(V+U+8R)).
+
+DELTA
+0.10 for fixed-time and sequential confidence statements.
+
+OUTCOME
+All gates pass: authorise final observer freeze and U6 preregistration only.
+Any gate fails: retain all results and refine transparently before U6.
+
+Pipeline SHA-256: e72dde33247372667a9d4486c0085e1627a995b2692fa8134fb5d03bc6cde6ce
+Theory SHA-256: 2b0c3f4d478f80b9c20b1e7938203317989eb10f661199e3c05371196d6ff8fc
+New blind accessed: FALSE
+Stage 12 authorised: FALSE
+

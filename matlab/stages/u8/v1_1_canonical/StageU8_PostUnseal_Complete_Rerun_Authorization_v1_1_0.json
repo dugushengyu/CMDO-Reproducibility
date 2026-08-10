@@ -1,0 +1,19 @@
+{
+  "stage": "U8",
+  "original_protocol_version": "v1.0",
+  "rerun_version": "v1.1.0",
+  "decision": "AUTHORIZE_DISCLOSED_POST_UNSEAL_COMPLETE_RECONSTRUCTION",
+  "reviewed_preoutcome_seal_sha256": "5b6cab9bddd614b610a3acf5e69af0e1c304f14c4f38c55b62808be3835579cf",
+  "original_code_sha256": "f963ff0b3d1ec692cc18c1954cee6b748c2b527a83a30b17aa20b9aef49898b2",
+  "original_protocol_sha256": "c1fffe15415b3fcde2e7976e82013f1ec4952c5ecc87c4694808f8758faaeb7b",
+  "original_execution_authorization_sha256": "ffd8bcb9263d66a5b4edb08e33100a565554a2d7e80c18021c13d49201da90ac",
+  "code_sha256": "fe81fd942e073f9875194e7fe1998eda91eccfd5d3f2a1923e47cd0de3500b82",
+  "protocol_sha256": "5157f96d27cdb6a86eaf6d4e5e0d1d89fbeef65a243a89e511032c308dd987ba",
+  "required_target_scores_sha256": "7a67146ee0b8cc48c925636cad162d7835c293e7ce1bab0b0a8ed868287dce12",
+  "required_target_score_rows": 19097,
+  "permitted_analytical_change": "CYCLE_IDENTIFIER_CONTAINER_NORMALIZATION_CELL_TO_STRING_ONLY",
+  "outcome_blind_execution": false,
+  "independent_new_reserve_claim": "PROHIBITED",
+  "authorized_at_singapore": "2026-08-09 18:11:07 +0800",
+  "note": "Authorizes one complete deterministic reconstruction after the reviewed v1.0.1 reserve access and disclosed cell-array identifier error. The run must reproduce the frozen target-score hash before reserve evaluation and must be reported as post-unseal, not as a new blind reserve experiment."
+}

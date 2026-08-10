@@ -1,0 +1,34 @@
+{
+  "authorisation_sha256": "54e46a5c4e30c7c5447ab79f0f9421488ad0613bf6f2f5c5daabd9f7eb0ffe2e",
+  "created_utc": "2026-07-24T13:31:44.027554+00:00",
+  "files": {
+    "CMDO_v4.3_Pair_Complete_Cross_Fitted_Observer.html": {
+      "sha256": "3e4e0d6576fb4a11ab217a25c225b6ccc6573b240b03ee5c01d94b2d6cb4a599",
+      "size_bytes": 3432
+    },
+    "CrossModal_StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0.ipynb": {
+      "sha256": "b30b43be53f8cd2ccf975b2a9c90ea0e1df920b4c77a020cc7c9ebdeb2230452",
+      "size_bytes": 23343
+    },
+    "StageU5E_Pair_Complete_Cross_Fitted_Observer_v1.0.py": {
+      "sha256": "a0a488456a62e87744b95440bc7f7242585d6b33d7666b8d5d00e2f426d02205",
+      "size_bytes": 40168
+    },
+    "StageU5E_Pair_Complete_Observer_Protocol_v1.0.txt": {
+      "sha256": "f19fb19b6b7d54cecbd89c7c33b13c30c8974de1659aa759da98ff2abf37db1f",
+      "size_bytes": 1862
+    },
+    "U5E_PAIR_COMPLETE_OBSERVER_AUTHORIZATION_v1.0.json": {
+      "sha256": "54e46a5c4e30c7c5447ab79f0f9421488ad0613bf6f2f5c5daabd9f7eb0ffe2e",
+      "size_bytes": 851
+    }
+  },
+  "new_blind_accessed": false,
+  "parent_u5_final_record_sha256": "0850505e3a603b5c3cca68a44c94c10970218d525cb8364be5a6f148b5059721",
+  "parent_u5d_final_record_sha256": "d50e5749bb2cf53f8d83c819ab4a832e07c89303d81c142e0012567d13850620",
+  "pipeline_sha256": "a0a488456a62e87744b95440bc7f7242585d6b33d7666b8d5d00e2f426d02205",
+  "protocol_sha256": "f19fb19b6b7d54cecbd89c7c33b13c30c8974de1659aa759da98ff2abf37db1f",
+  "release": "CMDO Stage U5E pair-complete cross-fitted observer v1.0",
+  "stage12_authorised": false,
+  "theory_sha256": "3e4e0d6576fb4a11ab217a25c225b6ccc6573b240b03ee5c01d94b2d6cb4a599"
+}

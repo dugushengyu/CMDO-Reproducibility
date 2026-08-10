@@ -1,0 +1,21 @@
+{
+  "record_type": "U7_IMPLEMENTATION_AMENDMENT_V1_0_1",
+  "created_utc": "2026-07-24T20:25:00Z",
+  "original_pipeline_sha256": "bfffa94bf50bcee16acc0cf439c939ff3d4395121cde793a64d02b1a188a5f8b",
+  "amended_pipeline_sha256": "COMPUTED_AND_SEALED_AT_U7_RUNTIME",
+  "pipeline_drive_file_id": "1SjgGLRbWDYMJv0ff5044ACJZVn2D_2Gn",
+  "root_cause": "ucimlrepo returns encounter_id and patient_nbr in data.ids because they are ID-role variables; the original implementation read only data.features and data.targets.",
+  "implementation_change": "Merge encounter_id and patient_nbr from data.ids into the feature dataframe before the existing frozen schema check.",
+  "failure_location": "prepare_clinical_deployment before source model fitting, target score construction and pre-outcome seal creation",
+  "preoutcome_seal_existed_before_amendment": false,
+  "target_outcomes_accessed_before_amendment": false,
+  "scientific_protocol_changed": false,
+  "target_roster_changed": false,
+  "metrics_changed": false,
+  "parameters_changed": false,
+  "random_seeds_changed": false,
+  "observer_changed": false,
+  "gates_changed": false,
+  "candidate_switching": false,
+  "stage12_authorised": false
+}

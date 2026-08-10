@@ -1,0 +1,35 @@
+{
+  "authorisation_sha256": "db85f09f5368661251cb5cf281fdee04568f7ae0a2169ed74a93502d5c93ca01",
+  "created_utc": "2026-07-24T13:48:36.874378+00:00",
+  "files": {
+    "CMDO_v4.4_Final_Observer_Freeze.html": {
+      "sha256": "96f39a44ab7993a1364d95ade121345337a72562f2cba575cf89bdfbaf5e44d8",
+      "size_bytes": 2196
+    },
+    "CrossModal_StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0.ipynb": {
+      "sha256": "ae0baea5d338bf38ad3942fb1716a7afe502f56a4e281a569e5867710e7796d5",
+      "size_bytes": 17345
+    },
+    "StageU5F_Final_Observer_Freeze_And_U6_Preregistration_v1.0.py": {
+      "sha256": "831fdd5f557e4aa1b063b38bbd78dfb8a9cfaab4eea1123f3c604c54e28abbb3",
+      "size_bytes": 22390
+    },
+    "StageU5F_Observer_Freeze_Protocol_v1.0.txt": {
+      "sha256": "5aba7222134894ba6016790d7810fce2145d3fde3415daa4141fdaeeb77a608f",
+      "size_bytes": 1290
+    },
+    "U5F_OBSERVER_FREEZE_AUTHORIZATION_v1.0.json": {
+      "sha256": "db85f09f5368661251cb5cf281fdee04568f7ae0a2169ed74a93502d5c93ca01",
+      "size_bytes": 731
+    }
+  },
+  "new_blind_accessed": false,
+  "parent_u5e_final_record_sha256": "cdfc1a03ebb4ae81d44f5deae459dffb9fc05bcc19915a778844b1fb01e1ea53",
+  "pipeline_sha256": "831fdd5f557e4aa1b063b38bbd78dfb8a9cfaab4eea1123f3c604c54e28abbb3",
+  "protocol_sha256": "5aba7222134894ba6016790d7810fce2145d3fde3415daa4141fdaeeb77a608f",
+  "release": "CMDO Stage U5F final observer freeze v1.0",
+  "selected_method_expected": "PC_PAIRED_HOEFFDING",
+  "stage12_authorised": false,
+  "theory_sha256": "96f39a44ab7993a1364d95ade121345337a72562f2cba575cf89bdfbaf5e44d8",
+  "u6_target_label_access_authorised": false
+}

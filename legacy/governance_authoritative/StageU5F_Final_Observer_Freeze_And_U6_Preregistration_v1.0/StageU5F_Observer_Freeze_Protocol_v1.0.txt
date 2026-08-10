@@ -1,0 +1,48 @@
+STAGE U5F — FINAL OBSERVER FREEZE AND U6 PREREGISTRATION FRAMEWORK v1.0
+
+STATUS
+TRANSPARENT POST-OUTCOME METHOD SELECTION.
+U5E OFFICIAL DECISION REMAINS UNCHANGED.
+NO NEW BLIND ACCESS.
+STAGE 12 PROHIBITED.
+
+PARENT U5E FINAL RECORD:
+cdfc1a03ebb4ae81d44f5deae459dffb9fc05bcc19915a778844b1fb01e1ea53
+
+SELECTION CANDIDATES
+PC_PAIRED_HOEFFDING
+PC_USTAT_MCDIARMID
+
+ELIGIBILITY
+- pair-complete identity residual < 1e-12;
+- mean simultaneous coverage >= 0.99;
+- minimum simultaneous coverage >= 0.98;
+- minimum block no-harm rate >= 0.999;
+- positive pooled gain versus full direct;
+- worst target-budget regret <= 0.005;
+- at least 9 positive targets;
+- positive mean transport weight.
+
+LEXICOGRAPHIC RULE
+Among eligible candidates:
+1. maximise pooled gain;
+2. minimise worst target-budget regret;
+3. maximise positive target count;
+4. deterministic method-name tie break.
+
+EXPECTED FROZEN OBSERVER:
+PC_PAIRED_HOEFFDING
+
+The selection is for a future independent U6 reserve only. It is not a
+retrospective reclassification of U5E.
+
+Pipeline SHA-256:
+831fdd5f557e4aa1b063b38bbd78dfb8a9cfaab4eea1123f3c604c54e28abbb3
+
+Theory SHA-256:
+96f39a44ab7993a1364d95ade121345337a72562f2cba575cf89bdfbaf5e44d8
+
+New blind accessed: FALSE.
+U6 target-label access authorised: FALSE.
+Stage 12 authorised: FALSE.
+
