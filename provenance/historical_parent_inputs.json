@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "classification": "BYTE_VERIFIED_HISTORICAL_PARENT_INPUTS",
+  "claim_boundary": "Stage 7 is the accepted historical parent of Stage 8 and is not re-executed by the full-claim Stage 8-to-U8 replay.",
+  "inputs": [
+    {
+      "id": "STAGE7_FINAL_RECORD",
+      "repository_path": "bootstrap_inputs/stage7/Stage7_FourDomain_Discovery_Complete_v0.1.json",
+      "runtime_path": "06_Data_Records/Retinal_DR/Prospective_Retinal_Blind_Test_v0.1/Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1/03_Results/Stage7_FourDomain_Discovery_Complete_v0.1.json",
+      "size_bytes": 2879,
+      "sha256": "64cd3975c4445f3befa28a6862617798aa73665afbe9ccda307d606fab9abfe2",
+      "internal_final_record_sha256": "293db1a6c41f86bcd4c94d91c2d6ad7dfdb5a9369fc4312beacce73b914cd4be"
+    },
+    {
+      "id": "STAGE7_EDGE_MATRIX",
+      "repository_path": "bootstrap_inputs/stage7/Stage7_FourDomain_Edge_Matrix_v0.1.csv",
+      "runtime_path": "06_Data_Records/Retinal_DR/Prospective_Retinal_Blind_Test_v0.1/Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1/01_Four_Domain_Edge_Matrix/Stage7_FourDomain_Edge_Matrix_v0.1.csv",
+      "size_bytes": 9289,
+      "sha256": "f7856f34ece52d6d766be91f25961a2929a394a442d8bc4b1fcec76ee85e9f14"
+    }
+  ]
+}
