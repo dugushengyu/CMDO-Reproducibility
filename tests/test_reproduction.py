@@ -53,6 +53,25 @@ class AdapterTests(unittest.TestCase):
             self.assertIn(project.as_posix(), destination.read_text(encoding="utf-8"))
             self.assertFalse(record["source_mutated"])
 
+    def test_adapter_uses_python311_compatible_isic_cli_without_mutating_source(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            source = temp / "source.py"
+            source.write_text(
+                "PIN = 'isic-cli==12.5.2'\n",
+                encoding="utf-8",
+            )
+            before = source.read_bytes()
+            destination = temp / "adapted.py"
+            project = temp / "runtime" / "Cross-Modal_Diagnostic_Observability"
+            record = adapt_python(source, destination, project)
+            self.assertEqual(source.read_bytes(), before)
+            self.assertIn("isic-cli==12.4.0", destination.read_text(encoding="utf-8"))
+            self.assertEqual(
+                record["runtime_dependency_adaptations"],
+                ["isic-cli==12.5.2 -> isic-cli==12.4.0"],
+            )
+
 
 class StateTests(unittest.TestCase):
     def test_state_round_trip(self) -> None:
