@@ -1,0 +1,31 @@
+name: Static integrity
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify provenance and packaging
+        run: python scripts/verify_repository.py
+      - name: Verify embedded-source extraction
+        run: python scripts/extract_embedded_sources.py --check
+      - name: Verify generated provenance manifests
+        run: |
+          python scripts/build_provenance_manifests.py --check
+          python scripts/build_cleanup_manifest.py --check
+      - name: Run reproduction-runner unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify reviewer plans
+        run: |
+          python RUN_REPRODUCTION.py frozen --plan --run-id ci-frozen
+          python RUN_REPRODUCTION.py full-claim --plan --run-id ci-full
