@@ -1,0 +1,74 @@
+{
+  "stage": "Stage7",
+  "decision": "GO_EXPAND_DATASETS_THEN_FIT_DDO2_USING_DISCOVERED_THREE_AXIS_COMPONENTS",
+  "scope": "POST_UNSEAL_RETROSPECTIVE_DISCOVERY_NOT_PROSPECTIVE_VALIDATION",
+  "stage6_final_record_sha256": "cbe17046eb97a191928d93dc0061a33ef52b630377b3af84103fa530568cb326",
+  "stage7_protocol_seal_sha256": "cb45245a1a0f28a3a822f2386b1c5d63edf40582650abb1c3326a2159c98cb2d",
+  "datasets": [
+    "EyePACS_2015",
+    "DeepDRiD",
+    "APTOS_2019",
+    "IDRiD"
+  ],
+  "directed_edges": 16,
+  "cross_domain_edges": 12,
+  "recoverable_sources": [
+    "APTOS_2019",
+    "DeepDRiD",
+    "IDRiD"
+  ],
+  "recoverable_source_cross_edges": 9,
+  "observed_state_counts": {
+    "DISCRIMINATION_AND_CALIBRATION_RETAINED_BUT_OPERATING_POINT_FAILED": 1,
+    "DISCRIMINATION_CALIBRATION_AND_OPERATING_POINT_RETAINED": 3,
+    "DISCRIMINATION_FAILURE_WITH_OR_WITHOUT_ADDITIONAL_FAILURES": 4,
+    "DISCRIMINATION_RETAINED_BUT_CALIBRATION_FAILED": 4
+  },
+  "ddo2_discovery_candidates": [
+    {
+      "outcome": "target_auc",
+      "candidate_component": "target_mean_knn_distance",
+      "median_leave_one_target_out_rho": -0.5178571429,
+      "sign_consistency": 1.0,
+      "status": "DISCOVERY_CANDIDATE_REQUIRES_NEW_DATASET_VALIDATION"
+    },
+    {
+      "outcome": "source_minus_target_auc",
+      "candidate_component": "atc_estimated_accuracy",
+      "median_leave_one_target_out_rho": 0.4821428571,
+      "sign_consistency": 1.0,
+      "status": "DISCOVERY_CANDIDATE_REQUIRES_NEW_DATASET_VALIDATION"
+    },
+    {
+      "outcome": "target_ece10",
+      "candidate_component": "unlabeled_mixture_prevalence",
+      "median_leave_one_target_out_rho": -0.4752343657,
+      "sign_consistency": 1.0,
+      "status": "DISCOVERY_CANDIDATE_REQUIRES_NEW_DATASET_VALIDATION"
+    },
+    {
+      "outcome": "calibration_ece_degradation",
+      "candidate_component": "atc_estimated_accuracy",
+      "median_leave_one_target_out_rho": 0.6607142857,
+      "sign_consistency": 1.0,
+      "status": "DISCOVERY_CANDIDATE_REQUIRES_NEW_DATASET_VALIDATION"
+    },
+    {
+      "outcome": "target_balanced_accuracy_at_0_5",
+      "candidate_component": "unlabeled_mixture_prevalence",
+      "median_leave_one_target_out_rho": 0.4657401719,
+      "sign_consistency": 0.75,
+      "status": "DISCOVERY_CANDIDATE_REQUIRES_NEW_DATASET_VALIDATION"
+    }
+  ],
+  "image_files_read": false,
+  "image_files_copied": false,
+  "external_data_downloaded": false,
+  "backbone_inference_run": false,
+  "new_stage7_bytes": 1430659,
+  "maximum_new_stage7_bytes": 536870912,
+  "output_integrity_manifest_sha256": "50a2a47954de47ce3fc6950c1ba9267f96f05dce13cf0af4c5a790397c631a85",
+  "next_step": "ADD_INDEPENDENT_DATASETS_BEFORE_FINAL_DDO2_FIT_OR_PROSPECTIVE_VALIDATION",
+  "completed_utc": "2026-07-21T02:32:44.557376+00:00",
+  "final_record_sha256": "293db1a6c41f86bcd4c94d91c2d6ad7dfdb5a9369fc4312beacce73b914cd4be"
+}
