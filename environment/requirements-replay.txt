@@ -27,7 +27,7 @@ tensorflow-datasets==4.9.7
 medmnist==3.0.2
 folktables==0.0.12
 ucimlrepo==0.0.7
-isic-cli==12.5.2
+isic-cli==12.4.0
 gdown==5.2.0
 kaggle==1.6.17
 kagglehub==0.3.4
