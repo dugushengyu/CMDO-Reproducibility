@@ -1,0 +1,91 @@
+name: Bootstrap CMDO publication
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'CMDO-GitHub-Payload-v0.2.0.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify and unpack publication payload
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import shutil
+          import zipfile
+
+          root = Path.cwd()
+          payload = root / 'CMDO-GitHub-Payload-v0.2.0.zip'
+          expected_sha = '044843ba3ccfd1af54443cc220028bbd9547bea20c84ac6f4e91f8cd93add7bb'
+          expected_count = 269
+
+          if not payload.is_file():
+              raise SystemExit('publication payload is missing')
+
+          h = hashlib.sha256()
+          with payload.open('rb') as f:
+              for chunk in iter(lambda: f.read(1024 * 1024), b''):
+                  h.update(chunk)
+          actual_sha = h.hexdigest()
+          if actual_sha != expected_sha:
+              raise SystemExit(f'payload SHA-256 mismatch: {actual_sha}')
+
+          temp = root / '_cmdo_import'
+          if temp.exists():
+              shutil.rmtree(temp)
+          temp.mkdir()
+
+          with zipfile.ZipFile(payload) as z:
+              members = [i for i in z.infolist() if not i.is_dir()]
+              if len(members) != expected_count:
+                  raise SystemExit(f'expected {expected_count} files, found {len(members)}')
+              for info in members:
+                  rel = Path(info.filename)
+                  if rel.is_absolute() or '..' in rel.parts:
+                      raise SystemExit(f'unsafe ZIP member: {info.filename}')
+                  target = temp / rel
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  with z.open(info) as src, target.open('wb') as dst:
+                      shutil.copyfileobj(src, dst)
+
+          for src in temp.rglob('*'):
+              if src.is_file():
+                  rel = src.relative_to(temp)
+                  dst = root / rel
+                  dst.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copy2(src, dst)
+
+          shutil.rmtree(temp)
+          payload.unlink()
+          bootstrap = root / '.github' / 'workflows' / 'bootstrap-import.yml'
+          if bootstrap.exists():
+              bootstrap.unlink()
+
+          print(f'CMDO publication payload verified: {actual_sha}')
+          print(f'Imported {expected_count} Git publication candidate files')
+          PY
+
+      - name: Commit publication tree
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit \
+            -m 'Publish reviewer reproducibility package v0.2.0' \
+            -m 'Source build commit: cac231170b2e6c77e039109fa9050db0f32997d4' \
+            -m 'Portable package SHA-256: 22f3fcb53be50ea137905ac4bd5cd2649ff4047c80625a22360a0d8e6840e160' \
+            -m 'Git publication tree: 269 files; 48 portable-only assets remain intentionally gitignored.' \
+            -m 'Full scientific replay remains pending.'
+          git push origin HEAD:main
