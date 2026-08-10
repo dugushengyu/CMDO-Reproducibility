@@ -9,13 +9,65 @@ from pathlib import Path
 from .hashing import sha256_file
 
 
+REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 ISIC_CLI_RUNTIME_PIN = "12.4.0"  # newest release compatible with Python 3.11
+STAGE8_NOTEBOOK_NAME = (
+    "CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_And_Protocol_Seal_v0.1.ipynb"
+)
 
 
 COLAB_MOUNT = re.compile(
     r"^\s*(?:from\s+google\.colab\s+import\s+drive|drive\.mount\s*\([^\n]*\))\s*$",
     re.MULTILINE,
 )
+
+
+def _materialize_historical_parent_inputs(project_root: Path) -> list[dict[str, object]]:
+    """Restore byte-verified Stage 7 parent records required by Stage 8.
+
+    Stage 7 is a frozen historical parent of the accepted Stage 8-to-U8 replay,
+    not a stage re-executed by the full-claim profile. Existing runtime files are
+    reused only when their byte identity matches the declared provenance.
+    """
+
+    manifest_path = REPOSITORY_ROOT / "provenance/historical_parent_inputs.json"
+    if not manifest_path.is_file():
+        raise RuntimeError(f"historical parent manifest is missing: {manifest_path}")
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    project_root = project_root.resolve()
+    records: list[dict[str, object]] = []
+    for row in payload.get("inputs", []):
+        source = (REPOSITORY_ROOT / row["repository_path"]).resolve()
+        if REPOSITORY_ROOT not in source.parents or not source.is_file():
+            raise RuntimeError(f"historical parent source is missing or unsafe: {source}")
+        expected_size = int(row["size_bytes"])
+        expected_sha = str(row["sha256"]).lower()
+        if source.stat().st_size != expected_size or sha256_file(source) != expected_sha:
+            raise RuntimeError(f"historical parent source integrity mismatch: {source}")
+
+        destination = (project_root / row["runtime_path"]).resolve()
+        if project_root not in destination.parents:
+            raise RuntimeError(f"historical parent runtime path escapes project root: {destination}")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if destination.exists():
+            if destination.stat().st_size != expected_size or sha256_file(destination) != expected_sha:
+                raise RuntimeError(f"historical parent runtime conflict: {destination}")
+        else:
+            destination.write_bytes(source.read_bytes())
+        if destination.stat().st_size != expected_size or sha256_file(destination) != expected_sha:
+            raise RuntimeError(f"historical parent materialization failed: {destination}")
+        records.append(
+            {
+                "id": row["id"],
+                "runtime_path": str(destination),
+                "size_bytes": expected_size,
+                "sha256": expected_sha,
+                "bytes_unchanged": True,
+            }
+        )
+    if len(records) != 2:
+        raise RuntimeError("historical parent manifest must contain exactly two Stage 7 inputs")
+    return records
 
 
 def _adapt_text(text: str, project_root: Path) -> tuple[str, int]:
@@ -90,6 +142,10 @@ def _compile_notebook_cells(payload: dict[str, object], label: str) -> None:
 def adapt_notebook(
     source: Path, destination: Path, project_root: Path
 ) -> dict[str, object]:
+    historical_parent_inputs: list[dict[str, object]] = []
+    if source.name == STAGE8_NOTEBOOK_NAME:
+        historical_parent_inputs = _materialize_historical_parent_inputs(project_root)
+
     payload = json.loads(source.read_text(encoding="utf-8-sig"))
     original_has_isic_1252 = any(
         "isic-cli==12.5.2" in "".join(cell.get("source", []))
@@ -122,6 +178,7 @@ def adapt_notebook(
             if original_has_isic_1252
             else []
         ),
+        "historical_parent_inputs": historical_parent_inputs,
         "source_mutated": False,
     }
 
