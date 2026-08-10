@@ -6,7 +6,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from reproduction.adapters import adapt_python
+from reproduction.adapters import _materialize_historical_parent_inputs, adapt_python
 from reproduction.dag import ReproductionDAG
 from reproduction.state import RunState
 from scripts.compare_replay import compare_archive
@@ -72,6 +72,21 @@ class AdapterTests(unittest.TestCase):
                 ["isic-cli==12.5.2 -> isic-cli==12.4.0"],
             )
 
+    def test_stage7_historical_parents_materialize_byte_exactly(self) -> None:
+        manifest = json.loads(
+            (ROOT / "provenance/historical_parent_inputs.json").read_text(encoding="utf-8")
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            project = Path(directory) / "runtime"
+            records = _materialize_historical_parent_inputs(project)
+            self.assertEqual(len(records), 2)
+            for row in manifest["inputs"]:
+                source = ROOT / row["repository_path"]
+                destination = project / row["runtime_path"]
+                self.assertTrue(destination.is_file())
+                self.assertEqual(destination.read_bytes(), source.read_bytes())
+                self.assertEqual(destination.stat().st_size, int(row["size_bytes"]))
+
 
 class StateTests(unittest.TestCase):
     def test_state_round_trip(self) -> None:
@@ -102,6 +117,7 @@ class ComparisonTests(unittest.TestCase):
             frozen = temp / "frozen.zip"
             replay = temp / "replay.zip"
             self._write_zip(frozen, 0.5)
+            replay = temp / "replay.zip"
             self._write_zip(replay, 0.5000001)
             result = compare_archive(frozen, replay, rules)
             self.assertEqual(result["status"], "PASS")
