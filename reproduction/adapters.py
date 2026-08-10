@@ -9,6 +9,9 @@ from pathlib import Path
 from .hashing import sha256_file
 
 
+ISIC_CLI_RUNTIME_PIN = "12.4.0"  # newest release compatible with Python 3.11
+
+
 COLAB_MOUNT = re.compile(
     r"^\s*(?:from\s+google\.colab\s+import\s+drive|drive\.mount\s*\([^\n]*\))\s*$",
     re.MULTILINE,
@@ -25,6 +28,10 @@ def _adapt_text(text: str, project_root: Path) -> tuple[str, int]:
         ("/tmp/cmdo_fake_drive", parent),
         ("/content/drive/Shareddrives", parent),
         ("/content/drive/MyDrive", parent),
+        # The immutable Drive-era sources pin isic-cli 12.5.2, which now
+        # requires Python >=3.12. The replay baseline is Python 3.11, so the
+        # non-destructive runtime copy uses the last compatible CLI release.
+        ("isic-cli==12.5.2", f"isic-cli=={ISIC_CLI_RUNTIME_PIN}"),
     ]
     count = 0
     adapted = text
@@ -50,6 +57,11 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
         "source_sha256": sha256_file(source),
         "adapted_sha256": sha256_file(destination),
         "replacement_count": replacement_count,
+        "runtime_dependency_adaptations": (
+            [f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"]
+            if "isic-cli==12.5.2" in original
+            else []
+        ),
         "source_mutated": False,
     }
 
@@ -79,6 +91,11 @@ def adapt_notebook(
     source: Path, destination: Path, project_root: Path
 ) -> dict[str, object]:
     payload = json.loads(source.read_text(encoding="utf-8-sig"))
+    original_has_isic_1252 = any(
+        "isic-cli==12.5.2" in "".join(cell.get("source", []))
+        for cell in payload.get("cells", [])
+        if cell.get("cell_type") == "code"
+    )
     replacement_count = 0
     for cell in payload.get("cells", []):
         if cell.get("cell_type") != "code":
@@ -100,6 +117,11 @@ def adapt_notebook(
         "source_sha256": sha256_file(source),
         "adapted_sha256": sha256_file(destination),
         "replacement_count": replacement_count,
+        "runtime_dependency_adaptations": (
+            [f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"]
+            if original_has_isic_1252
+            else []
+        ),
         "source_mutated": False,
     }
 
