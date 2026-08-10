@@ -9,12 +9,16 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.11"
       - name: Verify provenance and packaging
         run: python scripts/verify_repository.py
       - name: Verify embedded-source extraction
