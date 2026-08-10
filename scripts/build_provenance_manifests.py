@@ -24,6 +24,14 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _sorted_files(directory: Path) -> list[Path]:
+    """Return files in a platform-independent canonical path order."""
+    return sorted(
+        (item for item in directory.rglob("*") if item.is_file()),
+        key=lambda item: item.relative_to(ROOT).as_posix(),
+    )
+
+
 def csv_text(rows: list[dict[str, object]], fieldnames: list[str]) -> str:
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
@@ -40,7 +48,7 @@ def imported_source_manifest() -> str:
     ]
     rows = []
     for directory in roots:
-        for path in sorted(item for item in directory.rglob("*") if item.is_file()):
+        for path in _sorted_files(directory):
             rows.append(
                 {
                     "repository_path": path.relative_to(ROOT).as_posix(),
@@ -64,7 +72,7 @@ def frozen_asset_manifest() -> str:
     for directory in roots:
         if not directory.exists():
             continue
-        for path in sorted(item for item in directory.rglob("*") if item.is_file()):
+        for path in _sorted_files(directory):
             relative = path.relative_to(ROOT).as_posix()
             role = (
                 "FIGURE_CANONICAL_RECORD"
@@ -112,7 +120,7 @@ def u2_frozen_metrics() -> str | None:
         "brier",
         "log_loss",
     ]
-    for path in sorted(directory.glob("*.npz")):
+    for path in sorted(directory.glob("*.npz"), key=lambda item: item.name):
         with np.load(path, allow_pickle=False) as payload:
             row = {field: payload[field].item() for field in scalar_fields}
         row["cache_file"] = path.name
@@ -227,7 +235,7 @@ def check_or_write(path: Path, expected: str, *, check: bool) -> list[str]:
             return [f"missing generated manifest: {path.relative_to(ROOT)}"]
         actual = path.read_text(encoding="utf-8-sig")
         return [] if actual == expected else [f"stale generated manifest: {path.relative_to(ROOT)}"]
-    path.write_text(expected, encoding="utf-8")
+    path.write_text(expected, encoding="utf-8", newline="\n")
     return []
 
 
@@ -254,7 +262,7 @@ def main() -> int:
     if args.check:
         errors.extend(verify_frozen_assets(frozen_path))
     else:
-        frozen_path.write_text(frozen_asset_manifest(), encoding="utf-8")
+        frozen_path.write_text(frozen_asset_manifest(), encoding="utf-8", newline="\n")
     u2_metrics_path = PROVENANCE / "u2_frozen_metrics.csv"
     u2_metrics = u2_frozen_metrics()
     if u2_metrics is None:
