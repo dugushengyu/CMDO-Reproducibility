@@ -244,7 +244,7 @@ def main() -> int:
     )
     errors.extend(canonical_errors)
 
-    ignored_scan_roots = {".git", "outputs", "dist"}
+    ignored_scan_roots = {".git", ".venv", "outputs", "dist"}
     for path in ROOT.rglob("*"):
         relative_parts = path.relative_to(ROOT).parts
         if not path.is_file() or any(part in ignored_scan_roots for part in relative_parts):
