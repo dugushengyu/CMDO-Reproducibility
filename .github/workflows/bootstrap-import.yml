@@ -3,8 +3,6 @@ name: Bootstrap CMDO publication
 on:
   push:
     branches: [main]
-    paths:
-      - 'CMDO-GitHub-Payload-v0.2.0.zip'
   workflow_dispatch:
 
 permissions:
