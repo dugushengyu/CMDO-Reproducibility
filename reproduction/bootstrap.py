@@ -70,6 +70,7 @@ FRESH_BUNDLES = (
 ARCHIVAL_BUNDLES = (
     "CMDO-Archival-Accepted-Parents-v0.1.zip",
     "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip",
+    "CMDO-Archival-T2G-T2J-Immutable-Companions-v0.1.zip",
 )
 ABORTED_PROTOCOL_NAME = "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json"
 ABORTED_PROTOCOL_SHA256 = "7f5a6450c3341fb1ef067dff5b89f186ce0142fdc8d38648607cd74843fa1a77"
@@ -169,7 +170,10 @@ def prepare_archival_parents(project_root: Path) -> list[dict[str, Any]]:
     Windows/Python 3.11 archival attempt subsequently failed T2-F's immutable
     AMW-U exact-parent reproduction assertion. The accepted historical T2-F
     records are therefore a separate, explicitly classified archival parent
-    bundle. This does not represent T2-F as reproduced in the current runtime.
+    bundle. Historical T2-G/T2-H/T2-I/T2-J companion documents and registries are
+    materialized from a separate byte-verified bundle because the Drive-era
+    implementations require them before execution. This repairs packaging only
+    and does not represent T2-F or any fresh upstream stage as reproduced.
     """
     return [
         materialize_bootstrap_zip(PORTABLE_ROOT / name, project_root)

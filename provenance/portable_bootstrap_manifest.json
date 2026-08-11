@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "classification": "BYTE_VERIFIED_PORTABLE_HISTORICAL_BOOTSTRAP_ARCHIVES",
-  "claim_boundary": "These bytes are portable-only historical prerequisites/accepted-parent records. The archival T2-F accepted-parent extension is explicitly a response to a current-runtime exact-parent numerical non-reproduction and is not evidence that the fresh chain reproduced.",
+  "claim_boundary": "These bytes are portable-only historical prerequisites/accepted-parent records. The archival T2-F accepted-parent extension responds to a current-runtime exact-parent numerical non-reproduction, and the T2-G/T2-J immutable-companion bundle repairs omitted historical documents/registries only. Neither is evidence that the fresh chain reproduced.",
   "files": [
     {
       "file": "CMDO-Archival-Accepted-Parents-v0.1.zip",
@@ -13,6 +13,12 @@
       "file": "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip",
       "size_bytes": 325218,
       "sha256": "03c7c420e45938d3b474cdbb121a28120faaeeadc9dbbf31fc8bd44b9e6b1500",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "CMDO-Archival-T2G-T2J-Immutable-Companions-v0.1.zip",
+      "size_bytes": 26406,
+      "sha256": "56b8fecf9c4de9dadcb16bf0c8e640b9888adbbada56887aec3a41e0dc8a5dcc",
       "distribution": "PORTABLE_ONLY_GITIGNORED"
     },
     {

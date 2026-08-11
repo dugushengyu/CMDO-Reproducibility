@@ -141,3 +141,10 @@ The archival classification is written to
 create a new prospective claim. U9/eICU is excluded from all default reviewer
 profiles. No gate threshold is relaxed to force reproduction. The detailed T2-D
 boundary is machine-readable in `provenance/scientific_boundaries.json`.
+
+
+### Archival companion bootstrap
+
+The Portable bundle also carries byte-verified Drive-era immutable companion files
+needed by T2-G through T2-J (theory/method/preregistration/registry/checklist
+records). These are prerequisites only, not regenerated scientific results.
