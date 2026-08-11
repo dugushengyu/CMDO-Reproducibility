@@ -17,13 +17,6 @@
       "runtime_path": "06_Data_Records/Retinal_DR/Prospective_Retinal_Blind_Test_v0.1/Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1/01_Four_Domain_Edge_Matrix/Stage7_FourDomain_Edge_Matrix_v0.1.csv",
       "size_bytes": 9289,
       "sha256": "f7856f34ece52d6d766be91f25961a2929a394a442d8bc4b1fcec76ee85e9f14"
-    },
-    {
-      "id": "STAGE7_DDO2_DISCOVERY_CANDIDATES",
-      "repository_path": "bootstrap_inputs/stage7/Stage7_DDO2_Discovery_Candidates_v0.1.csv",
-      "runtime_path": "06_Data_Records/Retinal_DR/Prospective_Retinal_Blind_Test_v0.1/Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1/02_DDO2_Prototype/Stage7_DDO2_Discovery_Candidates_v0.1.csv",
-      "size_bytes": 671,
-      "sha256": "019a0ddf47132286cc62b3e8a803568e73a558a2a79d027d77b5bc40b6de2dd9"
     }
   ]
 }
