@@ -22,6 +22,7 @@ ISIC_CLI_RUNTIME_PIN = "12.4.0"
 STAGE8_NOTEBOOK_NAME = "CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_And_Protocol_Seal_v0.1.ipynb"
 T1R_NOTEBOOK_NAME = "CrossModal_StageT1-R_Development_Only_DDET_Mechanism_Kill_Test_v0.1.ipynb"
 T2KR_PIPELINE_NAME = "StageT2KR_CPU_pipeline_v0.4.py"
+T2L_PIPELINE_NAME = "StageT2L_pipeline_v0.1.py"
 STAGE11G_NOTEBOOK_NAME = "CrossModal_Stage11G-R_Development_Only_DDO2_Decisive_Viability_Kill_Test_v0.1.ipynb"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 COLAB_MOUNT = re.compile(r"^\s*(?:from\s+google\.colab\s+import\s+drive|drive\.mount\s*\([^\n]*\))\s*$", re.MULTILINE)
@@ -425,10 +426,162 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
             "scientific_thresholds_changed": False,
             "reason": "avoid Windows text-mode CRLF translation while preserving frozen LF SHA-256 commitments",
         })
+    if source.name == T2L_PIPELINE_NAME:
+        old_write = 'path.write_text(text, encoding="utf-8")'
+        new_write = 'path.write_bytes(text.encode("utf-8"))'
+        occurrences = adapted.count(old_write)
+        if occurrences != 1:
+            raise RuntimeError(
+                f"expected exactly one T2-L embedded companion writer, found {occurrences}"
+            )
+        adapted = adapted.replace(old_write, new_write, 1)
+        # Windows compatibility only. T2-L executes at module top
+        # level; DataLoader multiprocessing therefore recursively executes
+        # the whole pipeline under Windows spawn.
+        old_workers = 'shuffle=False, num_workers=2, pin_memory=False'
+        new_workers = 'shuffle=False, num_workers=0 if os.name == "nt" else 2, pin_memory=False'
+        worker_occurrences = adapted.count(old_workers)
+        if worker_occurrences != 1:
+            raise RuntimeError(
+                f"expected exactly one T2-L DataLoader worker configuration, "
+                f"found {worker_occurrences}"
+            )
+        adapted = adapted.replace(old_workers, new_workers, 1)
+        platform_adaptations.append({
+            "rule": "t2l_windows_dataloader_single_process",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "reason": "Windows spawn recursively executes the top-level T2-L pipeline; single-process loading preserves frozen image ordering and main-process inference",
+        })
+        platform_adaptations.append({
+            "rule": "t2l_embedded_companion_lf_byte_stability",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "reason": "preserve frozen LF SHA-256 commitments for T2-L embedded theory, preregistration, registry and manual files on Windows",
+        })
+
     adapted, replacements = _apply_known_text_bindings(adapted, project_root)
     for item in _smart_rebindings(adapted, project_root):
-        adapted, n = _replace_hash_in_text(adapted, item["historical_hash"], item["fresh_replay_hash"])
-        if n: item["occurrences"] = n; replacements.append(item)
+        # T2-L contains the historical T2-KR parent hash both in the runtime
+        # EXPECTED_PARENT dictionary and inside the frozen embedded preregistration.
+        # Do not globally rewrite this commitment: the targeted adapter below
+        # rebinds only EXPECTED_PARENT["t2kr"] while preserving the prereg bytes.
+        if (
+            source.name == T2L_PIPELINE_NAME
+            and Path(item["resolved_parent"]).name in {
+                "StageT2-KR_Complete_v0.4.json",
+                "StageT2-H_Complete_v0.1.json",
+                "StageT3-PF_Activation_Record_v1.0.json",
+            }
+        ):
+            continue
+        adapted, n = _replace_hash_in_text(
+            adapted,
+            item["historical_hash"],
+            item["fresh_replay_hash"],
+        )
+        if n:
+            item["occurrences"] = n
+            replacements.append(item)
+
+    if source.name == T2L_PIPELINE_NAME:
+        # Targeted runtime-only parent rebinding.
+        #
+        # T2-L embeds frozen historical documents that may themselves mention
+        # historical parent hashes. Therefore parent rebinding is restricted
+        # to the EXPECTED_PARENT dictionary and must never be a global textual
+        # replacement.
+        t2l_runtime_parents = {
+            "t2kr": (
+                project_root
+                / "06_Data_Records"
+                / "Cross_Modal"
+                / "StageT2-KR_Frozen_Axis_Schema_Adapter_And_CPU_Continuation_v0.4"
+                / "06_Results"
+                / "StageT2-KR_Complete_v0.4.json"
+            ),
+            "t2h": (
+                project_root
+                / "06_Data_Records"
+                / "Cross_Modal"
+                / "StageT2-H_Development_Only_Single_Pilot_Deployability_And_Sequential_Forecast_Freeze_v0.1"
+                / "04_Results"
+                / "StageT2-H_Complete_v0.1.json"
+            ),
+            "t3pf": (
+                project_root
+                / "06_Data_Records"
+                / "Cross_Modal"
+                / "StageT3-PF_Outcome-Free_Preregistration_And_Asset_Preflight_v1.0"
+                / "04_Results"
+                / "StageT3-PF_Activation_Record_v1.0.json"
+            ),
+        }
+
+        parent_block = re.search(
+            r'EXPECTED_PARENT\s*=\s*\{(?P<body>.*?)\}\s*\nEXPECTED_DOCS\s*=\s*\{',
+            adapted,
+            flags=re.DOTALL,
+        )
+        if parent_block is None:
+            raise RuntimeError("Could not isolate T2-L EXPECTED_PARENT dictionary")
+
+        body = parent_block.group("body")
+        updated_body = body
+
+        for parent_key, parent_path in t2l_runtime_parents.items():
+            fresh_hash = _self_hash_from_json(parent_path)
+            if fresh_hash is None:
+                raise RuntimeError(
+                    f"could not verify replay-generated {parent_key} self-hash: "
+                    f"{parent_path}"
+                )
+
+            key_pattern = re.compile(
+                rf'("{re.escape(parent_key)}"\s*:\s*")([0-9a-f]{{64}})(")'
+            )
+
+            matches = list(key_pattern.finditer(updated_body))
+            if len(matches) != 1:
+                raise RuntimeError(
+                    f"expected exactly one EXPECTED_PARENT[{parent_key}] "
+                    f"commitment, found {len(matches)}"
+                )
+
+            historical_hash = matches[0].group(2)
+
+            if historical_hash != fresh_hash:
+                updated_body, n = key_pattern.subn(
+                    lambda m, value=fresh_hash:
+                        m.group(1) + value + m.group(3),
+                    updated_body,
+                    count=1,
+                )
+                if n != 1:
+                    raise RuntimeError(
+                        f"T2-L {parent_key} runtime parent rebinding failed"
+                    )
+
+                replacements.append({
+                    "historical_hash": historical_hash,
+                    "fresh_replay_hash": fresh_hash,
+                    "resolved_parent": str(parent_path),
+                    "occurrences": 1,
+                    "basis": "targeted_t2l_runtime_parent_self_hashes",
+                    "parent_key": parent_key,
+                    "frozen_embedded_documents_mutated": False,
+                })
+
+        adapted = (
+            adapted[:parent_block.start("body")]
+            + updated_body
+            + adapted[parent_block.end("body"):]
+        )
+
     compile(adapted, str(destination), "exec"); destination.parent.mkdir(parents=True, exist_ok=True); destination.write_text(adapted, encoding="utf-8", newline="\n")
     return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements)+sum(int(x["occurrences"]) for x in platform_adaptations),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if "isic-cli==12.5.2" in original else [],"runtime_replay_parent_hash_adaptations":replacements,"runtime_platform_adaptations":platform_adaptations,"source_mutated":False}
 

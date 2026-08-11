@@ -189,6 +189,141 @@ class AdapterTests(unittest.TestCase):
                 ["isic-cli==12.5.2 -> isic-cli==12.4.0"],
             )
 
+    def test_t2l_windows_and_targeted_parent_adapters(self) -> None:
+        import ast
+
+        source = ROOT / (
+            "legacy/extracted_authoritative/t_series/"
+            "StageT2L_pipeline_v0.1.py"
+        )
+        source_before = source.read_bytes()
+
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            project = temp / "P"
+
+            parents = {
+                "t2kr": (
+                    project
+                    / "06_Data_Records/Cross_Modal/"
+                    "StageT2-KR_Frozen_Axis_Schema_Adapter_And_CPU_Continuation_v0.4/"
+                    "06_Results/StageT2-KR_Complete_v0.4.json",
+                    "final_record_sha256",
+                    "T2KR",
+                ),
+                "t2h": (
+                    project
+                    / "06_Data_Records/Cross_Modal/"
+                    "StageT2-H_Development_Only_Single_Pilot_Deployability_And_Sequential_Forecast_Freeze_v0.1/"
+                    "04_Results/StageT2-H_Complete_v0.1.json",
+                    "final_record_sha256",
+                    "T2H",
+                ),
+                "t3pf": (
+                    project
+                    / "06_Data_Records/Cross_Modal/"
+                    "StageT3-PF_Outcome-Free_Preregistration_And_Asset_Preflight_v1.0/"
+                    "04_Results/StageT3-PF_Activation_Record_v1.0.json",
+                    "activation_record_sha256",
+                    "T3PF",
+                ),
+            }
+
+            expected_runtime = {}
+
+            for key, (path, field, stage) in parents.items():
+                path.parent.mkdir(parents=True, exist_ok=True)
+                core = {"stage": stage, "test_value": 1}
+                payload = dict(core)
+                payload[field] = canonical_json_hash(core)
+                path.write_text(
+                    json.dumps(payload, indent=2) + "\n",
+                    encoding="utf-8",
+                    newline="\n",
+                )
+                expected_runtime[key] = payload[field]
+
+            destination = temp / "adapted_t2l.py"
+            record = adapt_python(source, destination, project)
+
+            def assigned(path):
+                tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+                wanted = {
+                    "EXPECTED_PARENT",
+                    "EXPECTED_DOCS",
+                    "EMBEDDED_THEORY",
+                    "EMBEDDED_PREREG",
+                    "EMBEDDED_REGISTRY",
+                    "EMBEDDED_MANUAL",
+                }
+                out = {}
+                for stmt in tree.body:
+                    if not isinstance(stmt, ast.Assign) or len(stmt.targets) != 1:
+                        continue
+                    target = stmt.targets[0]
+                    if isinstance(target, ast.Name) and target.id in wanted:
+                        out[target.id] = ast.literal_eval(stmt.value)
+                return out
+
+            original = assigned(source)
+            adapted = assigned(destination)
+            adapted_text = destination.read_text(encoding="utf-8")
+
+            for key in [
+                "EXPECTED_DOCS",
+                "EMBEDDED_THEORY",
+                "EMBEDDED_PREREG",
+                "EMBEDDED_REGISTRY",
+                "EMBEDDED_MANUAL",
+            ]:
+                self.assertEqual(adapted[key], original[key])
+
+            self.assertEqual(
+                adapted["EXPECTED_PARENT"],
+                expected_runtime,
+            )
+
+            self.assertIn(
+                'path.write_bytes(text.encode("utf-8"))',
+                adapted_text,
+            )
+            self.assertIn(
+                'shuffle=False, num_workers=0 if os.name == "nt" else 2, pin_memory=False',
+                adapted_text,
+            )
+
+            platform_rules = {
+                item["rule"]
+                for item in record["runtime_platform_adaptations"]
+            }
+            self.assertIn(
+                "t2l_embedded_companion_lf_byte_stability",
+                platform_rules,
+            )
+            self.assertIn(
+                "t2l_windows_dataloader_single_process",
+                platform_rules,
+            )
+
+            targeted = [
+                item
+                for item in record["runtime_replay_parent_hash_adaptations"]
+                if item.get("basis")
+                == "targeted_t2l_runtime_parent_self_hashes"
+            ]
+            self.assertEqual(
+                {item["parent_key"] for item in targeted},
+                {"t2kr", "t2h", "t3pf"},
+            )
+            self.assertTrue(
+                all(
+                    item["frozen_embedded_documents_mutated"] is False
+                    for item in targeted
+                )
+            )
+
+        self.assertEqual(source.read_bytes(), source_before)
+
 
 class StateTests(unittest.TestCase):
     def test_scientific_boundary_is_persistent_governance_state(self) -> None:
