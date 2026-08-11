@@ -21,6 +21,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 ISIC_CLI_RUNTIME_PIN = "12.4.0"
 STAGE8_NOTEBOOK_NAME = "CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_And_Protocol_Seal_v0.1.ipynb"
 T1R_NOTEBOOK_NAME = "CrossModal_StageT1-R_Development_Only_DDET_Mechanism_Kill_Test_v0.1.ipynb"
+T2KR_PIPELINE_NAME = "StageT2KR_CPU_pipeline_v0.4.py"
 STAGE11G_NOTEBOOK_NAME = "CrossModal_Stage11G-R_Development_Only_DDO2_Decisive_Viability_Kill_Test_v0.1.ipynb"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 COLAB_MOUNT = re.compile(r"^\s*(?:from\s+google\.colab\s+import\s+drive|drive\.mount\s*\([^\n]*\))\s*$", re.MULTILINE)
@@ -388,12 +389,29 @@ def _apply_known_text_bindings(text: str, project_root: Path) -> tuple[str, list
 
 def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[str, object]:
     original = source.read_text(encoding="utf-8-sig"); adapted, count = _adapt_text(original, project_root)
+    platform_adaptations: list[dict[str, object]] = []
+    if source.name == T2KR_PIPELINE_NAME:
+        old_write = 'path.write_text(text, encoding="utf-8")'
+        new_write = 'path.write_bytes(text.encode("utf-8"))'
+        occurrences = adapted.count(old_write)
+        if occurrences != 1:
+            raise RuntimeError(
+                f"expected exactly one T2-KR embedded-text writer, found {occurrences}"
+            )
+        adapted = adapted.replace(old_write, new_write, 1)
+        platform_adaptations.append({
+            "rule": "t2kr_embedded_text_lf_byte_stability",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "reason": "avoid Windows text-mode CRLF translation while preserving frozen LF SHA-256 commitments",
+        })
     adapted, replacements = _apply_known_text_bindings(adapted, project_root)
     for item in _smart_rebindings(adapted, project_root):
         adapted, n = _replace_hash_in_text(adapted, item["historical_hash"], item["fresh_replay_hash"])
         if n: item["occurrences"] = n; replacements.append(item)
     compile(adapted, str(destination), "exec"); destination.parent.mkdir(parents=True, exist_ok=True); destination.write_text(adapted, encoding="utf-8", newline="\n")
-    return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if "isic-cli==12.5.2" in original else [],"runtime_replay_parent_hash_adaptations":replacements,"source_mutated":False}
+    return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements)+sum(int(x["occurrences"]) for x in platform_adaptations),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if "isic-cli==12.5.2" in original else [],"runtime_replay_parent_hash_adaptations":replacements,"runtime_platform_adaptations":platform_adaptations,"source_mutated":False}
 
 
 def adapt_notebook(source: Path, destination: Path, project_root: Path) -> dict[str, object]:

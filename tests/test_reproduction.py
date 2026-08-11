@@ -111,6 +111,42 @@ class AdapterTests(unittest.TestCase):
             bases = [row["basis"] for row in record["runtime_replay_parent_hash_adaptations"]]
             self.assertTrue(any("normalized file_sha256 t2h_file" in value for value in bases))
 
+    def test_t2kr_embedded_text_materialisation_is_lf_byte_stable(self) -> None:
+        import ast
+        import hashlib
+        source = ROOT / "legacy/extracted_authoritative/t_series/StageT2KR_CPU_pipeline_v0.4.py"
+        original_bytes = source.read_bytes()
+        tree = ast.parse(source.read_text(encoding="utf-8-sig"))
+        assigned = {}
+        for stmt in tree.body:
+            if not isinstance(stmt, ast.Assign) or len(stmt.targets) != 1:
+                continue
+            target = stmt.targets[0]
+            if not isinstance(target, ast.Name):
+                continue
+            if target.id in {"EMBEDDED_PREREG_TEXT", "EMBEDDED_METHOD_TEXT", "EMBEDDED_LEXICON_TEXT", "EXPECTED"}:
+                assigned[target.id] = ast.literal_eval(stmt.value)
+        expected = assigned["EXPECTED"]
+        for text_name, hash_key in [
+            ("EMBEDDED_PREREG_TEXT", "prereg_sha256"),
+            ("EMBEDDED_METHOD_TEXT", "method_sha256"),
+            ("EMBEDDED_LEXICON_TEXT", "lexicon_sha256"),
+        ]:
+            observed = hashlib.sha256(assigned[text_name].encode("utf-8")).hexdigest()
+            self.assertEqual(observed, expected[hash_key])
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            destination = temp / source.name
+            record = adapt_python(source, destination, temp / "P")
+            adapted = destination.read_text(encoding="utf-8")
+            self.assertIn('path.write_bytes(text.encode("utf-8"))', adapted)
+            self.assertNotIn('path.write_text(text, encoding="utf-8")', adapted)
+            self.assertEqual(
+                record["runtime_platform_adaptations"][0]["rule"],
+                "t2kr_embedded_text_lf_byte_stability",
+            )
+        self.assertEqual(source.read_bytes(), original_bytes)
+
     def test_adapter_uses_python311_compatible_isic_cli_without_mutating_source(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
