@@ -148,9 +148,25 @@ class AdapterTests(unittest.TestCase):
             adapted = destination.read_text(encoding="utf-8")
             self.assertIn('path.write_bytes(text.encode("utf-8"))', adapted)
             self.assertNotIn('path.write_text(text, encoding="utf-8")', adapted)
-            self.assertEqual(
-                record["runtime_platform_adaptations"][0]["rule"],
+            rules = {
+                item["rule"]
+                for item in record["runtime_platform_adaptations"]
+            }
+            self.assertIn(
                 "t2kr_embedded_text_lf_byte_stability",
+                rules,
+            )
+            self.assertIn(
+                "t2kr_windows_dataloader_single_process",
+                rules,
+            )
+            self.assertIn(
+                'shuffle=False, num_workers=0 if os.name == "nt" else 2, pin_memory=False',
+                adapted,
+            )
+            self.assertIn(
+                'shuffle=False, num_workers=2, pin_memory=False',
+                source.read_text(encoding="utf-8-sig"),
             )
         self.assertEqual(source.read_bytes(), original_bytes)
 

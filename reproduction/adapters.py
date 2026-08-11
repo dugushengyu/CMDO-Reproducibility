@@ -399,6 +399,25 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
                 f"expected exactly one T2-KR embedded-text writer, found {occurrences}"
             )
         adapted = adapted.replace(old_write, new_write, 1)
+        # Windows compatibility only: the authoritative T2-KR script
+        # executes at module top level. Windows DataLoader multiprocessing
+        # uses spawn and recursively re-executes the whole pipeline.
+        old_workers = 'shuffle=False, num_workers=2, pin_memory=False'
+        new_workers = 'shuffle=False, num_workers=0 if os.name == "nt" else 2, pin_memory=False'
+        worker_occurrences = adapted.count(old_workers)
+        if worker_occurrences != 1:
+            raise RuntimeError(
+                f"expected exactly one T2-KR DataLoader worker configuration, found {worker_occurrences}"
+            )
+        adapted = adapted.replace(old_workers, new_workers, 1)
+        platform_adaptations.append({
+            "rule": "t2kr_windows_dataloader_single_process",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "reason": "Windows spawn cannot safely execute workers from the top-level historical T2-KR script; single-process loading preserves image order and main-process inference",
+        })
         platform_adaptations.append({
             "rule": "t2kr_embedded_text_lf_byte_stability",
             "occurrences": 1,
