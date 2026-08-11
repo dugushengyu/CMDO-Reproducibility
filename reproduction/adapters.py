@@ -14,6 +14,11 @@ ISIC_CLI_RUNTIME_PIN = "12.4.0"  # newest release compatible with Python 3.11
 STAGE8_NOTEBOOK_NAME = (
     "CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_And_Protocol_Seal_v0.1.ipynb"
 )
+REQUIRED_STAGE7_PARENT_IDS = {
+    "STAGE7_FINAL_RECORD",
+    "STAGE7_EDGE_MATRIX",
+    "STAGE7_DDO2_DISCOVERY_CANDIDATES",
+}
 
 
 COLAB_MOUNT = re.compile(
@@ -23,7 +28,7 @@ COLAB_MOUNT = re.compile(
 
 
 def _materialize_historical_parent_inputs(project_root: Path) -> list[dict[str, object]]:
-    """Restore byte-verified Stage 7 parent records required by Stage 8.
+    """Restore byte-verified Stage 7 parent records required by Stage 8/Stage 9.
 
     Stage 7 is a frozen historical parent of the accepted Stage 8-to-U8 replay,
     not a stage re-executed by the full-claim profile. Existing runtime files are
@@ -65,8 +70,13 @@ def _materialize_historical_parent_inputs(project_root: Path) -> list[dict[str, 
                 "bytes_unchanged": True,
             }
         )
-    if len(records) != 2:
-        raise RuntimeError("historical parent manifest must contain exactly two Stage 7 inputs")
+
+    actual_ids = {str(record["id"]) for record in records}
+    if actual_ids != REQUIRED_STAGE7_PARENT_IDS:
+        raise RuntimeError(
+            "historical parent manifest must contain the complete Stage 7 parent set; "
+            f"expected={sorted(REQUIRED_STAGE7_PARENT_IDS)} actual={sorted(actual_ids)}"
+        )
     return records
 
 
