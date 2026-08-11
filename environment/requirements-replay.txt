@@ -32,6 +32,8 @@ gdown==5.2.0
 kaggle==1.6.17
 kagglehub==0.3.4
 pydicom==3.0.1
+pylibjpeg==2.0.1
+pylibjpeg-libjpeg==2.0.1
 py7zr==0.22.0
 mat73==0.65
 cryptography==44.0.0

@@ -1,95 +1,95 @@
 # End-to-end reproduction contract
 
-## What “end to end” means here
+## Evidence modes
 
-The package now distinguishes four levels of evidence:
+| Profile | Starts from | Retrains | Meaning |
+|---|---|---:|---|
+| `audit` | repository bytes/manifests | No | engineering/provenance integrity |
+| `smoke` | one official public dataset | small model | environment sanity only |
+| `frozen` | canonical result ZIPs | No | fastest publication-figure verification |
+| `full-claim` | official/public raw assets plus declared historical prerequisites | Yes | fresh retrospective raw-to-science replay, subject to scientific boundary |
+| `archival-continuation` | byte-verified accepted historical T2-D/T2-E parents | downstream only | historical implementation audit; **not fresh reproduction** |
+| `historical-replay` | broader legacy path | Yes | discovery-history audit |
 
-| Profile | Starts from | Retrains | Produces | Intended use |
-|---|---|---:|---|---|
-| `audit` | source and manifests | No | integrity ledger | code/provenance review |
-| `smoke` | one official public dataset | Yes, small model | metrics + ROC | environment sanity check |
-| `frozen` | canonical result ZIPs | No | all publication figures | fastest reviewer verification |
-| `full-claim` | official/public or user-authorized raw assets | Yes | T/U replay, comparison report, figures | deepest claim-path reconstruction |
-| `historical-replay` | full path plus legacy raw assets | Yes | failed/superseded branches too | discovery-history audit |
+The machine-readable graph is `provenance/reproduction_dag.json`. The fresh
+`full-claim` plan declares 55 nodes. T3-PF is structurally positioned after T2-F and
+before T2-G because T2-G and later development stages consume its activation record.
+U9 is absent from the accepted/default paths.
 
-The authoritative machine-readable graph is
-`provenance/reproduction_dag.json`. The accepted `full-claim` plan currently has 55
-ordered nodes. The principal flow is:
+## Historical bootstrap boundary
 
-```mermaid
-flowchart TD
-    A[Official raw datasets] --> B[Stage 8-11 acquisition and representations]
-    B --> C[T1-T4 development and disclosed blind replay]
-    C --> D[U0-U3 observability and U2 fresh training]
-    D --> E[U4-U7 prospective-stage disclosed replay]
-    E --> F[U8 NHANES reconstruction]
-    F --> G[Golden/tolerance comparison]
-    G --> H[Publication figures]
-```
+Several early records are frozen historical parents rather than stages that can be
+regenerated without changing the accepted protocol chronology. The reviewer portable
+bundle therefore includes byte-verified archives under `bootstrap_inputs/portable/`:
+
+- Stage 7 parents required by Stage 8/9;
+- Stage11E aborted pre-execution mixed-endpoint protocol record;
+- T1-R historical representations and protocol parents;
+- T2-D and T2-E historical protocol/preregistration parents;
+- an archival accepted-parent bundle used only by `archival-continuation`.
+
+These bytes are Git-ignored because of size/redistribution boundaries. The runner
+verifies every member hash and refuses to overwrite a conflicting runtime file.
+
+Stage11C also requires six historical official provider receipt files. Their exact
+identity is declared in `provenance/historical_receipts.json`. They are prerequisites
+for reconstructing the historical acquisition path; they are not described as fresh
+downloads.
 
 ## Immutable originals and runtime adapters
 
-Files under `legacy/original_authoritative/` are imported evidence. Files under
-`legacy/extracted_authoritative/` are byte-exact decoded payloads whose SHA-256 is
-recorded in `provenance/extracted_payloads_manifest.csv`.
+`legacy/original_authoritative/` preserves imported evidence. Runtime adapters are
+non-destructive. Immediately before each source stage, the runner regenerates the
+adapted copy so SHA commitments to newly reproduced upstream parents can be rebound
+from the actual byte-verified runtime files rather than stale historical hashes.
 
-The runner never edits those sources. It creates two separate runtime views:
+The adapter records every source/adapted SHA and semantic runtime adaptation. It also
+contains two explicitly governed portability adaptations discovered by fresh replay:
+Windows extended-length addressing for T1-R and a Stage11G invariant check that
+preserves failed-gate identity instead of requiring an environment-sensitive exact
+intermediate count. Neither adaptation relaxes T2-D/T2-E scientific gates.
 
-1. an unchanged `05_Code/Cross_Modal` mirror, so historical self-hash commitments
-   continue to read the original bytes; and
-2. adapted execution copies in the run directory, where Colab mount calls and
-   `/content/drive/...` paths are redirected to an isolated local work tree.
+## Numerical environment
 
-Every source/adapted hash and replacement count is written to
-`adapted_source_manifest.json`. Notebook-container drift caused by saved Colab
-outputs is recorded separately in `provenance/container_revision_audit.json`; when
-the embedded pipeline matches the release-manifest hash, that extracted pipeline is
-the execution authority.
+The replay environment is constrained by `environment/replay-constraints.txt`.
+Fresh diagnostics identified a localized Stage11E near-zero-variance conditioning
+defect under a different execution stack; it is documented as a hardening candidate,
+not used to retroactively claim that the historical T2-D authorisation reproduced.
+No analogous constant-to-tiny discontinuity was found in Stage8/Stage8B.
 
-## Training and nondeterminism
+## Scientific divergence semantics
 
-U2 has two distinct assets and checks:
+The historical T2-D v0.1 certificate passed 11/11 frozen gates. On the reference
+fresh current-runtime replay, T2-D executed to completion but passed 10/11 because
+G4 (target-cluster exact sign-flip) did not reproduce the historical authorisation
+boundary. After mechanism audits and predeclared development probes, no gate was
+relaxed and further T2-D tuning on the observed development evidence was closed.
 
-- the authoritative epoch-12 checkpoint and 38 environment prediction caches support
-  the frozen fast route;
-- the full route calls the continuation training entry point in a fresh data root,
-  so training runs again rather than silently installing the authoritative weights.
+Accordingly, a non-authorising fresh T2-D result raises
+`SCIENTIFIC_DIVERGENCE_BOUNDARY` and returns exit status `4`. The generated T2-D
+artifacts are preserved, the ledger records the evidence, and fresh downstream
+execution stops. This is deliberately distinct from an engineering failure (`1`) or
+prerequisite block (`3`).
 
-GPU kernels, BLAS implementations and library builds can prevent model-file byte
-identity even with fixed seeds. Therefore checkpoint SHA equality is explicitly not
-an acceptance criterion for a fresh training replay. Target roster, sample counts,
-governance decisions and structural fields are exact; performance metrics use the
-tolerances in `provenance/replay_acceptance_rules.json` and are reported target by
-target.
+## Archival continuation
 
-U3-U7 train their source models inside their original scripts. U8 downloads the
-official CDC files, reproduces the pre-outcome assets, requires the frozen 19,097-row
-target-score commitment, and then runs the disclosed post-unseal reconstruction.
+`archival-continuation` materializes accepted historical T2-D/T2-E parent records and
+continues the declared downstream historical path. Its project root should be
+separate from a fresh replay root. The runner writes an explicit archival
+classification and sets `fresh_raw_to_science_reproduction=false`. Results from this
+mode may audit downstream implementation, but must never be presented as successful
+fresh reproduction of the raw-to-science chain.
 
-## Resume, logging and failure semantics
+## Resume and transactional cleanup
 
-Each run writes:
+`run_state.json` is resumable. A stage is skipped only with `--resume` and status
+`COMPLETE`. A sealed scientific boundary cannot be skipped into downstream fresh
+stages. For engineering failures, the runner removes only newly created stage-owned
+top-level output entries; pre-existing data and successfully completed scientific
+boundary artifacts are preserved.
 
-- `run_state.json` with environment, governance classification and per-stage state;
-- `logs/<stage>.log` with the command output and log SHA-256;
-- an authoritative code-mirror manifest;
-- an adapted-source manifest;
-- scientific outputs inside the isolated project work tree;
-- a replay comparison report after U8;
-- replay-derived figures after all comparisons pass.
+## What is never automatic
 
-A completed stage is skipped only when `--resume` is given and the ledger says
-`COMPLETE`. Missing terms, raw assets, network authority, MATLAB or Python packages
-produce a typed blocking state. The runner never converts those conditions into a
-pass.
-
-## What is not automatic
-
-- Accepting Kaggle, PhysioNet, challenge, author-request or other provider terms.
-- Redistributing raw data whose terms do not permit it.
-- Treating retrospective replay as a new prospective experiment.
-- Running U9/eICU.
-- Deleting Drive or GitHub content.
-
-Those boundaries are deliberate reproducibility controls, not missing scientific
-steps.
+Provider-term acceptance, redistribution of restricted raw data, creation of a new
+prospective claim, U9/eICU execution, and Drive/GitHub deletion are outside the
+reviewer replay. Those are governance boundaries, not missing scientific steps.

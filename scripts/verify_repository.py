@@ -143,6 +143,58 @@ def verify_optional_frozen_assets() -> list[str]:
     return errors
 
 
+def verify_optional_portable_bootstraps() -> list[str]:
+    errors: list[str] = []
+    root = ROOT / "bootstrap_inputs/portable"
+    if not root.is_dir():
+        return errors
+    manifest_path = ROOT / "provenance/portable_bootstrap_manifest.json"
+    try:
+        outer = json.loads(manifest_path.read_text(encoding="utf-8"))
+        declared = {row["file"]: row for row in outer["files"]}
+        for name, row in declared.items():
+            path = root / name
+            if not path.is_file():
+                errors.append(f"portable bootstrap declared but absent: {name}")
+                continue
+            if path.stat().st_size != int(row["size_bytes"]) or sha256(path) != row["sha256"]:
+                errors.append(f"portable bootstrap outer identity mismatch: {name}")
+    except Exception as exc:
+        errors.append(f"invalid portable bootstrap outer manifest: {exc}")
+    for bundle in sorted(root.glob("*.zip")):
+        try:
+            with zipfile.ZipFile(bundle) as archive:
+                broken = archive.testzip()
+                if broken:
+                    errors.append(f"portable bootstrap corrupt member: {bundle.name}: {broken}")
+                    continue
+                if "BOOTSTRAP_MANIFEST.json" not in archive.namelist():
+                    errors.append(f"portable bootstrap lacks BOOTSTRAP_MANIFEST.json: {bundle.name}")
+                    continue
+                manifest = json.loads(archive.read("BOOTSTRAP_MANIFEST.json"))
+                rows = manifest.get("files", [])
+                if int(manifest.get("file_count", len(rows))) != len(rows):
+                    errors.append(f"portable bootstrap file_count mismatch: {bundle.name}")
+                for row in rows:
+                    rel = row["relative_path"]
+                    if rel not in archive.namelist():
+                        errors.append(f"portable bootstrap member missing: {bundle.name}: {rel}")
+                        continue
+                    data = archive.read(rel)
+                    if len(data) != int(row["size_bytes"]):
+                        errors.append(f"portable bootstrap size mismatch: {bundle.name}: {rel}")
+                    if hashlib.sha256(data).hexdigest() != row["sha256"]:
+                        errors.append(f"portable bootstrap SHA mismatch: {bundle.name}: {rel}")
+        except Exception as exc:
+            errors.append(f"invalid portable bootstrap {bundle.name}: {exc}")
+    aborted = root / "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json"
+    if aborted.exists():
+        expected = "7f5a6450c3341fb1ef067dff5b89f186ce0142fdc8d38648607cd74843fa1a77"
+        if aborted.stat().st_size != 2370 or sha256(aborted) != expected:
+            errors.append("Stage11E-R aborted historical protocol bootstrap identity mismatch")
+    return errors
+
+
 def verify_reproduction_metadata() -> list[str]:
     errors: list[str] = []
     try:
@@ -154,10 +206,33 @@ def verify_reproduction_metadata() -> list[str]:
             if stage.source and not (ROOT / stage.source).is_file():
                 errors.append(f"DAG source missing: {stage.id}: {stage.source}")
         full = dag.select("full-claim")
+        full_ids = [stage.id for stage in full]
         if not any(stage.id == "u2_train_replay" for stage in full):
             errors.append("full-claim DAG does not contain U2 fresh training")
         if any("u9" in stage.id.lower() for stage in full):
             errors.append("full-claim DAG must not auto-run U9")
+        if len(full_ids) != 55:
+            errors.append(f"full-claim DAG must declare 55 nodes, found {len(full_ids)}")
+        try:
+            if not (full_ids.index("t2f_covariate_balance") < full_ids.index("t3pf_preflight") < full_ids.index("t2g_hierarchy")):
+                errors.append("full-claim DAG must order T2-F -> T3-PF -> T2-G")
+        except ValueError:
+            errors.append("full-claim DAG lacks T2-F/T3-PF/T2-G structural nodes")
+
+        archival = dag.select("archival-continuation")
+        archival_ids = [stage.id for stage in archival]
+        if "t2d_witness" in archival_ids or "t2e_baselines" in archival_ids:
+            errors.append("archival-continuation must not execute fresh T2-D/T2-E")
+        for required in ("archival_preflight", "t2f_covariate_balance", "t3pf_preflight", "t2g_hierarchy", "u8_nhanes_reconstruction"):
+            if required not in archival_ids:
+                errors.append(f"archival-continuation lacks {required}")
+        if any("u9" in stage_id.lower() for stage_id in archival_ids):
+            errors.append("archival-continuation must not auto-run U9")
+        try:
+            if not (archival_ids.index("t2f_covariate_balance") < archival_ids.index("t3pf_preflight") < archival_ids.index("t2g_hierarchy")):
+                errors.append("archival-continuation must order T2-F -> T3-PF -> T2-G")
+        except ValueError:
+            pass
     except Exception as exc:
         errors.append(f"invalid reproduction DAG: {exc}")
 
@@ -176,6 +251,36 @@ def verify_reproduction_metadata() -> list[str]:
             errors.append("eICU/U9 must remain excluded from default profiles")
     except Exception as exc:
         errors.append(f"invalid dataset registry: {exc}")
+
+    receipts_path = ROOT / "provenance/historical_receipts.json"
+    try:
+        receipts = json.loads(receipts_path.read_text(encoding="utf-8"))
+        rows = receipts["files"]
+        if len(rows) != 6:
+            errors.append(f"historical receipt manifest must declare six files, found {len(rows)}")
+        if len({row["id"] for row in rows}) != len(rows):
+            errors.append("historical receipt manifest contains duplicate IDs")
+        if len({row["relative_path"] for row in rows}) != len(rows):
+            errors.append("historical receipt manifest contains duplicate paths")
+        for row in rows:
+            if int(row.get("size_bytes", 0)) <= 0 or not re.fullmatch(r"[0-9a-f]{64}", str(row.get("sha256", ""))):
+                errors.append(f"invalid historical receipt identity: {row.get('id')}")
+    except Exception as exc:
+        errors.append(f"invalid historical receipt manifest: {exc}")
+
+    boundary_path = ROOT / "provenance/scientific_boundaries.json"
+    try:
+        boundary = json.loads(boundary_path.read_text(encoding="utf-8"))
+        if boundary.get("fresh_full_claim", {}).get("stage") != "t2d_witness":
+            errors.append("scientific boundary must identify T2-D as the fresh full-claim stop")
+        if boundary.get("fresh_full_claim", {}).get("exit_code") != 4:
+            errors.append("scientific boundary exit code must be 4")
+        if boundary.get("u9_excluded") is not True:
+            errors.append("scientific boundary manifest must keep U9 excluded")
+        if boundary.get("archival_continuation", {}).get("fresh_raw_to_science_reproduction") is not False:
+            errors.append("archival continuation must be explicitly non-fresh")
+    except Exception as exc:
+        errors.append(f"invalid scientific boundary manifest: {exc}")
 
     audit_path = ROOT / "provenance/container_revision_audit.json"
     try:
@@ -238,6 +343,7 @@ def main() -> int:
     )
     errors.extend(verify_u9_manifest())
     errors.extend(verify_optional_frozen_assets())
+    errors.extend(verify_optional_portable_bootstraps())
     errors.extend(verify_reproduction_metadata())
     canonical_errors, canonical_checked = verify_canonical_archives(
         args.require_canonical

@@ -19,8 +19,15 @@ except ModuleNotFoundError:  # pragma: no cover - Python 3.10 fallback is docume
     tomllib = None  # type: ignore[assignment]
 
 from .adapters import adapt_source
+from .bootstrap import (
+    check_windows_path_budget,
+    prepare_archival_parents,
+    prepare_fresh_bootstraps,
+    verify_historical_receipts,
+    verify_replay_python_environment,
+)
 from .dag import ReproductionDAG, Stage
-from .errors import BlockedError, IntegrityError
+from .errors import BlockedError, IntegrityError, ScientificBoundary
 from .hashing import file_record, sha256_file
 from .state import RunState
 
@@ -90,7 +97,7 @@ class Runner:
         print(f"Run directory: {self.run_dir}")
         print(f"Scientific project root: {self.project_root}")
         for index, stage in enumerate(self.stages, 1):
-            dependencies = ",".join(stage.depends_on) or "-"
+            dependencies = ",".join(self.dag.dependencies(stage, self.options.profile)) or "-"
             print(
                 f"{index:02d}. {stage.id:28s} [{stage.kind:15s}] "
                 f"deps={dependencies} | {stage.estimated} | {stage.governance}"
@@ -101,33 +108,52 @@ class Runner:
         self.print_plan()
         if self.options.plan_only:
             return 0
+        existing = self._existing_scientific_boundary()
+        if existing is not None:
+            print("[SCIENTIFIC_DIVERGENCE_BOUNDARY] Fresh accepted chain is already sealed at T2-D.")
+            print(json.dumps(existing, indent=2))
+            print(f"Run ledger: {self.state.path}")
+            return 4
         for stage in self.stages:
-            if self.options.resume and self.state.status(stage.id) == "COMPLETE":
+            status = self.state.status(stage.id)
+            if self.options.resume and status == "COMPLETE":
                 print(f"[RESUME] {stage.id}: already complete")
                 continue
+            if self.options.resume and status == "SCIENTIFIC_DIVERGENCE_BOUNDARY":
+                print(f"[SCIENTIFIC_DIVERGENCE_BOUNDARY] {stage.id}: previously sealed; downstream fresh continuation is prohibited")
+                return 4
             print(f"\n[START] {stage.id}: {stage.title}")
             self.state.begin(stage.id)
             started = time.monotonic()
+            transaction = self._begin_stage_transaction(stage)
             try:
                 details = self._execute(stage)
+                self._raise_if_scientific_boundary(stage, details)
+            except ScientificBoundary as exc:
+                # Preserve the successfully generated scientific boundary artefacts.
+                # Rollback is only for engineering/blocking failures, never for a
+                # scientifically meaningful completed stage.
+                self.state.boundary(stage.id, code=exc.code, message=str(exc), evidence=exc.evidence, details=exc.details)
+                print(f"[{exc.code}] {exc}")
+                for detail in exc.details:
+                    print(f"- {detail}")
+                print("- boundary artifacts preserved; no transactional rollback was applied")
+                print("- This is a scientific non-reproduction boundary, not an engineering crash.")
+                print("- Fresh downstream stages were not executed. Use archival-continuation only for a separately labelled historical-parent audit.")
+                return 4
             except BlockedError as exc:
-                self.state.fail(
-                    stage.id,
-                    status=exc.code,
-                    message=str(exc),
-                    details=exc.details,
-                )
+                cleanup = self._rollback_stage_transaction(transaction)
+                self.state.fail(stage.id, status=exc.code, message=str(exc), details=exc.details, transactional_cleanup=cleanup)
                 print(f"[{exc.code}] {exc}")
                 for detail in exc.details:
                     print(f"- {detail}")
                 return 3
             except Exception as exc:
-                self.state.fail(
-                    stage.id,
-                    status="FAILED",
-                    message=f"{type(exc).__name__}: {exc}",
-                )
+                cleanup = self._rollback_stage_transaction(transaction)
+                self.state.fail(stage.id, status="FAILED", message=f"{type(exc).__name__}: {exc}", transactional_cleanup=cleanup)
                 print(f"[FAILED] {stage.id}: {type(exc).__name__}: {exc}")
+                if cleanup:
+                    print(f"[CLEANUP] {cleanup}")
                 return 1
             elapsed = time.monotonic() - started
             self.state.complete(stage.id, elapsed_seconds=elapsed, **details)
@@ -135,6 +161,89 @@ class Runner:
         print(f"\nCMDO profile {self.options.profile} COMPLETE")
         print(f"Run ledger: {self.state.path}")
         return 0
+
+    def _cross_modal_root(self) -> Path:
+        return self.project_root / "06_Data_Records" / "Cross_Modal"
+
+    def _begin_stage_transaction(self, stage: Stage) -> dict[str, Any] | None:
+        if stage.kind not in {"python", "notebook"}:
+            return None
+        root = self._cross_modal_root()
+        before = set(path.name for path in root.iterdir()) if root.is_dir() else set()
+        return {"root": root, "before": before, "stage": stage.id}
+
+    def _rollback_stage_transaction(self, transaction: dict[str, Any] | None) -> list[str]:
+        if not transaction:
+            return []
+        root: Path = transaction["root"]
+        if not root.is_dir():
+            return []
+        before = set(transaction["before"]); removed = []
+        for path in list(root.iterdir()):
+            if path.name in before:
+                continue
+            # Only remove newly-created stage-owned top-level scientific-record entries.
+            if not (path.name.startswith("Stage") or path.name.startswith("Protocol_Amendment")):
+                continue
+            if path.is_dir(): shutil.rmtree(path)
+            else: path.unlink()
+            removed.append(str(path))
+        return removed
+
+    def _t2d_final_path(self) -> Path:
+        return self.project_root / "06_Data_Records/Cross_Modal/StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1/04_Results/StageT2-D_Complete_v0.1.json"
+
+    def _read_t2d_boundary_evidence(self) -> dict[str, Any] | None:
+        path = self._t2d_final_path()
+        if not path.is_file():
+            return None
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        gates = int(payload.get("frozen_gates_passed", -1)); total = int(payload.get("frozen_gates_total", -1)); decision = str(payload.get("decision", ""))
+        authorised = gates == 11 and total == 11 and decision == "AUTHORISE_AMW_DDET_METHOD_FREEZE_AND_BLIND_PREREGISTRATION_ONLY"
+        if authorised:
+            return None
+        metrics = payload.get("metrics", {})
+        return {
+            "classification": "FRESH_FULL_CLAIM_SCIENTIFIC_DIVERGENCE_AT_T2D",
+            "final_path": str(path),
+            "file_sha256": sha256_file(path),
+            "gates_passed": gates, "gates_total": total, "decision": decision,
+            "g4_target_signflip": metrics.get("target_cluster_exact_signflip_p", metrics.get("target_signflip_p")),
+            "primary_mae": metrics.get("amw_ddet_target_level_median_mae"),
+            "relative_improvement": metrics.get("relative_improvement"),
+            "stage12_authorised": bool(payload.get("stage12_authorised", False)),
+            "locked_blind_assets_touched": bool(payload.get("locked_blind_assets_touched", False)),
+        }
+
+    def _existing_scientific_boundary(self) -> dict[str, Any] | None:
+        if self.options.profile not in {"full-claim", "historical-replay"}:
+            return None
+        ids = [s.id for s in self.stages]
+        if "t2d_witness" not in ids or not any(i in ids for i in ["t2e_baselines", "t2f_covariate_balance"]):
+            return None
+        evidence = self._read_t2d_boundary_evidence()
+        if evidence is not None:
+            self.state.boundary("t2d_witness", code="SCIENTIFIC_DIVERGENCE_BOUNDARY", message="fresh replay did not reproduce the frozen T2-D authorisation boundary", evidence=evidence)
+        return evidence
+
+    def _raise_if_scientific_boundary(self, stage: Stage, execution_details: dict[str, Any]) -> None:
+        if stage.id != "t2d_witness" or self.options.profile not in {"full-claim", "historical-replay"}:
+            return
+        evidence = self._read_t2d_boundary_evidence()
+        if evidence is None:
+            return
+        evidence["execution"] = execution_details
+        raise ScientificBoundary(
+            "SCIENTIFIC_DIVERGENCE_BOUNDARY",
+            "fresh replay executed T2-D successfully but did not reproduce the frozen 11/11 authorisation",
+            details=[
+                f"observed gates: {evidence['gates_passed']} / {evidence['gates_total']}",
+                f"decision: {evidence['decision']}",
+                f"G4 target sign-flip p: {evidence.get('g4_target_signflip')}",
+                "No gate threshold was relaxed; no downstream fresh accepted stage is authorised.",
+            ],
+            evidence=evidence,
+        )
 
     def _execute(self, stage: Stage) -> dict[str, Any]:
         if stage.kind == "internal":
@@ -194,6 +303,8 @@ class Runner:
             )
         if action == "full_preflight":
             return self._full_preflight()
+        if action == "archival_preflight":
+            return self._archival_preflight()
         if action == "collect_replay_records":
             return self._collect_replay_records()
         if action == "frozen_figures":
@@ -218,10 +329,11 @@ class Runner:
             {
                 "CMDO_PROJECT_ROOT": str(self.project_root),
                 "CDO_PROJECT_ROOT": str(self.project_root),
-                "CMDO_REPRODUCTION_MODE": "RETROSPECTIVE_REPLAY",
+                "CMDO_REPRODUCTION_MODE": ("ARCHIVAL_HISTORICAL_PARENT_CONTINUATION" if self.options.profile == "archival-continuation" else "RETROSPECTIVE_REPLAY"),
                 "CMDO_ALLOW_PROSPECTIVE_CLAIM": "0",
                 "PYTHONHASHSEED": "0",
                 "MPLBACKEND": "Agg",
+                "PIP_CONSTRAINT": str((self.root / "environment/replay-constraints.txt").resolve()),
             }
         )
         environment.update(self.options.extra_env)
@@ -279,7 +391,8 @@ class Runner:
             record["source"] = stage.source
             record["destination"] = str(destination.relative_to(self.run_dir))
             records.append(record)
-            self.adapted_sources[stage.id] = destination
+            # Static adapter audit only. Execution copies are regenerated immediately
+            # before each stage so upstream replay hashes can be rebound transactionally.
         manifest_path = self.run_dir / "adapted_source_manifest.json"
         manifest_path.write_text(
             json.dumps(
@@ -348,11 +461,12 @@ class Runner:
         return {"file_count": len(records), "manifest": str(manifest)}
 
     def _adapted_source(self, stage: Stage) -> Path:
-        if stage.id in self.adapted_sources:
-            return self.adapted_sources[stage.id]
         assert stage.source
         source = self.root / stage.source
         destination = self.run_dir / "adapted_source" / stage.source
+        # Re-adapt at execution time. This is required because an upstream fresh
+        # replay may have produced a valid parent with a different byte/self hash
+        # after the earlier static adapter audit.
         adapt_source(source, destination, self.project_root)
         self.adapted_sources[stage.id] = destination
         return destination
@@ -412,6 +526,10 @@ class Runner:
                 "BLOCKED_GOVERNANCE_ACK",
                 "full-claim requires --acknowledge-retrospective-replay",
             )
+        path_budget = check_windows_path_budget(self.project_root, self.run_dir)
+        python_environment = verify_replay_python_environment()
+        bootstrap_records = prepare_fresh_bootstraps(self.project_root)
+        receipt_records = verify_historical_receipts(self.root, self.project_root)
         manifest = json.loads(
             (self.root / "provenance/datasets.json").read_text(encoding="utf-8")
         )
@@ -495,7 +613,41 @@ class Runner:
             "network_allowed": self.options.allow_network,
             "prospective_claim_created": False,
             "u9_excluded": True,
+            "historical_bootstraps": bootstrap_records,
+            "historical_receipts_verified": receipt_records,
+            "windows_path_budget": path_budget,
+            "python_replay_environment": python_environment,
         }
+
+    def _archival_preflight(self) -> dict[str, Any]:
+        if not self.options.acknowledge_retrospective_replay:
+            raise BlockedError("BLOCKED_GOVERNANCE_ACK", "archival-continuation requires --acknowledge-retrospective-replay")
+        missing = [m for m in ["numpy","pandas","scipy","sklearn","matplotlib","torch","torchvision","nbformat","nbclient"] if importlib.util.find_spec(m) is None]
+        if missing:
+            raise BlockedError("BLOCKED_RUNTIME", "archival replay Python environment is incomplete", details=["Python modules: " + ", ".join(missing)])
+        if not shutil.which("matlab"):
+            raise BlockedError("BLOCKED_RUNTIME", "archival continuation requires MATLAB for the declared downstream path", details=["Required toolbox: Statistics and Machine Learning Toolbox"])
+        path_budget = check_windows_path_budget(self.project_root, self.run_dir)
+        python_environment = verify_replay_python_environment()
+        self.project_root.mkdir(parents=True, exist_ok=True)
+        bootstrap = prepare_archival_parents(self.project_root)
+        marker = self.run_dir / "ARCHIVAL_CONTINUATION_CLASSIFICATION.json"
+        marker.write_text(json.dumps({
+            "classification":"ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
+            "fresh_raw_to_science_reproduction":False,
+            "starts_from":"byte-verified accepted historical T2-D/T2-E parents",
+            "prospective_claim_created":False,
+            "u9_excluded":True,
+            "project_root":str(self.project_root),
+            "bootstrap_sha256":bootstrap["bundle_sha256"],
+        }, indent=2), encoding="utf-8")
+        self.state.payload["governance"].update({
+            "classification":"ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
+            "fresh_raw_to_science_reproduction":False,
+            "prospective_claim_created":False,
+            "u9_automatically_unsealed":False,
+        }); self.state.save()
+        return {"archival_bootstrap":bootstrap,"classification_marker":str(marker),"windows_path_budget":path_budget,"python_replay_environment":python_environment,"network_allowed":self.options.allow_network,"u9_excluded":True}
 
     def _collect_replay_records(self) -> dict[str, Any]:
         names = []

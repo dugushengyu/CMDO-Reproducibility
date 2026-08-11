@@ -33,3 +33,6 @@ jobs:
         run: |
           python RUN_REPRODUCTION.py frozen --plan --run-id ci-frozen
           python RUN_REPRODUCTION.py full-claim --plan --run-id ci-full
+          python RUN_REPRODUCTION.py archival-continuation --plan --run-id ci-archival
+      - name: One-command reviewer engineering acceptance
+        run: python scripts/final_reviewer_acceptance.py --skip-runtime

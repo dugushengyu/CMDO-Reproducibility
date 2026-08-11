@@ -24,14 +24,6 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def _sorted_files(directory: Path) -> list[Path]:
-    """Return files in a platform-independent canonical path order."""
-    return sorted(
-        (item for item in directory.rglob("*") if item.is_file()),
-        key=lambda item: item.relative_to(ROOT).as_posix(),
-    )
-
-
 def csv_text(rows: list[dict[str, object]], fieldnames: list[str]) -> str:
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=fieldnames, lineterminator="\n")
@@ -48,7 +40,7 @@ def imported_source_manifest() -> str:
     ]
     rows = []
     for directory in roots:
-        for path in _sorted_files(directory):
+        for path in sorted((item for item in directory.rglob("*") if item.is_file()), key=lambda item: item.relative_to(ROOT).as_posix()):
             rows.append(
                 {
                     "repository_path": path.relative_to(ROOT).as_posix(),
@@ -72,7 +64,7 @@ def frozen_asset_manifest() -> str:
     for directory in roots:
         if not directory.exists():
             continue
-        for path in _sorted_files(directory):
+        for path in sorted((item for item in directory.rglob("*") if item.is_file()), key=lambda item: item.relative_to(ROOT).as_posix()):
             relative = path.relative_to(ROOT).as_posix()
             role = (
                 "FIGURE_CANONICAL_RECORD"

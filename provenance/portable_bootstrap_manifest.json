@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "classification": "BYTE_VERIFIED_PORTABLE_HISTORICAL_BOOTSTRAP_ARCHIVES",
+  "claim_boundary": "These bytes are portable-only historical prerequisites/accepted-parent records; they are not restricted raw provider datasets and are not evidence that the fresh chain reproduced.",
+  "files": [
+    {
+      "file": "CMDO-Archival-Accepted-Parents-v0.1.zip",
+      "size_bytes": 1721412,
+      "sha256": "ce43ffd8fe5681c6fe3094d32672e98a0740b2f349cfad1702c7cd3d79a526d1",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "CMDO-T1R-Historical-Bootstrap-v0.1.zip",
+      "size_bytes": 33868687,
+      "sha256": "e6bbac2b67e61bb20d092767cacb60298bce0cf02fc14e1983cdd58b20ba9267",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "CMDO-T2D-Historical-Bootstrap-v0.1.zip",
+      "size_bytes": 169223,
+      "sha256": "7280753a85f51e541a04469ddce5c4133935b77b2bc987ea9c2033ff3ddc8bfb",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "CMDO-T2E-Historical-Bootstrap-v0.1.zip",
+      "size_bytes": 8808,
+      "sha256": "e58539f7414fd8aed2ff532dc6cef5b53237d3651f7299f08c35290d407862ef",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json",
+      "size_bytes": 2370,
+      "sha256": "7f5a6450c3341fb1ef067dff5b89f186ce0142fdc8d38648607cd74843fa1a77",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    }
+  ]
+}

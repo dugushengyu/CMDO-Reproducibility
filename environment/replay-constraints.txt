@@ -1,0 +1,9 @@
+# Runtime guardrails for the published Python 3.11 replay baseline.
+# PIP_CONSTRAINT points here so notebook-local pip installs cannot silently
+# upgrade the numerical stack (notably NumPy) mid-replay.
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.13.1
+scikit-learn==1.5.2
+pylibjpeg==2.0.1
+pylibjpeg-libjpeg==2.0.1

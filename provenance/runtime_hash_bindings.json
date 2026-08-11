@@ -1,0 +1,252 @@
+{
+  "9feb5c20171c5c8f9aa3b63aa90b117d24dfe232c3775f40fedd2f3a6820a5fa": [
+    "06_Data_Records/Cross_Modal/StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1/04_Results/StageT2-D_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "3284a1615ac303759fa88f346f72717cdf1a8ef4115053bef6e95c47d1809df9": [
+    "06_Data_Records/Cross_Modal/StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1/00_Protocol/StageT2-D_AMW-DDET_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "c6f740510c520167c2ecfbfc48fc2db88428e17ce1b96e6ad5826e507929aedb": [
+    "06_Data_Records/Cross_Modal/StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1/01_Replicate_Results/StageT2-D_All_Acquisition_Replicates_v0.1.csv",
+    "file",
+    null
+  ],
+  "c95ec204abdb800284b0db62df31546b1aa33f3f506d4e4fb3007118f3077707": [
+    "06_Data_Records/Cross_Modal/StageT2-D_Development_Only_AMW-DDET_Active_Minimal_Witness_Certificate_v0.1/03_Certificates_And_Gates/StageT2-D_LOTO_Conformal_Certificates_v0.1.csv",
+    "file",
+    null
+  ],
+  "e8f019d1beaf6716e780825894651318974c0780982b55d5f0481216f0c6602f": [
+    "06_Data_Records/Cross_Modal/Stage8_CrossModality_EdgeLibrary_Expansion_v0.1/05_Unsealed_Discovery/Stage8_Evaluated_Unit_Predictions_v0.1.csv",
+    "file",
+    null
+  ],
+  "33a8b2312df5c0e9576de1c5211e82a158177a89e321ba667252fb485a393329": [
+    "06_Data_Records/Cross_Modal/Stage8B_NLM_Chest_Radiography_Access_Completion_v0.1/05_Unsealed_Chest_Discovery/Stage8B_Evaluated_Chest_Unit_Predictions_v0.1.csv",
+    "file",
+    null
+  ],
+  "6ace342fbd6928f1041e80c446e79a501d8c23f618ebc4a3c671fc98d899a80d": [
+    "06_Data_Records/Cross_Modal/Stage11F-R_Development_Only_Directed_Edge_Assembly_And_Fit_Readiness_v0.2/02_Development_Transfer_Outcomes/Stage11F-R_Evaluated_Ultrasound_Target_Predictions_v0.2.csv",
+    "file",
+    null
+  ],
+  "05e0288a02af5255ce0335d6da74f78483c51ee8c9f2b63de60a6dd2a6fb1ada": [
+    "06_Data_Records/Cross_Modal/Stage11C_Amended_Original_First_Official_Route_Recovery_And_Outcome_Free_Reserve_Screening_v0.1/05_Results/Stage11C_Amended_Recovery_And_Reserve_Screening_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "1303c704d20f57ed9a05be03e0525a34c5d40624bffdece85dccb5077d99ca2d": [
+    "06_Data_Records/Cross_Modal/Stage11A_Hold_And_Unavailable_Cause_Audit_v0.1/02_Cause_Classification/Stage11A_Dataset_Hold_Cause_Classification_v0.1.csv",
+    "file",
+    null
+  ],
+  "24d41b7a3a30b1548a81ab1a99d909eb29bf9189fef49709754d1b9cfc8dcca2": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/06_Results/Stage11E-R_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "24da138b2a6972fe60108902bf7a03d6523b2fff47abbfcbe1212feb7b8a9801": [
+    "06_Data_Records/Cross_Modal/Stage11C-R2_Recursive_Payload_And_Provider_Evidence_Readjudication_v0.1/03_Readjudication/Stage11C-R2_Stage11D-R_Handoff_v0.1.json",
+    "json",
+    "handoff_sha256"
+  ],
+  "2568a9fdaff83ab74938655d65d25cd9d50f8b28bafbc44e856098932f6c6648": [
+    "06_Data_Records/Cross_Modal/Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1/05_Results/Stage9_Hierarchical_DDO2_Specification_Freeze_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "2b907cc8ebbef7c6d3fc206b7c0a3067ad3d503594f2323d9f19f2a2c3a91af6": [
+    "06_Data_Records/Cross_Modal/Stage11_Development_Extension_Acquisition_And_Source_Gates_v0.2/04_Frozen_Source_Axes/Stage11_Source_Recoverability_Summary_v0.2.csv",
+    "file",
+    null
+  ],
+  "305c715cd95c72b7e54cfd241891080ddd6838e4428c6bd5acdf7b4264c96f31": [
+    "06_Data_Records/Cross_Modal/Stage10_Preassigned_Development_And_Locked_Blind_Registry_v0.1/00_Protocol/Stage10_Acquisition_Role_Registry_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "37c1d5da4cfd2057ee3438cacfbc831df6d4cdcb5c7efd87cf629d8cf871e912": [
+    "06_Data_Records/Cross_Modal/Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1/03_Development_Reserve/A1_Frozen_Development_Reserve_Pool_v0.1.csv",
+    "file",
+    null
+  ],
+  "3e66aad296106d12958a8d84634e5cc780399329ba22b503e49f42019bf3db11": [
+    "06_Data_Records/Cross_Modal/Stage11D-R_Cross_Roster_Dedup_Exact_Manifest_And_Grouped_Split_Freeze_v0.1/01_Exact_Manifest/Stage11D-R_Frozen_Exact_Image_Label_Group_Manifest_v0.1.csv",
+    "file",
+    null
+  ],
+  "4003be92df8a9c84352062383e8a94d066cc0e2bb2978cfb1af8968e51b85320": [
+    "06_Data_Records/Cross_Modal/Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1/05_Results/Protocol_Amendment_A1_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "4339402d843af177ef1181df1e3ae4fb7b0b6bd0211e250bb22cd9b255141024": [
+    "06_Data_Records/Cross_Modal/Stage8B_NLM_Chest_Radiography_Access_Completion_v0.1/06_Results/Stage8B_NLM_Access_Completion_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "4362d6a8baed676ee6245971dac40aeb8d2865541df05446ce970ed4431fba72": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/00_Protocol/Stage11E-R_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "5d1e5d045a3dff69f7888e1d118ccfff79ec9760c9dd92cb44fbf3d69f3eece0": [
+    "06_Data_Records/Cross_Modal/Stage11F-R_Development_Only_Directed_Edge_Assembly_And_Fit_Readiness_v0.2/04_Independence_And_Readiness/Stage11F-R_DDO2_Fit_Eligibility_Audit_v0.2.csv",
+    "file",
+    null
+  ],
+  "60ee87ec253c34d2e3b50f6f1a40318aa1a14c0f0e5bf168fcb60d5f0d641ebf": [
+    "06_Data_Records/Cross_Modal/Stage8B_NLM_Chest_Radiography_Access_Completion_v0.1/05_Unsealed_Chest_Discovery/Stage8B_ThreeModality_Eligible_Edge_Library_v0.1.csv",
+    "file",
+    null
+  ],
+  "6438434cb41607ad97b1b4a2fab07b143969ce7f551b87b5c2a23afbe67ccccf": [
+    "06_Data_Records/Cross_Modal/Stage10_Preassigned_Development_And_Locked_Blind_Registry_v0.1/05_Results/Stage10_Preassigned_Role_Registry_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "698c019b8516a84522831216b6cb0c85e047e6d0b401071db99e1d74ae6b2397": [
+    "06_Data_Records/Cross_Modal/Stage8_CrossModality_EdgeLibrary_Expansion_v0.1/06_Results/Stage8_CrossModality_Expansion_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "6aa5b1c6a09f146265061f411c8d8e6f617040c3a3f6f769e4a67466082b9e26": [
+    "06_Data_Records/Cross_Modal/Stage11_Development_Extension_Acquisition_And_Source_Gates_v0.2/02_Harmonised_Manifests/BUS_BRA_2024_Harmonised_Development_Manifest_v0.2.csv",
+    "file",
+    null
+  ],
+  "6e41e091759cfea56bbfb42ec841677d3e0b844a86ab882e486251ec3886df13": [
+    "06_Data_Records/Cross_Modal/Stage11D-R_Cross_Roster_Dedup_Exact_Manifest_And_Grouped_Split_Freeze_v0.1/02_Deduplication/Stage11D-R_Deduplication_And_Endpoint_Summary_v0.1.csv",
+    "file",
+    null
+  ],
+  "7eb31a4630c68488dac71d1602e4faf2dca348541d1a9ee62103524e8b83997c": [
+    "06_Data_Records/Cross_Modal/Stage10_Preassigned_Development_And_Locked_Blind_Registry_v0.1/01_Role_Registry/Stage10_Frozen_Harmonised_Endpoint_Specifications_v0.1.json",
+    "file",
+    null
+  ],
+  "8738b3f470e33a8de28cca1612e9595608660d6c05f1eef7e16f6f0a6b0c452b": [
+    "06_Data_Records/Cross_Modal/Stage11A_Hold_And_Unavailable_Cause_Audit_v0.1/03_Frozen_Remediation_Actions/Stage11A_Frozen_Remediation_Action_Registry_v0.1.csv",
+    "file",
+    null
+  ],
+  "8f2c409cf51429c33aea93b0c8788484c53c909865c4153ca88de3bb3877cc98": [
+    "06_Data_Records/Cross_Modal/Stage11D-R_Cross_Roster_Dedup_Exact_Manifest_And_Grouped_Split_Freeze_v0.1/00_Protocol/Stage11D-R_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "9858f91de0e78863281c74488f1002641d2d968de319fb3f239c406e26c69114": [
+    "06_Data_Records/Cross_Modal/Stage11A_Hold_And_Unavailable_Cause_Audit_v0.1/05_Results/Stage11A_Hold_And_Unavailable_Cause_Audit_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "98903477c84b7ec6b33258e30f02e8f357ec36e4261c6cbd242fb73ba8c1ec20": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/03_Frozen_Source_Axes/Stage11E-R_Prevalidation_Axis_Freeze_v0.1.json",
+    "json",
+    "freeze_sha256"
+  ],
+  "98a285c18d7e680a126b78b5dfa70a4883e7c8cf9536aff2a76528adb42f2a5d": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/04_Heldout_Validation/Stage11E-R_Stage11F-R_Handoff_v0.1.json",
+    "json",
+    "handoff_sha256"
+  ],
+  "a273cdad4892d8b954dad6dfb2c230e7352f68899897466a95852e2c5baa16e2": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/01_Frozen_Embeddings/Stage11E-R_Frozen_Embedding_Manifest_v0.1.csv",
+    "file",
+    null
+  ],
+  "a7ad22dcc25e5bef7763246d79fad64536fcbb87eef4493037712da8f07199be": [
+    "06_Data_Records/Cross_Modal/Stage11E-R_Development_Only_Source_Recoverability_And_Axis_Freeze_v0.1/04_Heldout_Validation/Stage11E-R_Source_Recoverability_Decisions_v0.1.csv",
+    "file",
+    null
+  ],
+  "a7d744dfdec1b4f0847d2e6b22a9e6368738630d3b96b3328584ce0ebf1da9b0": [
+    "06_Data_Records/Cross_Modal/Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1/02_Frozen_Specification/Stage9_Frozen_DDO2_ABSTAIN_Policy_v0.1.json",
+    "json",
+    "policy_sha256"
+  ],
+  "acef1a8da90b95e875ed29572ca4a8283a5035ebfc1a1bf9fc787c487a01ec5a": [
+    "06_Data_Records/Cross_Modal/Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1/04_Future_Blind_Validation/Stage9_Frozen_Future_Blind_Validation_Protocol_v0.1.json",
+    "json",
+    "protocol_sha256"
+  ],
+  "baecfc013349037d739b5058e45938e0f785718465bd88d45d58de5f3f4b7399": [
+    "06_Data_Records/Cross_Modal/Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1/02_Official_Route_Recovery/A1_Official_Route_Recovery_Registry_v0.1.csv",
+    "file",
+    null
+  ],
+  "bb85f49c2378600a50619624ad322dc824d662d8eadb73fcf1d5532ee067082a": [
+    "06_Data_Records/Cross_Modal/Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1/00_Protocol/Protocol_Amendment_A1_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "bc330e4389c36729427ca07c3ea1fb0993c5c3bc2126dcbfc2ca079e1cbb8889": [
+    "06_Data_Records/Cross_Modal/Stage11_Development_Extension_Acquisition_And_Source_Gates_v0.2/06_Results/Stage11_Development_Acquisition_And_Source_Gates_Complete_v0.2.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "bfe88b0b57d9efc90a123995d606648e9074eecb17d951087caaf4a889514423": [
+    "06_Data_Records/Cross_Modal/Stage11F-R_Development_Only_Directed_Edge_Assembly_And_Fit_Readiness_v0.2/06_Results/Stage11F-R_Complete_v0.2.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "cc0b56178eecee123d8c6fa99824018b18aae79679c6620edc7e5ebcc9018bc3": [
+    "06_Data_Records/Cross_Modal/Stage10_Preassigned_Development_And_Locked_Blind_Registry_v0.1/01_Role_Registry/Stage10_Frozen_Dataset_Acquisition_Role_Registry_v0.1.csv",
+    "file",
+    null
+  ],
+  "d50440479a53b63cc22c8bd643089ce43545587f29b0062897f76b9e774ac768": [
+    "06_Data_Records/Cross_Modal/Stage11C-R_Manual_Official_Receipt_Validation_And_Typed_Hold_Readjudication_v0.1/05_Results/Stage11C-R_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "d77c944ee88674696a069831caadd2131bc6dd6a7dad996775967694088664e3": [
+    "06_Data_Records/Cross_Modal/Stage11B_Protocol_Conformant_Reacquisition_And_Patient_Grouping_Repair_v0.1/05_Results/Stage11B_Protocol_Conformant_Repair_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ],
+  "e2a0d8f65143e0b9d58d740595a39b803f1684481c4f8af01f05935bfaacb732": [
+    "06_Data_Records/Cross_Modal/Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1/02_Frozen_Specification/Stage9_Frozen_Hierarchical_DDO2_Model_Specification_v0.1.json",
+    "json",
+    "specification_sha256"
+  ],
+  "e8196fcdb9c05c5b04e9bbf8ac3b520991e51114d684ef3484b36c5fbad1cd44": [
+    "06_Data_Records/Cross_Modal/Stage11A_Hold_And_Unavailable_Cause_Audit_v0.1/00_Protocol/Stage11A_Hold_Cause_Audit_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "f074467614321e4162a3aa4ad982b62edfa362d6238edeb2f69be6d4d50f09a9": [
+    "06_Data_Records/Cross_Modal/Stage11F-R_Development_Only_Directed_Edge_Assembly_And_Fit_Readiness_v0.2/03_Expanded_Edge_Library/Stage11F-R_FourModality_Eligible_Edge_Library_v0.2.csv",
+    "file",
+    null
+  ],
+  "f09e2b0d9505bded7329d9b380c098542cc9450b6e16d695295228da18ac67eb": [
+    "06_Data_Records/Cross_Modal/Stage11B_Protocol_Conformant_Reacquisition_And_Patient_Grouping_Repair_v0.1/00_Protocol/Stage11B_Repair_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "f5689995ec6ab0dcf0bcacf813d578edd47edbedf8fb96b7809ec674e3cad593": [
+    "06_Data_Records/Cross_Modal/Stage9_Hierarchical_DDO2_Specification_Freeze_v0.1/00_Protocol/Stage9_Hierarchical_DDO2_Specification_Protocol_Seal_v0.1.json",
+    "json",
+    "seal_sha256"
+  ],
+  "fc96bd4f61b41c0f64e5a24d8a270487acb25ad7c77d5b6865e9d9f4af59bbcd": [
+    "06_Data_Records/Cross_Modal/Stage11_Development_Extension_Acquisition_And_Source_Gates_v0.2/00_Protocol/Stage11_Development_Acquisition_And_Source_Gate_Protocol_Seal_v0.2.json",
+    "json",
+    "seal_sha256"
+  ],
+  "fd9dc25be5699c4dee17dc7af18f1bb9e063bafc6d7835087212e113ead0ce6a": [
+    "06_Data_Records/Cross_Modal/Protocol_Amendment_A1_Official_Route_Recovery_And_Development_Only_Substitution_Rules_v0.1/03_Development_Reserve/A1_Outcome_Free_Activation_Policy_v0.1.json",
+    "json",
+    "policy_sha256"
+  ],
+  "fffcb9dba5c5e25c066b5f92cdd3856bbe84dbe42eb1ae0cab62a9228c70f85d": [
+    "06_Data_Records/Cross_Modal/Stage11C-R2_Recursive_Payload_And_Provider_Evidence_Readjudication_v0.1/05_Results/Stage11C-R2_Complete_v0.1.json",
+    "json",
+    "final_record_sha256"
+  ]
+}

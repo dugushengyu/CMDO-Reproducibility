@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "classification": "BYTE_VERIFIED_HISTORICAL_OFFICIAL_RECEIPTS",
+  "claim_boundary": "These six files are historical official provider receipt bytes required by Stage11C-R. They are prerequisites for retrospective replay and are not fresh provider acquisitions performed by the runner.",
+  "root": "00_Data_Acquisition/Stage11C_Manual_Official_Receipts",
+  "files": [
+    {"id":"BREAST_LESIONS_USG_CLINICAL","relative_path":"BREAST_LESIONS_USG/BrEaST-Lesions-USG-clinical-data-Dec-15-2023.xlsx","size_bytes":40173,"sha256":"89a8874496a6f1f93960390b963f7369b90f7e72ee08a738f2d17e37f5eff8bf"},
+    {"id":"BREAST_LESIONS_USG_IMAGES","relative_path":"BREAST_LESIONS_USG/BrEaST-Lesions_USG-images_and_masks-Dec-15-2023.zip","size_bytes":69862076,"sha256":"c32e49cdfa54042e065582d0cb35978b5fc5e5b5e461b33bf773fb50cfdad355"},
+    {"id":"BUSI_WHU","relative_path":"BUSI_WHU/BUSI_WHU Breast Cancer Ultrasound Image  Dataset.zip","size_bytes":127397821,"sha256":"9fcda99c284ba5ebcda5bb2761af68b32d9c8a7070bd570bb9e69b9bab72520c"},
+    {"id":"BUS_BRA","relative_path":"BUS_BRA/BUSBRA.zip","size_bytes":133917740,"sha256":"ba3e6ed19cc37c682d8d39e25435bbf8a555a12cb7e641b5f2117685c95580ff"},
+    {"id":"BUS_UCLM","relative_path":"BUS_UCLM/BUS-UCLM Breast ultrasound lesion segmentation dataset.zip","size_bytes":336180434,"sha256":"985cb6f399ba65087cbb6d3fa7ee775ad7ea30d69f1dbf328842c3bd0182b650"},
+    {"id":"RODRIGUES_BUI","relative_path":"RODRIGUES_BUI/Breast Ultrasound Image.zip","size_bytes":3194579,"sha256":"fc727f96de14dfb7dd45d3b33f297c748932fd09323302a7bf2b69083d7632a2"}
+  ]
+}

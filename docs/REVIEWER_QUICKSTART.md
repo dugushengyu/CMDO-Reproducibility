@@ -1,8 +1,8 @@
 # Reviewer quickstart
 
-The fastest scientifically useful check is the `frozen` profile. The deepest check
-is `full-claim`. They answer different questions and should not be described as the
-same run.
+CMDO separates **engineering reproducibility**, **fresh raw-to-science replay**, and
+**archival historical-parent continuation**. These modes answer different questions
+and must not be conflated.
 
 ## 1. Install
 
@@ -12,37 +12,42 @@ the Statistics and Machine Learning Toolbox is required.
 ```bash
 python -m venv .venv
 source .venv/bin/activate              # Windows: .venv\Scripts\activate
-python -m pip install -r environment/requirements-replay.txt
+python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
 ```
 
-For a CUDA machine, install the matching official PyTorch CUDA wheel before the
-requirements file. Do not change the scientific seeds, budgets or replicate counts.
+For CUDA, install the matching official PyTorch wheel first. The runner also exports
+`PIP_CONSTRAINT=environment/replay-constraints.txt` so legacy notebook `pip install`
+commands cannot silently upgrade the numerical stack during replay. Immutable
+Drive-era source bytes remain unchanged. Runtime copies adapt `isic-cli==12.5.2` to
+`12.4.0`, the last Python-3.11-compatible release.
 
-Python 3.11 compatibility note: the immutable Drive-era T-series sources retain their
-original `isic-cli==12.5.2` bytes and hashes. Runtime-adapted copies substitute
-`isic-cli==12.4.0`, the last release compatible with Python 3.11; this changes only
-the acquisition client version, not scientific seeds, budgets or source commitments.
 
-## 2. Integrity audit (no data download)
+## 2. One-command engineering acceptance
+
+For an ordinary Git clone (large Portable-only assets absent):
+
+```bash
+python scripts/final_reviewer_acceptance.py --skip-runtime
+```
+
+For the reviewer Portable bundle, require the seven canonical archives as well:
+
+```bash
+python scripts/final_reviewer_acceptance.py --skip-runtime --require-canonical
+```
+
+On the intended Python 3.11/MATLAB workstation, omit `--skip-runtime`; a supplied
+`--project-root` additionally verifies the six historical receipt identities and
+reports any sealed T2-D scientific boundary without turning it into an engineering
+failure.
+
+## 3. Static integrity audit
 
 ```bash
 python RUN_REPRODUCTION.py audit
 ```
 
-This verifies source imports, embedded-payload extraction, sealed U8/U9 packages,
-the stage DAG, dataset registry, frozen-asset manifests and non-destructive path
-adapters.
-
-## 3. Minutes-scale engineering smoke test
-
-```bash
-python RUN_REPRODUCTION.py smoke --allow-network
-```
-
-This downloads the official UCI-296 clinical dataset, preprocesses an 8,000-row
-deterministic sample, trains a logistic model, evaluates AUC and writes a ROC figure.
-It is labelled `ENGINEERING_SMOKE_TEST_NOT_MANUSCRIPT_RESULT` and must not be cited
-as a CMDO manuscript estimate.
+This performs code/provenance/DAG/adapter checks without downloading scientific data.
 
 ## 4. Fast frozen-result reproduction
 
@@ -50,60 +55,89 @@ as a CMDO manuscript estimate.
 python RUN_REPRODUCTION.py frozen
 ```
 
-This byte-verifies the seven U4C-U7 canonical archives and renders all current main
-and extended figures. It does not retrain any model. In the portable ZIP, the
-canonical archives are already present; in a normal Git clone, place them under
-`data/canonical_records/` or set `CMDO_CANONICAL_RECORD_DIR`.
+This byte-verifies the seven canonical archives and regenerates current figures. It
+does not retrain models.
 
-## 5. Full raw-data and training replay
+## 5. Fresh raw-to-science replay
 
-First inspect the complete 55-node plan:
+Use the **reviewer portable bundle**, not a bare Git clone, because large
+byte-verified historical bootstrap inputs are intentionally Git-ignored. On Windows,
+use short roots such as `C:\Users\<you>\P` and `C:\Users\<you>\R`.
+
+Before the run, place the six exact historical Stage11C official receipt files under
+`<project-root>/00_Data_Acquisition/Stage11C_Manual_Official_Receipts/`. Their names,
+sizes, and SHA-256 values are declared in `provenance/historical_receipts.json`.
+These are **historical prerequisites**, not fresh provider downloads.
+
+Inspect the plan:
 
 ```bash
 python RUN_REPRODUCTION.py full-claim --plan
 ```
 
-Then run it:
+Run:
 
 ```bash
 python RUN_REPRODUCTION.py full-claim \
+  --run-id CMDO-FRESH-FULL \
+  --output-root /short/path/R \
+  --project-root /short/path/P \
   --allow-network \
   --acknowledge-retrospective-replay
 ```
 
-If a manual or account-gated asset is needed, copy
-`config/reproduction.example.toml` to an untracked local file, fill only the paths
-you are permitted to use, and add `--config /path/to/reproduction.toml`.
+Windows PowerShell example:
 
-The full profile:
-
-- creates a new isolated project-shaped work tree;
-- preserves all imported source bytes and executes adapted copies only;
-- downloads public datasets from declared official routes;
-- reruns preprocessing, frozen representations, model fitting and target analysis;
-- trains U2 CIFAR from a fresh work directory for 12 epochs;
-- replays U3C/U4C/U5B/U6/U7 and U8 as disclosed retrospective reconstructions;
-- compares structures and governance fields exactly, and retrained metrics under
-  declared tolerances;
-- renders figures from replay U4C-U7 canonical records;
-- writes a resumable `run_state.json` and one log per stage.
-
-Resume the same run after an interruption:
-
-```bash
-python RUN_REPRODUCTION.py full-claim \
-  --run-id YOUR_EXISTING_RUN_ID \
-  --allow-network \
-  --acknowledge-retrospective-replay \
-  --resume
+```powershell
+python .\RUN_REPRODUCTION.py full-claim `
+  --run-id CMDO-FRESH-FULL `
+  --output-root "$HOME\R" `
+  --project-root "$HOME\P" `
+  --allow-network `
+  --acknowledge-retrospective-replay
 ```
 
-Exit status `3` is an intentional prerequisite gate, such as
-`BLOCKED_LICENSE_GATE`, `BLOCKED_RUNTIME` or `BLOCKED_GOVERNANCE_ACK`. It is not a
-silent skip. Exit status `1` is a failed stage or integrity comparison.
+The declared plan has 55 nodes, but a scientifically valid fresh replay may stop
+earlier. The reference current-runtime replay executes T2-D successfully but does
+not reproduce its historical 11/11 authorisation gate. The runner therefore seals
+`SCIENTIFIC_DIVERGENCE_BOUNDARY` at T2-D and returns exit status **4**. This is a
+scientific non-reproduction boundary, not an engineering crash; downstream stages
+are not represented as part of a fresh accepted chain.
+
+Resume only interrupted engineering work with the same run ID and `--resume`.
+A sealed scientific boundary cannot be bypassed by resume.
+
+## 6. Archival historical-parent continuation
+
+This profile is deliberately separate. It starts from byte-verified **accepted
+historical T2-D/T2-E parents** and audits downstream historical implementation. It is
+**not** a fresh raw-to-science reproduction and must use a project root separate from
+the fresh replay tree.
+
+```powershell
+python .\RUN_REPRODUCTION.py archival-continuation `
+  --run-id CMDO-ARCHIVAL `
+  --output-root "$HOME\R" `
+  --project-root "$HOME\A" `
+  --allow-network `
+  --acknowledge-retrospective-replay
+```
+
+The archival classification is written to
+`ARCHIVAL_CONTINUATION_CLASSIFICATION.json` and the run ledger. U9/eICU is excluded.
+
+## Exit codes
+
+- `0` — selected profile completed.
+- `1` — engineering/integrity/stage execution failure.
+- `3` — explicit prerequisite block (runtime, network, license/receipt, path budget,
+  or governance acknowledgement).
+- `4` — `SCIENTIFIC_DIVERGENCE_BOUNDARY`; a scientific stage executed, but the frozen
+  authorisation boundary was not reproduced. This is not converted into a pass.
 
 ## Governance boundary
 
-`full-claim` is a retrospective replay of already disclosed outcomes. It cannot
-create a new prospective validation claim. U9/eICU is excluded from every default
-profile and is never automatically prepared or unsealed.
+`full-claim` is a retrospective replay of already disclosed outcomes and cannot
+create a new prospective claim. U9/eICU is excluded from all default reviewer
+profiles. No gate threshold is relaxed to force reproduction. The detailed T2-D
+boundary is machine-readable in `provenance/scientific_boundaries.json`.

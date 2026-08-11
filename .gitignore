@@ -37,3 +37,6 @@ Thumbs.db
 
 # Workspace-only migration scratch
 .tmp/
+
+# Large byte-verified historical replay bootstraps ship only in the reviewer portable bundle.
+bootstrap_inputs/portable/

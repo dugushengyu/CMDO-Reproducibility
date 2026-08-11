@@ -22,7 +22,7 @@ class RunState:
             self.payload = json.loads(path.read_text(encoding="utf-8"))
         else:
             self.payload: dict[str, Any] = {
-                "schema_version": 1,
+                "schema_version": 2,
                 "run_id": run_id,
                 "profile": profile,
                 "created_utc": utc_now(),
@@ -69,6 +69,26 @@ class RunState:
     def complete(self, stage_id: str, **details: Any) -> None:
         row = self.payload["stages"].setdefault(stage_id, {})
         row.update({"status": "COMPLETE", "completed_utc": utc_now(), **details})
+        self.save()
+
+    def boundary(self, stage_id: str, *, code: str, message: str, evidence: dict[str, Any], details: list[str] | None = None) -> None:
+        row = self.payload["stages"].setdefault(stage_id, {})
+        row.update({
+            "status": code,
+            "stopped_utc": utc_now(),
+            "message": message,
+            "details": details or [],
+            "evidence": evidence,
+        })
+        governance = self.payload.setdefault("governance", {})
+        governance.update({
+            "classification": "RETROSPECTIVE_REPLAY_WITH_SCIENTIFIC_BOUNDARY",
+            "fresh_accepted_chain_complete": False,
+            "scientific_boundary_stage": stage_id,
+            "scientific_boundary_code": code,
+            "prospective_claim_created": False,
+            "u9_automatically_unsealed": False,
+        })
         self.save()
 
     def fail(self, stage_id: str, *, status: str, message: str, **details: Any) -> None:

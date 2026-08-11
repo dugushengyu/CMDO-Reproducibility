@@ -20,11 +20,11 @@ def default_run_id(profile: str) -> str:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="CMDO reviewer reproduction: audit, smoke, frozen or full replay"
+        description="CMDO reviewer reproduction: audit, smoke, frozen, fresh full replay, or archival historical-parent continuation"
     )
     parser.add_argument(
         "profile",
-        choices=["audit", "smoke", "frozen", "full-claim", "historical-replay"],
+        choices=["audit", "smoke", "frozen", "full-claim", "archival-continuation", "historical-replay"],
     )
     parser.add_argument("--run-id")
     parser.add_argument("--output-root", type=Path, default=ROOT / "outputs/reproduction")

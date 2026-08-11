@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "classification": "DISCLOSED_REPRODUCIBILITY_BOUNDARIES",
+  "u9_excluded": true,
+  "fresh_full_claim": {
+    "boundary_stage": "t2d_witness",
+    "boundary_code": "SCIENTIFIC_DIVERGENCE_BOUNDARY",
+    "historical": {
+      "gates_passed": 11,
+      "gates_total": 11,
+      "g4_target_signflip": 0.0364990234375,
+      "decision": "AUTHORISE_AMW_DDET_METHOD_FREEZE_AND_BLIND_PREREGISTRATION_ONLY"
+    },
+    "observed_current_runtime_reference": {
+      "gates_passed": 10,
+      "gates_total": 11,
+      "g4_target_signflip": 0.0587158203125,
+      "decision": "DO_NOT_AUTHORISE_BLIND_VALIDATION_REVISE_OR_TERMINATE"
+    },
+    "policy": "A successful execution that does not reproduce the historical T2-D authorisation is a scientific divergence boundary, not an engineering crash. The fresh accepted chain stops and downstream stages must not be represented as fresh reproduction.",
+    "stage": "t2d_witness",
+    "exit_code": 4
+  },
+  "archival_continuation": {
+    "classification": "ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
+    "policy": "Byte-verified historical accepted parents may be used in a separate retrospective archival profile to audit downstream implementation. This profile is never evidence that the fresh raw-to-science chain reproduced.",
+    "fresh_raw_to_science_reproduction": false,
+    "starts_from": "byte-verified accepted historical T2-D/T2-E parents"
+  },
+  "stage11e": {
+    "classification": "NUMERICAL_CONDITIONING_HARDENING_CANDIDATE",
+    "rule": "development-training feature standard deviation <= 10*eps(float32) is degenerate and excluded before StandardScaler/logistic fitting",
+    "status": "diagnostic hardening finding; not retroactive recovery of historical T2-D authorisation"
+  }
+}

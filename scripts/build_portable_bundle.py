@@ -8,6 +8,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import subprocess
 import zipfile
 from pathlib import Path
@@ -15,7 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "CMDO-Reproducibility"
-DEFAULT_NAME = "CMDO-Reproducibility-Reviewer-Portable-v0.2.0.zip"
+DEFAULT_NAME = "CMDO-Reproducibility-Reviewer-Portable-v0.3.0.zip"
 FIXED_TIME = (2026, 8, 10, 0, 0, 0)
 
 
@@ -32,23 +33,49 @@ def sha256_file(path: Path) -> str:
 
 
 def repository_files() -> list[Path]:
-    process = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.PIPE,
-    )
-    relative = [Path(value.decode("utf-8")) for value in process.stdout.split(b"\0") if value]
-    forced_roots = [ROOT / "data/canonical_records", ROOT / "data/frozen_assets"]
+    forced_roots = [
+        ROOT / "data/canonical_records",
+        ROOT / "data/frozen_assets",
+        ROOT / "bootstrap_inputs/portable",
+    ]
+    relative: list[Path] = []
+    if (ROOT / ".git").exists():
+        process = subprocess.run(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+            cwd=ROOT,
+            check=True,
+            stdout=subprocess.PIPE,
+        )
+        relative.extend(
+            Path(value.decode("utf-8"))
+            for value in process.stdout.split(b"\0")
+            if value
+        )
+    else:
+        # Deterministic fallback for a reconstructed reviewer work tree. This is
+        # used only by the package builder; GitHub publication still comes from
+        # the real Git checkout.
+        relative.extend(
+            path.relative_to(ROOT)
+            for path in ROOT.rglob("*")
+            if path.is_file() and ".git" not in path.parts
+        )
     for directory in forced_roots:
-        relative.extend(path.relative_to(ROOT) for path in directory.rglob("*") if path.is_file())
-    excluded_prefixes = ("outputs/", "dist/", ".git/")
-    excluded_exact = {"config/local_paths.json"}
+        if directory.is_dir():
+            relative.extend(path.relative_to(ROOT) for path in directory.rglob("*") if path.is_file())
+    excluded_prefixes = ("outputs/", "dist/", ".git/", ".venv/", "__pycache__/")
+    excluded_exact = {
+        "config/local_paths.json",
+        "PORTABLE_MANIFEST_SHA256.csv",
+        "PORTABLE_PACKAGE_INFO.json",
+    }
     files = []
     for rel in sorted(set(relative), key=lambda item: item.as_posix()):
         value = rel.as_posix()
         path = ROOT / rel
         if value in excluded_exact or value.startswith(excluded_prefixes):
+            continue
+        if "__pycache__" in rel.parts:
             continue
         if not path.is_file() or path.is_symlink():
             continue
@@ -57,21 +84,21 @@ def repository_files() -> list[Path]:
 
 
 def git_metadata() -> dict[str, object]:
-    revision = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.PIPE,
-        text=True,
-    ).stdout.strip()
-    status = subprocess.run(
-        ["git", "status", "--porcelain", "--untracked-files=normal"],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.PIPE,
-        text=True,
-    ).stdout
-    return {"git_commit": revision, "git_worktree_dirty": bool(status.strip())}
+    declared = os.environ.get("CMDO_SOURCE_COMMIT", "").strip()
+    if (ROOT / ".git").exists():
+        revision = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True,
+            stdout=subprocess.PIPE, text=True,
+        ).stdout.strip()
+        status = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=normal"],
+            cwd=ROOT, check=True, stdout=subprocess.PIPE, text=True,
+        ).stdout
+        return {"git_commit": declared or revision, "git_worktree_dirty": bool(status.strip())}
+    return {
+        "git_commit": declared or "UNPUBLISHED_RECONSTRUCTED_WORKTREE",
+        "git_worktree_dirty": None,
+    }
 
 
 def manifest_text(records: list[dict[str, object]]) -> str:
@@ -107,7 +134,7 @@ def build(output: Path) -> dict[str, object]:
         data = path.read_bytes()
         distribution = (
             "PORTABLE_ONLY_GITIGNORED"
-            if relative.startswith(("data/canonical_records/", "data/frozen_assets/"))
+            if relative.startswith(("data/canonical_records/", "data/frozen_assets/", "bootstrap_inputs/portable/"))
             else "GIT_PUBLICATION_CANDIDATE"
         )
         records.append(
@@ -125,13 +152,18 @@ def build(output: Path) -> dict[str, object]:
     package_info = json.dumps(
         {
             "schema_version": 1,
-            "package": DEFAULT_NAME,
+            "package": output.name,
             "classification": "REVIEWER_PORTABLE_REPRODUCTION_PACKAGE",
             "raw_restricted_data_included": False,
             "u9_eicu_data_included": False,
             "canonical_figure_archives_included": 7,
             "u2_authoritative_checkpoint_and_prediction_caches_included": True,
             "scientific_full_replay_executed_during_packaging": False,
+            "fresh_full_claim_may_terminate_at_declared_scientific_boundary": True,
+            "fresh_boundary_stage": "t2d_witness",
+            "fresh_boundary_exit_code": 4,
+            "archival_continuation_is_not_fresh_reproduction": True,
+            "historical_bootstrap_archives_included": True,
             "entrypoint": "python RUN_REPRODUCTION.py <profile>",
             **revision,
             "manifest_sha256": sha256_bytes(manifest),
