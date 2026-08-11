@@ -223,14 +223,16 @@ def verify_reproduction_metadata() -> list[str]:
         archival_ids = [stage.id for stage in archival]
         if "t2d_witness" in archival_ids or "t2e_baselines" in archival_ids:
             errors.append("archival-continuation must not execute fresh T2-D/T2-E")
-        for required in ("archival_preflight", "t2f_covariate_balance", "t3pf_preflight", "t2g_hierarchy", "u8_nhanes_reconstruction"):
+        if "t2f_covariate_balance" in archival_ids:
+            errors.append("archival-continuation must not re-execute T2-F after the disclosed exact-parent numerical boundary")
+        for required in ("archival_preflight", "t3pf_preflight", "t2g_hierarchy", "u8_nhanes_reconstruction"):
             if required not in archival_ids:
                 errors.append(f"archival-continuation lacks {required}")
         if any("u9" in stage_id.lower() for stage_id in archival_ids):
             errors.append("archival-continuation must not auto-run U9")
         try:
-            if not (archival_ids.index("t2f_covariate_balance") < archival_ids.index("t3pf_preflight") < archival_ids.index("t2g_hierarchy")):
-                errors.append("archival-continuation must order T2-F -> T3-PF -> T2-G")
+            if not (archival_ids.index("archival_preflight") < archival_ids.index("t3pf_preflight") < archival_ids.index("t2g_hierarchy")):
+                errors.append("archival-continuation must order archival preflight -> T3-PF -> T2-G")
         except ValueError:
             pass
     except Exception as exc:

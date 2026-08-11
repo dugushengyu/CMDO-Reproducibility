@@ -67,7 +67,10 @@ FRESH_BUNDLES = (
     "CMDO-T2D-Historical-Bootstrap-v0.1.zip",
     "CMDO-T2E-Historical-Bootstrap-v0.1.zip",
 )
-ARCHIVAL_BUNDLE = "CMDO-Archival-Accepted-Parents-v0.1.zip"
+ARCHIVAL_BUNDLES = (
+    "CMDO-Archival-Accepted-Parents-v0.1.zip",
+    "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip",
+)
 ABORTED_PROTOCOL_NAME = "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json"
 ABORTED_PROTOCOL_SHA256 = "7f5a6450c3341fb1ef067dff5b89f186ce0142fdc8d38648607cd74843fa1a77"
 ABORTED_PROTOCOL_SIZE = 2370
@@ -159,8 +162,19 @@ def prepare_fresh_bootstraps(project_root: Path) -> list[dict[str, Any]]:
     return records
 
 
-def prepare_archival_parents(project_root: Path) -> dict[str, Any]:
-    return materialize_bootstrap_zip(PORTABLE_ROOT / ARCHIVAL_BUNDLE, project_root)
+def prepare_archival_parents(project_root: Path) -> list[dict[str, Any]]:
+    """Materialize the declared byte-verified archival accepted-parent frontier.
+
+    T2-D/T2-E were already historical parents of the archival profile. A current
+    Windows/Python 3.11 archival attempt subsequently failed T2-F's immutable
+    AMW-U exact-parent reproduction assertion. The accepted historical T2-F
+    records are therefore a separate, explicitly classified archival parent
+    bundle. This does not represent T2-F as reproduced in the current runtime.
+    """
+    return [
+        materialize_bootstrap_zip(PORTABLE_ROOT / name, project_root)
+        for name in ARCHIVAL_BUNDLES
+    ]
 
 
 def verify_historical_receipts(repository_root: Path, project_root: Path) -> list[dict[str, Any]]:

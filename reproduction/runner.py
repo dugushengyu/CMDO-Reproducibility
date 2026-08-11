@@ -630,16 +630,17 @@ class Runner:
         path_budget = check_windows_path_budget(self.project_root, self.run_dir)
         python_environment = verify_replay_python_environment()
         self.project_root.mkdir(parents=True, exist_ok=True)
-        bootstrap = prepare_archival_parents(self.project_root)
+        bootstraps = prepare_archival_parents(self.project_root)
         marker = self.run_dir / "ARCHIVAL_CONTINUATION_CLASSIFICATION.json"
         marker.write_text(json.dumps({
             "classification":"ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
             "fresh_raw_to_science_reproduction":False,
-            "starts_from":"byte-verified accepted historical T2-D/T2-E parents",
+            "starts_from":"byte-verified accepted historical T2-D/T2-E/T2-F parents",
+            "t2f_current_runtime_status":"ARCHIVAL_NUMERICAL_BOUNDARY_AT_T2F_EXACT_PARENT_REPRODUCTION",
             "prospective_claim_created":False,
             "u9_excluded":True,
             "project_root":str(self.project_root),
-            "bootstrap_sha256":bootstrap["bundle_sha256"],
+            "bootstrap_sha256":[row["bundle_sha256"] for row in bootstraps],
         }, indent=2), encoding="utf-8")
         self.state.payload["governance"].update({
             "classification":"ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
@@ -647,7 +648,7 @@ class Runner:
             "prospective_claim_created":False,
             "u9_automatically_unsealed":False,
         }); self.state.save()
-        return {"archival_bootstrap":bootstrap,"classification_marker":str(marker),"windows_path_budget":path_budget,"python_replay_environment":python_environment,"network_allowed":self.options.allow_network,"u9_excluded":True}
+        return {"archival_bootstraps":bootstraps,"classification_marker":str(marker),"windows_path_budget":path_budget,"python_replay_environment":python_environment,"network_allowed":self.options.allow_network,"u9_excluded":True}
 
     def _collect_replay_records(self) -> dict[str, Any]:
         names = []

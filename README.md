@@ -42,7 +42,7 @@ artifacts, and prohibits downstream stages from being represented as a fresh
 accepted chain. No threshold is relaxed to force a pass.
 
 A separate `archival-continuation` profile starts from byte-verified accepted
-historical T2-D/T2-E parents to audit downstream historical implementation. That mode
+historical T2-D/T2-E/T2-F parents to audit downstream historical implementation. That mode
 is explicitly **not** fresh raw-to-science reproduction.
 
 Machine-readable disclosure: `provenance/scientific_boundaries.json`.

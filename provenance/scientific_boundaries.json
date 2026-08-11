@@ -25,7 +25,33 @@
     "classification": "ARCHIVAL_HISTORICAL_ACCEPTED_PARENT_CONTINUATION",
     "policy": "Byte-verified historical accepted parents may be used in a separate retrospective archival profile to audit downstream implementation. This profile is never evidence that the fresh raw-to-science chain reproduced.",
     "fresh_raw_to_science_reproduction": false,
-    "starts_from": "byte-verified accepted historical T2-D/T2-E parents"
+    "starts_from": "byte-verified accepted historical T2-D/T2-E/T2-F parents",
+    "t2f_archival_boundary": {
+      "boundary_code": "ARCHIVAL_NUMERICAL_BOUNDARY_AT_T2F_EXACT_PARENT_REPRODUCTION",
+      "observed_current_runtime": "T2-F formal revisions executed across all 13 targets, then the immutable 2700-row AMW-U exact-parent reproduction assertion failed before T2-F outputs were accepted.",
+      "historical_exact_parent_audit": {
+        "rows": 2700,
+        "max_absolute_difference": 4.99933427989e-13,
+        "assertion_threshold": 1e-10
+      },
+      "historical_environment": {
+        "python": "3.12.13",
+        "platform": "Linux",
+        "numpy": "2.0.2",
+        "pandas": "2.2.2",
+        "scipy": "1.16.3",
+        "scikit_learn": "1.6.1"
+      },
+      "current_replay_baseline": {
+        "python": "3.11.x",
+        "platform": "Windows",
+        "numpy": "1.26.4",
+        "pandas": "2.2.3",
+        "scipy": "1.13.1",
+        "scikit_learn": "1.5.2"
+      },
+      "policy": "Do not delete or relax the exact-parent assertion. For archival downstream implementation audit only, extend the accepted historical parent frontier through Stage T2-F and begin executable continuation at T3-PF."
+    }
   },
   "stage11e": {
     "classification": "NUMERICAL_CONDITIONING_HARDENING_CANDIDATE",

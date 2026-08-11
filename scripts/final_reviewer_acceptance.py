@@ -84,7 +84,8 @@ def main() -> int:
     assert len(full) == 55
     assert full.index("t2f_covariate_balance") < full.index("t3pf_preflight") < full.index("t2g_hierarchy")
     assert "t2d_witness" not in archival and "t2e_baselines" not in archival
-    assert archival.index("t2f_covariate_balance") < archival.index("t3pf_preflight") < archival.index("t2g_hierarchy")
+    assert "t2f_covariate_balance" not in archival
+    assert archival.index("archival_preflight") < archival.index("t3pf_preflight") < archival.index("t2g_hierarchy")
     assert not any("u9" in x.lower() for x in full + archival)
     report["dag"] = {"full_claim_nodes": len(full), "archival_nodes": len(archival), "u9_excluded": True}
 

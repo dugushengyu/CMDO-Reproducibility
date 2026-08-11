@@ -22,7 +22,7 @@
       "claim_scope": "historical audit only"
     },
     "archival-continuation": {
-      "description": "Explicit retrospective continuation from byte-verified accepted historical T2-D/T2-E parents",
+      "description": "Explicit retrospective continuation from byte-verified accepted historical T2-D/T2-E/T2-F parents after a disclosed T2-F exact-parent numerical boundary",
       "claim_scope": "archival downstream implementation audit only; never a fresh raw-to-science reproduction"
     }
   },
@@ -476,8 +476,7 @@
       "kind": "notebook",
       "profiles": [
         "full-claim",
-        "historical-replay",
-        "archival-continuation"
+        "historical-replay"
       ],
       "depends_on": [
         "t2e_baselines"
@@ -626,7 +625,12 @@
       "source": "legacy/original_authoritative/t_series/CrossModal_StageT3-PF_Outcome-Free_Preregistration_And_Asset_Preflight_v1.0.ipynb",
       "governance": "sealed_replay",
       "runtime": "python",
-      "estimated": "minutes"
+      "estimated": "minutes",
+      "depends_on_by_profile": {
+        "archival-continuation": [
+          "archival_preflight"
+        ]
+      }
     },
     {
       "id": "t3a_blind_replay",

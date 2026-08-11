@@ -39,10 +39,10 @@ class DAGTests(unittest.TestCase):
         self.assertNotIn("t2d_witness", ids)
         self.assertNotIn("t2e_baselines", ids)
         self.assertIn("archival_preflight", ids)
-        self.assertIn("t2f_covariate_balance", ids)
+        self.assertNotIn("t2f_covariate_balance", ids)
         self.assertIn("t3pf_preflight", ids)
         self.assertIn("u8_nhanes_reconstruction", ids)
-        self.assertLess(ids.index("t2f_covariate_balance"), ids.index("t3pf_preflight"))
+        self.assertLess(ids.index("archival_preflight"), ids.index("t3pf_preflight"))
         self.assertLess(ids.index("t3pf_preflight"), ids.index("t2g_hierarchy"))
         self.assertFalse(any("u9" in stage_id.lower() for stage_id in ids))
 
@@ -193,6 +193,17 @@ class BootstrapTests(unittest.TestCase):
             {row["id"] for row in payload["inputs"]},
             {"STAGE7_FINAL_RECORD", "STAGE7_EDGE_MATRIX", "STAGE7_DDO2_DISCOVERY_CANDIDATES"},
         )
+
+    def test_archival_t2f_parent_bundle_is_declared(self) -> None:
+        payload = json.loads((ROOT / "provenance/portable_bootstrap_manifest.json").read_text())
+        rows = {row["file"]: row for row in payload["files"]}
+        name = "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip"
+        self.assertIn(name, rows)
+        path = ROOT / "bootstrap_inputs" / "portable" / name
+        if path.is_file():
+            self.assertEqual(path.stat().st_size, int(rows[name]["size_bytes"]))
+            import hashlib
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), rows[name]["sha256"])
 
     def test_historical_receipt_manifest_declares_six_unique_files(self) -> None:
         payload = json.loads((ROOT / "provenance/historical_receipts.json").read_text())

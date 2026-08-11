@@ -8,7 +8,7 @@
 | `smoke` | one official public dataset | small model | environment sanity only |
 | `frozen` | canonical result ZIPs | No | fastest publication-figure verification |
 | `full-claim` | official/public raw assets plus declared historical prerequisites | Yes | fresh retrospective raw-to-science replay, subject to scientific boundary |
-| `archival-continuation` | byte-verified accepted historical T2-D/T2-E parents | downstream only | historical implementation audit; **not fresh reproduction** |
+| `archival-continuation` | byte-verified accepted historical T2-D/T2-E/T2-F parents | downstream only | historical implementation audit; **not fresh reproduction** |
 | `historical-replay` | broader legacy path | Yes | discovery-history audit |
 
 The machine-readable graph is `provenance/reproduction_dag.json`. The fresh
@@ -73,12 +73,20 @@ prerequisite block (`3`).
 
 ## Archival continuation
 
-`archival-continuation` materializes accepted historical T2-D/T2-E parent records and
-continues the declared downstream historical path. Its project root should be
-separate from a fresh replay root. The runner writes an explicit archival
-classification and sets `fresh_raw_to_science_reproduction=false`. Results from this
-mode may audit downstream implementation, but must never be presented as successful
-fresh reproduction of the raw-to-science chain.
+`archival-continuation` materializes accepted historical T2-D/T2-E/T2-F parent records and
+continues the declared downstream historical path beginning at T3-PF. T2-F is an
+explicit archival numerical boundary: the current Windows/Python 3.11 attempt
+executed its 13-target formal revisions but failed the immutable AMW-U exact-parent
+reproduction assertion. The historical 2700-row exact-parent audit is preserved in
+the portable T2-F parent bundle and had maximum absolute difference
+`4.99933427989e-13` under the historical Linux/Python 3.12 environment. The assertion
+was not relaxed or deleted.
+
+The archival project root should be separate from a fresh replay root. The runner
+writes an explicit archival classification and sets
+`fresh_raw_to_science_reproduction=false`. Results from this mode may audit
+downstream implementation, but must never be presented as successful fresh
+reproduction of either T2-F or the raw-to-science chain.
 
 ## Resume and transactional cleanup
 

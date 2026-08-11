@@ -110,7 +110,7 @@ A sealed scientific boundary cannot be bypassed by resume.
 ## 6. Archival historical-parent continuation
 
 This profile is deliberately separate. It starts from byte-verified **accepted
-historical T2-D/T2-E parents** and audits downstream historical implementation. It is
+historical T2-D/T2-E/T2-F parents** and audits downstream historical implementation. It is
 **not** a fresh raw-to-science reproduction and must use a project root separate from
 the fresh replay tree.
 
