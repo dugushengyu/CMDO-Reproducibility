@@ -223,6 +223,21 @@ class BootstrapTests(unittest.TestCase):
                     {"T2-G", "T2-H", "T2-I", "T2-J"},
                 )
 
+    def test_archival_t2j_upstream_manifest_bundle_is_declared(self) -> None:
+        payload = json.loads((ROOT / "provenance/portable_bootstrap_manifest.json").read_text())
+        rows = {row["file"]: row for row in payload["files"]}
+        name = "CMDO-Archival-T2J-Upstream-Manifests-v0.1.zip"
+        self.assertIn(name, rows)
+        path = ROOT / "bootstrap_inputs" / "portable" / name
+        if path.is_file():
+            self.assertEqual(path.stat().st_size, int(rows[name]["size_bytes"]))
+            import hashlib
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), rows[name]["sha256"])
+            with zipfile.ZipFile(path) as archive:
+                manifest = json.loads(archive.read("BOOTSTRAP_MANIFEST.json"))
+                self.assertEqual(manifest["file_count"], 4)
+                self.assertEqual({row["required_by_stage"] for row in manifest["files"]}, {"T2-J"})
+
     def test_historical_receipt_manifest_declares_six_unique_files(self) -> None:
         payload = json.loads((ROOT / "provenance/historical_receipts.json").read_text())
         rows = payload["files"]

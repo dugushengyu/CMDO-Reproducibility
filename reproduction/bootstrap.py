@@ -71,6 +71,7 @@ ARCHIVAL_BUNDLES = (
     "CMDO-Archival-Accepted-Parents-v0.1.zip",
     "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip",
     "CMDO-Archival-T2G-T2J-Immutable-Companions-v0.1.zip",
+    "CMDO-Archival-T2J-Upstream-Manifests-v0.1.zip",
 )
 ABORTED_PROTOCOL_NAME = "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json"
 ABORTED_PROTOCOL_SHA256 = "7f5a6450c3341fb1ef067dff5b89f186ce0142fdc8d38648607cd74843fa1a77"
