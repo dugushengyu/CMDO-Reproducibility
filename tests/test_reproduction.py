@@ -56,6 +56,13 @@ class DAGTests(unittest.TestCase):
 
 
 class AdapterTests(unittest.TestCase):
+    def test_runner_uses_utf8_child_process_io(self) -> None:
+        text = (ROOT / "reproduction/runner.py").read_text(encoding="utf-8")
+        self.assertIn('"PYTHONIOENCODING": "utf-8"', text)
+        self.assertIn('encoding="utf-8"', text)
+        self.assertIn('errors="strict"', text)
+        self.assertIn('reconfigure(errors="backslashreplace")', text)
+
     def test_adapter_does_not_mutate_source(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
@@ -273,6 +280,24 @@ class BootstrapTests(unittest.TestCase):
                 manifest = json.loads(archive.read("BOOTSTRAP_MANIFEST.json"))
                 self.assertEqual(manifest["file_count"], 4)
                 self.assertEqual({row["required_by_stage"] for row in manifest["files"]}, {"T2-J"})
+
+    def test_archival_t2j_reference_fingerprint_cache_bundle_is_declared(self) -> None:
+        payload = json.loads((ROOT / "provenance/portable_bootstrap_manifest.json").read_text())
+        rows = {row["file"]: row for row in payload["files"]}
+        name = "CMDO-Archival-T2J-Dermoscopy-Reference-Fingerprints-v0.1.zip"
+        self.assertIn(name, rows)
+        path = ROOT / "bootstrap_inputs" / "portable" / name
+        if path.is_file():
+            self.assertEqual(path.stat().st_size, int(rows[name]["size_bytes"]))
+            import hashlib
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), rows[name]["sha256"])
+            with zipfile.ZipFile(path) as archive:
+                manifest = json.loads(archive.read("BOOTSTRAP_MANIFEST.json"))
+                self.assertEqual(manifest["file_count"], 1)
+                row = manifest["files"][0]
+                self.assertEqual(row["required_by_stage"], "T2-J")
+                self.assertEqual(row["relative_path"], "06_Data_Records/Cross_Modal/StageT2-J_Expansion_Harmonisation_Dedup_And_Public_Route_Repair_v0.1/03_Fingerprints_And_Dedup/StageT2-J_Existing_Dermoscopy_Reference_Fingerprints_v0.1.csv")
+                self.assertEqual(row["sha256"], "d0383dfce4db6b147c5f68aaf4a07bd44f62352dd5179ae6cd205b59b762e2bd")
 
     def test_archival_t2kr_prerequisite_bundle_is_declared(self) -> None:
         payload = json.loads((ROOT / "provenance/portable_bootstrap_manifest.json").read_text())

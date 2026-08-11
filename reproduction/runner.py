@@ -105,6 +105,9 @@ class Runner:
             print(f"    {stage.title}")
 
     def run(self) -> int:
+        # Console-only portability: preserve UTF-8 logs while preventing legacy Windows code pages from crashing.
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(errors="backslashreplace")
         self.print_plan()
         if self.options.plan_only:
             return 0
@@ -332,6 +335,7 @@ class Runner:
                 "CMDO_REPRODUCTION_MODE": ("ARCHIVAL_HISTORICAL_PARENT_CONTINUATION" if self.options.profile == "archival-continuation" else "RETROSPECTIVE_REPLAY"),
                 "CMDO_ALLOW_PROSPECTIVE_CLAIM": "0",
                 "PYTHONHASHSEED": "0",
+                "PYTHONIOENCODING": "utf-8",
                 "MPLBACKEND": "Agg",
                 "PIP_CONSTRAINT": str((self.root / "environment/replay-constraints.txt").resolve()),
             }
@@ -361,6 +365,8 @@ class Runner:
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
+                encoding="utf-8",
+                errors="strict",
                 bufsize=1,
             )
             assert process.stdout is not None

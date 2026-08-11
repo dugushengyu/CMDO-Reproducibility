@@ -72,6 +72,7 @@ ARCHIVAL_BUNDLES = (
     "CMDO-Archival-T2F-Accepted-Parent-v0.1.zip",
     "CMDO-Archival-T2G-T2J-Immutable-Companions-v0.1.zip",
     "CMDO-Archival-T2J-Upstream-Manifests-v0.1.zip",
+    "CMDO-Archival-T2J-Dermoscopy-Reference-Fingerprints-v0.1.zip",
     "CMDO-Archival-T2KR-Frozen-Prerequisites-v0.1.zip",
 )
 ABORTED_PROTOCOL_NAME = "Stage11E-R_Protocol_Seal_v0.1_ABORTED_PREEXECUTION_MIXED_ENDPOINT_ASSUMPTION.json"
@@ -174,7 +175,10 @@ def prepare_archival_parents(project_root: Path) -> list[dict[str, Any]]:
     records are therefore a separate, explicitly classified archival parent
     bundle. Historical T2-G/T2-H/T2-I/T2-J companion documents and registries are
     materialized from separate byte-verified bundles because the Drive-era
-    implementations require them before execution. The T2-KR bundle contains only
+    implementations require them before execution. The T2-J dermoscopy reference
+    fingerprint cache is also materialized as a historical non-outcome dependency
+    so retrospective replay does not depend on later third-party URL availability.
+    The T2-KR bundle contains only
     seven immutable derived/frozen prerequisites that were present in the Drive
     authority but omitted from the reviewer portable frontier; it contains no raw
     HiSBreast provider archive. These repairs are packaging-only and do not
