@@ -27,6 +27,7 @@ that these historical receipts can be recreated as a new automatic provider acti
 
 | Dataset/route | Gate | Redistribution | Reviewer treatment |
 |---|---|---|---|
+| HiSBreast v2 | public Mendeley v2 archive; historical scripted acquisition returned HTTP 403, so official browser/manual download is an allowed prerequisite | do not bundle the ~1 GB raw archive | required by T2-KR; mount at the declared v0.1 acquisition path |
 | PH2 | official registration/manual archive | do not bundle | optional provider extension |
 | IDRiD | challenge access | no raw GitHub copy | historical/extension path only |
 | DeepDRiD | challenge/repository terms | do not bundle pending rights | historical path only |

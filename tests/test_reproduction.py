@@ -274,6 +274,32 @@ class BootstrapTests(unittest.TestCase):
                 self.assertEqual(manifest["file_count"], 4)
                 self.assertEqual({row["required_by_stage"] for row in manifest["files"]}, {"T2-J"})
 
+    def test_archival_t2kr_prerequisite_bundle_is_declared(self) -> None:
+        payload = json.loads((ROOT / "provenance/portable_bootstrap_manifest.json").read_text())
+        rows = {row["file"]: row for row in payload["files"]}
+        name = "CMDO-Archival-T2KR-Frozen-Prerequisites-v0.1.zip"
+        self.assertIn(name, rows)
+        path = ROOT / "bootstrap_inputs" / "portable" / name
+        if path.is_file():
+            self.assertEqual(path.stat().st_size, int(rows[name]["size_bytes"]))
+            import hashlib
+            self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), rows[name]["sha256"])
+            with zipfile.ZipFile(path) as archive:
+                manifest = json.loads(archive.read("BOOTSTRAP_MANIFEST.json"))
+                self.assertEqual(manifest["file_count"], 7)
+                self.assertEqual({row["required_by_stage"] for row in manifest["files"]}, {"T2-KR"})
+
+    def test_hisbreast_registry_matches_authoritative_t2kr_mount(self) -> None:
+        payload = json.loads((ROOT / "provenance/datasets.json").read_text())
+        row = next(row for row in payload["datasets"] if row["id"] == "HISBREAST_V2")
+        self.assertEqual(row["acquisition"], "manual_official")
+        self.assertEqual(row["persistent_id"], "10.17632/5c723rpwz2.2")
+        self.assertEqual(
+            row["expected_mount"],
+            "00_Data_Acquisition/Cross_Modal_Independent_Target_Expansion_v0.1/"
+            "HISBREAST_V2/00_Raw_Inbox/HiSBreast_Version 2.zip",
+        )
+
     def test_historical_receipt_manifest_declares_six_unique_files(self) -> None:
         payload = json.loads((ROOT / "provenance/historical_receipts.json").read_text())
         rows = payload["files"]

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "classification": "BYTE_VERIFIED_PORTABLE_HISTORICAL_BOOTSTRAP_ARCHIVES",
-  "claim_boundary": "These bytes are portable-only historical prerequisites/accepted-parent records. T2-F accepted-parent extension responds to current-runtime numerical non-reproduction; downstream companion/upstream-manifest bundles repair omitted historical prerequisites only. None is evidence that the fresh chain reproduced.",
+  "claim_boundary": "These bytes are portable-only historical prerequisites/accepted-parent records. T2-F accepted-parent extension responds to current-runtime numerical non-reproduction; downstream companion, upstream-manifest and T2-KR frozen-prerequisite bundles repair omitted historical prerequisites only. None is evidence that the fresh chain reproduced.",
   "files": [
     {
       "file": "CMDO-Archival-Accepted-Parents-v0.1.zip",
@@ -25,6 +25,12 @@
       "file": "CMDO-Archival-T2J-Upstream-Manifests-v0.1.zip",
       "size_bytes": 423687,
       "sha256": "2c5ed388a2c758cc79b170e766210ea41e593f849079ad5c58f9bddc648d63a2",
+      "distribution": "PORTABLE_ONLY_GITIGNORED"
+    },
+    {
+      "file": "CMDO-Archival-T2KR-Frozen-Prerequisites-v0.1.zip",
+      "size_bytes": 389536,
+      "sha256": "58f2fe7703ab84d92fac1d3de7d4486444c16333f034f1ab9c42bd98b2cabe81",
       "distribution": "PORTABLE_ONLY_GITIGNORED"
     },
     {
