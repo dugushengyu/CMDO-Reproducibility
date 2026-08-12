@@ -63,6 +63,16 @@ class AdapterTests(unittest.TestCase):
         self.assertIn('errors="strict"', text)
         self.assertIn('reconfigure(errors="backslashreplace")', text)
 
+    def test_static_adapter_audit_materializes_profile_bootstraps_first(self) -> None:
+        text = (ROOT / "reproduction/runner.py").read_text(encoding="utf-8")
+        method = text.split("def _adapt_selected_sources", 1)[1].split("def _adapted_source", 1)[0]
+        self.assertIn("prepare_fresh_bootstraps(self.project_root)", method)
+        self.assertIn("prepare_archival_parents(self.project_root)", method)
+        self.assertLess(
+            method.index("prepare_fresh_bootstraps(self.project_root)"),
+            method.index("_prepare_authoritative_code_mirror()"),
+        )
+
     def test_adapter_does_not_mutate_source(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             temp = Path(directory)
@@ -380,6 +390,51 @@ class BootstrapTests(unittest.TestCase):
             (project / "03_Theory/test.txt").write_bytes(b"changed")
             with self.assertRaises(BlockedError):
                 materialize_bootstrap_zip(bundle, project)
+
+    def test_materialize_bootstrap_supports_deep_portable_paths(self) -> None:
+        import hashlib
+        import os
+        import shutil
+
+        directory = tempfile.mkdtemp()
+        temp = Path(directory)
+        try:
+            bundle = temp / "deep.zip"
+            data = b"deep-byte-verified-parent\n"
+            digest = hashlib.sha256(data).hexdigest()
+            relative = (
+                "06_Data_Records/Retinal_DR/Prospective_Retinal_Blind_Test_v0.1/"
+                "Stage7_PostUnseal_FourDomain_Transportability_Discovery_And_DDO2_Prototype_v0.1/"
+                "02_DDO2_Prototype/Frozen_PostUnseal_Source_Axes/"
+                "APTOS_2019_PostUnseal_Frozen_Development_Axis_v0.1.npz"
+            )
+            manifest = {
+                "classification": "TEST_LONG_PATH_BOOTSTRAP",
+                "file_count": 1,
+                "files": [{
+                    "relative_path": relative,
+                    "size_bytes": len(data),
+                    "sha256": digest,
+                }],
+            }
+            with zipfile.ZipFile(bundle, "w") as archive:
+                archive.writestr("BOOTSTRAP_MANIFEST.json", json.dumps(manifest))
+                archive.writestr(relative, data)
+
+            project = temp / "P"
+            first = materialize_bootstrap_zip(bundle, project)
+            self.assertEqual(first["files"][0]["status"], "materialized")
+            second = materialize_bootstrap_zip(bundle, project)
+            self.assertEqual(second["files"][0]["status"], "reused")
+        finally:
+            cleanup = temp
+            if os.name == "nt":
+                value = str(temp.resolve())
+                if value.startswith("\\\\"):
+                    cleanup = Path("\\\\?\\UNC\\" + value[2:])
+                else:
+                    cleanup = Path("\\\\?\\" + value)
+            shutil.rmtree(cleanup)
 
     def test_stage7_historical_parent_manifest_is_complete(self) -> None:
         payload = json.loads((ROOT / "provenance/historical_parent_inputs.json").read_text())

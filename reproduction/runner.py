@@ -383,6 +383,16 @@ class Runner:
         }
 
     def _adapt_selected_sources(self) -> dict[str, Any]:
+        # Static adaptation may inspect historical parent records. Materialize
+        # the declared profile bootstrap before adapter audit. Preflight repeats
+        # this idempotently and additionally verifies runtime/license receipts.
+        if self.options.profile in {"full-claim", "historical-replay"}:
+            self.project_root.mkdir(parents=True, exist_ok=True)
+            prepare_fresh_bootstraps(self.project_root)
+        elif self.options.profile == "archival-continuation":
+            self.project_root.mkdir(parents=True, exist_ok=True)
+            prepare_archival_parents(self.project_root)
+
         destination_root = self.run_dir / "adapted_source"
         records = []
         mirror = self._prepare_authoritative_code_mirror()

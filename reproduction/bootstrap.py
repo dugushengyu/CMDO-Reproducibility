@@ -93,6 +93,18 @@ def _safe_destination(project_root: Path, relative: str) -> Path:
     return destination
 
 
+def _io_path(path: Path) -> Path:
+    # Filesystem-only portability adapter. Scientific paths and bytes are unchanged.
+    if os.name != "nt":
+        return path
+    value = str(path.resolve())
+    if value.startswith("\\\\?\\"):
+        return Path(value)
+    if value.startswith("\\\\"):
+        return Path("\\\\?\\UNC\\" + value[2:])
+    return Path("\\\\?\\" + value)
+
+
 def _write_verified(data: bytes, destination: Path, *, size: int, digest: str) -> str:
     if len(data) != size:
         raise IntegrityError(f"bootstrap member size mismatch: {destination}")
@@ -100,17 +112,18 @@ def _write_verified(data: bytes, destination: Path, *, size: int, digest: str) -
     observed = hashlib.sha256(data).hexdigest()
     if observed != digest:
         raise IntegrityError(f"bootstrap member hash mismatch: {destination}")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    if destination.exists():
-        if destination.stat().st_size != size or sha256_file(destination) != digest:
+    io_destination = _io_path(destination)
+    io_destination.parent.mkdir(parents=True, exist_ok=True)
+    if io_destination.exists():
+        if io_destination.stat().st_size != size or sha256_file(io_destination) != digest:
             raise BlockedError(
                 "BLOCKED_BOOTSTRAP_CONFLICT",
                 f"existing runtime file conflicts with byte-verified bootstrap: {destination}",
                 details=["Use a clean project root or preserve/move the conflicting file; it will not be overwritten."],
             )
         return "reused"
-    destination.write_bytes(data)
-    if destination.stat().st_size != size or sha256_file(destination) != digest:
+    io_destination.write_bytes(data)
+    if io_destination.stat().st_size != size or sha256_file(io_destination) != digest:
         raise IntegrityError(f"bootstrap write verification failed: {destination}")
     return "materialized"
 
