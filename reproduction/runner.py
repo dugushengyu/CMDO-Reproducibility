@@ -403,7 +403,12 @@ class Runner:
             if not source.is_file():
                 raise IntegrityError(f"declared source is missing: {stage.source}")
             destination = destination_root / stage.source
-            record = adapt_source(source, destination, self.project_root)
+            record = adapt_source(
+                source,
+                destination,
+                self.project_root,
+                require_runtime_parents=False,
+            )
             record["source"] = stage.source
             record["destination"] = str(destination.relative_to(self.run_dir))
             records.append(record)

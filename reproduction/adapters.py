@@ -392,9 +392,16 @@ def _apply_known_text_bindings(text: str, project_root: Path) -> tuple[str, list
     return text, replacements
 
 
-def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[str, object]:
+def adapt_python(
+    source: Path,
+    destination: Path,
+    project_root: Path,
+    *,
+    require_runtime_parents: bool = True,
+) -> dict[str, object]:
     original = source.read_text(encoding="utf-8-sig"); adapted, count = _adapt_text(original, project_root)
     platform_adaptations: list[dict[str, object]] = []
+    deferred_runtime_parent_bindings: list[dict[str, str]] = []
     if source.name == T2KR_PIPELINE_NAME:
         old_write = 'path.write_text(text, encoding="utf-8")'
         new_write = 'path.write_bytes(text.encode("utf-8"))'
@@ -716,6 +723,13 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
         for parent_key, parent_path in t2l_runtime_parents.items():
             fresh_hash = _self_hash_from_json(parent_path)
             if fresh_hash is None:
+                if not require_runtime_parents and not parent_path.is_file():
+                    deferred_runtime_parent_bindings.append({
+                        "parent_key": parent_key,
+                        "resolved_parent": str(parent_path),
+                        "basis": "static_audit_runtime_parent_not_generated_yet",
+                    })
+                    continue
                 raise RuntimeError(
                     f"could not verify replay-generated {parent_key} self-hash: "
                     f"{parent_path}"
@@ -763,7 +777,7 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
         )
 
     compile(adapted, str(destination), "exec"); destination.parent.mkdir(parents=True, exist_ok=True); destination.write_text(adapted, encoding="utf-8", newline="\n")
-    return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements)+sum(int(x["occurrences"]) for x in platform_adaptations),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if "isic-cli==12.5.2" in original else [],"runtime_replay_parent_hash_adaptations":replacements,"runtime_platform_adaptations":platform_adaptations,"source_mutated":False}
+    return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements)+sum(int(x["occurrences"]) for x in platform_adaptations),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if "isic-cli==12.5.2" in original else [],"runtime_replay_parent_hash_adaptations":replacements,"deferred_runtime_parent_bindings":deferred_runtime_parent_bindings,"runtime_platform_adaptations":platform_adaptations,"source_mutated":False}
 
 
 def adapt_notebook(source: Path, destination: Path, project_root: Path) -> dict[str, object]:
@@ -793,7 +807,20 @@ def adapt_notebook(source: Path, destination: Path, project_root: Path) -> dict[
     return {"source":source.as_posix(),"destination":destination.as_posix(),"source_sha256":sha256_file(source),"adapted_sha256":sha256_file(destination),"replacement_count":count+sum(int(x["occurrences"]) for x in replacements),"runtime_dependency_adaptations":[f"isic-cli==12.5.2 -> isic-cli=={ISIC_CLI_RUNTIME_PIN}"] if original_has_pin else [],"historical_parent_inputs":historical_parent_inputs,"runtime_replay_parent_hash_adaptations":replacements,"runtime_replay_semantic_adaptations":semantic,"source_mutated":False}
 
 
-def adapt_source(source: Path, destination: Path, project_root: Path) -> dict[str, object]:
-    if source.suffix.lower() == ".py": return adapt_python(source, destination, project_root)
-    if source.suffix.lower() == ".ipynb": return adapt_notebook(source, destination, project_root)
+def adapt_source(
+    source: Path,
+    destination: Path,
+    project_root: Path,
+    *,
+    require_runtime_parents: bool = True,
+) -> dict[str, object]:
+    if source.suffix.lower() == ".py":
+        return adapt_python(
+            source,
+            destination,
+            project_root,
+            require_runtime_parents=require_runtime_parents,
+        )
+    if source.suffix.lower() == ".ipynb":
+        return adapt_notebook(source, destination, project_root)
     raise ValueError(f"unsupported adaptable source: {source}")

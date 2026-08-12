@@ -199,6 +199,54 @@ class AdapterTests(unittest.TestCase):
                 ["isic-cli==12.5.2 -> isic-cli==12.4.0"],
             )
 
+    def test_t2l_static_audit_defers_absent_runtime_parents_but_execution_is_strict(self) -> None:
+        source = ROOT / (
+            "legacy/extracted_authoritative/t_series/"
+            "StageT2L_pipeline_v0.1.py"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            temp = Path(directory)
+            project = temp / "P"
+
+            static_destination = temp / "static_t2l.py"
+            record = adapt_python(
+                source,
+                static_destination,
+                project,
+                require_runtime_parents=False,
+            )
+            deferred = record["deferred_runtime_parent_bindings"]
+            self.assertEqual(
+                {item["parent_key"] for item in deferred},
+                {"t2kr", "t2h", "t3pf"},
+            )
+            self.assertTrue(static_destination.is_file())
+
+            strict_destination = temp / "strict_t2l.py"
+            with self.assertRaises(RuntimeError):
+                adapt_python(
+                    source,
+                    strict_destination,
+                    project,
+                    require_runtime_parents=True,
+                )
+
+    def test_runner_static_adapter_uses_deferred_parent_mode_only(self) -> None:
+        text = (ROOT / "reproduction/runner.py").read_text(encoding="utf-8")
+        static_method = text.split("def _adapt_selected_sources", 1)[1].split(
+            "def _prepare_authoritative_code_mirror", 1
+        )[0]
+        self.assertIn("require_runtime_parents=False", static_method)
+
+        runtime_method = text.split("def _adapted_source", 1)[1].split(
+            "def _execute_legacy", 1
+        )[0]
+        self.assertNotIn("require_runtime_parents=False", runtime_method)
+        self.assertIn(
+            "adapt_source(source, destination, self.project_root)",
+            runtime_method,
+        )
+
     def test_t2l_windows_and_targeted_parent_adapters(self) -> None:
         import ast
 
