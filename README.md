@@ -79,3 +79,11 @@ See also:
 - [Reviewer quickstart](docs/REVIEWER_QUICKSTART.md)
 - [End-to-end reproduction contract](docs/END_TO_END_REPRODUCTION.md)
 - [Data/license gates](docs/DATA_LICENSE_GATES.md)
+
+## Current replay status (12 August 2026)
+
+The fresh accepted-chain boundary at T2-D remains disclosed and is not relaxed.
+Separately, retrospective historical-parent continuation has now been audited through
+T2-MN, including explicit machine-precision representation/runtime boundaries.
+See [current reproducibility status](docs/REPRODUCIBILITY_STATUS_2026-08-12.md) and
+`provenance/downstream_replay_status_20260812.json`.

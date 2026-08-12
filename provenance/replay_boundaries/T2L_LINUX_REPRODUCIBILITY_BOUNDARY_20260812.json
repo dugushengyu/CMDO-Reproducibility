@@ -1,0 +1,47 @@
+{
+  "stage": "StageT2-L_Independent_Target_Regime_Expansion_v0.1",
+  "audit_date": "2026-08-12",
+  "classification": "T2L_TRUE_HISTORICAL_PARENT_LINUX_SCIENTIFIC_PATH_EXACT",
+  "reference_environment": {
+    "platform": "WSL2 Linux x86_64",
+    "python": "3.12.13",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "scikit_learn": "1.6.1",
+    "blas": "scipy-openblas 0.3.27"
+  },
+  "historical_inputs": {
+    "historical_parent_chain_restored": true,
+    "historical_protocol_seal_restored": true,
+    "historical_frozen_embeddings_restored": true,
+    "image_ids_byte_exact": true
+  },
+  "source_score_replay": {
+    "rows": 4002,
+    "serialized_logit_differences": 1,
+    "maximum_logit_absolute_delta": 9.999986949615902e-14
+  },
+  "multibudget_replay": {
+    "rows": 35280,
+    "estimate_auc_differences": 17,
+    "maximum_estimate_auc_absolute_delta": 1.000088900582341e-12,
+    "absolute_error_differences": 124,
+    "maximum_absolute_error_delta": 1.0000056338554941e-12,
+    "balance_selected_divergences": 0
+  },
+  "meta_replay": {
+    "byte_exact": true,
+    "rows": 18,
+    "discrete_divergences": 0
+  },
+  "governance": {
+    "scientific_rules_changed": false,
+    "seed_changed": false,
+    "budget_changed": false,
+    "selector_changed": false,
+    "threshold_changed": false,
+    "gate_changed": false,
+    "stage12_authorised": false
+  },
+  "interpretation": "Historical parent records, historical protocol and byte-exact frozen embeddings restore the complete Stage T2-L scientific path under the Linux reference environment. Remaining differences are confined to machine-precision continuous numerical tails."
+}

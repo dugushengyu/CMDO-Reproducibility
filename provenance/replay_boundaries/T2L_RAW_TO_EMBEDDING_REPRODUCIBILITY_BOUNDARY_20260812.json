@@ -1,0 +1,79 @@
+﻿{
+  "classification": "T2L_RAW_TO_EMBEDDING_LINUX_CPU_MACHINE_PRECISION_NUMERICAL_REPLAY_WITH_BYTE_EXACT_ARCHIVAL_EMBEDDING_CHECKPOINTS",
+  "reference_environment": {
+    "os": "Linux x86_64 under WSL2",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "torch": "2.6.0+cpu",
+    "torchvision": "0.21.0+cpu",
+    "pillow": "11.0.0",
+    "device": "CPU",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900H",
+    "torch_cpu_capability": "AVX2",
+    "mkldnn": true,
+    "threads": 8,
+    "weights": "ResNet50_Weights.IMAGENET1K_V2",
+    "weight_file": "resnet50-11ad3fa6.pth"
+  },
+  "scientific_path": {
+    "raw_image_sha_verification": true,
+    "historical_image_id_order_preserved": true,
+    "exif_transpose": true,
+    "rgb_conversion": true,
+    "official_imagenet1k_v2_transform": true,
+    "l2_normalisation": true
+  },
+  "sentinel_exactness": {
+    "ISIC2017_TEST_ISIC_0012092": {
+      "array_exact": true,
+      "changed_elements": 0,
+      "max_abs": 0.0
+    },
+    "ISIC2018_TEST_ISIC_0034525": {
+      "array_exact": true,
+      "changed_elements": 0,
+      "max_abs": 0.0
+    },
+    "ISIC2019_TEST_ISIC_0034321": {
+      "array_exact": true,
+      "changed_elements": 0,
+      "max_abs": 0.0
+    }
+  },
+  "full_raw_to_embedding_replay": {
+    "ISIC2017_TEST": {
+      "rows": 247,
+      "changed_rows": 40,
+      "changed_elements": 31534,
+      "max_abs": 1.1920928955078125e-07,
+      "mean_abs": 6.688290550611095e-11,
+      "id_file_sha_exact": true
+    },
+    "ISIC2018_TEST": {
+      "rows": 584,
+      "changed_rows": 60,
+      "changed_elements": 44312,
+      "max_abs": 1.1920928955078125e-07,
+      "mean_abs": 4.221906517503144e-11,
+      "id_file_sha_exact": true
+    },
+    "ISIC2019_TEST": {
+      "rows": 503,
+      "changed_rows": 60,
+      "changed_elements": 44089,
+      "max_abs": 5.960464477539063e-08,
+      "mean_abs": 4.957058139424426e-11,
+      "id_file_sha_exact": true
+    }
+  },
+  "backend_diagnostics": {
+    "batch_size_is_root_cause": false,
+    "thread_count_is_root_cause": false,
+    "mkldnn_disable_restores_exactness": false,
+    "avx2_limit_restores_exactness": false,
+    "avx_limit_restores_exactness": false,
+    "sse41_limit_restores_exactness": false,
+    "gpu_is_archival_reference_path": false
+  },
+  "interpretation": "Historical frozen embedding arrays remain byte-identical archival checkpoints. Fresh raw-image reconstruction under the pinned Linux CPU reference environment reproduces the representation numerically to machine precision; residual discrepancies are sparse float32 terminal-bit differences attributable to platform/backend execution rather than changes in data, model, preprocessing or scientific method."
+}

@@ -23,6 +23,10 @@ STAGE8_NOTEBOOK_NAME = "CrossModal_Stage8_CrossModality_EdgeLibrary_Expansion_An
 T1R_NOTEBOOK_NAME = "CrossModal_StageT1-R_Development_Only_DDET_Mechanism_Kill_Test_v0.1.ipynb"
 T2KR_PIPELINE_NAME = "StageT2KR_CPU_pipeline_v0.4.py"
 T2L_PIPELINE_NAME = "StageT2L_pipeline_v0.1.py"
+
+T2MN_PIPELINE_NAME = "StageT2MN_pipeline_v0.3.py"
+T2MN_EXTRACTED_SOURCE_SHA256 = "f4aefd24f714c127635566ef0c637593fc8455655f585ae92904c245cb58aa50"
+T2MN_LAUNCHER_PAYLOAD_SHA256 = "ca642a7d31c4717dde1f3645c47c4f7a8508b9e7d2ec5e1e3e3cb3aaec07d66f"
 STAGE11G_NOTEBOOK_NAME = "CrossModal_Stage11G-R_Development_Only_DDO2_Decisive_Viability_Kill_Test_v0.1.ipynb"
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 COLAB_MOUNT = re.compile(r"^\s*(?:from\s+google\.colab\s+import\s+drive|drive\.mount\s*\([^\n]*\))\s*$", re.MULTILINE)
@@ -462,6 +466,182 @@ def adapt_python(source: Path, destination: Path, project_root: Path) -> dict[st
             "scientific_thresholds_changed": False,
             "scientific_values_changed": False,
             "reason": "preserve frozen LF SHA-256 commitments for T2-L embedded theory, preregistration, registry and manual files on Windows",
+        })
+
+    if source.name == T2MN_PIPELINE_NAME:
+        # The extracted authoritative source is the decoded payload of the
+        # historical self-contained notebook. The notebook launcher computes
+        # the SHA-256 of the encoded Base85 payload and leaves that value in
+        # globals() before exec(). Direct execution of the extracted payload
+        # therefore needs the same already-committed launcher value restored.
+        if sha256_file(source) != T2MN_EXTRACTED_SOURCE_SHA256:
+            raise RuntimeError(
+                "T2-MN extracted authoritative source no longer matches "
+                "its frozen decoded-payload SHA-256"
+            )
+
+        launcher = (
+            REPOSITORY_ROOT
+            / "legacy"
+            / "original_authoritative"
+            / "t_series"
+            / "CrossModal_StageT2-MN_Censored_Model_Freeze_And_Provider_Prospective_Extension_v0.3_SELF_CONTAINED.ipynb"
+        )
+        if not launcher.is_file():
+            raise RuntimeError(
+                f"T2-MN authoritative self-contained launcher missing: {launcher}"
+            )
+
+        launcher_payload = json.loads(
+            launcher.read_text(encoding="utf-8-sig")
+        )
+        launcher_code = "\n".join(
+            "".join(cell.get("source", []))
+            if isinstance(cell.get("source", []), list)
+            else str(cell.get("source", ""))
+            for cell in launcher_payload.get("cells", [])
+            if cell.get("cell_type") == "code"
+        )
+
+        launcher_compute = (
+            "EMBEDDED_PAYLOAD_SHA256 = "
+            "hashlib.sha256(payload.encode('ascii')).hexdigest()"
+        )
+        launcher_assert = (
+            "assert EMBEDDED_PAYLOAD_SHA256 == "
+            f"'{T2MN_LAUNCHER_PAYLOAD_SHA256}'"
+        )
+        launcher_exec = (
+            "exec(compile(source, "
+            "'StageT2MN_pipeline_v0.3.py', 'exec'))"
+        )
+
+        for required_launcher_line in (
+            launcher_compute,
+            launcher_assert,
+            launcher_exec,
+        ):
+            if required_launcher_line not in launcher_code:
+                raise RuntimeError(
+                    "T2-MN launcher provenance contract is not present: "
+                    + required_launcher_line
+                )
+
+        old_payload_context = (
+            'EMBEDDED_PAYLOAD_SHA256 = '
+            'globals().get("EMBEDDED_PAYLOAD_SHA256", "")'
+        )
+        new_payload_context = (
+            'EMBEDDED_PAYLOAD_SHA256 = '
+            'globals().get("EMBEDDED_PAYLOAD_SHA256", '
+            f'"{T2MN_LAUNCHER_PAYLOAD_SHA256}")'
+        )
+
+        payload_occurrences = adapted.count(old_payload_context)
+        if payload_occurrences != 1:
+            raise RuntimeError(
+                "expected exactly one T2-MN launcher-context lookup, "
+                f"found {payload_occurrences}"
+            )
+
+        adapted = adapted.replace(
+            old_payload_context,
+            new_payload_context,
+            1,
+        )
+
+        platform_adaptations.append({
+            "rule": "t2mn_self_contained_launcher_payload_sha_restoration",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "launcher_payload_sha256":
+                T2MN_LAUNCHER_PAYLOAD_SHA256,
+            "decoded_source_sha256":
+                T2MN_EXTRACTED_SOURCE_SHA256,
+            "reason":
+                "standalone execution of the byte-exact decoded payload "
+                "omits the original notebook launcher's already-verified "
+                "encoded-payload SHA global",
+        })
+
+        # Windows compatibility only. As with T2-KR and T2-L, this source
+        # executes at module top level; DataLoader workers under Windows
+        # spawn would recursively execute the complete pipeline.
+        old_workers = "num_workers=2, pin_memory=False"
+        new_workers = (
+            'num_workers=0 if os.name == "nt" else 2, '
+            "pin_memory=False"
+        )
+
+        worker_occurrences = adapted.count(old_workers)
+        if worker_occurrences != 1:
+            raise RuntimeError(
+                "expected exactly one T2-MN DataLoader worker "
+                f"configuration, found {worker_occurrences}"
+            )
+
+        adapted = adapted.replace(
+            old_workers,
+            new_workers,
+            1,
+        )
+
+        platform_adaptations.append({
+            "rule": "t2mn_windows_dataloader_single_process",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "reason":
+                "Windows spawn recursively executes the top-level "
+                "T2-MN payload; single-process loading preserves "
+                "frozen image order and CPU inference",
+        })
+
+    if source.name == T2MN_PIPELINE_NAME:
+        # Windows os.fsync/_commit rejects a read-only descriptor.
+        # Preserve the historical post-replace durability flush by opening
+        # the final runtime output read/write on Windows only. No bytes are
+        # modified; non-Windows execution remains byte-for-byte unchanged.
+        old_post_replace_fsync = (
+            '    os.replace(temporary, path)\n'
+            '    with path.open("rb") as handle:\n'
+            '        os.fsync(handle.fileno())\n'
+            '    return path'
+        )
+        new_post_replace_fsync = (
+            '    os.replace(temporary, path)\n'
+            '    with path.open("rb+" if os.name == "nt" else "rb") as handle:\n'
+            '        os.fsync(handle.fileno())\n'
+            '    return path'
+        )
+
+        fsync_occurrences = adapted.count(old_post_replace_fsync)
+        if fsync_occurrences != 1:
+            raise RuntimeError(
+                "expected exactly one T2-MN post-replace fsync block, "
+                f"found {fsync_occurrences}"
+            )
+
+        adapted = adapted.replace(
+            old_post_replace_fsync,
+            new_post_replace_fsync,
+            1,
+        )
+
+        platform_adaptations.append({
+            "rule": "t2mn_windows_post_replace_fsync_writable_handle",
+            "occurrences": 1,
+            "authoritative_source_mutated": False,
+            "scientific_thresholds_changed": False,
+            "scientific_values_changed": False,
+            "reason":
+                "Windows fsync/_commit rejects the historical read-only "
+                "post-replace descriptor; opening the already-written "
+                "runtime output as rb+ preserves the durability flush "
+                "without changing file bytes",
         })
 
     adapted, replacements = _apply_known_text_bindings(adapted, project_root)

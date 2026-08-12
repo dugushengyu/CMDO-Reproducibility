@@ -1,0 +1,55 @@
+{
+  "stage": "StageT2-KR_Frozen_Axis_Schema_Adapter_And_CPU_Continuation_v0.4",
+  "audit_date": "2026-08-12",
+  "classification": "T2KR_LINUX_SCIENTIFIC_PATH_EXACT_WITH_MACHINE_PRECISION_CONTINUOUS_TAIL",
+  "reference_environment": {
+    "platform": "WSL2 Linux x86_64",
+    "python": "3.12.13",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "scikit_learn": "1.6.1",
+    "blas": "scipy-openblas 0.3.27"
+  },
+  "frozen_input_reproduction": {
+    "breast_embedding_byte_exact": true,
+    "milk_embedding_byte_exact": true,
+    "breast_ids_byte_exact": true,
+    "milk_ids_byte_exact": true,
+    "source_score_csv_byte_exact": true,
+    "source_score_rows": 3477
+  },
+  "downstream_reproduction": {
+    "multibudget_rows": 23904,
+    "discrete_path_exact": true,
+    "balance_selected_divergences": 0,
+    "estimate_auc_serialized_divergences": 6,
+    "estimate_auc_max_abs_delta": 1.000088900582341e-12,
+    "absolute_error_serialized_divergences": 81,
+    "absolute_error_max_abs_delta": 3.0001001682933293e-13
+  },
+  "estimate_auc_tail_difference_methods": {
+    "random_joint_gmm": 3,
+    "amw_ddet": 1,
+    "amw_u_recomputed": 1,
+    "amw_cb2": 1
+  },
+  "governance": {
+    "scientific_rules_changed": false,
+    "seed_changed": false,
+    "threshold_changed": false,
+    "selector_changed": false,
+    "gate_changed": false,
+    "intermediate_rounding_added": false,
+    "locked_blind_assets_touched": false,
+    "stage12_authorised": false
+  },
+  "interpretation": "Linux restores the historical frozen source-score artifact byte-for-byte and restores the complete acquisition and selector path. Remaining differences are confined to machine-precision continuous numerical tails and do not alter any discrete scientific decision or governance gate.",
+  "windows_contrast": {
+    "source_logit_serialized_divergences": 5,
+    "source_probability_serialized_divergences": 7,
+    "multibudget_estimate_auc_divergences": 9003,
+    "balance_selected_divergences": 123,
+    "maximum_estimate_auc_difference": 0.092200021979,
+    "classification": "CROSS_PLATFORM_NUMERICAL_BRANCH_AMPLIFICATION"
+  }
+}

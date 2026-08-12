@@ -1,0 +1,46 @@
+﻿{
+    "schema_version":  1,
+    "sealed_date":  "2026-08-12",
+    "classification":  "RETROSPECTIVE_DOWNSTREAM_REPLAY_SEALED_WITH_DISCLOSED_NUMERICAL_BOUNDARIES",
+    "fresh_full_claim":  {
+                             "boundary_stage":  "t2d_witness",
+                             "boundary_code":  "SCIENTIFIC_DIVERGENCE_BOUNDARY",
+                             "exit_code":  4,
+                             "policy":  "The historical T2-D authorisation gate is not relaxed or bypassed. Fresh accepted-chain claims stop at this boundary."
+                         },
+    "archival_downstream":  {
+                                "t2kr":  "LINUX_SCIENTIFIC_PATH_EXACT_WITH_MACHINE_PRECISION_CONTINUOUS_TAIL",
+                                "t2l":  "TRUE_HISTORICAL_PARENT_LINUX_SCIENTIFIC_PATH_EXACT",
+                                "t2m":  "HISTORICAL_PARENT_DETERMINISTIC_CHECKPOINT_EXACT",
+                                "t2mn":  "LINUX_SCIENTIFIC_PATH_EXACT_WITH_MACHINE_PRECISION_CONTINUOUS_TAIL_AND_DYNAMIC_PROVENANCE",
+                                "discrete_scientific_divergence_detected":  false,
+                                "thresholds_relaxed":  false,
+                                "frozen_gates_changed":  false
+                            },
+    "t2l_raw_to_embedding":  {
+                                 "classification":  "LINUX_CPU_MACHINE_PRECISION_NUMERICAL_REPLAY_WITH_BYTE_EXACT_ARCHIVAL_EMBEDDING_CHECKPOINTS",
+                                 "ids_byte_exact":  true,
+                                 "raw_image_sha_verified":  true,
+                                 "weights_and_transform_frozen":  true,
+                                 "max_abs_by_target":  {
+                                                           "ISIC2017_TEST":  1.1920928955078125E-07,
+                                                           "ISIC2018_TEST":  1.1920928955078125E-07,
+                                                           "ISIC2019_TEST":  5.9604644775390625E-08
+                                                       },
+                                 "policy":  "Historical embedding arrays remain byte-identical archival checkpoints. Cross-machine raw-image reconstruction is accepted at machine-precision numerical equivalence; bitwise identity is not required."
+                             },
+    "reviewer_package_policy":  {
+                                    "engineering_acceptance_required":  true,
+                                    "canonical_archive_verification_required_for_portable":  true,
+                                    "archival_continuation_not_fresh_reproduction":  true,
+                                    "u9_in_default_reviewer_profiles":  false,
+                                    "u9_data_in_reviewer_package":  false
+                                },
+    "audit_records":  [
+                          "T2KR_LINUX_NUMERICAL_REPRODUCIBILITY_BOUNDARY_20260812.json",
+                          "T2L_LINUX_REPRODUCIBILITY_BOUNDARY_20260812.json",
+                          "T2MN_LINUX_REPRODUCIBILITY_BOUNDARY_20260812.json",
+                          "T2L_RAW_TO_EMBEDDING_REPRODUCIBILITY_BOUNDARY_20260812.json",
+                          "T2MN_CANONICAL_MEMBER_COMPARISON_20260812.json"
+                      ]
+}

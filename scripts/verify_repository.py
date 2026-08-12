@@ -355,7 +355,7 @@ def main() -> int:
     ignored_scan_roots = {".git", ".venv", "outputs", "dist"}
     for path in ROOT.rglob("*"):
         relative_parts = path.relative_to(ROOT).parts
-        if not path.is_file() or any(part in ignored_scan_roots for part in relative_parts):
+        if not path.is_file() or any(part in ignored_scan_roots or part.startswith(".venv") for part in relative_parts):
             continue
         rel = path.relative_to(ROOT)
         if path.stat().st_size > MAX_GIT_FILE_BYTES:

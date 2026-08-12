@@ -1,0 +1,81 @@
+{
+  "stage": "StageT2-MN_v0.1",
+  "audit_date": "2026-08-12",
+  "classification": "T2MN_LINUX_SCIENTIFIC_PATH_EXACT_WITH_MACHINE_PRECISION_CONTINUOUS_TAIL_AND_DYNAMIC_PROVENANCE",
+  "authoritative_pipeline": {
+    "file": "StageT2MN_pipeline_v0.3.py",
+    "sha256": "f4aefd24f714c127635566ef0c637593fc8455655f585ae92904c245cb58aa50"
+  },
+  "reference_environment": {
+    "platform": "WSL2 Linux x86_64",
+    "python": "3.12.13",
+    "numpy": "2.0.2",
+    "scipy": "1.16.3",
+    "scikit_learn": "1.6.1",
+    "blas": "scipy-openblas 0.3.27"
+  },
+  "historical_archive": {
+    "sha256": "28da430abc6d7a7581ef79844228c68ed1c97685d4a39c42b136c3b32092abb6",
+    "members": 72
+  },
+  "linux_replay_archive": {
+    "sha256": "9ae9f3e6a7c819d175dd5727504f9a241772de9997f900c7cc2afd10d66881cb",
+    "members": 72
+  },
+  "member_audit": {
+    "member_set_exact": true,
+    "byte_exact_members": 47,
+    "different_members": 25,
+    "frozen_npy_exact": 6,
+    "frozen_npy_different": 0,
+    "frozen_npy_changed_elements": 0,
+    "maximum_observed_numeric_csv_absolute_delta": 3.000000248221113e-11,
+    "numeric_changed_columns": 12
+  },
+  "scientific_path": {
+    "t2m_selected_model": "CORE",
+    "t2m_selected_penalty": 1.0,
+    "t2m_fixed_loto_relative_nll_improvement": 0.1623132620500567,
+    "t2m_nested_loto_relative_nll_improvement": 0.06292600517755942,
+    "t2m_family_holdout_relative_nll_improvement": 0.17312093962460307,
+    "t2m_interval_order_concordance": 0.8076923076923077,
+    "t2m_support_coverage": 0.9444444444444444,
+    "provider_targets": 3,
+    "distinct_providers": 3,
+    "provider_multibudget_rows": 35712,
+    "provider_regime_counts": {
+      "EVIDENCE_LIMITED_OPERATIONAL": 3
+    },
+    "discrete_selector_divergence": false,
+    "discrete_regime_divergence": false,
+    "gate_outcome_divergence": false,
+    "provider_assignment_divergence": false,
+    "historical_mean_provider_prospective_interval_nll": 1.9156497323765471,
+    "linux_mean_provider_prospective_interval_nll": 1.9156497323765478
+  },
+  "dynamic_provenance_differences": [
+    "UTC timestamps",
+    "entry/protocol/forecast/completion self-hashes derived from timestamps",
+    "parent T2-M completion hash derived from the fresh replay record",
+    "runtime filesystem paths",
+    "durable commit manifest hashes derived from fresh provenance",
+    "derived PNG rendering bytes"
+  ],
+  "governance": {
+    "scientific_rules_changed": false,
+    "seeds_changed": false,
+    "budgets_changed": false,
+    "selectors_changed": false,
+    "thresholds_changed": false,
+    "gates_changed": false,
+    "single_pilot_deployment_authorised": false,
+    "locked_blind_assets_touched": false,
+    "locked_blind_outcomes_accessed": false,
+    "stage12_authorised": false
+  },
+  "interpretation": "The historical Stage T2-MN scientific path is reproduced under the Linux reference numerical stack. The complete canonical member set is preserved, all six frozen provider embedding/ID arrays are exact, and no discrete scientific decision changes. Remaining differences consist of machine-precision continuous numerical tails and expected fresh-run provenance, runtime-path and rendering differences. Archival byte identity is therefore preserved by the historical canonical archive, while replay reproducibility is established at the scientific/numerical level.",
+  "canonical_member_comparison_report": {
+    "path": "C:\\Users\\zyx\\R\\T2MN_CANONICAL_MEMBER_COMPARISON_20260812.json",
+    "sha256": "80962228b17f2266a7f5480f38c6edec5fad01e6a1e6bf956e71cd6607715182"
+  }
+}

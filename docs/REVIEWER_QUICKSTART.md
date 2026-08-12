@@ -128,11 +128,11 @@ The archival classification is written to
 
 ## Exit codes
 
-- `0` — selected profile completed.
-- `1` — engineering/integrity/stage execution failure.
-- `3` — explicit prerequisite block (runtime, network, license/receipt, path budget,
+- `0` â€” selected profile completed.
+- `1` â€” engineering/integrity/stage execution failure.
+- `3` â€” explicit prerequisite block (runtime, network, license/receipt, path budget,
   or governance acknowledgement).
-- `4` — `SCIENTIFIC_DIVERGENCE_BOUNDARY`; a scientific stage executed, but the frozen
+- `4` â€” `SCIENTIFIC_DIVERGENCE_BOUNDARY`; a scientific stage executed, but the frozen
   authorisation boundary was not reproduced. This is not converted into a pass.
 
 ## Governance boundary
@@ -148,3 +148,14 @@ boundary is machine-readable in `provenance/scientific_boundaries.json`.
 The Portable bundle also carries byte-verified Drive-era immutable companion files
 needed by T2-G through T2-J (theory/method/preregistration/registry/checklist
 records). These are prerequisites only, not regenerated scientific results.
+
+## Current downstream archival status
+
+The fresh full-claim boundary at T2-D remains unchanged. In the separate archival
+historical-parent profile, downstream implementation has now been audited through
+T2-MN with no discrete scientific divergence. T2-L raw-image ResNet50 reconstruction
+is machine-precision numerically reproducible on the pinned Linux CPU stack while the
+historical frozen embeddings remain the byte-identical archival checkpoint.
+
+See `REPRODUCIBILITY_STATUS_2026-08-12.md` for the compact interpretation and
+`provenance/replay_boundaries/` for machine-readable audit records.
