@@ -1,16 +1,20 @@
 CMDO U9 PRE-OUTCOME ENGINEERING AMENDMENT A1 QA REPORT
-Date: 2026-08-13 11:02:05 +08:00
-
 STATUS: PASSED
 
 Base
 ----
-Reviewer commit: a130c7fa7a40b04f5ae05fe6a00c328784fa49df
-Base authoritative MATLAB SHA-256: 1286b67f3dd1b5d384bed43f4e61723800600e11345d4530b0443e83d4ca4ddd
+Reviewer parent commit: a130c7fa7a40b04f5ae05fe6a00c328784fa49df
 
-Amendment
----------
-Amended authoritative MATLAB SHA-256: 1a8d609144d692725ff2ee2618ea8b25129a051d04ec20a97f52943adbe35cfc
+Scientific amendment validation
+-------------------------------
+Validated A1 distributable MATLAB SHA-256: 1a8d609144d692725ff2ee2618ea8b25129a051d04ec20a97f52943adbe35cfc
+Git checkout MATLAB SHA-256: 5f72a5aba7650bc7ac51ac48c72db8e5d7ede19d856a75d29b8367387da43352
+Normalized MATLAB source equality: PASS
+Raw-hash difference classification: EOL_ONLY_BYTE_DIFFERENCE
+Scientific source-content difference across package/Git: NONE
+
+A1 engineering corrections
+--------------------------
 A1.1 apachePatientsResultsID -> apachePatientResultsID: PASS
 A1.2 apachepatientsresultsid -> apachepatientresultsid: PASS
 A1.3 Windows case-insensitive locator de-dup: PASS
@@ -19,8 +23,7 @@ Exact reverse-diff reconstructs base source: PASS
 Regression
 ----------
 Native MATLAB SELFTEST on amended implementation: PASS
-Official public eICU demo file hashes: PASS
-Selected-column import and APACHE-IVa adapter path: PASS
+Official public eICU demo selected-column/APACHE-IVa adapter path: PASS
 Expected terminal boundary: CMDO:U9:HospitalCount
 Frozen minimum hospital roster: 512
 Frozen required hospitals: 38
@@ -43,7 +46,14 @@ Role seed 2026081001: unchanged
 Master seed 2026081002: unchanged
 Calibration seed 2026081003: unchanged
 Telemetry pair count 10: unchanged
-All U9 gates: unchanged by source exact-diff constraint
+All U9 gates: unchanged
+
+Distribution boundary
+---------------------
+PACKAGE_MANIFEST_SHA256_v1_0_A1.csv records exact bytes of the validated distributable A1 package.
+Git may normalize text line endings, so raw text-file SHA-256 values in a checkout can differ.
+The locally validated A1 MATLAB source and GitHub MATLAB source were compared after CRLF/LF
+normalization and were exactly equal.
 
 Governance
 ----------
@@ -51,7 +61,5 @@ Full credentialed eICU reserve outcomes accessed before A1: FALSE
 Formal full-eICU ADAPT before A1: FALSE
 PREPARE before A1: FALSE
 UNSEAL before A1: FALSE
-Original C:\CP42 v0.4.2 package mutated: FALSE
 Public demo used for scientific evidence: FALSE
-
-Regression record SHA-256: ed1a64fc4f08aa0076ebb0b622f4497b598c645d0ba9375695ebcff39e02b6df
+Scientific protocol changed: FALSE
