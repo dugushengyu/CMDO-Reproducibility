@@ -1,0 +1,57 @@
+CMDO U9 PRE-OUTCOME ENGINEERING AMENDMENT A1 QA REPORT
+Date: 2026-08-13 11:02:05 +08:00
+
+STATUS: PASSED
+
+Base
+----
+Reviewer commit: a130c7fa7a40b04f5ae05fe6a00c328784fa49df
+Base authoritative MATLAB SHA-256: 1286b67f3dd1b5d384bed43f4e61723800600e11345d4530b0443e83d4ca4ddd
+
+Amendment
+---------
+Amended authoritative MATLAB SHA-256: 1a8d609144d692725ff2ee2618ea8b25129a051d04ec20a97f52943adbe35cfc
+A1.1 apachePatientsResultsID -> apachePatientResultsID: PASS
+A1.2 apachepatientsresultsid -> apachepatientresultsid: PASS
+A1.3 Windows case-insensitive locator de-dup: PASS
+Exact reverse-diff reconstructs base source: PASS
+
+Regression
+----------
+Native MATLAB SELFTEST on amended implementation: PASS
+Official public eICU demo file hashes: PASS
+Selected-column import and APACHE-IVa adapter path: PASS
+Expected terminal boundary: CMDO:U9:HospitalCount
+Frozen minimum hospital roster: 512
+Frozen required hospitals: 38
+PREPARE executed: FALSE
+UNSEAL executed: FALSE
+Scientific claim created: FALSE
+
+Frozen scientific specification
+-------------------------------
+APACHE version 4: unchanged
+Minimum age 18: unchanged
+Hospital roster threshold 512: unchanged
+Roles 6 SOURCE / 6 HISTORY / 6 CALIBRATION / 20 RESERVE: unchanged
+Budgets 64 / 128 / 256: unchanged
+Replicates 200: unchanged
+Folds 4: unchanged
+Maximum transport weight 0.35: unchanged
+Decision guard band 0.01: unchanged
+Role seed 2026081001: unchanged
+Master seed 2026081002: unchanged
+Calibration seed 2026081003: unchanged
+Telemetry pair count 10: unchanged
+All U9 gates: unchanged by source exact-diff constraint
+
+Governance
+----------
+Full credentialed eICU reserve outcomes accessed before A1: FALSE
+Formal full-eICU ADAPT before A1: FALSE
+PREPARE before A1: FALSE
+UNSEAL before A1: FALSE
+Original C:\CP42 v0.4.2 package mutated: FALSE
+Public demo used for scientific evidence: FALSE
+
+Regression record SHA-256: ed1a64fc4f08aa0076ebb0b622f4497b598c645d0ba9375695ebcff39e02b6df
