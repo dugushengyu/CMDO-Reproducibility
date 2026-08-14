@@ -14,6 +14,10 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
+    env:
+      TMP: ${{ runner.temp }}
+      TEMP: ${{ runner.temp }}
+      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
