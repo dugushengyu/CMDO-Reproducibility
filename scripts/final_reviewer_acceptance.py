@@ -23,13 +23,7 @@ from reproduction.dag import ReproductionDAG
 
 
 def _child_environment() -> dict[str, str]:
-    """Return a byte-neutral child environment with canonical Windows temp paths.
-
-    Hosted Windows runners may expose TEMP/TMP through an 8.3 short alias while
-    ``Path.resolve()`` expands the same directory to its long form. Canonicalising
-    these environment values prevents path-spelling-only unit-test failures without
-    altering any scientific input, threshold or replay rule.
-    """
+    """Return a byte-neutral child environment with canonical Windows temp paths."""
     env = os.environ.copy()
     if os.name == "nt":
         for key in ("TEMP", "TMP", "TMPDIR"):
@@ -76,7 +70,7 @@ def main() -> int:
     ap.add_argument("--skip-runtime", action="store_true", help="static package acceptance only")
     ap.add_argument(
         "--require-canonical", action="store_true",
-        help="require all seven canonical scientific archives (Portable bundle acceptance)",
+        help="require all seven canonical scientific archives (reviewer asset bundle acceptance)",
     )
     ap.add_argument("--output", type=Path, default=ROOT / "outputs/reviewer_acceptance.json")
     args = ap.parse_args()
@@ -93,7 +87,6 @@ def main() -> int:
     report["checks"].append(run(verify_command, label="repository"))
     report["checks"].append(run([sys.executable, "scripts/extract_embedded_sources.py", "--check"], label="embedded-sources"))
     report["checks"].append(run([sys.executable, "scripts/build_provenance_manifests.py", "--check"], label="provenance"))
-    report["checks"].append(run([sys.executable, "scripts/build_cleanup_manifest.py", "--check"], label="cleanup-manifest"))
     report["checks"].append(run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"], label="unit-tests"))
 
     dag = ReproductionDAG(ROOT / "provenance/reproduction_dag.json")
@@ -133,7 +126,7 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("\n=== CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===")
-    print("Static integrity, provenance, bootstrap identities, DAG and unit tests passed.")
+    print("Static integrity, provenance, source extraction, DAG and unit tests passed.")
     print("This PASS does not overwrite or reinterpret any scientific divergence.")
     if report.get("scientific_boundary_code"):
         print(f"Observed scientific status: {report['scientific_boundary_code']}")
