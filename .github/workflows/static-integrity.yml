@@ -24,14 +24,12 @@ jobs:
           python -m py_compile RUN_REVIEWER.py
           python -m py_compile scripts/install_reviewer_asset_bundle.py
           python -m py_compile scripts/build_reviewer_asset_bundle.py
-      - name: Verify provenance and packaging
+      - name: Verify repository, provenance and packaging
         run: python scripts/verify_repository.py
       - name: Verify embedded-source extraction
         run: python scripts/extract_embedded_sources.py --check
       - name: Verify generated provenance manifests
-        run: |
-          python scripts/build_provenance_manifests.py --check
-          python scripts/build_cleanup_manifest.py --check
+        run: python scripts/build_provenance_manifests.py --check
       - name: Run reproduction-runner unit tests (Linux)
         if: runner.os != 'Windows'
         run: python -m unittest discover -s tests -v
