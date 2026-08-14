@@ -1,161 +1,171 @@
 # Reviewer quickstart
 
-CMDO separates **engineering reproducibility**, **fresh raw-to-science replay**, and
-**archival historical-parent continuation**. These modes answer different questions
-and must not be conflated.
+The standard CMDO reviewer path has five steps. It is deliberately separated from the much deeper historical replay machinery.
 
-## 1. Install
+## Step 1 — install the pinned Python environment
 
-Use Python 3.11. MATLAB must be callable as `matlab` for U8 and publication figures;
-the Statistics and Machine Learning Toolbox is required.
+Reference Python version: **3.11**.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate              # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
 ```
 
-For CUDA, install the matching official PyTorch wheel first. The runner also exports
-`PIP_CONSTRAINT=environment/replay-constraints.txt` so legacy notebook `pip install`
-commands cannot silently upgrade the numerical stack during replay. Immutable
-Drive-era source bytes remain unchanged. Runtime copies adapt `isic-cli==12.5.2` to
-`12.4.0`, the last Python-3.11-compatible release.
-
-
-## 2. One-command engineering acceptance
-
-For an ordinary Git clone (large Portable-only assets absent):
-
-```bash
-python scripts/final_reviewer_acceptance.py --skip-runtime
-```
-
-For the reviewer Portable bundle, require the seven canonical archives as well:
-
-```bash
-python scripts/final_reviewer_acceptance.py --skip-runtime --require-canonical
-```
-
-On the intended Python 3.11/MATLAB workstation, omit `--skip-runtime`; a supplied
-`--project-root` additionally verifies the six historical receipt identities and
-reports any sealed T2-D scientific boundary without turning it into an engineering
-failure.
-
-## 3. Static integrity audit
-
-```bash
-python RUN_REPRODUCTION.py audit
-```
-
-This performs code/provenance/DAG/adapter checks without downloading scientific data.
-
-## 4. Fast frozen-result reproduction
-
-```bash
-python RUN_REPRODUCTION.py frozen
-```
-
-This byte-verifies the seven canonical archives and regenerates current figures. It
-does not retrain models.
-
-## 5. Fresh raw-to-science replay
-
-Use the **reviewer portable bundle**, not a bare Git clone, because large
-byte-verified historical bootstrap inputs are intentionally Git-ignored. On Windows,
-use short roots such as `C:\Users\<you>\P` and `C:\Users\<you>\R`.
-
-Before the run, place the six exact historical Stage11C official receipt files under
-`<project-root>/00_Data_Acquisition/Stage11C_Manual_Official_Receipts/`. Their names,
-sizes, and SHA-256 values are declared in `provenance/historical_receipts.json`.
-These are **historical prerequisites**, not fresh provider downloads.
-
-Inspect the plan:
-
-```bash
-python RUN_REPRODUCTION.py full-claim --plan
-```
-
-Run:
-
-```bash
-python RUN_REPRODUCTION.py full-claim \
-  --run-id CMDO-FRESH-FULL \
-  --output-root /short/path/R \
-  --project-root /short/path/P \
-  --allow-network \
-  --acknowledge-retrospective-replay
-```
-
-Windows PowerShell example:
+Windows PowerShell activation:
 
 ```powershell
-python .\RUN_REPRODUCTION.py full-claim `
-  --run-id CMDO-FRESH-FULL `
-  --output-root "$HOME\R" `
-  --project-root "$HOME\P" `
-  --allow-network `
-  --acknowledge-retrospective-replay
+.\.venv\Scripts\Activate.ps1
 ```
 
-The declared plan has 55 nodes, but a scientifically valid fresh replay may stop
-earlier. The reference current-runtime replay executes T2-D successfully but does
-not reproduce its historical 11/11 authorisation gate. The runner therefore seals
-`SCIENTIFIC_DIVERGENCE_BOUNDARY` at T2-D and returns exit status **4**. This is a
-scientific non-reproduction boundary, not an engineering crash; downstream stages
-are not represented as part of a fresh accepted chain.
+For CUDA-dependent deep replay, install the matching official PyTorch wheel first. CUDA is not required for the standard static or frozen-figure reviewer path.
 
-Resume only interrupted engineering work with the same run ID and `--resume`.
-A sealed scientific boundary cannot be bypassed by resume.
+## Step 2 — package acceptance
 
-## 6. Archival historical-parent continuation
+```bash
+python RUN_REVIEWER.py check
+```
 
-This profile is deliberately separate. It starts from byte-verified **accepted
-historical T2-D/T2-E/T2-F parents** and audits downstream historical implementation. It is
-**not** a fresh raw-to-science reproduction and must use a project root separate from
-the fresh replay tree.
+Expected terminal message:
+
+```text
+=== CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===
+```
+
+This performs repository, source, provenance, DAG, adapter, cleanup-manifest and unit-test checks. It does not infer that every historical scientific authorisation gate reproduced.
+
+## Step 3 — public-data end-to-end smoke test
+
+```bash
+python RUN_REVIEWER.py smoke --allow-network
+```
+
+Expected final profile state:
+
+```text
+CMDO profile smoke COMPLETE
+```
+
+The smoke route downloads public UCI-296 data, preprocesses it, fits a model, evaluates AUC and saves a ROC figure. It demonstrates that the download → preprocessing → model → evaluation → figure path works on the reviewer's machine. It is not a manuscript estimate.
+
+## Step 4 — install the seven canonical manuscript archives
+
+The submission should provide one binary companion ZIP, normally named:
+
+```text
+CMDO-Reviewer-Assets-v1.0.zip
+```
+
+Install it:
+
+```bash
+python RUN_REVIEWER.py install-assets --bundle /path/to/CMDO-Reviewer-Assets-v1.0.zip
+```
+
+Windows example:
 
 ```powershell
-python .\RUN_REPRODUCTION.py archival-continuation `
-  --run-id CMDO-ARCHIVAL `
-  --output-root "$HOME\R" `
-  --project-root "$HOME\A" `
-  --allow-network `
-  --acknowledge-retrospective-replay
+python .\RUN_REVIEWER.py install-assets --bundle "$HOME\Downloads\CMDO-Reviewer-Assets-v1.0.zip"
 ```
 
-The archival classification is written to
-`ARCHIVAL_CONTINUATION_CLASSIFICATION.json` and the run ledger. U9/eICU is excluded.
+The installer searches the supplied bundle for the seven filenames declared in `provenance/canonical_archives_manifest.csv`. Every archive must match the frozen byte size and SHA-256 exactly, and its internal ZIP CRC must pass. Only then is it materialized under `data/canonical_records/`.
+
+The reviewer's machine does **not** need the historical Google Drive directory tree.
+
+## Step 5 — regenerate manuscript figures
+
+MATLAB must be callable as `matlab`. The reference reviewer run used MATLAB R2024b with the Statistics and Machine Learning Toolbox.
+
+```bash
+python RUN_REVIEWER.py frozen
+```
+
+Expected final profile state:
+
+```text
+CMDO profile frozen COMPLETE
+```
+
+This route:
+
+1. rechecks repository/source/provenance integrity;
+2. byte-verifies all seven canonical result archives;
+3. regenerates the current manuscript main and Extended Data figures from those records.
+
+It does not retrain the historical models.
+
+## One-command standard route
+
+After installing the asset ZIP:
+
+```bash
+python RUN_REVIEWER.py all --allow-network
+```
+
+The command runs `check`, `smoke`, canonical verification and `frozen` in sequence.
+
+Use a different run prefix if you want to keep several independent reviewer runs:
+
+```bash
+python RUN_REVIEWER.py all --allow-network --run-prefix REVIEWER-RUN2
+```
+
+Generated outputs are written under `outputs/reviewer/` unless `--output-root` is supplied.
+
+## Validated baseline
+
+The scientific baseline at commit `57962f57ef11902bd9fa437412514d994d3af864` was independently exercised twice on 14 August 2026. The sealed local reviewer audit reported:
+
+- public smoke: PASS x2;
+- canonical archive identity: 7/7 exact;
+- canonical-to-publication-figure route: PASS x2;
+- exact-first cross-run comparison: PASS;
+- numerical-boundary registry: PASS;
+- threshold relaxation: none;
+- U9/eICU included: false;
+- Stage12 authorised: false.
+
+See `reviewer/VALIDATED_BASELINE.json` for the machine-readable record.
+
+## Deep replay is optional and deliberately separate
+
+A reviewer who wants to inspect the deeper historical DAG can first print both plans:
+
+```bash
+python RUN_REVIEWER.py deep-plan
+```
+
+The underlying full runner is:
+
+```bash
+python RUN_REPRODUCTION.py <profile> [options]
+```
+
+Available deep profiles include `full-claim` and `archival-continuation`.
+
+### Fresh full-claim boundary
+
+The current-runtime fresh path reaches a disclosed T2-D scientific non-reproduction boundary: the stage executes, but the historical 11/11 authorisation gate is not reproduced. The runner records `SCIENTIFIC_DIVERGENCE_BOUNDARY`, returns exit code **4**, and does not represent downstream stages as a fresh accepted chain. No gate threshold is relaxed.
+
+### Archival continuation
+
+`archival-continuation` starts from byte-verified accepted historical parents and audits downstream historical implementation. It is explicitly retrospective and must not be described as a fresh raw-to-science reproduction.
+
+U9/eICU is excluded from all default reviewer profiles.
 
 ## Exit codes
 
-- `0` â€” selected profile completed.
-- `1` â€” engineering/integrity/stage execution failure.
-- `3` â€” explicit prerequisite block (runtime, network, license/receipt, path budget,
-  or governance acknowledgement).
-- `4` â€” `SCIENTIFIC_DIVERGENCE_BOUNDARY`; a scientific stage executed, but the frozen
-  authorisation boundary was not reproduced. This is not converted into a pass.
+- `0` — selected profile completed.
+- `1` — engineering/integrity/stage execution failure.
+- `3` — explicit prerequisite block, such as missing assets/runtime/network acknowledgement.
+- `4` — sealed `SCIENTIFIC_DIVERGENCE_BOUNDARY`; scientific execution occurred but a frozen authorisation boundary was not reproduced.
 
-## Governance boundary
+## Maintainer-only asset packaging
 
-`full-claim` is a retrospective replay of already disclosed outcomes and cannot
-create a new prospective claim. U9/eICU is excluded from all default reviewer
-profiles. No gate threshold is relaxed to force reproduction. The detailed T2-D
-boundary is machine-readable in `provenance/scientific_boundaries.json`.
+With the seven exact canonical archives present under `data/canonical_records/`:
 
+```bash
+python scripts/build_reviewer_asset_bundle.py
+```
 
-### Archival companion bootstrap
-
-The Portable bundle also carries byte-verified Drive-era immutable companion files
-needed by T2-G through T2-J (theory/method/preregistration/registry/checklist
-records). These are prerequisites only, not regenerated scientific results.
-
-## Current downstream archival status
-
-The fresh full-claim boundary at T2-D remains unchanged. In the separate archival
-historical-parent profile, downstream implementation has now been audited through
-T2-MN with no discrete scientific divergence. T2-L raw-image ResNet50 reconstruction
-is machine-precision numerically reproducible on the pinned Linux CPU stack while the
-historical frozen embeddings remain the byte-identical archival checkpoint.
-
-See `REPRODUCIBILITY_STATUS_2026-08-12.md` for the compact interpretation and
-`provenance/replay_boundaries/` for machine-readable audit records.
+The script produces `dist/CMDO-Reviewer-Assets-v1.0.zip` and a SHA-256 sidecar. The output is for the submission/release attachment, not for Git history.
