@@ -514,7 +514,7 @@ function cmdo_u9_adapt(C)
         {'patientUnitStayID','patientHealthSystemStayID','uniquePID','hospitalID', ...
          'unitVisitNumber','age','gender','ethnicity','unitType','unitAdmitSource'});
     A = cmdo_u9_read_selected(C, apachePath, ...
-        {'patientUnitStayID','apachePatientResultsID','apacheVersion', ...
+        {'patientUnitStayID','apachePatientsResultsID','apacheVersion', ...
          'predictedHospitalMortality','actualHospitalMortality'});
     H = cmdo_u9_read_selected(C, hospitalPath, ...
         {'hospitalID','numBedsCategory','teachingStatus','region'});
@@ -533,13 +533,13 @@ function cmdo_u9_adapt(C)
     P.unitadmitsource = string(P.unitadmitsource);
 
     A.patientunitstayid = cmdo_u9_to_double(A.patientunitstayid);
-    A.apachepatientresultsid = cmdo_u9_to_double(A.apachepatientresultsid);
+    A.apachepatientsresultsid = cmdo_u9_to_double(A.apachepatientsresultsid);
     A.apacheversion_num = cmdo_u9_parse_apache_version(A.apacheversion);
     A.score = cmdo_u9_to_double(A.predictedhospitalmortality);
     A.outcome = cmdo_u9_parse_mortality(A.actualhospitalmortality);
 
     A = A(A.apacheversion_num == C.apache_version & isfinite(A.score) & A.score >= 0 & A.score <= 1, :);
-    A = sortrows(A, {'patientunitstayid','apachepatientresultsid'});
+    A = sortrows(A, {'patientunitstayid','apachepatientsresultsid'});
     [~, ia] = unique(A.patientunitstayid, 'stable');
     A = A(ia, {'patientunitstayid','apacheversion_num','score','outcome'});
 
@@ -1347,8 +1347,7 @@ function path = cmdo_u9_locate_table(C, baseName)
     for i = 1:numel(candidates)
         paths(i) = string(fullfile(candidates(i).folder, candidates(i).name));
     end
-    [~, caseUnique] = unique(lower(paths), 'stable');
-    paths = paths(caseUnique);
+    paths = unique(paths);
     if numel(paths) > 1
         error('CMDO:U9:AmbiguousTable', 'Multiple candidates found for %s: %s', baseName, strjoin(cellstr(paths), '; '));
     end
