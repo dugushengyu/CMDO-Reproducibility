@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "57962f57ef11902bd9fa437412514d994d3af864",
+  "validated_on": "2026-08-14",
+  "reviewer_validation": {
+    "classification": "PASS_REVIEWER_V1_X2_ENGINEERING_AND_FROZEN_SCIENCE_AUDIT",
+    "certificate_sha256": "826090c5f1e57536b2c04abb23e1fddbf3a777f8d49ab28c75d231d13145b608",
+    "evidence_zip_sha256": "f767c34c5833c8d292854917887a4003e45bb32c8c92cc2bf0dc51f1047b33ea",
+    "public_end_to_end_smoke_x2": "PASS",
+    "canonical_archives_exact": "7/7",
+    "frozen_canonical_to_publication_figures_x2": "PASS",
+    "exact_first_cross_run_comparison": "PASS",
+    "numerical_boundary_registry": "PASS"
+  },
+  "scientific_governance": {
+    "thresholds_relaxed": false,
+    "frozen_gates_changed": false,
+    "historical_google_drive_byte_identity_required": false,
+    "u9_eicu_included": false,
+    "stage12_authorised": false
+  },
+  "scope_note": "This record describes the locally sealed scientific baseline. The reviewer-submission-v1 branch adds reviewer interface, packaging, and documentation only; any later scientific-content change requires a new validation seal."
+}
