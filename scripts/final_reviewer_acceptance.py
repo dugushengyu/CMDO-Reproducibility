@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -21,9 +22,26 @@ from reproduction.bootstrap import verify_historical_receipts, verify_replay_pyt
 from reproduction.dag import ReproductionDAG
 
 
+def _child_environment() -> dict[str, str]:
+    """Return a byte-neutral child environment with canonical Windows temp paths.
+
+    Hosted Windows runners may expose TEMP/TMP through an 8.3 short alias while
+    ``Path.resolve()`` expands the same directory to its long form. Canonicalising
+    these environment values prevents path-spelling-only unit-test failures without
+    altering any scientific input, threshold or replay rule.
+    """
+    env = os.environ.copy()
+    if os.name == "nt":
+        for key in ("TEMP", "TMP", "TMPDIR"):
+            value = env.get(key)
+            if value:
+                env[key] = str(Path(value).expanduser().resolve())
+    return env
+
+
 def run(command: list[str], *, label: str) -> dict:
     print(f"\n[{label}] {' '.join(command)}")
-    p = subprocess.run(command, cwd=ROOT, text=True)
+    p = subprocess.run(command, cwd=ROOT, text=True, env=_child_environment())
     if p.returncode:
         raise RuntimeError(f"{label} failed with exit status {p.returncode}")
     return {"label": label, "command": command, "returncode": p.returncode}
