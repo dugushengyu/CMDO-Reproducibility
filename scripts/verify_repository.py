@@ -352,10 +352,17 @@ def main() -> int:
     )
     errors.extend(canonical_errors)
 
-    ignored_scan_roots = {".git", ".venv", "outputs", "dist"}
+    # Scan repository/source material only. A reproduction run materialises an
+    # adapted scientific project under a directory literally named ``runtime``.
+    # That runtime mirror can intentionally preserve historically malformed
+    # containers and must not be reclassified as repository-source corruption.
+    ignored_scan_roots = {".git", ".venv", "outputs", "dist", "runtime"}
     for path in ROOT.rglob("*"):
         relative_parts = path.relative_to(ROOT).parts
-        if not path.is_file() or any(part in ignored_scan_roots or part.startswith(".venv") for part in relative_parts):
+        if not path.is_file() or any(
+            part in ignored_scan_roots or part.startswith(".venv")
+            for part in relative_parts
+        ):
             continue
         rel = path.relative_to(ROOT)
         if path.stat().st_size > MAX_GIT_FILE_BYTES:

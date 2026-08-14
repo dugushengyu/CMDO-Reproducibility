@@ -1,89 +1,139 @@
-# CMDO reproducibility repository
+# CMDO reproducibility
 
-CMDO reviewer package with a single Python entry point and explicit separation of
-**engineering verification**, **fresh scientific replay**, and **archival historical
-continuation**.
+This repository is the reviewer-facing reproducibility package for **Cross-Modal Diagnostic Observability (CMDO)**.
 
-## Reviewer entry points
+The standard reviewer path is intentionally short: verify the package, run a small public-data end-to-end smoke test, install the seven byte-verified canonical result archives supplied with the submission, and regenerate the manuscript figures.
 
-```bash
-python RUN_REPRODUCTION.py audit
-python RUN_REPRODUCTION.py smoke --allow-network
-python RUN_REPRODUCTION.py frozen
-python RUN_REPRODUCTION.py full-claim --plan
-python RUN_REPRODUCTION.py archival-continuation --plan
-```
+## Start here
 
-Detailed commands and exit semantics are in
-[docs/REVIEWER_QUICKSTART.md](docs/REVIEWER_QUICKSTART.md).
+### 1. Create the Python environment
 
-One-command engineering acceptance for an ordinary Git clone:
+Python 3.11 is the reference replay version.
 
 ```bash
-python scripts/final_reviewer_acceptance.py --skip-runtime
+python -m venv .venv
 ```
 
-For the reviewer **Portable** bundle, additionally require all seven canonical
-archives:
+Activate it:
 
 ```bash
-python scripts/final_reviewer_acceptance.py --skip-runtime --require-canonical
+source .venv/bin/activate
 ```
 
-Omit `--skip-runtime` on the intended Python 3.11/MATLAB replay workstation.
+Windows PowerShell:
 
-## Scientific boundary
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
-The original historical T2-D v0.1 certificate passed 11/11 frozen gates. The
-reference fresh current-runtime replay executes T2-D successfully but does not
-reproduce the historical G4 authorisation gate (10/11). The runner therefore records
-`SCIENTIFIC_DIVERGENCE_BOUNDARY`, returns exit code `4`, preserves the scientific
-artifacts, and prohibits downstream stages from being represented as a fresh
-accepted chain. No threshold is relaxed to force a pass.
+Install the pinned replay environment:
 
-A separate `archival-continuation` profile starts from byte-verified accepted
-historical T2-D/T2-E/T2-F parents to audit downstream historical implementation. That mode
-is explicitly **not** fresh raw-to-science reproduction.
+```bash
+python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
+```
 
-Machine-readable disclosure: `provenance/scientific_boundaries.json`.
+### 2. Verify the repository
 
-## Portable versus GitHub clone
+```bash
+python RUN_REVIEWER.py check
+```
 
-The reviewer **Portable** ZIP carries seven canonical result archives plus
-`bootstrap_inputs/portable/`, which contains large byte-verified historical bootstrap
-records. Those bytes are deliberately Git-ignored. A bare GitHub clone supports code,
-provenance, audit/smoke, and user-supplied data workflows, but the deepest fresh and
-archival reviewer paths should be launched from the portable distribution.
+This is the fastest no-data integrity check. It verifies repository structure, source/provenance manifests, the reproduction DAG, adapters, cleanup commitments and unit tests.
 
-Stage11C historical official receipt bytes are not redistributed. Their exact names,
-sizes, and hashes are declared in `provenance/historical_receipts.json` and verified
-at full-claim preflight.
+### 3. Run the public end-to-end smoke test
 
-## Immutable evidence and runtime adaptation
+```bash
+python RUN_REVIEWER.py smoke --allow-network
+```
 
-Authoritative source bytes under `legacy/original_authoritative/` are never edited.
-The runner creates adapted execution copies, records source/adapted hashes, redirects
-legacy Colab paths, constrains the numerical Python stack, and rebinds runtime parent
-hash commitments to byte-verified freshly produced upstream artifacts. Engineering
-failure cleanup is transactional; scientific-boundary artifacts are never rolled
-back.
+This downloads a public UCI dataset, preprocesses it, fits a model, evaluates AUC and writes a ROC figure. It is an engineering smoke test, not a manuscript estimate.
+
+### 4. Install the manuscript result assets
+
+The submission includes one small binary companion ZIP, named for example:
+
+```text
+CMDO-Reviewer-Assets-v1.0.zip
+```
+
+Install it with:
+
+```bash
+python RUN_REVIEWER.py install-assets --bundle /path/to/CMDO-Reviewer-Assets-v1.0.zip
+```
+
+The installer accepts the seven canonical archives only when their filename, byte size, SHA-256 and inner ZIP CRC match `provenance/canonical_archives_manifest.csv` exactly. The historical Google Drive working tree is not required.
+
+### 5. Regenerate the manuscript figures
+
+MATLAB R2024b or a compatible MATLAB installation must be callable as `matlab`; the Statistics and Machine Learning Toolbox is required.
+
+```bash
+python RUN_REVIEWER.py frozen
+```
+
+This byte-verifies all seven canonical result archives and regenerates the current main and Extended Data figures. It does **not** retrain the historical models.
+
+### One-command standard reviewer route
+
+After the asset ZIP is installed:
+
+```bash
+python RUN_REVIEWER.py all --allow-network
+```
+
+That runs package acceptance, the public-data smoke test, canonical verification and frozen manuscript-figure reproduction in sequence.
+
+## What was independently validated
+
+The scientific baseline at commit `57962f57ef11902bd9fa437412514d994d3af864` was independently run twice and sealed on 14 August 2026:
+
+- public end-to-end smoke: **PASS x2**;
+- seven canonical archives: **7/7 byte exact**;
+- canonical records to publication figures: **PASS x2**;
+- cross-run comparison: **exact-first PASS**;
+- disclosed numerical-boundary registry: **PASS**;
+- threshold relaxation: **none**;
+- U9/eICU: **not included**;
+- Stage12 authorisation: **false**.
+
+The machine-readable baseline record is `reviewer/VALIDATED_BASELINE.json`.
+
+## Scientific boundaries are disclosed, not hidden
+
+CMDO distinguishes engineering reproducibility from scientific non-reproduction boundaries.
+
+The current-runtime fresh chain reaches a disclosed T2-D scientific boundary rather than reproducing the historical 11/11 authorisation gate. Separately, downstream historical implementation has disclosed numerical-backend boundaries such as T2-MN. No threshold, gate, seed or budget is relaxed to turn those boundaries into a pass.
+
+For reviewers who want the deeper history rather than the standard manuscript check:
+
+```bash
+python RUN_REVIEWER.py deep-plan
+```
+
+The detailed runner remains available as `RUN_REPRODUCTION.py`. Deep `full-claim` and `archival-continuation` modes are retrospective audit tools and are not required to reproduce the manuscript figures.
+
+## Repository map
+
+- `RUN_REVIEWER.py` — recommended reviewer entry point.
+- `RUN_REPRODUCTION.py` — full reproduction runner and historical audit profiles.
+- `provenance/` — dataset registry, canonical archive manifest, scientific boundaries and replay status.
+- `scripts/` — package verification, asset installation/building and integrity utilities.
+- `matlab/figures/` — manuscript figure generators.
+- `legacy/original_authoritative/` — immutable historical source bytes; do not edit.
+- `reviewer/VALIDATED_BASELINE.json` — compact sealed baseline status.
+- `docs/REVIEWER_QUICKSTART.md` — detailed reviewer instructions and exit semantics.
+
+## For maintainers: build the submission asset ZIP
+
+When the seven exact canonical archives are present under `data/canonical_records/`:
+
+```bash
+python scripts/build_reviewer_asset_bundle.py
+```
+
+This writes `dist/CMDO-Reviewer-Assets-v1.0.zip` plus a SHA-256 sidecar. `dist/` and the canonical ZIPs remain Git-ignored; the binary bundle should be attached to the submission/release rather than committed into Git history.
 
 ## Governance
 
-All default reviewer paths are retrospective. U9/eICU is excluded. The package does
-not accept provider terms, redistribute restricted raw data, create a new prospective
-claim, or delete Drive/GitHub content.
-
-See also:
-
-- [Reviewer quickstart](docs/REVIEWER_QUICKSTART.md)
-- [End-to-end reproduction contract](docs/END_TO_END_REPRODUCTION.md)
-- [Data/license gates](docs/DATA_LICENSE_GATES.md)
-
-## Current replay status (12 August 2026)
-
-The fresh accepted-chain boundary at T2-D remains disclosed and is not relaxed.
-Separately, retrospective historical-parent continuation has now been audited through
-T2-MN, including explicit machine-precision representation/runtime boundaries.
-See [current reproducibility status](docs/REPRODUCIBILITY_STATUS_2026-08-12.md) and
-`provenance/downstream_replay_status_20260812.json`.
+All default reviewer routes are retrospective. U9/eICU is excluded from the standard reviewer package. No provider terms are accepted automatically, no restricted raw data are redistributed, and no new prospective-validation claim is created.

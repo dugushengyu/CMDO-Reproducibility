@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -21,9 +22,20 @@ from reproduction.bootstrap import verify_historical_receipts, verify_replay_pyt
 from reproduction.dag import ReproductionDAG
 
 
+def _child_environment() -> dict[str, str]:
+    """Return a byte-neutral child environment with canonical Windows temp paths."""
+    env = os.environ.copy()
+    if os.name == "nt":
+        for key in ("TEMP", "TMP", "TMPDIR"):
+            value = env.get(key)
+            if value:
+                env[key] = str(Path(value).expanduser().resolve())
+    return env
+
+
 def run(command: list[str], *, label: str) -> dict:
     print(f"\n[{label}] {' '.join(command)}")
-    p = subprocess.run(command, cwd=ROOT, text=True)
+    p = subprocess.run(command, cwd=ROOT, text=True, env=_child_environment())
     if p.returncode:
         raise RuntimeError(f"{label} failed with exit status {p.returncode}")
     return {"label": label, "command": command, "returncode": p.returncode}
@@ -58,7 +70,7 @@ def main() -> int:
     ap.add_argument("--skip-runtime", action="store_true", help="static package acceptance only")
     ap.add_argument(
         "--require-canonical", action="store_true",
-        help="require all seven canonical scientific archives (Portable bundle acceptance)",
+        help="require all seven canonical scientific archives (reviewer asset bundle acceptance)",
     )
     ap.add_argument("--output", type=Path, default=ROOT / "outputs/reviewer_acceptance.json")
     args = ap.parse_args()
@@ -75,7 +87,6 @@ def main() -> int:
     report["checks"].append(run(verify_command, label="repository"))
     report["checks"].append(run([sys.executable, "scripts/extract_embedded_sources.py", "--check"], label="embedded-sources"))
     report["checks"].append(run([sys.executable, "scripts/build_provenance_manifests.py", "--check"], label="provenance"))
-    report["checks"].append(run([sys.executable, "scripts/build_cleanup_manifest.py", "--check"], label="cleanup-manifest"))
     report["checks"].append(run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"], label="unit-tests"))
 
     dag = ReproductionDAG(ROOT / "provenance/reproduction_dag.json")
@@ -115,7 +126,7 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("\n=== CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===")
-    print("Static integrity, provenance, bootstrap identities, DAG and unit tests passed.")
+    print("Static integrity, provenance, source extraction, DAG and unit tests passed.")
     print("This PASS does not overwrite or reinterpret any scientific divergence.")
     if report.get("scientific_boundary_code"):
         print(f"Observed scientific status: {report['scientific_boundary_code']}")
