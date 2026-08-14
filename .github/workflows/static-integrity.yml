@@ -14,10 +14,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
-    env:
-      TMP: ${{ runner.temp }}
-      TEMP: ${{ runner.temp }}
-      TMPDIR: ${{ runner.temp }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,8 +32,19 @@ jobs:
         run: |
           python scripts/build_provenance_manifests.py --check
           python scripts/build_cleanup_manifest.py --check
-      - name: Run reproduction-runner unit tests
+      - name: Run reproduction-runner unit tests (Linux)
+        if: runner.os != 'Windows'
         run: python -m unittest discover -s tests -v
+      - name: Run reproduction-runner unit tests (Windows stable temp path)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ciTemp = Join-Path $PWD '.ci-temp'
+          New-Item -ItemType Directory -Force -Path $ciTemp | Out-Null
+          $env:TEMP = $ciTemp
+          $env:TMP = $ciTemp
+          $env:TMPDIR = $ciTemp
+          python -m unittest discover -s tests -v
       - name: Verify reviewer plans
         run: |
           python RUN_REPRODUCTION.py frozen --plan --run-id ci-frozen
