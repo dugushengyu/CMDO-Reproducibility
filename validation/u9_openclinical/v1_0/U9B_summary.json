@@ -1,0 +1,23 @@
+{
+  "stage": "U9B",
+  "role": "PRIMARY_OPEN_EXTERNAL_CLINICAL_SYSTEM_RESERVE",
+  "source": {"system_A_n":20336,"system_B_n":20000,"system_A_prevalence":0.08802124311565697,"system_B_prevalence":0.0571,"train_n":12201,"validation_n":4067,"historical_n":4068,"threshold":0.06392778540342563,"historical_accuracy":0.6162733529990168,"historical_auc":0.7569019259437727,"target_auc":0.5742562768401469},
+  "target": "hospital_system_B",
+  "target_n": 20000,
+  "target_prevalence": 0.0571,
+  "true_accuracy": 0.7485,
+  "historical_accuracy": 0.6162733529990168,
+  "historical_accuracy_bias": -0.1322266470009833,
+  "direct_mae": 0.019876816406249994,
+  "observer_mae": 0.02060547741737384,
+  "relative_gain": -0.03665883893231158,
+  "worst_state_regret": 0.0010474783257509634,
+  "mean_weight": 0.05110091647784553,
+  "mean_simultaneous_coverage": 0.9699999999999999,
+  "minimum_simultaneous_coverage": 0.945,
+  "certificate_violations": 0,
+  "maximum_fallback_residual": 0.0,
+  "direct_root_budget_slope": -0.49550986646467715,
+  "gates": {"system_counts":true,"exact_fallback":true,"zero_certificate_violations":true,"mean_simultaneous_coverage":true,"minimum_budget_coverage":true,"root_budget_slope":true,"pooled_noninferiority":false,"worst_budget_regret":true,"nontrivial_borrowing":true},
+  "decision": "PARTIAL_EXTERNAL_CERTIFICATION_EFFICIENCY_NOT_CONFIRMED"
+}
