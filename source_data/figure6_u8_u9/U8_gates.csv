@@ -1,0 +1,11 @@
+gate,threshold,observed,passed
+three_temporal_reserve_cycles,>=3,3,1
+exact_full_direct_fallback,<1e-12,0,1
+covered_event_certificate_violations,=0,0,1
+mean_simultaneous_coverage,>=0.90,0.968333333333,1
+minimum_state_simultaneous_coverage,>=0.85,0.94,1
+pooled_observer_noninferiority,observer MAE <= direct MAE,-0.00202826701496,1
+worst_state_regret,<=0.005,-0.000794723969197,1
+improved_reserve_cycles,>=2/3,3,1
+nontrivial_borrowing,mean weight >0,0.116411384109,1
+direct_root_budget_slope,"[-0.70,-0.30]",-0.531444237112,1
