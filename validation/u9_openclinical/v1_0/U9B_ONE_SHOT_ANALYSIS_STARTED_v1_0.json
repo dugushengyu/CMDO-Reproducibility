@@ -1,0 +1,7 @@
+{
+  "stage": "U9B",
+  "status": "ONE_SHOT_TARGET_OUTCOME_ANALYSIS_STARTED",
+  "source_feature_cache_sha256": "c5eb3fb8060f6f4d32dfeaf02d500c75e5867c84c7a75cdccdac49059bc2f915",
+  "target_outcome_free_feature_cache_sha256": "04404350bfbcad083a788f7e95bb01202185b1a778684ed470bc0335c1559f27",
+  "note": "Marker written before System-B SepsisLabel values are read into analysis."
+}
