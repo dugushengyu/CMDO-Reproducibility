@@ -17,13 +17,27 @@ For protected direct fold `q`:
 
 - `D_q` is direct accuracy in fold `q`;
 - an opposite, observation-disjoint fold supplies a two-sided Clopper–Pearson interval `[a_q,b_q]` for target correctness probability `theta`;
-- direct-fold variance lower bound: `L_q = min(a_q(1-a_q), b_q(1-b_q)) / n_q`;
-- squared transport-bias upper bound relative to historical accuracy `T`: `U_q = max((T-a_q)^2, (T-b_q)^2)`;
-- frozen guarded weight: `w_q = min(0.35, 2 L_q / (L_q + U_q))`, with `w_q=0` if `L_q<=0`.
+- direct-fold variance lower bound:
 
-Protected block estimate: `E_q = (1-w_q)D_q + w_q T`.
+`L_q = min(a_q(1-a_q), b_q(1-b_q)) / n_q`
 
-The observer is the mean of the four protected blocks. If all weights are zero, the four direct-fold means reconstruct the full same-budget direct estimate exactly. Family confidence level is `0.95`, Bonferroni-distributed across the four opposite-fold confidence events.
+- squared transport-bias upper bound relative to historical accuracy `T`:
+
+`U_q = max((T-a_q)^2, (T-b_q)^2)`
+
+- frozen guarded weight:
+
+`w_q = min(0.35, 2 L_q / (L_q + U_q))`
+
+with `w_q=0` if `L_q<=0`.
+
+Protected block estimate:
+
+`E_q = (1-w_q)D_q + w_q T`.
+
+The observer is the mean of the four protected blocks. If all weights are zero, the four direct-fold means reconstruct the full same-budget direct estimate exactly.
+
+Family confidence level is `0.95`, Bonferroni-distributed across the four opposite-fold confidence events.
 
 The blockwise certificate is not relabelled as an unrestricted theorem for the cross-fitted aggregate; aggregate MAE is assessed empirically.
 
@@ -33,9 +47,15 @@ The blockwise certificate is not relabelled as an unrestricted theorem for the c
 
 ## Data
 
-Official UCI Heart Disease dataset. The four databases are Cleveland, Hungary, Switzerland and VA Long Beach. The implementation uses the standard processed 14-column versions if present in the official archive: `age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, num`.
+Official UCI Heart Disease dataset. The four databases are Cleveland, Hungary, Switzerland and VA Long Beach.
 
-Outcome: `Y = 1[num > 0]`.
+The implementation uses the standard processed 14-column versions if present in the official archive:
+
+`age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal, num`.
+
+Outcome:
+
+`Y = 1[num > 0]`.
 
 ## Roles
 
@@ -49,11 +69,19 @@ Targets are Hungary, Switzerland and VA Long Beach.
 
 ## Model
 
-Ridge-style L2 logistic regression, numeric source-median imputation with explicit missingness indicators, source-only standardisation. The decision threshold maximises the Youden index on the Cleveland threshold-validation split only. The historical evidence `T` is fixed-threshold accuracy on the untouched Cleveland historical split.
+Ridge-style L2 logistic regression, numeric source-median imputation with explicit missingness indicators, source-only standardisation.
+
+The decision threshold maximises the Youden index on the Cleveland threshold-validation split only.
+
+The historical evidence `T` is fixed-threshold accuracy on the untouched Cleveland historical split.
 
 ## Auditing
 
-Budgets: `16, 32, 64`. Replicates: `400` per target centre and budget. Sampling is simple random sampling without replacement at natural target prevalence.
+Budgets: `16, 32, 64`.
+
+Replicates: `400` per target centre and budget.
+
+Sampling is simple random sampling without replacement at natural target prevalence.
 
 ## U9A bridge gates
 
@@ -81,7 +109,9 @@ Official documentation reports 20,336 subjects in A and 20,000 in B.
 
 ## Landmark prediction problem
 
-Unit: one ICU subject. Features are extracted from the **first six recorded ICU hours only**.
+Unit: one ICU subject.
+
+Features are extracted from the **first six recorded ICU hours only**.
 
 For each physiological/laboratory variable among the first 34 Challenge variables, the source-independent raw representation contains:
 
@@ -89,9 +119,19 @@ For each physiological/laboratory variable among the first 34 Challenge variable
 - last observed first-6-hour value;
 - first-6-hour missing fraction.
 
-Static/admission fields use the first record: Age, Gender, Unit1, Unit2, HospAdmTime. `ICULOS` and `SepsisLabel` are never model features.
+Static/admission fields use the first record:
 
-Outcome: `Y = 1` if the subject has any `SepsisLabel=1` anywhere in the official record, otherwise `0`.
+- Age;
+- Gender;
+- Unit1;
+- Unit2;
+- HospAdmTime.
+
+`ICULOS` and `SepsisLabel` are never model features.
+
+Outcome:
+
+`Y = 1` if the subject has any `SepsisLabel=1` anywhere in the official record, otherwise `0`.
 
 This experiment uses the dataset as a fixed clinical deployment testbed; it does not claim to introduce a new sepsis-prediction model.
 
@@ -103,11 +143,21 @@ System A is split once, stratified and deterministically:
 - 20% source threshold validation;
 - 20% historical-performance evidence.
 
-Model: L2 logistic regression with source-median imputation, missingness indicators and source-only standardisation. Threshold: Youden maximum on source threshold-validation subjects only. Historical evidence `T`: fixed-threshold accuracy on untouched source historical subjects. System B outcomes do not train, tune, recalibrate or select the model, threshold, observer or gates.
+Model: L2 logistic regression with source-median imputation, missingness indicators and source-only standardisation.
+
+Threshold: Youden maximum on source threshold-validation subjects only.
+
+Historical evidence `T`: fixed-threshold accuracy on untouched source historical subjects.
+
+System B outcomes do not train, tune, recalibrate or select the model, threshold, observer or gates.
 
 ## Auditing
 
-Budgets: `128, 256, 512, 1024`. Replicates: `200` per budget. Sampling is simple random sampling without replacement over System-B subjects at natural prevalence.
+Budgets: `128, 256, 512, 1024`.
+
+Replicates: `200` per budget.
+
+Sampling is simple random sampling without replacement over System-B subjects at natural prevalence.
 
 ## U9B primary gates
 
