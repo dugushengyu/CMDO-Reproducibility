@@ -1,0 +1,22 @@
+{
+  "record": "StageU9_OpenClinical_TurboContinuation_v1_0_4",
+  "scientific_change": "NONE",
+  "reason": "Accelerate repeated per-subject PSV parsing before and after the preserved U9B one-shot marker.",
+  "logical_cpus": 20,
+  "benchmark_files": 800,
+  "candidate_thread_counts": [1,4,8,12,16,24,32],
+  "benchmark_files_per_second": {"1":297.7152845278517,"4":262.18639925749846,"8":257.49804534824625,"12":254.77753255796796,"16":253.4688800414444,"24":232.59682227985493,"32":185.10131971924616},
+  "selected_workers": 1,
+  "implementation_change": [
+    "Original sealed scientific code verified before continuation.",
+    "Original phys_subject_features_only() used unchanged for every subject.",
+    "Original phys_subject_label_only() used unchanged for every subject.",
+    "Sorted subject-file order preserved exactly.",
+    "Only build_phys_features/build_phys_labels I/O loops are parallelized.",
+    "Original run_u9b() retains source/target roles, marker placement, model, threshold, observer, seeds, budgets, replicates and gates."
+  ],
+  "analysis_code_sha256": "d37a0a938550be55578be4701f1da628d524f531da1a395b01b5b88fa038bc31",
+  "observer_code_sha256": "6b78eb03031e6df0f50e3205b61588f59b3019426a6fcd3c7b6124d0fd0987ed",
+  "u9a_decision": "BRIDGE_FALSIFICATION_SIGNAL",
+  "u9b_decision": "PARTIAL_EXTERNAL_CERTIFICATION_EFFICIENCY_NOT_CONFIRMED"
+}
