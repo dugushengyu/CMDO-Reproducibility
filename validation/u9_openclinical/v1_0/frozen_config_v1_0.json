@@ -3,17 +3,30 @@
   "version": "v1.0",
   "observer": {
     "folds": 4,
-    "opposite_fold_zero_based": [2,3,0,1],
+    "opposite_fold_zero_based": [
+      2,
+      3,
+      0,
+      1
+    ],
     "delta_family": 0.05,
     "max_transport_weight": 0.35
   },
   "u9a": {
     "seed_split": 2026081501,
     "seed_audit": 2026081502,
-    "budgets": [16,32,64],
+    "budgets": [
+      16,
+      32,
+      64
+    ],
     "replicates": 400,
     "source": "cleveland",
-    "targets": ["hungary","switzerland","va_long_beach"],
+    "targets": [
+      "hungary",
+      "switzerland",
+      "va_long_beach"
+    ],
     "train_fraction": 0.6,
     "validation_fraction": 0.2,
     "historical_fraction": 0.2
@@ -21,7 +34,12 @@
   "u9b": {
     "seed_split": 2026081511,
     "seed_audit": 2026081512,
-    "budgets": [128,256,512,1024],
+    "budgets": [
+      128,
+      256,
+      512,
+      1024
+    ],
     "replicates": 200,
     "source": "training_setA",
     "target": "training_setB",
