@@ -1,0 +1,15 @@
+{
+  "stage": "U9A",
+  "role": "MULTICENTRE_BRIDGE_FALSIFICATION",
+  "source": {"source_n":303,"train_n":181,"validation_n":61,"historical_n":61,"threshold":0.5074579928853019,"historical_accuracy":0.8852459016393442,"historical_auc":0.9523809523809524},
+  "pooled_direct_mae": 0.05748508448094686,
+  "pooled_observer_mae": 0.05754893861859677,
+  "pooled_relative_gain": -0.0011107948822981814,
+  "worst_state_regret": 0.0023637286286992596,
+  "improved_targets": 2,
+  "mean_weight": 0.012462595983469384,
+  "certificate_violations": 0,
+  "maximum_fallback_residual": 0.0,
+  "gates": {"exact_fallback":true,"zero_certificate_violations":true,"pooled_noninferiority":false,"worst_state_regret":true,"two_of_three_targets_improve":true,"nontrivial_borrowing":true},
+  "decision": "BRIDGE_FALSIFICATION_SIGNAL"
+}
