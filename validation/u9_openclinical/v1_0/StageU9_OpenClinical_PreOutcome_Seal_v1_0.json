@@ -1,0 +1,15 @@
+{
+  "stage": "U9_OPEN_CLINICAL",
+  "version": "v1.0",
+  "status": "FROZEN_BEFORE_U9A_OR_U9B_EXECUTION",
+  "package_manifest_sha256": "5b63033bbb11cb2e5f3e65629c45b96e9f52ed907221ebbef0d8623119fbb684",
+  "protocol_sha256": "3153de3a3bfe58ecfed93d9f753f8f4f051b139499285385d2eb76e2e50fe71b",
+  "scope_amendment_sha256": "f7c6965eadd8c90d24a5b1a12a3dfb77a86260c3088b52fb0dec746305f7c227",
+  "config_sha256": "f795e3d3bb1e386c8390b05a87e78774cfe7dcb39697e8adb74c9731830e8d3c",
+  "analysis_code_sha256": "d37a0a938550be55578be4701f1da628d524f531da1a395b01b5b88fa038bc31",
+  "observer_code_sha256": "6b78eb03031e6df0f50e3205b61588f59b3019426a6fcd3c7b6124d0fd0987ed",
+  "outcomes_accessed_by_package_build": false,
+  "u9a_role": "MULTICENTRE_BRIDGE_FALSIFICATION",
+  "u9b_role": "PRIMARY_OPEN_EXTERNAL_CLINICAL_SYSTEM_RESERVE",
+  "eicu_role": "DEFERRED_CONFIRMATORY_MULTICENTRE_REPLICATION"
+}
