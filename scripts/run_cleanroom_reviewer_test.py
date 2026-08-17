@@ -15,7 +15,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_WORKSPACE = Path.home() / "Downloads" / "CMDO-Reviewer-Cleanroom"
+if os.name == "nt":
+    _system_drive = os.environ.get("SystemDrive", "C:")
+    DEFAULT_WORKSPACE = Path(_system_drive + "\\") / "CMDO-CR"
+else:
+    DEFAULT_WORKSPACE = Path.home() / "CMDO-Reviewer-Cleanroom"
 
 
 def sha256(path: Path) -> str:
@@ -26,9 +30,15 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def git_command(*args: str) -> list[str]:
+    if os.name == "nt":
+        return ["git", "-c", "core.longpaths=true", *args]
+    return ["git", *args]
+
+
 def git(*args: str, cwd: Path = ROOT, check: bool = True) -> str:
     process = subprocess.run(
-        ["git", *args], cwd=cwd, text=True, stdout=subprocess.PIPE,
+        git_command(*args), cwd=cwd, text=True, stdout=subprocess.PIPE,
         stderr=subprocess.PIPE, check=False,
     )
     if check and process.returncode:
@@ -95,7 +105,10 @@ def source_preflight() -> dict[str, object]:
     missing = [str(path.relative_to(ROOT)) for path in required if not path.is_file()]
     if missing:
         raise RuntimeError(f"clean-room source preflight missing files: {missing}")
-    result: dict[str, object] = {"required_files": len(required)}
+    result: dict[str, object] = {
+        "required_files": len(required),
+        "windows_longpaths_enabled_for_git": os.name == "nt",
+    }
     if (ROOT / ".git").exists():
         result["source_head"] = git("rev-parse", "HEAD")
         result["source_status_clean"] = not bool(git("status", "--porcelain"))
@@ -127,6 +140,7 @@ def main(argv: list[str] | None = None) -> int:
             "source_preflight": preflight,
             "default_workspace": str(DEFAULT_WORKSPACE),
             "required_python_major_minor": "3.11",
+            "windows_clone_policy": "git -c core.longpaths=true" if os.name == "nt" else "native",
             "standard_sequence": [
                 "fresh delivery materialization",
                 "new Python 3.11 venv + pinned dependencies",
@@ -183,15 +197,17 @@ def main(argv: list[str] | None = None) -> int:
         else:
             repo = workspace / "CMDO-Reproducibility"
             clone = run_logged(
-                ["git", "clone", "--no-local", str(args.repository_url), str(repo)],
+                git_command("clone", "--no-local", str(args.repository_url), str(repo)),
                 cwd=workspace,
                 log_path=logs / "01_clone.log",
             )
             commands.append(clone)
             if clone["returncode"]:
                 raise RuntimeError("fresh git clone failed")
+            if os.name == "nt":
+                git("config", "core.longpaths", "true", cwd=repo)
             checkout = run_logged(
-                ["git", "checkout", "--detach", str(args.ref)],
+                git_command("checkout", "--detach", str(args.ref)),
                 cwd=repo,
                 log_path=logs / "02_checkout.log",
             )
@@ -209,6 +225,7 @@ def main(argv: list[str] | None = None) -> int:
                 "repository_url": args.repository_url,
                 "requested_ref": args.ref,
                 "cloned_head": cloned_head,
+                "windows_longpaths": os.name == "nt",
             }
 
         base_python = Path(args.python_exe).expanduser().resolve()
