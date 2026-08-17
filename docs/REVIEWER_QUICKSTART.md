@@ -43,6 +43,16 @@ python scripts/audit_final_figure56.py
 
 The final Figure 5 and Figure 6 MATLAB files are sealed renderers: the frozen derived values required for rendering are embedded in the scripts, so they do not read scientific inputs from `Downloads`, Google Drive, a manuscript working directory, or another machine-specific data path at runtime. Independent audit companions remain tracked under `source_data/` so the embedded values can be checked against repository records.
 
+### Fastest Figure 5/6-only reproduction
+
+If the reviewer only wants to reproduce the two new final manuscript figures, no canonical asset ZIP is required. With MATLAB callable as `matlab`, run:
+
+```bash
+python RUN_REVIEWER.py figures56
+```
+
+This command first runs the sealed Figure 5/6 audit, then renders only `Figure5()` and `Figure6()` into `outputs/reviewer/figures/main/`. It does not run the older canonical-archive figure pipeline and does not touch deferred eICU data.
+
 ## Step 3 — public-data end-to-end smoke test
 
 ```bash
@@ -126,7 +136,7 @@ Generated outputs are written under `outputs/reviewer/` unless `--output-root` i
 ## Figure 5/6 provenance notes
 
 - `source_data/figure6_u8_u9/` retains the share-safe U8/U9A/U9B state and summary records audited against the final Figure 5 embedded values. The directory name is historical; these records now support current manuscript Figure 5.
-- `source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Table.csv` retains the exact 185-state Figure 6 synthesis table. Its SHA-256 is `a0ad0c9f9feded26b9b32f732ae62d7639d5ff91be983cb54a04525b0efc6d03`.
+- `source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv` retains the six exact columns consumed by Figure 6 for all 185 states. The originating full 26-column table has SHA-256 `a0ad0c9f9feded26b9b32f732ae62d7639d5ff91be983cb54a04525b0efc6d03`; the Git-tracked audit extract has SHA-256 `4ef09304a0dbb4110130b9543b05bd8a7d0f34f22dd0ecef1cb6ef758c6174c4`.
 - `source_data/figure6_admissibility/` also retains the U9B composability decomposition and strict-split mechanistic-control tables used to audit Figure 6 panels c/d.
 - `provenance/final_figure56_seal.json` records the final renderer hashes and expected scientific invariants.
 - `docs/FIGURE5_6_REPRODUCIBILITY_AUDIT_2026-08-17.md` gives the detailed scope and interpretation boundary.
@@ -135,7 +145,7 @@ Generated outputs are written under `outputs/reviewer/` unless `--output-root` i
 
 The deeper scientific baseline at commit `57962f57ef11902bd9fa437412514d994d3af864` was independently exercised twice on 14 August 2026. The sealed local reviewer audit reported public smoke PASS x2, 7/7 canonical archive identity, canonical-to-publication-figure PASS x2, exact-first cross-run comparison PASS, and no threshold relaxation.
 
-The 17 August Figure 5/6 update adds the final sealed renderers and static audit described above. It does **not** rewrite the historical baseline or silently claim a new independent raw-to-science U9 replay. Maintainers should run `RUN_REVIEWER.py check` and `RUN_REVIEWER.py frozen` after pulling this update to record the new local renderer acceptance.
+The 17 August Figure 5/6 update adds the final sealed renderers and static audit described above. It does **not** rewrite the historical baseline or silently claim a new independent raw-to-science U9 replay. Maintainers should run `RUN_REVIEWER.py check`, `RUN_REVIEWER.py figures56`, and, when the canonical asset ZIP is installed, `RUN_REVIEWER.py frozen` after pulling this update to record the new local renderer acceptance.
 
 See `reviewer/VALIDATED_BASELINE.json` for the historical machine-readable baseline.
 
