@@ -97,6 +97,7 @@ def extract_portable(bundle: Path, destination: Path) -> tuple[Path, dict[str, o
 def source_preflight() -> dict[str, object]:
     required = [
         ROOT / "RUN_REVIEWER.py",
+        ROOT / "environment/requirements-reviewer.txt",
         ROOT / "environment/requirements-replay.txt",
         ROOT / "environment/replay-constraints.txt",
         ROOT / "scripts/install_reviewer_asset_bundle.py",
@@ -107,6 +108,7 @@ def source_preflight() -> dict[str, object]:
         raise RuntimeError(f"clean-room source preflight missing files: {missing}")
     result: dict[str, object] = {
         "required_files": len(required),
+        "reviewer_requirements": "environment/requirements-reviewer.txt",
         "windows_longpaths_enabled_for_git": os.name == "nt",
     }
     if (ROOT / ".git").exists():
@@ -143,7 +145,7 @@ def main(argv: list[str] | None = None) -> int:
             "windows_clone_policy": "git -c core.longpaths=true" if os.name == "nt" else "native",
             "standard_sequence": [
                 "fresh delivery materialization",
-                "new Python 3.11 venv + pinned dependencies",
+                "new Python 3.11 venv + pinned minimal reviewer dependencies",
                 "RUN_REVIEWER.py check",
                 "install exact seven-archive reviewer asset bundle",
                 "RUN_REVIEWER.py deep-plan",
@@ -250,14 +252,19 @@ def main(argv: list[str] | None = None) -> int:
             commands.append(create)
             if create["returncode"]:
                 raise RuntimeError("clean-room venv creation failed")
+            reviewer_requirements = repo / "environment" / "requirements-reviewer.txt"
             install = run_logged(
-                [str(py), "-m", "pip", "install", "-c", "environment/replay-constraints.txt", "-r", "environment/requirements-replay.txt"],
+                [str(py), "-m", "pip", "install", "-c", "environment/replay-constraints.txt", "-r", "environment/requirements-reviewer.txt"],
                 cwd=repo, log_path=logs / "04_install_environment.log",
             )
             commands.append(install)
             if install["returncode"]:
-                raise RuntimeError("clean-room dependency installation failed")
-            report["environment_install"] = "PINNED_REQUIREMENTS_INSTALLED"
+                raise RuntimeError("clean-room reviewer dependency installation failed")
+            report["environment_install"] = {
+                "classification": "PINNED_MINIMAL_REVIEWER_REQUIREMENTS_INSTALLED",
+                "requirements": "environment/requirements-reviewer.txt",
+                "requirements_sha256": sha256(reviewer_requirements),
+            }
 
         def reviewer(label: str, *reviewer_args: str) -> None:
             record = run_logged(
