@@ -34,7 +34,29 @@ def render_final_figures56(output_root: Path) -> int:
         "Figure5(); Figure6();"
     )
     print("\n$ matlab -batch <sealed Figure5/6 render>", flush=True)
-    return subprocess.run([matlab, "-batch", matlab_expr], cwd=ROOT, env=env).returncode
+    rc = subprocess.run([matlab, "-batch", matlab_expr], cwd=ROOT, env=env).returncode
+    if rc:
+        return rc
+    figure_dir = output_root / "figures" / "main"
+    expected = [
+        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.png",
+        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.pdf",
+        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.fig",
+        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.png",
+        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.pdf",
+        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.fig",
+    ]
+    missing = [p for p in expected if not p.is_file() or p.stat().st_size == 0]
+    if missing:
+        print("\nFigure 5/6 render finished but required outputs are missing/empty:")
+        for p in missing:
+            print("  ", p)
+        return 1
+    print("\nVerified sealed Figure 5/6 outputs:")
+    for p in expected:
+        print(f"  {p} ({p.stat().st_size} bytes)")
+    print("=== CMDO FIGURE 5/6 RENDER PASS ===")
+    return 0
 
 def require_assets() -> int:
     rc = run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
