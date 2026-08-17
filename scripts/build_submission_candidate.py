@@ -53,6 +53,7 @@ def main(argv: list[str] | None = None) -> int:
             "HEAD equals origin/main and the full visible worktree is clean",
             "RUN_REVIEWER.py check",
             "seven canonical archives byte-verify",
+            "minimal standard reviewer environment is versioned",
         ],
         "artifacts": [
             "CMDO-Reviewer-Assets-v1.0.zip",
@@ -77,6 +78,10 @@ def main(argv: list[str] | None = None) -> int:
     if status:
         raise RuntimeError(f"worktree is not clean before packaging:\n{status}")
 
+    reviewer_requirements = ROOT / "environment/requirements-reviewer.txt"
+    if not reviewer_requirements.is_file():
+        raise RuntimeError("missing environment/requirements-reviewer.txt")
+
     run([sys.executable, "RUN_REVIEWER.py", "check"])
     run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
 
@@ -95,11 +100,15 @@ def main(argv: list[str] | None = None) -> int:
         "raw_restricted_data_included": False,
         "u9_eicu_data_included": False,
         "standard_reviewer_entrypoint": "python RUN_REVIEWER.py all --allow-network",
+        "standard_reviewer_environment": "environment/requirements-reviewer.txt",
+        "deep_replay_environment": "environment/requirements-replay.txt",
         "cleanroom_maintainer_entrypoint": "powershell -ExecutionPolicy Bypass -File .\\RUN_CLEANROOM_REVIEWER.ps1",
         "artifacts": [artifact(asset), artifact(portable)],
         "binding_records": {
             "canonical_archives_manifest_sha256": sha256(ROOT / "provenance/canonical_archives_manifest.csv"),
             "final_figure56_seal_sha256": sha256(ROOT / "provenance/final_figure56_seal.json"),
+            "reviewer_requirements_sha256": sha256(reviewer_requirements),
+            "replay_constraints_sha256": sha256(ROOT / "environment/replay-constraints.txt"),
         },
         "interpretation_boundary": (
             "The standard package reproduces engineering acceptance, public smoke, byte-verified frozen manuscript assets, "
