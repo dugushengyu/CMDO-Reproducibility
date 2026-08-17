@@ -1,0 +1,35 @@
+name: Final Figure 5/6 integrity
+
+on:
+  push:
+    paths:
+      - "matlab/figures/main/Figure5.m"
+      - "matlab/figures/main/Figure6.m"
+      - "source_data/figure6_u8_u9/**"
+      - "source_data/figure6_admissibility/**"
+      - "provenance/final_figure56_seal.json"
+      - "scripts/audit_final_figure56.py"
+      - ".github/workflows/final-figure56-integrity.yml"
+  pull_request:
+    paths:
+      - "matlab/figures/main/Figure5.m"
+      - "matlab/figures/main/Figure6.m"
+      - "source_data/figure6_u8_u9/**"
+      - "source_data/figure6_admissibility/**"
+      - "provenance/final_figure56_seal.json"
+      - "scripts/audit_final_figure56.py"
+      - ".github/workflows/final-figure56-integrity.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Audit sealed Figure 5/6 renderers
+        run: python scripts/audit_final_figure56.py
