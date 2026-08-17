@@ -12,6 +12,8 @@ powershell -ExecutionPolicy Bypass -File .\RUN_CLEANROOM_REVIEWER.ps1
 
 The wrapper first builds the final reviewer artifacts and then creates a new clean-room workspace under a deliberately short Windows path such as `C:\CMDO-CR-<timestamp>`. The fresh-clone runner invokes Git with `core.longpaths=true` on Windows and also records that setting in the clone. This avoids false checkout failures caused only by the repository's long immutable historical governance paths. A custom writable short path can be supplied with `-Workspace` when required.
 
+The clean-room uses `environment/requirements-reviewer.txt`, not the much larger historical/deep replay environment. The minimal reviewer requirements contain only the numerical/model/plotting dependencies required by the standard `RUN_REVIEWER.py` route. Jupyter/JupyterLab, PyTorch and deep-replay data tooling remain available in `environment/requirements-replay.txt` for optional historical replay, but are deliberately not installed during standard reviewer acceptance. This both reduces installation burden and avoids requiring system-wide Windows long-path configuration solely for unnecessary JupyterLab static assets.
+
 The default acceptance is intentionally strict:
 
 1. the source repository must be at the same commit as `origin/main` with no tracked changes;
@@ -20,7 +22,7 @@ The default acceptance is intentionally strict:
 4. a deterministic `CMDO-Reviewer-Assets-v1.0.zip` is built;
 5. a deterministic `CMDO-Reproducibility-Reviewer-Portable-v1.0.zip` is built and byte-verified;
 6. a completely fresh Git clone is checked out at the exact source commit, using Windows long-path-safe Git handling when applicable;
-7. a new Python 3.11 virtual environment is created and the pinned replay requirements are installed;
+7. a new Python 3.11 virtual environment is created and the pinned minimal reviewer requirements are installed;
 8. the fresh clone runs `RUN_REVIEWER.py check`;
 9. the reviewer asset ZIP is installed and byte-verified in that fresh clone;
 10. both deep replay plans are parsed without execution;
@@ -36,7 +38,7 @@ A successful run ends with:
 CMDO FINAL CLEAN-ROOM REVIEWER CANDIDATE: PASS
 ```
 
-and writes `CMDO_CLEANROOM_REVIEWER_REPORT.json` plus step logs in the clean-room workspace.
+and writes `CMDO_CLEANROOM_REVIEWER_REPORT.json` plus step logs in the clean-room workspace. The report records the SHA-256 of `environment/requirements-reviewer.txt` used to create the clean-room environment.
 
 ## Submission artifacts
 
@@ -52,6 +54,8 @@ The two ZIP delivery modes are complementary. A normal reviewer can clone the re
 ## Scope boundary
 
 A clean-room PASS certifies the documented reviewer engineering path, public smoke test, exact canonical manuscript assets and frozen figure regeneration. It does not reinterpret the disclosed fresh T2-D scientific divergence, does not relax a frozen gate and does not claim a fresh U9/eICU raw-to-science replay. The deferred eICU branch remains excluded from the default reviewer profiles and from distributed reviewer artifacts.
+
+The minimal reviewer environment is a packaging/interface boundary only. It does not alter any frozen scientific archive, MATLAB renderer, numerical result, threshold, seed, budget or governance decision. Reviewers who choose to execute the optional deep replay profiles should separately install `environment/requirements-replay.txt`.
 
 ## Reduced diagnostic runs
 
