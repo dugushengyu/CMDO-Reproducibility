@@ -33,8 +33,8 @@ if opt.IncludeMain
     names(end+1,1) = "Figure2"; actions{end+1,1} = @() Figure2();
     names(end+1,1) = "Figure3"; actions{end+1,1} = @() Figure3();
     names(end+1,1) = "Figure4"; actions{end+1,1} = @() Figure4();
-    names(end+1,1) = "Figure5_U6_U7"; actions{end+1,1} = @() CMDO_Figure5_U6_U7_Final();
-    names(end+1,1) = "Figure6_U8_U9"; actions{end+1,1} = @() Figure6();
+    names(end+1,1) = "Figure5_OperationalBoundary"; actions{end+1,1} = @() Figure5();
+    names(end+1,1) = "Figure6_AdmissibilityComposability"; actions{end+1,1} = @() Figure6();
     if opt.IncludePreU8Figure5
         names(end+1,1) = "Figure5_PreU8"; actions{end+1,1} = @() Figure5_PreU8();
     end
@@ -46,8 +46,9 @@ if opt.IncludeExtended
     names(end+1,1) = "ED4"; actions{end+1,1} = @() ED4();
     names(end+1,1) = "ED5"; actions{end+1,1} = @() ED5();
     names(end+1,1) = "ED6"; actions{end+1,1} = @() ED6();
-    % ED7 remains the detailed U8 source-workbook view; the final main
-    % Figure 6 combines U8 with the completed open U9 external boundary.
+    % ED7 remains the detailed U8 source-workbook view. The final main
+    % Figure 5 carries the U8/U9 operational boundary, while Figure 6
+    % carries the admissibility/composability synthesis and mechanism test.
     names(end+1,1) = "ED7_U8"; actions{end+1,1} = @() ...
         CMDO_ExtendedDataFigure7_U8(sourceWorkbook, fullfile(cfg.outputRoot,'figures','extended'));
 end

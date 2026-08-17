@@ -7,10 +7,14 @@ ROOT = Path(__file__).resolve().parent
 RUNNER = ROOT / "RUN_REPRODUCTION.py"
 ACCEPT = ROOT / "scripts" / "final_reviewer_acceptance.py"
 INSTALL_ASSETS = ROOT / "scripts" / "install_reviewer_asset_bundle.py"
+FIGURE56_AUDIT = ROOT / "scripts" / "audit_final_figure56.py"
 
 def run(command: list[str]) -> int:
     print("\n$", " ".join(command), flush=True)
     return subprocess.run(command, cwd=ROOT).returncode
+
+def audit_final_figures() -> int:
+    return run([sys.executable, str(FIGURE56_AUDIT)])
 
 def require_assets() -> int:
     rc = run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
@@ -42,6 +46,8 @@ def main(argv: list[str] | None = None) -> int:
             command.append("--allow-network")
         return run(command)
     if args.command == "frozen":
+        if audit_final_figures():
+            return 1
         if require_assets():
             return 3
         return run([sys.executable, str(RUNNER), "frozen", "--run-id", f"{args.run_prefix}-FROZEN",

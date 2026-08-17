@@ -1,6 +1,6 @@
 # Reviewer quickstart
 
-The standard CMDO reviewer path has five steps. It is deliberately separated from the much deeper historical replay machinery.
+The standard CMDO reviewer path is deliberately separated from the deeper historical replay machinery. The default route verifies the repository, audits the final sealed Figure 5/6 records, exercises a public-data smoke path, byte-verifies the canonical manuscript assets, and regenerates the manuscript figures.
 
 ## Step 1 — install the pinned Python environment
 
@@ -20,19 +20,28 @@ Windows PowerShell activation:
 
 For CUDA-dependent deep replay, install the matching official PyTorch wheel first. CUDA is not required for the standard static or frozen-figure reviewer path.
 
-## Step 2 — package acceptance
+## Step 2 — package acceptance and final Figure 5/6 audit
 
 ```bash
 python RUN_REVIEWER.py check
 ```
 
-Expected terminal message:
+Expected terminal messages include:
 
 ```text
+=== CMDO FINAL FIGURE 5/6 AUDIT PASS ===
 === CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===
 ```
 
-This performs repository, source, provenance, DAG, adapter, cleanup-manifest and unit-test checks. It does not infer that every historical scientific authorisation gate reproduced.
+This performs repository, source, provenance, DAG, final Figure 5/6, cleanup-manifest and unit-test checks. It does not infer that every historical scientific authorisation gate reproduced.
+
+The Figure 5/6 audit can also be run directly:
+
+```bash
+python scripts/audit_final_figure56.py
+```
+
+The final Figure 5 and Figure 6 MATLAB files are sealed renderers: the frozen derived values required for rendering are embedded in the scripts, so they do not read scientific inputs from `Downloads`, Google Drive, a manuscript working directory, or another machine-specific data path at runtime. Independent audit companions remain tracked under `source_data/` so the embedded values can be checked against repository records.
 
 ## Step 3 — public-data end-to-end smoke test
 
@@ -74,7 +83,7 @@ The reviewer's machine does **not** need the historical Google Drive directory t
 
 ## Step 5 — regenerate manuscript figures
 
-MATLAB must be callable as `matlab`. The reference reviewer run used MATLAB R2024b with the Statistics and Machine Learning Toolbox.
+MATLAB must be callable as `matlab`. The reference reviewer environment uses MATLAB R2024b with the Statistics and Machine Learning Toolbox.
 
 ```bash
 python RUN_REVIEWER.py frozen
@@ -86,13 +95,15 @@ Expected final profile state:
 CMDO profile frozen COMPLETE
 ```
 
-This route:
+Before MATLAB rendering, this command reruns the final Figure 5/6 static audit. The frozen route then:
 
 1. rechecks repository/source/provenance integrity;
-2. byte-verifies all seven canonical result archives;
-3. regenerates the current manuscript main and Extended Data figures from those records.
+2. byte-verifies the seven canonical result archives used by the earlier manuscript figure pipeline;
+3. regenerates the current main and Extended Data figures;
+4. runs the current `Figure5()` and `Figure6()` sealed renderers into the same reviewer `figures/main` output tree as Figure 4;
+5. builds compatibility PDFs and writes the figure-run report.
 
-It does not retrain the historical models.
+The final Figure 5/6 sealed-render path reproduces the manuscript figures from frozen derived records. This is intentionally distinguished from a fresh raw-to-science replay of restricted/deferred U9 data.
 
 ## One-command standard route
 
@@ -102,7 +113,7 @@ After installing the asset ZIP:
 python RUN_REVIEWER.py all --allow-network
 ```
 
-The command runs `check`, `smoke`, canonical verification and `frozen` in sequence.
+The command runs static acceptance (including the Figure 5/6 audit), public smoke, canonical verification and frozen figure regeneration in sequence.
 
 Use a different run prefix if you want to keep several independent reviewer runs:
 
@@ -112,20 +123,21 @@ python RUN_REVIEWER.py all --allow-network --run-prefix REVIEWER-RUN2
 
 Generated outputs are written under `outputs/reviewer/` unless `--output-root` is supplied.
 
-## Validated baseline
+## Figure 5/6 provenance notes
 
-The scientific baseline at commit `57962f57ef11902bd9fa437412514d994d3af864` was independently exercised twice on 14 August 2026. The sealed local reviewer audit reported:
+- `source_data/figure6_u8_u9/` retains the share-safe U8/U9A/U9B state and summary records audited against the final Figure 5 embedded values. The directory name is historical; these records now support current manuscript Figure 5.
+- `source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Table.csv` retains the exact 185-state Figure 6 synthesis table. Its SHA-256 is `a0ad0c9f9feded26b9b32f732ae62d7639d5ff91be983cb54a04525b0efc6d03`.
+- `source_data/figure6_admissibility/` also retains the U9B composability decomposition and strict-split mechanistic-control tables used to audit Figure 6 panels c/d.
+- `provenance/final_figure56_seal.json` records the final renderer hashes and expected scientific invariants.
+- `docs/FIGURE5_6_REPRODUCIBILITY_AUDIT_2026-08-17.md` gives the detailed scope and interpretation boundary.
 
-- public smoke: PASS x2;
-- canonical archive identity: 7/7 exact;
-- canonical-to-publication-figure route: PASS x2;
-- exact-first cross-run comparison: PASS;
-- numerical-boundary registry: PASS;
-- threshold relaxation: none;
-- U9/eICU included: false;
-- Stage12 authorised: false.
+## Validated baseline and current update
 
-See `reviewer/VALIDATED_BASELINE.json` for the machine-readable record.
+The deeper scientific baseline at commit `57962f57ef11902bd9fa437412514d994d3af864` was independently exercised twice on 14 August 2026. The sealed local reviewer audit reported public smoke PASS x2, 7/7 canonical archive identity, canonical-to-publication-figure PASS x2, exact-first cross-run comparison PASS, and no threshold relaxation.
+
+The 17 August Figure 5/6 update adds the final sealed renderers and static audit described above. It does **not** rewrite the historical baseline or silently claim a new independent raw-to-science U9 replay. Maintainers should run `RUN_REVIEWER.py check` and `RUN_REVIEWER.py frozen` after pulling this update to record the new local renderer acceptance.
+
+See `reviewer/VALIDATED_BASELINE.json` for the historical machine-readable baseline.
 
 ## Deep replay is optional and deliberately separate
 
@@ -151,7 +163,7 @@ The current-runtime fresh path reaches a disclosed T2-D scientific non-reproduct
 
 `archival-continuation` starts from byte-verified accepted historical parents and audits downstream historical implementation. It is explicitly retrospective and must not be described as a fresh raw-to-science reproduction.
 
-U9/eICU is excluded from all default reviewer profiles.
+The deferred eICU branch is excluded from all default reviewer profiles.
 
 ## Exit codes
 

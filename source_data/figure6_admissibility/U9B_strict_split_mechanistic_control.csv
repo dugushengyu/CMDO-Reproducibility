@@ -1,0 +1,9 @@
+budget,orientation,corr_w_A,xi_cross_pp,gain_vs_half_direct_pct,gain_vs_full_direct_pct,split_tax_pct
+128,A_sensor_B_est,-0.096,-3.057,12.88,-78.81,105.2
+256,A_sensor_B_est,0.078,-2.003,8.03,-102.36,120.0
+512,A_sensor_B_est,0.026,-0.574,3.66,-74.44,81.1
+1024,A_sensor_B_est,-0.037,0.655,1.68,-99.49,102.9
+128,B_sensor_A_est,-0.085,1.869,7.5,-59.74,72.7
+256,B_sensor_A_est,0.038,-4.061,9.09,-81.59,99.8
+512,B_sensor_A_est,0.031,-4.502,8.33,-106.88,125.7
+1024,B_sensor_A_est,-0.055,0.765,1.19,-81.12,83.3

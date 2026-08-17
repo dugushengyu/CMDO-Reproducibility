@@ -87,6 +87,7 @@ def main() -> int:
     report["checks"].append(run(verify_command, label="repository"))
     report["checks"].append(run([sys.executable, "scripts/extract_embedded_sources.py", "--check"], label="embedded-sources"))
     report["checks"].append(run([sys.executable, "scripts/build_provenance_manifests.py", "--check"], label="provenance"))
+    report["checks"].append(run([sys.executable, "scripts/audit_final_figure56.py"], label="final-figure56-audit"))
     report["checks"].append(run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"], label="unit-tests"))
 
     dag = ReproductionDAG(ROOT / "provenance/reproduction_dag.json")
@@ -126,7 +127,7 @@ def main() -> int:
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("\n=== CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===")
-    print("Static integrity, provenance, source extraction, DAG and unit tests passed.")
+    print("Static integrity, provenance, source extraction, final Figure 5/6 audit, DAG and unit tests passed.")
     print("This PASS does not overwrite or reinterpret any scientific divergence.")
     if report.get("scientific_boundary_code"):
         print(f"Observed scientific status: {report['scientific_boundary_code']}")

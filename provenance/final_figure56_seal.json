@@ -1,0 +1,45 @@
+{
+  "seal_version": "2026-08-17.v1",
+  "classification": "FINAL_MAIN_FIGURE56_SEALED_RENDER_AND_AUDIT",
+  "scientific_scope": "Frozen derived-result rendering and internal consistency audit; not a claim of fresh raw-to-science U9 reproduction.",
+  "files": {
+    "figure5": {
+      "repository_path": "matlab/figures/main/Figure5.m",
+      "size_bytes": 20595,
+      "sha256": "f5c7c9ef415405d6ca8394345195b8277991e2ce15008ee1d5a04305ef18f5f7"
+    },
+    "figure6": {
+      "repository_path": "matlab/figures/main/Figure6.m",
+      "size_bytes": 39402,
+      "sha256": "7943b966266af7c4ce5276505ae8039df5f73c4328525b5b21f096af738f96f7"
+    },
+    "admissibility_state_table": {
+      "repository_path": "source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv",
+      "size_bytes": 17950,
+      "sha256": "4ef09304a0dbb4110130b9543b05bd8a7d0f34f22dd0ecef1cb6ef758c6174c4"
+    }
+  },
+  "expected": {
+    "figure6_states": 185,
+    "stage_counts": {
+      "U6": 80,
+      "U7": 80,
+      "U8": 12,
+      "U9A": 9,
+      "U9B": 4
+    },
+    "rho_log10_lambda_observed": -0.5610382472233805,
+    "rho_scalar_prediction_observed": 0.5875990296046397,
+    "mean_shared_abs_corr": 0.9405,
+    "mean_strict_split_abs_corr": 0.05575,
+    "mean_shared_abs_xi_cross_pp": 9.44525,
+    "mean_strict_split_abs_xi_cross_pp": 2.18575
+  },
+  "provenance_notes": [
+    "Figure5 embeds frozen U8/U9A/U9B derived values whose audit companions already live under source_data/figure6_u8_u9/.",
+    "Figure6 embeds six columns from the exact 185-state admissibility table identified above.",
+    "U9B strict-split values are post-hoc mechanistic evidence and do not change the frozen external-reserve verdict.",
+    "Renderers honor CMDO_OUTPUT_ROOT for reviewer batch runs and require no external scientific input at render time."
+  ],
+  "originating_full_state_table_sha256": "a0ad0c9f9feded26b9b32f732ae62d7639d5ff91be983cb54a04525b0efc6d03"
+}
