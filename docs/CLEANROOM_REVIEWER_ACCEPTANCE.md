@@ -10,7 +10,7 @@ From the canonical repository root:
 powershell -ExecutionPolicy Bypass -File .\RUN_CLEANROOM_REVIEWER.ps1
 ```
 
-The wrapper first builds the final reviewer artifacts and then creates a new clean-room workspace under `~/Downloads/CMDO-Reviewer-Cleanroom-<timestamp>`.
+The wrapper first builds the final reviewer artifacts and then creates a new clean-room workspace under a deliberately short Windows path such as `C:\CMDO-CR-<timestamp>`. The fresh-clone runner invokes Git with `core.longpaths=true` on Windows and also records that setting in the clone. This avoids false checkout failures caused only by the repository's long immutable historical governance paths. A custom writable short path can be supplied with `-Workspace` when required.
 
 The default acceptance is intentionally strict:
 
@@ -19,7 +19,7 @@ The default acceptance is intentionally strict:
 3. all seven canonical archives must match the frozen size, SHA-256 and ZIP CRC records;
 4. a deterministic `CMDO-Reviewer-Assets-v1.0.zip` is built;
 5. a deterministic `CMDO-Reproducibility-Reviewer-Portable-v1.0.zip` is built and byte-verified;
-6. a completely fresh Git clone is checked out at the exact source commit;
+6. a completely fresh Git clone is checked out at the exact source commit, using Windows long-path-safe Git handling when applicable;
 7. a new Python 3.11 virtual environment is created and the pinned replay requirements are installed;
 8. the fresh clone runs `RUN_REVIEWER.py check`;
 9. the reviewer asset ZIP is installed and byte-verified in that fresh clone;
@@ -62,4 +62,4 @@ python scripts/run_cleanroom_reviewer_test.py --selftest
 python scripts/build_submission_candidate.py --plan
 ```
 
-The PowerShell wrapper also accepts `-SkipNetwork`, `-SkipEnvironmentInstall`, `-SkipFrozen` and `-SkipMatlab`. A run using these skips is diagnostic and should not be used as the final submission acceptance record.
+The PowerShell wrapper also accepts `-Workspace`, `-SkipNetwork`, `-SkipEnvironmentInstall`, `-SkipFrozen` and `-SkipMatlab`. A run using skips is diagnostic and should not be used as the final submission acceptance record.
