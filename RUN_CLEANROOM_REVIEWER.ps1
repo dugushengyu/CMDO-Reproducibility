@@ -28,7 +28,7 @@ if (-not (Test-Path -LiteralPath $py)) {
 
 Write-Host "===================================================================================================="
 Write-Host " CMDO FINAL SUBMISSION BUILD + CLEAN-ROOM REVIEWER TEST"
-Write-Host " Fresh clone; exact reviewer assets; new venv by default"
+Write-Host " Fresh clone; exact reviewer assets; new minimal reviewer venv by default"
 Write-Host " Windows clone path policy: short workspace + core.longpaths=true"
 Write-Host "===================================================================================================="
 
