@@ -24,6 +24,18 @@ jobs:
           python -m py_compile RUN_REVIEWER.py
           python -m py_compile scripts/install_reviewer_asset_bundle.py
           python -m py_compile scripts/build_reviewer_asset_bundle.py
+          python -m py_compile scripts/build_portable_bundle.py
+          python -m py_compile scripts/build_submission_candidate.py
+          python -m py_compile scripts/run_cleanroom_reviewer_test.py
+      - name: Verify clean-room and submission plans
+        run: |
+          python scripts/build_submission_candidate.py --plan
+          python scripts/run_cleanroom_reviewer_test.py --selftest
+      - name: Parse clean-room PowerShell wrapper
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          [scriptblock]::Create((Get-Content -Raw .\RUN_CLEANROOM_REVIEWER.ps1)) | Out-Null
       - name: Verify repository, provenance and packaging
         run: python scripts/verify_repository.py
       - name: Verify embedded-source extraction
