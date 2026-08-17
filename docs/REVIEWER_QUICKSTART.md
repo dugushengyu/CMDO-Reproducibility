@@ -2,20 +2,28 @@
 
 The standard CMDO reviewer path is deliberately separated from the deeper historical replay machinery. The default route verifies the repository, audits the final sealed Figure 5/6 records, exercises a public-data smoke path, byte-verifies the canonical manuscript assets, and regenerates the manuscript figures.
 
-## Step 1 — install the pinned Python environment
+## Step 1 — install the pinned standard reviewer environment
 
 Reference Python version: **3.11**.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
+python -m pip install -c environment/replay-constraints.txt -r environment/requirements-reviewer.txt
 ```
 
 Windows PowerShell activation:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
+```
+
+`environment/requirements-reviewer.txt` is intentionally minimal. It contains the numerical/model/plotting dependencies used by the standard reviewer path and omits Jupyter/JupyterLab, PyTorch and deep-replay data tooling.
+
+Only reviewers who choose to execute the optional historical/deep replay profiles need the larger environment:
+
+```bash
+python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
 ```
 
 For CUDA-dependent deep replay, install the matching official PyTorch wheel first. CUDA is not required for the standard static or frozen-figure reviewer path.
@@ -33,7 +41,7 @@ Expected terminal messages include:
 === CMDO REVIEWER ENGINEERING ACCEPTANCE PASS ===
 ```
 
-This performs repository, source, provenance, DAG, final Figure 5/6, cleanup-manifest and unit-test checks. It does not infer that every historical scientific authorisation gate reproduced.
+This performs repository, source, provenance, DAG, final Figure 5/6 and unit-test checks. It does not infer that every historical scientific authorisation gate reproduced.
 
 The Figure 5/6 audit can also be run directly:
 
@@ -65,7 +73,7 @@ Expected final profile state:
 CMDO profile smoke COMPLETE
 ```
 
-The smoke route downloads public UCI-296 data, preprocesses it, fits a model, evaluates AUC and saves a ROC figure. It demonstrates that the download → preprocessing → model → evaluation → figure path works on the reviewer's machine. It is not a manuscript estimate.
+The smoke route downloads public UCI-296 data, preprocesses it, fits a model, evaluates AUC and saves a ROC figure. Its Python imports are limited to the standard reviewer numerical stack (`pandas`, `matplotlib`, `scikit-learn` plus their NumPy/SciPy dependencies). It demonstrates that the download → preprocessing → model → evaluation → figure path works on the reviewer's machine. It is not a manuscript estimate.
 
 ## Step 4 — install the seven canonical manuscript archives
 
@@ -151,7 +159,7 @@ See `reviewer/VALIDATED_BASELINE.json` for the historical machine-readable basel
 
 ## Deep replay is optional and deliberately separate
 
-A reviewer who wants to inspect the deeper historical DAG can first print both plans:
+A reviewer who wants to inspect the deeper historical DAG can first print both plans without installing the deep replay environment:
 
 ```bash
 python RUN_REVIEWER.py deep-plan
@@ -163,7 +171,7 @@ The underlying full runner is:
 python RUN_REPRODUCTION.py <profile> [options]
 ```
 
-Available deep profiles include `full-claim` and `archival-continuation`.
+Available deep profiles include `full-claim` and `archival-continuation`. Actual execution of those profiles uses `environment/requirements-replay.txt` rather than the minimal reviewer requirements.
 
 ### Fresh full-claim boundary
 
