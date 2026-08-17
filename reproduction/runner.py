@@ -395,10 +395,19 @@ class Runner:
 
         destination_root = self.run_dir / "adapted_source"
         records = []
-        mirror = self._prepare_authoritative_code_mirror()
-        for stage in self.profile_stages:
-            if not stage.source:
-                continue
+        selected_source_stages = [stage for stage in self.profile_stages if stage.source]
+        if selected_source_stages:
+            mirror = self._prepare_authoritative_code_mirror()
+        else:
+            # Standard reviewer profiles such as smoke/frozen contain only internal
+            # stages. They do not execute or hash Drive-era historical notebooks, so
+            # materialising the full historical code mirror is unnecessary and can
+            # create avoidable Windows path-length failures in clean-room workspaces.
+            mirror_manifest = self.run_dir / "authoritative_code_mirror_manifest.json"
+            mirror_manifest.write_text("[]\n", encoding="utf-8")
+            mirror = {"file_count": 0, "manifest": str(mirror_manifest)}
+
+        for stage in selected_source_stages:
             source = (self.root / stage.source).resolve()
             if not source.is_file():
                 raise IntegrityError(f"declared source is missing: {stage.source}")
