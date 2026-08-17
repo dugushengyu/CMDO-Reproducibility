@@ -8,9 +8,9 @@ The standard reviewer path is intentionally short: verify the package, run a sma
 
 ## Start here
 
-### 1. Create the Python environment
+### 1. Create the standard reviewer Python environment
 
-Python 3.11 is the reference replay version.
+Python 3.11 is the reference reviewer version.
 
 ```bash
 python -m venv .venv
@@ -28,11 +28,21 @@ Windows PowerShell:
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install the pinned replay environment:
+Install the **minimal pinned reviewer environment**:
+
+```bash
+python -m pip install -c environment/replay-constraints.txt -r environment/requirements-reviewer.txt
+```
+
+This standard reviewer environment contains only the numerical/model/plotting packages required by `RUN_REVIEWER.py check`, the public smoke test and the frozen figure orchestration. It deliberately excludes Jupyter/JupyterLab, PyTorch and deep-replay data tooling.
+
+The much larger historical/deep replay environment remains available separately:
 
 ```bash
 python -m pip install -c environment/replay-constraints.txt -r environment/requirements-replay.txt
 ```
+
+The full replay environment is **not required** for the standard manuscript reviewer route.
 
 ### 2. Verify the repository
 
@@ -121,13 +131,15 @@ For reviewers who want the deeper history rather than the standard manuscript ch
 python RUN_REVIEWER.py deep-plan
 ```
 
-The detailed runner remains available as `RUN_REPRODUCTION.py`. Deep `full-claim` and `archival-continuation` modes are retrospective audit tools and are not required to reproduce the manuscript figures.
+The detailed runner remains available as `RUN_REPRODUCTION.py`. Deep `full-claim` and `archival-continuation` modes are retrospective audit tools and are not required to reproduce the manuscript figures. Reviewers who actually execute those deep profiles should install `environment/requirements-replay.txt`; merely printing the plans does not require the deep environment.
 
 ## Repository map
 
 - `RUN_REVIEWER.py` — recommended reviewer entry point.
 - `RUN_CLEANROOM_REVIEWER.ps1` — maintainer-only final submission build plus stranger-style clean-room acceptance.
 - `RUN_REPRODUCTION.py` — full reproduction runner and historical audit profiles.
+- `environment/requirements-reviewer.txt` — minimal pinned standard reviewer environment.
+- `environment/requirements-replay.txt` — larger optional historical/deep replay environment.
 - `provenance/` — dataset registry, canonical archive manifest, final Figure 5/6 seal, scientific boundaries and replay status.
 - `scripts/` — package verification, asset installation/building, clean-room acceptance and integrity utilities.
 - `matlab/figures/` — manuscript figure generators.
@@ -147,7 +159,7 @@ With the seven exact canonical archives present under `data/canonical_records/`,
 powershell -ExecutionPolicy Bypass -File .\RUN_CLEANROOM_REVIEWER.ps1
 ```
 
-It builds and hashes both reviewer delivery artifacts, performs a fresh clone at the exact Git commit, creates a new Python 3.11 environment, installs the exact canonical asset ZIP, reruns the reviewer acceptance, regenerates Figure 5/6, executes the public smoke route, runs the frozen figure path and requires the fresh clone to remain Git-clean.
+It builds and hashes both reviewer delivery artifacts, performs a fresh clone at the exact Git commit, creates a new Python 3.11 environment from `environment/requirements-reviewer.txt`, installs the exact canonical asset ZIP, reruns the reviewer acceptance, regenerates Figure 5/6, executes the public smoke route, runs the frozen figure path and requires the fresh clone to remain Git-clean.
 
 The submission build writes under `dist/`:
 
