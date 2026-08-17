@@ -12,7 +12,12 @@ Set-Location $repo
 
 if ([string]::IsNullOrWhiteSpace($Workspace)) {
     $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-    $Workspace = Join-Path $HOME "Downloads\CMDO-Reviewer-Cleanroom-$stamp"
+    if (-not [string]::IsNullOrWhiteSpace($env:SystemDrive)) {
+        $Workspace = "$($env:SystemDrive)\CMDO-CR-$stamp"
+    }
+    else {
+        $Workspace = Join-Path $HOME "CMDO-CR-$stamp"
+    }
 }
 
 $py = Join-Path $repo ".venv\Scripts\python.exe"
@@ -24,6 +29,7 @@ if (-not (Test-Path -LiteralPath $py)) {
 Write-Host "===================================================================================================="
 Write-Host " CMDO FINAL SUBMISSION BUILD + CLEAN-ROOM REVIEWER TEST"
 Write-Host " Fresh clone; exact reviewer assets; new venv by default"
+Write-Host " Windows clone path policy: short workspace + core.longpaths=true"
 Write-Host "===================================================================================================="
 
 Write-Host "`n[1/3] Build final submission candidate artifacts"
@@ -37,6 +43,7 @@ $origin = (git remote get-url origin).Trim()
 $ref = (git rev-parse HEAD).Trim()
 
 Write-Host "`n[2/3] Run stranger-style clean-room clone/reproduction"
+Write-Host "Clean-room workspace: $Workspace"
 $cleanArgs = @(
     ".\scripts\run_cleanroom_reviewer_test.py",
     "--repository-url", $origin,
