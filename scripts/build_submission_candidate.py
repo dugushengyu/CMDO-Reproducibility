@@ -50,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
     plan = {
         "classification": "CMDO_FINAL_REVIEWER_SUBMISSION_BUILD",
         "preflight": [
-            "HEAD equals origin/main and tracked worktree is clean",
+            "HEAD equals origin/main and the full visible worktree is clean",
             "RUN_REVIEWER.py check",
             "seven canonical archives byte-verify",
         ],
@@ -73,9 +73,9 @@ def main(argv: list[str] | None = None) -> int:
     origin = git("rev-parse", "origin/main")
     if head != origin:
         raise RuntimeError(f"HEAD {head} does not equal origin/main {origin}")
-    status = git("status", "--porcelain", "--untracked-files=no")
+    status = git("status", "--porcelain")
     if status:
-        raise RuntimeError(f"tracked worktree is dirty before packaging:\n{status}")
+        raise RuntimeError(f"worktree is not clean before packaging:\n{status}")
 
     run([sys.executable, "RUN_REVIEWER.py", "check"])
     run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
