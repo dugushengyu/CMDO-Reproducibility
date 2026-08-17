@@ -31,6 +31,10 @@ jobs:
         run: |
           python scripts/build_submission_candidate.py --plan
           python scripts/run_cleanroom_reviewer_test.py --selftest
+      - name: Install minimal reviewer environment
+        run: python -m pip install -c environment/replay-constraints.txt -r environment/requirements-reviewer.txt
+      - name: Verify reviewer scientific imports
+        run: python -c "import numpy, pandas, scipy, sklearn, matplotlib; print('CMDO minimal reviewer imports PASS')"
       - name: Parse clean-room PowerShell wrapper
         if: runner.os == 'Windows'
         shell: pwsh
