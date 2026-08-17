@@ -37,7 +37,7 @@ $origin = (git remote get-url origin).Trim()
 $ref = (git rev-parse HEAD).Trim()
 
 Write-Host "`n[2/3] Run stranger-style clean-room clone/reproduction"
-$args = @(
+$cleanArgs = @(
     ".\scripts\run_cleanroom_reviewer_test.py",
     "--repository-url", $origin,
     "--ref", $ref,
@@ -45,12 +45,12 @@ $args = @(
     "--workspace", $Workspace,
     "--force"
 )
-if (-not $SkipNetwork) { $args += "--allow-network" } else { $args += "--skip-smoke" }
-if ($SkipEnvironmentInstall) { $args += "--skip-environment-install" }
-if ($SkipFrozen) { $args += "--skip-frozen" }
-if ($SkipMatlab) { $args += "--skip-matlab" }
+if (-not $SkipNetwork) { $cleanArgs += "--allow-network" } else { $cleanArgs += "--skip-smoke" }
+if ($SkipEnvironmentInstall) { $cleanArgs += "--skip-environment-install" }
+if ($SkipFrozen) { $cleanArgs += "--skip-frozen" }
+if ($SkipMatlab) { $cleanArgs += "--skip-matlab" }
 
-& $py @args
+& $py @cleanArgs
 if ($LASTEXITCODE -ne 0) { throw "Clean-room reviewer acceptance failed" }
 
 Write-Host "`n[3/3] Final artifact inventory"
