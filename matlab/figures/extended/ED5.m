@@ -121,7 +121,7 @@ U7.rates  = ed_read(d,'StageU7_Label_Complexity_Rates_v1.0.csv');
 end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
-zipPath = fullfile(dataDir,zipName);
+zipPath = cmdo.find_unique_file(dataDir,zipName);
 if ~exist(zipPath,'file')
     error('ED:MissingZip','Missing canonical archive: %s',zipPath);
 end

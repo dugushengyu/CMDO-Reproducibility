@@ -175,7 +175,7 @@ U4.expiry = ed_read(d,'StageU4C_Evidence_Expiry_Map_v1.1.csv');
 end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
-zipPath = fullfile(dataDir,zipName);
+zipPath = cmdo.find_unique_file(dataDir,zipName);
 if ~exist(zipPath,'file')
     error('ED:MissingZip','Missing canonical archive: %s',zipPath);
 end

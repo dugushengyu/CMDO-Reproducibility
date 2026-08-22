@@ -667,7 +667,7 @@ end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
 
-zipPath = fullfile(dataDir,zipName);
+zipPath = cmdo.find_unique_file(dataDir,zipName);
 
 if ~exist(zipPath,'file')
     error( ...
