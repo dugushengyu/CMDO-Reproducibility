@@ -1,17 +1,17 @@
 {
-  "seal_version": "2026-08-17.v1",
+  "seal_version": "2026-08-22.v2",
   "classification": "FINAL_MAIN_FIGURE56_SEALED_RENDER_AND_AUDIT",
   "scientific_scope": "Frozen derived-result rendering and internal consistency audit; not a claim of fresh raw-to-science U9 reproduction.",
   "files": {
     "figure5": {
       "repository_path": "matlab/figures/main/Figure5.m",
-      "size_bytes": 20595,
-      "sha256": "f5c7c9ef415405d6ca8394345195b8277991e2ce15008ee1d5a04305ef18f5f7"
+      "size_bytes": 28881,
+      "sha256": "b057bb7dba86c31413c478cb6c3405f6d5860d3dae2469a084613eb419526092"
     },
     "figure6": {
       "repository_path": "matlab/figures/main/Figure6.m",
-      "size_bytes": 39402,
-      "sha256": "7943b966266af7c4ce5276505ae8039df5f73c4328525b5b21f096af738f96f7"
+      "size_bytes": 41812,
+      "sha256": "b830f9c68020cf616b714eb1b9449a8b8488586373d878db9e1cdf153b081108"
     },
     "admissibility_state_table": {
       "repository_path": "source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv",
@@ -38,6 +38,7 @@
   "provenance_notes": [
     "Figure5 embeds frozen U8/U9A/U9B derived values whose audit companions already live under source_data/figure6_u8_u9/.",
     "Figure6 embeds six columns from the exact 185-state admissibility table identified above.",
+    "The 2026-08-22 renderer refresh changed layout, labels, assertions and portable output routing without changing frozen scientific values.",
     "U9B strict-split values are post-hoc mechanistic evidence and do not change the frozen external-reserve verdict.",
     "Renderers honor CMDO_OUTPUT_ROOT for reviewer batch runs and require no external scientific input at render time."
   ],

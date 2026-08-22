@@ -83,7 +83,7 @@ ax.Position = [0.570 0.555 0.315 0.365];
 % Dedicated colour-bar location
 cb.Units = 'normalized';
 cb.Position = [0.905 0.555 0.016 0.365];
-xlabel(ax,'Sentinel estimated bias^2');
+xlabel(ax,'Sentinel estimate of B^{2}');
 ylabel(ax,'Mean sentinel weight');
 title(ax,'Borrowing contracts with sensed bias','FontWeight','bold');
 grid(ax,'on');

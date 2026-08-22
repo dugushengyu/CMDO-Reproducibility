@@ -302,11 +302,6 @@ for i = 1:5
         textX = worstScaled(i)+0.025*scaledRange;
         horizontalAlignment = 'left';
 
-    elseif abs(worstScaled(i)) > 0.50
-
-        textX = worstScaled(i)+0.035*scaledRange;
-        horizontalAlignment = 'left';
-
     else
 
         textX = worstScaled(i)-0.025*scaledRange;
@@ -329,7 +324,7 @@ xlabel(ax,'Worst stratum-budget regret (x10^{-4})');
 
 title( ...
     ax, ...
-    'Secondary no-harm is metric-specific', ...
+    'Worst-state regret is metric-specific', ...
     'FontWeight','bold', ...
     'FontSize',11.5);
 
