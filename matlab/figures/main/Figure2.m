@@ -21,7 +21,7 @@ function Figure2(outputDir)
 %
 % Usage:
 %   Figure2
-%   Figure2('F:\CMDO\09_Figures\output')
+%   Figure2(fullfile(pwd,'output'))
 
 close all;
 
