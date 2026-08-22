@@ -134,13 +134,13 @@ def audit_figure6() -> dict:
     psi = [float(r['psi_meanweight']) for r in rr]
     ratio = [float(r['scalar_risk_ratio_at_meanweight']) for r in rr]
 
-    if matlab_strings(text, 'stage_embedded') != stage:
+    if matlab_strings(text, 'stage_name') != stage:
         raise AssertionError('Figure6 embedded stage vector differs from audit source')
-    assert_vector_close(matlab_numbers(text,'lambda_embedded'), lam, 1e-12, 'Figure6 Lambda embedding')
-    assert_vector_close(matlab_numbers(text,'weight_embedded'), weight, 1e-14, 'Figure6 weight embedding')
-    assert_vector_close(matlab_numbers(text,'gain_embedded'), observed, 1e-13, 'Figure6 observed-gain embedding')
-    assert_vector_close(matlab_numbers(text,'psi_embedded'), psi, 1e-14, 'Figure6 Psi embedding')
-    assert_vector_close(matlab_numbers(text,'ratio_embedded'), ratio, 1e-14, 'Figure6 scalar-ratio embedding')
+    assert_vector_close(matlab_numbers(text,'lambda_state'), lam, 1e-12, 'Figure6 Lambda embedding')
+    assert_vector_close(matlab_numbers(text,'w_state'), weight, 1e-14, 'Figure6 weight embedding')
+    assert_vector_close(matlab_numbers(text,'g_observed'), observed, 1e-13, 'Figure6 observed-gain embedding')
+    assert_vector_close(matlab_numbers(text,'psi_stored'), psi, 1e-14, 'Figure6 Psi embedding')
+    assert_vector_close(matlab_numbers(text,'ratio_stored'), ratio, 1e-14, 'Figure6 scalar-ratio embedding')
 
     psi_re = [w*(1+l)/2 for w,l in zip(weight,lam)]
     ratio_re = [(1-w)**2 + l*w*w for w,l in zip(weight,lam)]

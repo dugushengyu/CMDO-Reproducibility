@@ -1,17 +1,17 @@
 {
-  "seal_version": "2026-08-17.v1",
+  "seal_version": "2026-08-22.v2",
   "classification": "FINAL_MAIN_FIGURE56_SEALED_RENDER_AND_AUDIT",
   "scientific_scope": "Frozen derived-result rendering and internal consistency audit; not a claim of fresh raw-to-science U9 reproduction.",
   "files": {
     "figure5": {
       "repository_path": "matlab/figures/main/Figure5.m",
-      "size_bytes": 20595,
-      "sha256": "f5c7c9ef415405d6ca8394345195b8277991e2ce15008ee1d5a04305ef18f5f7"
+      "size_bytes": 28715,
+      "sha256": "247b331ddff6b3a59ccce63df37068d980749b18a9caf1959a59aaef51a0f48d"
     },
     "figure6": {
       "repository_path": "matlab/figures/main/Figure6.m",
-      "size_bytes": 39402,
-      "sha256": "7943b966266af7c4ce5276505ae8039df5f73c4328525b5b21f096af738f96f7"
+      "size_bytes": 42152,
+      "sha256": "f8d4885dd047f9fe8e9d6637b86126c671699717bf5c1e8657e9150794bea3b7"
     },
     "admissibility_state_table": {
       "repository_path": "source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv",
