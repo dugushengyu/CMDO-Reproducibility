@@ -2,9 +2,9 @@
 
 This repository is the reviewer-facing reproducibility package for **Cross-Modal Diagnostic Observability (CMDO)**.
 
-> **Current manuscript status (17 August 2026).** The independently validated seven-archive U4C–U7 baseline remains frozen and historically unchanged. The current manuscript additionally contains completed U8 and U9 Open Clinical operational extensions plus the final evidence-admissibility synthesis. Figure 5 reports the U8 temporal natural-prevalence confirmation together with the U9A/U9B external-system operational boundary. Figure 6 synthesizes all 185 frozen U6/U7/U8/U9A/U9B states under the evidence-admissibility law and includes the U9B strict-split mechanistic control. The earlier credentialed eICU pre-outcome branch is preserved separately as deferred independent confirmation and has not been overwritten.
+> **Current manuscript status (22 August 2026).** The independently validated seven-archive U4C–U7 baseline remains frozen and historically unchanged. The current manuscript additionally contains completed U8 and U9 Open Clinical operational extensions plus the final evidence-admissibility synthesis. Figure 5 reports the U8 temporal natural-prevalence confirmation together with the U9A/U9B external-system operational boundary. Figure 6 synthesizes all 185 frozen U6/U7/U8/U9A/U9B states under the evidence-admissibility law and includes the U9B strict-split mechanistic control. The earlier credentialed eICU pre-outcome branch is preserved separately as deferred independent confirmation and has not been overwritten.
 
-The standard reviewer path is intentionally short: verify the package, run a small public-data end-to-end smoke test, install the seven byte-verified canonical result archives supplied with the submission, and regenerate the manuscript figures. Final Figure 5 and Figure 6 are sealed renderers whose required frozen derived values are embedded in the MATLAB scripts and independently audited against tracked share-safe records under `source_data/`. No raw PhysioNet patient files are redistributed.
+The standard reviewer path is intentionally short: verify the package, run a small public-data end-to-end smoke test, install the seven byte-verified canonical result archives supplied with the submission, and regenerate the programmatic manuscript figures. Final Figure 1 is supplied as a frozen submission schematic. Final Figure 5 and Figure 6 are sealed renderers whose required frozen derived values are embedded in the MATLAB scripts and independently audited against tracked share-safe records under `source_data/`. No raw PhysioNet patient files are redistributed.
 
 ## Start here
 
@@ -92,7 +92,7 @@ For the complete frozen manuscript-figure route after installing the asset ZIP:
 python RUN_REVIEWER.py frozen
 ```
 
-The frozen route byte-verifies all seven historical canonical result archives and regenerates the current main and Extended Data figures, then renders the final sealed Figure 5/6 into the same reviewer output tree. It does **not** retrain the historical models or rerun the completed one-shot U9 analysis.
+The frozen route byte-verifies all seven historical canonical result archives and regenerates current main Figures 2–6 and Extended Data Figures 1–6. Final Figure 1 is a frozen submission schematic and is not claimed to be programmatically regenerated. It does **not** retrain the historical models or rerun the completed one-shot U9 analysis.
 
 ### One-command standard reviewer route
 
@@ -142,7 +142,7 @@ The detailed runner remains available as `RUN_REPRODUCTION.py`. Deep `full-claim
 - `environment/requirements-replay.txt` — larger optional historical/deep replay environment.
 - `provenance/` — dataset registry, canonical archive manifest, final Figure 5/6 seal, scientific boundaries and replay status.
 - `scripts/` — package verification, asset installation/building, clean-room acceptance and integrity utilities.
-- `matlab/figures/` — manuscript figure generators.
+- `matlab/figures/` — generators for main Figures 2–6 and Extended Data Figures 1–6; final Figure 1 is a frozen submission schematic.
 - `source_data/figure6_u8_u9/` — historical directory name retaining share-safe U8/U9 records audited against current Figure 5.
 - `source_data/figure6_admissibility/` — 185-state evidence-admissibility and U9B mechanism records audited against current Figure 6.
 - `validation/u9_openclinical/v1_0/` — completed share-safe U9 Open Clinical records; no raw patient data.

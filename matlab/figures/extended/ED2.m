@@ -146,7 +146,7 @@ U5B.state = ed_read(d,'StageU5B_Audit_State_Results_v1.0.csv');
 end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
-zipPath = cmdo.find_unique_file(dataDir,zipName);
+zipPath = fullfile(dataDir,zipName);
 if ~exist(zipPath,'file')
     error('ED:MissingZip','Missing canonical archive: %s',zipPath);
 end

@@ -12,12 +12,6 @@ opt = p.Results;
 
 cfg = SETUP_CMDO();
 cmdo.check_canonical_archives(cfg, true);
-sourceWorkbook = fullfile(cfg.repoRoot, 'source_data', ...
-    'SourceData_Figure5_U7_U8_and_ED7_U8.xlsx');
-if ~isfile(sourceWorkbook)
-    error('CMDO:MissingSourceWorkbook', 'Missing source workbook: %s', sourceWorkbook);
-end
-
 previousBatch = getenv('CMDO_BATCH_MODE');
 cleanup = onCleanup(@() setenv('CMDO_BATCH_MODE', previousBatch)); %#ok<NASGU>
 if opt.Batch
@@ -29,7 +23,6 @@ end
 names = strings(0,1);
 actions = cell(0,1);
 if opt.IncludeMain
-    names(end+1,1) = "Figure1"; actions{end+1,1} = @() Figure1();
     names(end+1,1) = "Figure2"; actions{end+1,1} = @() Figure2();
     names(end+1,1) = "Figure3"; actions{end+1,1} = @() Figure3();
     names(end+1,1) = "Figure4"; actions{end+1,1} = @() Figure4();
@@ -46,11 +39,6 @@ if opt.IncludeExtended
     names(end+1,1) = "ED4"; actions{end+1,1} = @() ED4();
     names(end+1,1) = "ED5"; actions{end+1,1} = @() ED5();
     names(end+1,1) = "ED6"; actions{end+1,1} = @() ED6();
-    % ED7 remains the detailed U8 source-workbook view. The final main
-    % Figure 5 carries the U8/U9 operational boundary, while Figure 6
-    % carries the admissibility/composability synthesis and mechanism test.
-    names(end+1,1) = "ED7_U8"; actions{end+1,1} = @() ...
-        CMDO_ExtendedDataFigure7_U8(sourceWorkbook, fullfile(cfg.outputRoot,'figures','extended'));
 end
 
 status = strings(size(names));

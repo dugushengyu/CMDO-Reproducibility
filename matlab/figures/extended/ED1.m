@@ -78,8 +78,7 @@ y = F.component_late_mae;
 better = y < x;
 lo = min([x;y],[],'omitnan');
 hi = max([x;y],[],'omitnan');
-plot(ax,[lo hi],[lo hi],'--','Color',[.45 .45 .45],'LineWidth',1.2, ...
-    'DisplayName','Parity line');
+plot(ax,[lo hi],[lo hi],'--','Color',[.45 .45 .45],'LineWidth',1.2);
 scatter(ax,x(better),y(better),48,[.12 .47 .71],'filled', ...
     'DisplayName',sprintf('Universal law better (%d/13)',nnz(better)));
 scatter(ax,x(~better),y(~better),48,[.84 .15 .16],'filled', ...
@@ -176,7 +175,7 @@ U4.expiry = ed_read(d,'StageU4C_Evidence_Expiry_Map_v1.1.csv');
 end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
-zipPath = cmdo.find_unique_file(dataDir,zipName);
+zipPath = fullfile(dataDir,zipName);
 if ~exist(zipPath,'file')
     error('ED:MissingZip','Missing canonical archive: %s',zipPath);
 end

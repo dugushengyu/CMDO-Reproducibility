@@ -302,11 +302,6 @@ for i = 1:5
         textX = worstScaled(i)+0.025*scaledRange;
         horizontalAlignment = 'left';
 
-    elseif abs(worstScaled(i)) > 0.50
-
-        textX = worstScaled(i)+0.035*scaledRange;
-        horizontalAlignment = 'left';
-
     else
 
         textX = worstScaled(i)-0.025*scaledRange;
@@ -593,7 +588,7 @@ U7.rates  = ed_read(d,'StageU7_Label_Complexity_Rates_v1.0.csv');
 end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
-zipPath = cmdo.find_unique_file(dataDir,zipName);
+zipPath = fullfile(dataDir,zipName);
 if ~exist(zipPath,'file')
     error('ED:MissingZip','Missing canonical archive: %s',zipPath);
 end

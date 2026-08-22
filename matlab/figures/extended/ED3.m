@@ -696,7 +696,7 @@ fprintf( ...
 % ========================================================================
 drawnow;
 
-if usejava('desktop') && ~strcmp(getenv('CMDO_BATCH_MODE'), '1')
+if usejava('desktop')
 
     instructionBox = annotation( ...
         fig, ...
@@ -804,7 +804,7 @@ end
 
 function stageDir = ed_extract(dataDir,cacheDir,zipName)
 
-zipPath = cmdo.find_unique_file(dataDir,zipName);
+zipPath = fullfile(dataDir,zipName);
 
 if ~exist(zipPath,'file')
     error( ...
