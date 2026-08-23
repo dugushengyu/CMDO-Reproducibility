@@ -1,0 +1,25 @@
+{
+    "repair_name":  "CMDO U11 first-run ledger administrative repair",
+    "version":  "0.1.1",
+    "scientific_result_rerun":  false,
+    "scientific_result_modified":  false,
+    "protocol_modified":  false,
+    "evaluator_modified":  false,
+    "source_artifacts_modified":  false,
+    "first_result_commit":  "960a32164ff24703f43e7f2814d4c29240aed3ed",
+    "primary_verdict":  "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+    "defect":  {
+                   "affected_file":  "U11_FIRST_RUN_SHA256_LEDGER_v0.1.csv",
+                   "affected_file_sha256":  "a85fa3b4847e2f873a76c153299d1c215e3e315d48e685a2636cb86bd4317daa",
+                   "cause":  "Windows PowerShell 5.1 / .NET Framework lacks System.IO.Path.GetRelativePath().",
+                   "consequence":  "The original ledger-generation loop emitted non-terminating path errors, after which an incomplete ledger was nevertheless written and committed.",
+                   "scientific_consequence":  "NONE; witness evaluation and result files had already completed successfully before ledger construction."
+               },
+    "correction":  {
+                       "corrected_file":  "U11_FIRST_RUN_SHA256_LEDGER_v0.1.1.csv",
+                       "corrected_file_sha256":  "c40f968230535d76321b08450610e211cbd9529fe2e4192e9d17edddba05f53d",
+                       "method":  "PS5.1-compatible repository-relative path computation using GetFullPath plus prefix removal.",
+                       "original_v0_1_preserved":  true
+                   },
+    "repaired_at_utc":  "2026-08-23T23:13:11.9078691Z"
+}
