@@ -1,0 +1,45 @@
+CMDO U11 ONE-SHOT EXECUTION
+started_utc=2026-08-23T23:10:27.0681307Z
+finished_utc=2026-08-23T23:10:27.7117185Z
+authorization_commit=90cff610fa9efa144bcd6a9e96e3bb0c27a42115
+evaluator_commit=3229ab9ec19d4cbf9040834b25aa3174efd17302
+evaluator_sha256=0a2b20cf451401debec6342a4aeabb8290ce25d35c9c7afa322c7258b502fdb9
+exit_code=0
+
+==============================================================================
+CMDO U11 INFORMATION-CLOSURE WITNESS
+==============================================================================
+Protocol SHA256: c2025dd81539776b5b93f8b6c9850b33922a01edfb73275d91c7a63202ad59da
+True U10 labels read: NO
+Retraining: NO
+Re-inference: NO
+
+[georgia]
+n / positives each world: 10292 / 5146
+prevalence +/-: 0.500000000000 / 0.500000000000
+telemetry SHA +: 469437786834a5e67d1b6775b59e56b426c3a19ef05a2610870188f1b92ac2fb
+telemetry SHA -: 469437786834a5e67d1b6775b59e56b426c3a19ef05a2610870188f1b92ac2fb
+AUC + / -: 1.000000000000 / 0.000000000000
+absolute AUC gap: 1.000000000000
+Accuracy + / -: 0.537504858142 / 0.462495141858
+Balanced accuracy + / -: 0.537504858142 / 0.462495141858
+Brier + / -: 0.420234678411 / 0.545472979358
+PRIMARY SUCCESS: True
+
+[cpsc_2018]
+n / positives each world: 6877 / 3438
+prevalence +/-: 0.499927293878 / 0.499927293878
+telemetry SHA +: 31889d3ec6a6919189daeedbb2a502271e1da51175384e45007c835446aa3317
+telemetry SHA -: 31889d3ec6a6919189daeedbb2a502271e1da51175384e45007c835446aa3317
+AUC + / -: 1.000000000000 / 0.000000000000
+absolute AUC gap: 1.000000000000
+Accuracy + / -: 0.644467064127 / 0.355678348117
+Balanced accuracy + / -: 0.644415357766 / 0.355626635650
+Brier + / -: 0.291422147100 / 0.653492420482
+PRIMARY SUCCESS: True
+
+VERDICT: INFORMATION_CLOSURE_WITNESS_CONFIRMED
+
+Result:   F:\CMDO audit\20_Code_And_Environment\CMDO-Reproducibility\U11_Information_Closure\01_Result\U11_INFORMATION_CLOSURE_RESULT_v0.1.json
+Manifest: F:\CMDO audit\20_Code_And_Environment\CMDO-Reproducibility\U11_Information_Closure\01_Result\U11_RESULT_SHA256_MANIFEST_v0.1.csv
+==============================================================================

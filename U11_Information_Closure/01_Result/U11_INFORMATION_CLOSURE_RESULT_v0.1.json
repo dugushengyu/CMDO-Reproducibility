@@ -1,0 +1,125 @@
+{
+  "result_name": "CMDO U11 Information-Closure Constructive Demonstration",
+  "version": "0.1",
+  "protocol_sha256": "c2025dd81539776b5b93f8b6c9850b33922a01edfb73275d91c7a63202ad59da",
+  "prewitness_protocol_commit": "58d8ecb9952ec580d1f60345ac8127063a57532a",
+  "source_outcomes_read": false,
+  "true_u10_labels_used": false,
+  "retraining_performed": false,
+  "reinference_performed": false,
+  "cohort_selection_performed": false,
+  "cohorts": {
+    "georgia": {
+      "source": {
+        "score_rel": "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/TARGET_SCORES_georgia.csv",
+        "roster_rel": "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/ROSTER_georgia.csv",
+        "score_sha256": "53e1c9da2c4eb05ddbaca18ef1a8ace69f96ba93fcf79fb707e6fbb8f81610df",
+        "roster_sha256": "9706a054cd9b14fb7b038a0ce2ea8796188641dfcfb345bb643d9d3aa45db103"
+      },
+      "construction": {
+        "n": 10292,
+        "m": 5146,
+        "matched_prevalence": true,
+        "telemetry_sha256_world_plus": "469437786834a5e67d1b6775b59e56b426c3a19ef05a2610870188f1b92ac2fb",
+        "telemetry_sha256_world_minus": "469437786834a5e67d1b6775b59e56b426c3a19ef05a2610870188f1b92ac2fb",
+        "telemetry_byte_identity_claim": true,
+        "score_values_modified": false,
+        "outcome_source": "synthetic_protocol_locked"
+      },
+      "world_plus": {
+        "n": 10292,
+        "positives": 5146,
+        "prevalence": 0.5,
+        "auc": 1.0,
+        "accuracy": 0.5375048581422464,
+        "balanced_accuracy": 0.5375048581422464,
+        "sensitivity": 0.07500971628449281,
+        "specificity": 1.0,
+        "brier": 0.42023467841065915,
+        "confusion": {
+          "tp": 386,
+          "tn": 5146,
+          "fp": 0,
+          "fn": 4760
+        }
+      },
+      "world_minus": {
+        "n": 10292,
+        "positives": 5146,
+        "prevalence": 0.5,
+        "auc": 0.0,
+        "accuracy": 0.4624951418577536,
+        "balanced_accuracy": 0.4624951418577536,
+        "sensitivity": 0.0,
+        "specificity": 0.9249902837155072,
+        "brier": 0.5454729793582397,
+        "confusion": {
+          "tp": 0,
+          "tn": 4760,
+          "fp": 386,
+          "fn": 5146
+        }
+      },
+      "primary_auc_gap": 1.0,
+      "prevalence_difference": 0.0,
+      "primary_success": true
+    },
+    "cpsc_2018": {
+      "source": {
+        "score_rel": "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/TARGET_SCORES_cpsc_2018.csv",
+        "roster_rel": "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/ROSTER_cpsc_2018.csv",
+        "score_sha256": "37f84929a3800a5616c75b36657681157c8d0998a0843ff633fbbb53ba64bd62",
+        "roster_sha256": "648785c18805c168a0469a58329552de42d7437801615253ca22674010f2eadf"
+      },
+      "construction": {
+        "n": 6877,
+        "m": 3438,
+        "matched_prevalence": true,
+        "telemetry_sha256_world_plus": "31889d3ec6a6919189daeedbb2a502271e1da51175384e45007c835446aa3317",
+        "telemetry_sha256_world_minus": "31889d3ec6a6919189daeedbb2a502271e1da51175384e45007c835446aa3317",
+        "telemetry_byte_identity_claim": true,
+        "score_values_modified": false,
+        "outcome_source": "synthetic_protocol_locked"
+      },
+      "world_plus": {
+        "n": 6877,
+        "positives": 3438,
+        "prevalence": 0.49992729387814455,
+        "auc": 1.0,
+        "accuracy": 0.6444670641267994,
+        "balanced_accuracy": 0.6444153577661431,
+        "sensitivity": 0.28883071553228623,
+        "specificity": 1.0,
+        "brier": 0.2914221471003865,
+        "confusion": {
+          "tp": 993,
+          "tn": 3439,
+          "fp": 0,
+          "fn": 2445
+        }
+      },
+      "world_minus": {
+        "n": 6877,
+        "positives": 3438,
+        "prevalence": 0.49992729387814455,
+        "auc": 0.0,
+        "accuracy": 0.35567834811691146,
+        "balanced_accuracy": 0.3556266356498982,
+        "sensitivity": 0.0,
+        "specificity": 0.7112532712997964,
+        "brier": 0.653492420481764,
+        "confusion": {
+          "tp": 0,
+          "tn": 2446,
+          "fp": 993,
+          "fn": 3438
+        }
+      },
+      "primary_auc_gap": 1.0,
+      "prevalence_difference": 0.0,
+      "primary_success": true
+    }
+  },
+  "primary_verdict": "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+  "interpretation_boundary": "Constructive identification witness only; not a claim about the real clinical outcomes of either cohort."
+}
