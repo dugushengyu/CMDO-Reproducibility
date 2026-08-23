@@ -1,0 +1,29 @@
+{
+  "schema": "CMDO_U10_GITHUB_PROVENANCE_LEDGER_v0.1",
+  "repository": "dugushengyu/CMDO-Reproducibility",
+  "branch": "u10-final-freeze",
+  "scientific_status": {
+    "prospective_primary_verdict": "MECHANISM_NOT_CONFIRMED",
+    "prospective_result_is_immutable": true,
+    "posthoc_results_are_exploratory": true
+  },
+  "hash_chain": {
+    "preoutcome_seal_sha256": "efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949",
+    "locked_evaluation_spec_sha256": "25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449",
+    "prospective_result_csv_sha256": "685be9c1a86b4ace5c41d1ff4564fc2fedd65a8f15e9555fe6b3886a6d3c4df9",
+    "prospective_result_json_sha256": "dd2624ba443c69ef2dd276f40eefdff8dadb97612e9838c77b019a4e15c9b090",
+    "posthoc_phase_csv_sha256": "cae428a478cca74ca28e73cd986edba10ebdfff4c8bb89de82d2c696e1802afb",
+    "posthoc_phase_json_sha256": "3597fea4f9a0546705488a70003f91ca168d38cef92ef53928f0b94b27040f12",
+    "posthoc_dependence_csv_sha256": "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc",
+    "posthoc_dependence_json_sha256": "95d9f1cf9cd20c493af94fce9d94bb7fff8e27ce601ee58e8af0fec767f54947",
+    "final_evidence_capsule_sha256": "773047301c940ca2aeb26ce4f72a118feeddf0ec65ff66b3fbb7ba59c45e88b7",
+    "final_evidence_manifest_sha256": "f91164514012192883208f01c579077010cffaa5bd2ef160889ed8773a082503"
+  },
+  "data_policy": {
+    "raw_public_ecg_tracked_in_git": false,
+    "large_feature_arrays_tracked_in_git": false,
+    "final_capsule_zip_tracked_in_git": false,
+    "exact_small_protocol_result_and_provenance_files_should_be_imported_from_the_frozen_local_record": true
+  },
+  "freeze_policy": "Do not overwrite frozen U10 prospective artifacts. Future analyses must be versioned as POSTHOC or THEORY and must preserve the prospective verdict."
+}

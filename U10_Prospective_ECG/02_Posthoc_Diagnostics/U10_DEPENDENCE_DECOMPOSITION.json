@@ -1,0 +1,29 @@
+{
+  "created_unix": 1787492420.8368769,
+  "csv_sha256": "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc",
+  "prospective_verdict": "MECHANISM_NOT_CONFIRMED",
+  "schema": "CMDO_U10_POSTHOC_DEPENDENCE_DECOMPOSITION_v0.1",
+  "status": "EXPLORATORY_POSTHOC_DO_NOT_REPLACE_PROSPECTIVE_VERDICT",
+  "summary": {
+    "cpsc_2018": {
+      "adaptive_crossfit_positive_budgets": 1,
+      "constant_mean_crossfit_positive_budgets": 3,
+      "independent_fold_crossfit_positive_budgets_vs_original_full_direct": 1,
+      "median_disjoint_corr_observed": -0.1019150876080166,
+      "median_disjoint_corr_theory": -0.02881531347934567,
+      "median_independent_control_corr": -0.0019506411003045385,
+      "median_shared_adaptation_tax": 3.926355272964635e-05,
+      "permuted_weight_crossfit_positive_budgets": 3
+    },
+    "georgia": {
+      "adaptive_crossfit_positive_budgets": 2,
+      "constant_mean_crossfit_positive_budgets": 4,
+      "independent_fold_crossfit_positive_budgets_vs_original_full_direct": 2,
+      "median_disjoint_corr_observed": -0.003402860214700535,
+      "median_disjoint_corr_theory": -0.01905081886240624,
+      "median_independent_control_corr": 0.016945682153436385,
+      "median_shared_adaptation_tax": 2.3082162433427206e-05,
+      "permuted_weight_crossfit_positive_budgets": 4
+    }
+  }
+}

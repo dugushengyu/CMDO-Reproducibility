@@ -1,0 +1,7 @@
+﻿{
+    "schema":  "CMDO_U10_UNSEAL_STARTED_v0.1.1",
+    "created_utc":  "2026-08-23T13:17:04.3832922Z",
+    "preoutcome_seal_sha256":  "efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949",
+    "locked_evaluation_spec_sha256":  "25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449",
+    "statement":  "This marker was written before Georgia/CPSC target headers were downloaded."
+}

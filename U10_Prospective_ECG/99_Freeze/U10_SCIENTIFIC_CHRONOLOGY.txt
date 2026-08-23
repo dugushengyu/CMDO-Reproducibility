@@ -1,0 +1,41 @@
+﻿CMDO U10 FINAL SCIENTIFIC FREEZE
+================================
+
+Scientific chronology:
+1. PREOUTCOME stage:
+   - PTB-XL source headers/labels available.
+   - Georgia and CPSC target headers absent.
+   - Source model, threshold, historical H, target waveform rosters and target scores frozen.
+   - PREOUTCOME seal SHA256:
+     efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949
+
+2. BEFORE TARGET UNSEAL:
+   - Locked evaluation specification SHA256:
+     25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449
+   - One-shot unseal marker written before target headers were downloaded.
+
+3. PROSPECTIVE RESULT:
+   - Primary verdict: MECHANISM_NOT_CONFIRMED.
+   - This result is immutable and must not be replaced by post-hoc analyses.
+   - Prospective CSV SHA256:
+     685be9c1a86b4ace5c41d1ff4564fc2fedd65a8f15e9555fe6b3886a6d3c4df9
+   - Prospective JSON SHA256:
+     dd2624ba443c69ef2dd276f40eefdff8dadb97612e9838c77b019a4e15c9b090
+
+4. POST-HOC EXPLORATORY ANALYSES:
+   - Variance/phase diagnostics.
+   - Dependence/adaptation decomposition.
+   - These analyses may motivate theory but do not retroactively redefine the prospective gate.
+
+Final raw-data state:
+- PTB-XL: 21837 .mat, 21837 .hea
+- Georgia: 10344 .mat, 10344 .hea
+- CPSC 2018: 6877 .mat, 6877 .hea
+
+Public data resource:
+PhysioNet/Computing in Cardiology Challenge 2020, version 1.0.2.
+
+Freeze rule:
+No U10 artifact inside this evidence capsule should be edited in place.
+Any future analysis must be written to a new versioned POSTHOC or THEORY directory
+and must cite this freeze capsule / ledger.

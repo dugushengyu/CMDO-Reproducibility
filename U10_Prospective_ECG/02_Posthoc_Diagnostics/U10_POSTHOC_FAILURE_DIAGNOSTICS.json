@@ -1,0 +1,49 @@
+{
+  "calibration_hypothesis_summary": {
+    "cpsc_2018": {
+      "fullm_calibrated_positive_gain_budgets": 1,
+      "fullm_fpc_calibrated_positive_gain_budgets": 1,
+      "median_gain_fullm_fpc_pct": -8.448547301687523,
+      "median_gain_fullm_pct": -9.471582700568625,
+      "median_gain_prospective_pct": -17.308072504222984,
+      "prospective_crossfit_positive_gain_budgets": 1
+    },
+    "georgia": {
+      "fullm_calibrated_positive_gain_budgets": 2,
+      "fullm_fpc_calibrated_positive_gain_budgets": 2,
+      "median_gain_fullm_fpc_pct": 4.978526706062511,
+      "median_gain_fullm_pct": 5.169208517673415,
+      "median_gain_prospective_pct": 10.322513667698136,
+      "prospective_crossfit_positive_gain_budgets": 2
+    }
+  },
+  "created_unix": 1787492153.709714,
+  "prospective_primary_verdict": "MECHANISM_NOT_CONFIRMED",
+  "schema": "CMDO_U10_POSTHOC_FAILURE_DIAGNOSTICS_v0.1",
+  "status": "EXPLORATORY_POSTHOC_DO_NOT_REPLACE_PROSPECTIVE_VERDICT",
+  "table_sha256": "cae428a478cca74ca28e73cd986edba10ebdfff4c8bb89de82d2c696e1802afb",
+  "target_diagnostics": {
+    "cpsc_2018": {
+      "AF_positive_n": 1221,
+      "AF_prevalence": 0.17754834957103388,
+      "B": 0.03108222504640823,
+      "H": 0.9732081520494619,
+      "N": 6877,
+      "theta_accuracy": 0.9421259270030536
+    },
+    "georgia": {
+      "AF_positive_n": 568,
+      "AF_prevalence": 0.055188495919160516,
+      "B": 0.01809738640624381,
+      "H": 0.9732081520494619,
+      "N": 10292,
+      "theta_accuracy": 0.9551107656432181
+    }
+  },
+  "verified_hashes": {
+    "locked_spec": "25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449",
+    "preoutcome_seal": "efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949",
+    "prospective_csv": "685be9c1a86b4ace5c41d1ff4564fc2fedd65a8f15e9555fe6b3886a6d3c4df9",
+    "prospective_json": "dd2624ba443c69ef2dd276f40eefdff8dadb97612e9838c77b019a4e15c9b090"
+  }
+}
