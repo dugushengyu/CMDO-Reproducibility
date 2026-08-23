@@ -12,3 +12,12 @@
 *.png binary
 *.pdf binary
 *.zip binary
+
+# U10 frozen scientific artifacts: preserve bytes exactly
+U10_Prospective_ECG/00_Protocol/** -text
+U10_Prospective_ECG/01_Prospective_Result/** -text
+U10_Prospective_ECG/02_Posthoc_Diagnostics/** -text
+U10_Prospective_ECG/99_Freeze/U10_FINAL_EVIDENCE_LEDGER.json -text
+U10_Prospective_ECG/99_Freeze/U10_FINAL_FREEZE_SUMMARY.json -text
+U10_Prospective_ECG/99_Freeze/U10_SCIENTIFIC_CHRONOLOGY.txt -text
+U10_Prospective_ECG/99_Freeze/U10_EVIDENCE_CAPSULE_SHA256_MANIFEST.csv -text
