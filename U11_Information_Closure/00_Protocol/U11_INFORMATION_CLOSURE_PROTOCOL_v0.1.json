@@ -1,0 +1,121 @@
+{
+    "protocol_name":  "CMDO U11 Information-Closure Constructive Demonstration",
+    "protocol_version":  "0.1",
+    "status":  "PRE-WITNESS_LOCKED",
+    "scientific_role":  [
+                            "Constructive demonstration of performance non-identification under outcome-independent deployment telemetry.",
+                            "Not an external clinical validation study.",
+                            "Not a test of the true U10 cohort outcomes.",
+                            "Not evidence that real clinical labels are arbitrary.",
+                            "The construction demonstrates existence of performance-distinct worlds sharing an identical frozen monitoring channel."
+                        ],
+    "repository":  {
+                       "branch_before_u11":  "main",
+                       "head_before_u11":  "b36983c46e2df85f341edf788e0253cf60c17907",
+                       "u11_branch":  "u11-information-closure"
+                   },
+    "source_policy":  {
+                          "source_origin":  "U10 prospectively frozen PRESEAL_SMALL target-score artifacts",
+                          "cohorts":  [
+                                          "georgia",
+                                          "cpsc_2018"
+                                      ],
+                          "use_all_locked_cohorts":  true,
+                          "retraining_allowed":  false,
+                          "reinference_allowed":  false,
+                          "target_outcome_files_allowed":  false,
+                          "posthoc_cohort_selection_allowed":  false
+                      },
+    "sources":  {
+                    "georgia":  {
+                                    "score_rel":  "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/TARGET_SCORES_georgia.csv",
+                                    "roster_rel":  "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/ROSTER_georgia.csv",
+                                    "score_sha256_expected":  "53e1c9da2c4eb05ddbaca18ef1a8ace69f96ba93fcf79fb707e6fbb8f81610df",
+                                    "roster_sha256_expected":  "9706a054cd9b14fb7b038a0ce2ea8796188641dfcfb345bb643d9d3aa45db103",
+                                    "expected_n":  10292
+                                },
+                    "cpsc_2018":  {
+                                      "score_rel":  "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/TARGET_SCORES_cpsc_2018.csv",
+                                      "roster_rel":  "U10_Prospective_ECG/00_Protocol/PRESEAL_SMALL/ROSTER_cpsc_2018.csv",
+                                      "score_sha256_expected":  "37f84929a3800a5616c75b36657681157c8d0998a0843ff633fbbb53ba64bd62",
+                                      "roster_sha256_expected":  "648785c18805c168a0469a58329552de42d7437801615253ca22674010f2eadf",
+                                      "expected_n":  6877
+                                  }
+                },
+    "immutable_observation_channel":  {
+                                          "primary_score_column":  "score_af",
+                                          "fixed_prediction_column":  "predicted_af",
+                                          "join_key":  "record_id",
+                                          "interpretation":  [
+                                                                 "Both constructed worlds inherit the identical frozen record roster.",
+                                                                 "Both constructed worlds inherit byte-identical frozen score and prediction records.",
+                                                                 "Only the synthetic outcome assignment differs between worlds.",
+                                                                 "No jitter, recalibration, retraining, score transformation, or model fitting is permitted."
+                                                             ]
+                                      },
+    "primary_witness":  {
+                            "name":  "matched_prevalence_auc_rank_reversal",
+                            "construction":  [
+                                                 "For each cohort independently, let N be the number of frozen target records.",
+                                                 "Set m=floor(N/2).",
+                                                 "Sort records by score_af ascending.",
+                                                 "For deterministic selection only, break equal-score ordering ties by record_id using ordinal lexical ordering.",
+                                                 "WORLD_PLUS assigns Y=1 to the highest-ranked m records and Y=0 to all remaining records.",
+                                                 "WORLD_MINUS assigns Y=1 to the lowest-ranked m records and Y=0 to all remaining records.",
+                                                 "WORLD_PLUS and WORLD_MINUS therefore have exactly identical sample size and exactly identical positive prevalence m/N.",
+                                                 "AUC is evaluated using the original unmodified score_af values.",
+                                                 "Equal score_af values remain ties in AUC evaluation and contribute the standard 0.5 tie credit.",
+                                                 "The record_id tie-break is never used to alter score_af."
+                                             ],
+                            "primary_metric":  "ROC AUC(score_af, constructed_outcome)",
+                            "primary_estimand":  "absolute AUC separation between WORLD_PLUS and WORLD_MINUS",
+                            "success_conditions":  [
+                                                       "Source SHA256 values exactly match the pre-specified hashes.",
+                                                       "Record IDs are unique and score/roster ID sets match for both cohorts.",
+                                                       "All score_af values are finite.",
+                                                       "Observation-channel records are byte-identical across the two constructed worlds.",
+                                                       "WORLD_PLUS and WORLD_MINUS have exactly matched prevalence.",
+                                                       "The two worlds yield different ROC AUC values."
+                                                   ],
+                            "magnitude_policy":  [
+                                                     "No minimum AUC-gap threshold is required for protocol validity.",
+                                                     "The exact attainable AUC gap under the frozen score ties will be reported without modification.",
+                                                     "An AUC gap \u003e=0.95 may be described as a strong visual demonstration but is not a success criterion."
+                                                 ]
+                        },
+    "secondary_descriptive_metrics":  [
+                                          "accuracy using frozen predicted_af",
+                                          "balanced accuracy using frozen predicted_af",
+                                          "sensitivity using frozen predicted_af",
+                                          "specificity using frozen predicted_af",
+                                          "Brier score using frozen score_af"
+                                      ],
+    "secondary_metric_policy":  [
+                                    "Secondary metrics are descriptive only.",
+                                    "No secondary result can alter the primary AUC construction.",
+                                    "No additional synthetic worlds may be introduced after inspecting results."
+                                ],
+    "telemetry_identity_checks":  [
+                                      "record_id vector identity",
+                                      "score_af vector identity",
+                                      "predicted_af vector identity",
+                                      "row count identity",
+                                      "cohort identity",
+                                      "SHA256 of frozen source files"
+                                  ],
+    "prohibited_actions":  [
+                               "Reading U10 target outcome labels for U11 construction.",
+                               "Selecting only the better-looking cohort.",
+                               "Changing the positive fraction after observing AUC.",
+                               "Jittering or perturbing tied scores.",
+                               "Retraining or recalibrating the ECG model.",
+                               "Changing the primary metric after witness execution.",
+                               "Creating additional worlds in response to witness results."
+                           ],
+    "interpretation_boundary":  [
+                                    "U11 establishes a constructive information-equivalence witness, not an empirical claim that the real cohorts admit arbitrary outcomes.",
+                                    "Its purpose is to visualize the structural theorem using previously frozen real deployment scores.",
+                                    "Clinical truth from U10 is outside the U11 construction and must not be used to optimize the demonstration."
+                                ],
+    "sealed_at_utc":  "2026-08-23T22:55:00.5311745Z"
+}
