@@ -1,0 +1,54 @@
+{
+    "stage":  "U11",
+    "name":  "Information-Closure Constructive Demonstration",
+    "version":  "0.1.1",
+    "status":  "FINAL_FROZEN",
+    "scientific_role":  "Protocol-locked constructive realization of the deployment performance information-closure theorem using previously frozen real model target-score channels.",
+    "branch":  "u11-information-closure",
+    "commits":  {
+                    "protocol":  "58d8ecb9952ec580d1f60345ac8127063a57532a",
+                    "evaluator":  "3229ab9ec19d4cbf9040834b25aa3174efd17302",
+                    "authorization":  "90cff610fa9efa144bcd6a9e96e3bb0c27a42115",
+                    "first_result":  "960a32164ff24703f43e7f2814d4c29240aed3ed",
+                    "repair":  "712875120c78eadbeceda238e244456265ea7923"
+                },
+    "immutable_hashes":  {
+                             "protocol_sha256":  "c2025dd81539776b5b93f8b6c9850b33922a01edfb73275d91c7a63202ad59da",
+                             "evaluator_sha256":  "0a2b20cf451401debec6342a4aeabb8290ce25d35c9c7afa322c7258b502fdb9",
+                             "corrected_first_run_ledger_sha256":  "c40f968230535d76321b08450610e211cbd9529fe2e4192e9d17edddba05f53d"
+                         },
+    "cohorts":  {
+                    "georgia":  {
+                                    "n":  10292,
+                                    "prevalence_world_plus":  0.5,
+                                    "prevalence_world_minus":  0.5,
+                                    "auc_world_plus":  1,
+                                    "auc_world_minus":  0,
+                                    "absolute_auc_gap":  1,
+                                    "telemetry_sha256":  "469437786834a5e67d1b6775b59e56b426c3a19ef05a2610870188f1b92ac2fb"
+                                },
+                    "cpsc_2018":  {
+                                      "n":  6877,
+                                      "prevalence_world_plus":  0.49992729387814455,
+                                      "prevalence_world_minus":  0.49992729387814455,
+                                      "auc_world_plus":  1,
+                                      "auc_world_minus":  0,
+                                      "absolute_auc_gap":  1,
+                                      "telemetry_sha256":  "31889d3ec6a6919189daeedbb2a502271e1da51175384e45007c835446aa3317"
+                                  }
+                },
+    "primary_verdict":  "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+    "execution_facts":  {
+                            "true_u10_labels_used":  false,
+                            "retraining_performed":  false,
+                            "reinference_performed":  false,
+                            "cohort_selection_performed":  false,
+                            "witness_rerun_after_first_result":  false
+                        },
+    "interpretation_boundary":  [
+                                    "This is a constructive identification witness, not an empirical estimate of the real clinical performance of Georgia or CPSC 2018.",
+                                    "The theorem is established mathematically; U11 is a protocol-locked realization on previously frozen model score channels.",
+                                    "The v0.1 first-run ledger contained a PowerShell 5.1 administrative defect; v0.1.1 repairs only the ledger and preserves the first scientific result unchanged."
+                                ],
+    "frozen_at_utc":  "2026-08-23T23:32:17.8240292Z"
+}
