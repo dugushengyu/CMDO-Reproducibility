@@ -1,0 +1,71 @@
+{
+  "arms": {
+    "crossfit": "mean(strict_A_to_B, strict_B_to_A)",
+    "direct_full": "D_full from all m audited outcomes",
+    "shared_audit": "(1-w_full)*D_full + w_full*H, with w_full computed from D_full",
+    "strict_A_to_B": "w_A from A; estimate uses D_B",
+    "strict_B_to_A": "w_B from B; estimate uses D_A"
+  },
+  "audit_design": {
+    "budgets": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "half_split": "shuffle sampled indices with same replicate RNG; first m/2=A, second m/2=B",
+    "master_seed": 20260823,
+    "replicate_seed_derivation": "sha256(master_seed|dataset|budget|replicate), first 8 bytes little-endian",
+    "replicates_per_budget": 200,
+    "sampling": "simple random sample without replacement from frozen eligible target roster"
+  },
+  "historical_evidence": {
+    "H_source": "SOURCE_SUMMARY.json historical_accuracy_H",
+    "fixed_before_target_unseal": true
+  },
+  "locked_before_target_unseal": true,
+  "losses": {
+    "primary": "Monte-Carlo MSE of performance estimate around full eligible-target accuracy theta",
+    "secondary": [
+      "MAE",
+      "bias"
+    ]
+  },
+  "mechanism": {
+    "crossfit_exact_directional_coupling": "2*E[q*r], q=0.5*((1-w_B)e_A+(1-w_A)e_B), r=0.5*(w_A+w_B)*B",
+    "primary_prediction": "role separation reduces absolute exact directional coupling relative to shared-audit",
+    "shared_exact_directional_coupling": "2*B*E[w_full*(1-w_full)*(D_full-theta)]",
+    "strict_A_to_B_exact_directional_coupling": "2*B*E[w_A*(1-w_A)*(D_B-theta)]",
+    "strict_B_to_A_exact_directional_coupling": "2*B*E[w_B*(1-w_B)*(D_A-theta)]",
+    "strict_mean_coupling": "mean(A_to_B coupling, B_to_A coupling)"
+  },
+  "performance_interpretation": {
+    "crossfit_mse_gain_vs_full_direct": "descriptive; no sign is pre-required",
+    "no_target_dropping": true,
+    "same_audit_mse_gain_vs_full_direct": "descriptive; no sign is pre-required",
+    "strict_mse_gain_vs_full_direct": "descriptive; no sign is pre-required"
+  },
+  "primary_mechanistic_gate": {
+    "otherwise": "MECHANISM_NOT_CONFIRMED",
+    "per_target": "for each target separately, strict_mean reduces |coupling| in at least 3/4 budgets AND crossfit reduces |coupling| in at least 3/4 budgets",
+    "pooled": "median signed reduction in |coupling| is positive for strict_mean and crossfit across all 8 target-budget cells",
+    "verdict_if_both_hold": "MECHANISM_CONFIRMED"
+  },
+  "schema": "CMDO_U10_LOCKED_EVALUATION_SPEC_v0.1",
+  "source": "ptb-xl",
+  "target_eligibility": "exact frozen PRESEAL roster only",
+  "targets": [
+    "georgia",
+    "cpsc_2018"
+  ],
+  "task": {
+    "label": "atrial fibrillation present vs absent",
+    "primary_performance_parameter": "fixed-threshold target accuracy",
+    "snomed_ct": "164889003"
+  },
+  "weight_rule": {
+    "Vhat": "max(D*(1-D)/m,1e-8)",
+    "formula": "w=min(0.35, Vhat/(Vhat+(D-H)^2))",
+    "max_weight": 0.35
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "created_unix": 1787491790.2059212,
+  "locked_evaluation_spec_sha256": "25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449",
+  "per_target_gate": {
+    "cpsc_2018": {
+      "crossfit_budgets_reduced_abs_coupling": 2,
+      "per_target_gate_pass": false,
+      "strict_budgets_reduced_abs_coupling": 2
+    },
+    "georgia": {
+      "crossfit_budgets_reduced_abs_coupling": 3,
+      "per_target_gate_pass": true,
+      "strict_budgets_reduced_abs_coupling": 3
+    }
+  },
+  "pooled_crossfit_median_abs_coupling_reduction_pct": 10.818248126275654,
+  "pooled_strict_median_abs_coupling_reduction_pct": 60.36745275756314,
+  "preoutcome_seal_sha256": "efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949",
+  "primary_verdict": "MECHANISM_NOT_CONFIRMED",
+  "schema": "CMDO_U10_RESULT_v0.1",
+  "summary_csv_sha256": "685be9c1a86b4ace5c41d1ff4564fc2fedd65a8f15e9555fe6b3886a6d3c4df9",
+  "target_summary": {
+    "cpsc_2018": {
+      "B_H_minus_theta": 0.03108222504640823,
+      "af_positive_n": 1221,
+      "af_prevalence": 0.17754834957103388,
+      "eligible_n": 6877,
+      "historical_H": 0.9732081520494619,
+      "target_accuracy_theta": 0.9421259270030536
+    },
+    "georgia": {
+      "B_H_minus_theta": 0.01809738640624381,
+      "af_positive_n": 568,
+      "af_prevalence": 0.055188495919160516,
+      "eligible_n": 10292,
+      "historical_H": 0.9732081520494619,
+      "target_accuracy_theta": 0.9551107656432181
+    }
+  }
+}

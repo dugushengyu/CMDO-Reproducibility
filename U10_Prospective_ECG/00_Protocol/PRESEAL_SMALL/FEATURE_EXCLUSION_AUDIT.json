@@ -1,0 +1,25 @@
+{
+  "ptb-xl": {
+    "excluded": 0,
+    "allowed_eligibility_exclusions": 0,
+    "unexpected": 0,
+    "top_errors": []
+  },
+  "georgia": {
+    "excluded": 52,
+    "allowed_eligibility_exclusions": 52,
+    "unexpected": 0,
+    "top_errors": [
+      {
+        "count": 52,
+        "error": "ValueError('record too short: 5.000s')"
+      }
+    ]
+  },
+  "cpsc_2018": {
+    "excluded": 0,
+    "allowed_eligibility_exclusions": 0,
+    "unexpected": 0,
+    "top_errors": []
+  }
+}

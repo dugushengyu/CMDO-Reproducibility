@@ -1,0 +1,18 @@
+{
+  "af_code": "164889003",
+  "split_seed": 20260823,
+  "n_total_eligible": 21837,
+  "n_af": 1514,
+  "n_train": 13102,
+  "n_validation": 4368,
+  "n_historical": 4367,
+  "threshold": 0.8000000000000006,
+  "validation_accuracy": 0.9752747252747253,
+  "validation_balanced_accuracy": 0.8691242555989916,
+  "validation_auc": 0.982166039482177,
+  "historical_accuracy_H": 0.9732081520494619,
+  "historical_balanced_accuracy": 0.8603803662846599,
+  "historical_auc": 0.984400580806112,
+  "model_sha256": "7e5e85cc1a8cb167196c361e425ad39564a39dbf57038de2fabaabce0169fa6f",
+  "source_split_sha256": "4402bea138db7b99d3f4bc4fd8fead58ddbb2e02230dbc4fc5bc76506790b82e"
+}

@@ -1,0 +1,79 @@
+﻿{
+    "schema":  "CMDO_U10_FINAL_SCIENTIFIC_FREEZE_v0.1.1_PS51",
+    "created_utc":  "2026-08-23T14:07:17.9981272Z",
+    "source_root":  "C:\\Users\\zyx\\CMDO-U10-ECG",
+    "public_data_resource":  "PhysioNet/Computing in Cardiology Challenge 2020 v1.0.2",
+    "scientific_status":  {
+                              "prospective_primary_verdict":  "MECHANISM_NOT_CONFIRMED",
+                              "prospective_result_is_immutable":  true,
+                              "posthoc_results_are_exploratory":  true
+                          },
+    "verified_artifacts":  {
+                               "preoutcome_seal":  {
+                                                       "relative_path":  "SEALS\\U10_PREOUTCOME_SEAL.json",
+                                                       "sha256":  "efccafc32dc7778986296f6f7314488f6d08c45bdff2efdcb7f0918d36aec949",
+                                                       "scientific_status":  "PROSPECTIVE_PREOUTCOME"
+                                                   },
+                               "locked_evaluation_spec":  {
+                                                              "relative_path":  "UNSEAL\\U10_LOCKED_EVALUATION_SPEC_v0.1.json",
+                                                              "sha256":  "25b8810080a595494552789aca632c67db4b6af16b7f404920e38d9aee45a449",
+                                                              "scientific_status":  "LOCKED_BEFORE_TARGET_UNSEAL"
+                                                          },
+                               "prospective_summary_csv":  {
+                                                               "relative_path":  "UNSEAL\\RESULTS_v0.1\\U10_TARGET_BUDGET_SUMMARY.csv",
+                                                               "sha256":  "685be9c1a86b4ace5c41d1ff4564fc2fedd65a8f15e9555fe6b3886a6d3c4df9",
+                                                               "scientific_status":  "PROSPECTIVE_RESULT"
+                                                           },
+                               "prospective_primary_json":  {
+                                                                "relative_path":  "UNSEAL\\RESULTS_v0.1\\U10_PRIMARY_RESULT.json",
+                                                                "sha256":  "dd2624ba443c69ef2dd276f40eefdff8dadb97612e9838c77b019a4e15c9b090",
+                                                                "scientific_status":  "PROSPECTIVE_RESULT"
+                                                            },
+                               "posthoc_failure_csv":  {
+                                                           "relative_path":  "UNSEAL\\POSTHOC_FAILURE_DIAGNOSTICS_v0.1\\U10_POSTHOC_PHASE_DIAGNOSTICS.csv",
+                                                           "sha256":  "cae428a478cca74ca28e73cd986edba10ebdfff4c8bb89de82d2c696e1802afb",
+                                                           "scientific_status":  "POSTHOC_EXPLORATORY"
+                                                       },
+                               "posthoc_failure_json":  {
+                                                            "relative_path":  "UNSEAL\\POSTHOC_FAILURE_DIAGNOSTICS_v0.1\\U10_POSTHOC_FAILURE_DIAGNOSTICS.json",
+                                                            "sha256":  "3597fea4f9a0546705488a70003f91ca168d38cef92ef53928f0b94b27040f12",
+                                                            "scientific_status":  "POSTHOC_EXPLORATORY"
+                                                        },
+                               "posthoc_dependence_csv":  {
+                                                              "relative_path":  "UNSEAL\\POSTHOC_DEPENDENCE_DECOMPOSITION_v0.1\\U10_DEPENDENCE_DECOMPOSITION.csv",
+                                                              "sha256":  "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc",
+                                                              "scientific_status":  "POSTHOC_EXPLORATORY"
+                                                          },
+                               "posthoc_dependence_json":  {
+                                                               "relative_path":  "UNSEAL\\POSTHOC_DEPENDENCE_DECOMPOSITION_v0.1\\U10_DEPENDENCE_DECOMPOSITION.json",
+                                                               "sha256":  "95d9f1cf9cd20c493af94fce9d94bb7fff8e27ce601ee58e8af0fec767f54947",
+                                                               "scientific_status":  "POSTHOC_EXPLORATORY"
+                                                           }
+                           },
+    "raw_data_counts":  {
+                            "ptb-xl":  {
+                                           "mat_count":  21837,
+                                           "hea_count":  21837,
+                                           "part_count":  0
+                                       },
+                            "georgia":  {
+                                            "mat_count":  10344,
+                                            "hea_count":  10344,
+                                            "part_count":  0
+                                        },
+                            "cpsc_2018":  {
+                                              "mat_count":  6877,
+                                              "hea_count":  6877,
+                                              "part_count":  0
+                                          }
+                        },
+    "copied_code_packages":  [
+                                 "CMDO_U10_ECG_FAST_v0.2.1",
+                                 "CMDO_U10_PRESEAL_PIPELINE_v0.3.2_LABELFIX_QC",
+                                 "CMDO_U10_UNSEAL_EVAL_v0.1.1_RESUMABLE",
+                                 "CMDO_U10_POSTHOC_FAILURE_DIAGNOSTICS_v0.1",
+                                 "CMDO_U10_DEPENDENCE_DECOMPOSITION_v0.1"
+                             ],
+    "raw_data_sha256_manifest":  null,
+    "freeze_policy":  "Do not edit frozen artifacts in place; create new versioned post-hoc/theory outputs only."
+}

@@ -1,0 +1,131 @@
+{
+  "code": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "preseal_script_sha256": "fa3abfa804cfe319f8307c810e90dca7f13ee98c4b227a8ecc9ffe81f759b7fb",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "created_unix": 1787490558.2588985,
+  "download_audit": {
+    "cpsc_2018": {
+      "hea": 0,
+      "hea_roster_size_sha256": null,
+      "mat": 6877,
+      "mat_roster_size_sha256": "34aba11db150378cc0e71ec81aed078cc8fd04750396f6147bec080836f81840"
+    },
+    "georgia": {
+      "hea": 0,
+      "hea_roster_size_sha256": null,
+      "mat": 10344,
+      "mat_roster_size_sha256": "1f28064544b998de563cdb076a1bae593043ddd52a3c6d9c87363f3e0788fff7"
+    },
+    "ptb-xl": {
+      "hea": 21837,
+      "hea_roster_size_sha256": "35bc3f94a0ea7730830b85b088084d3febba0da7339ffec015be8c7a040d9cdc",
+      "mat": 21837,
+      "mat_roster_size_sha256": "83aa2d8f1c83e97a6e81fc8e99a88c5764a187c5d93826aa6f09cd7e0f472bcc"
+    }
+  },
+  "feature_exclusion_audit": {
+    "cpsc_2018": {
+      "allowed_eligibility_exclusions": 0,
+      "excluded": 0,
+      "top_errors": [],
+      "unexpected": 0
+    },
+    "georgia": {
+      "allowed_eligibility_exclusions": 52,
+      "excluded": 52,
+      "top_errors": [
+        {
+          "count": 52,
+          "error": "ValueError('record too short: 5.000s')"
+        }
+      ],
+      "unexpected": 0
+    },
+    "ptb-xl": {
+      "allowed_eligibility_exclusions": 0,
+      "excluded": 0,
+      "top_errors": [],
+      "unexpected": 0
+    }
+  },
+  "preprocessing": {
+    "analysis_window_s": 10,
+    "feature_downsample_hz": 100,
+    "long_record_rule": "first 10 s",
+    "minimum_duration_s": 6,
+    "normalization": "per-record per-lead median/MAD robust standardization",
+    "sampling_hz": 500,
+    "short_record_rule": "reflect-pad to 10 s for records >=6 s",
+    "target_headers_used": false
+  },
+  "prospective_evaluation": {
+    "arms": [
+      "same-audit adaptive borrowing",
+      "strict 50/50 role separation both orientations",
+      "two-fold cross-fitted role allocation"
+    ],
+    "budgets": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "crossfit_rule": "A computes w_A applied to B; B computes w_B applied to A; average both estimates",
+    "max_borrow_weight": 0.35,
+    "primary_mechanistic_prediction": "role separation reduces exact weight-error directional coupling relative to same-audit arm",
+    "replicate_seed": 20260823,
+    "replicates_per_budget": 200,
+    "reporting_rule": "Georgia and CPSC both reported; neither target may be dropped based on outcome",
+    "shared_weight_rule": "w=min(0.35,Vhat/(Vhat+(D-H)^2)); Vhat=max(D(1-D)/m,1e-8)",
+    "strict_split_rule": "sensor half computes w; disjoint estimation half computes D; both orientations reported"
+  },
+  "resource": "PhysioNet Challenge 2020 v1.0.2",
+  "schema": "CMDO_U10_PREOUTCOME_SEAL_v0.3.2_LABELFIX_QC",
+  "source": "ptb-xl",
+  "source_development": {
+    "af_code": "164889003",
+    "historical_accuracy_H": 0.9732081520494619,
+    "historical_auc": 0.984400580806112,
+    "historical_balanced_accuracy": 0.8603803662846599,
+    "model_sha256": "7e5e85cc1a8cb167196c361e425ad39564a39dbf57038de2fabaabce0169fa6f",
+    "n_af": 1514,
+    "n_historical": 4367,
+    "n_total_eligible": 21837,
+    "n_train": 13102,
+    "n_validation": 4368,
+    "source_split_sha256": "4402bea138db7b99d3f4bc4fd8fead58ddbb2e02230dbc4fc5bc76506790b82e",
+    "split_seed": 20260823,
+    "threshold": 0.8000000000000006,
+    "validation_accuracy": 0.9752747252747253,
+    "validation_auc": 0.982166039482177,
+    "validation_balanced_accuracy": 0.8691242555989916
+  },
+  "status": "SEALED_PREOUTCOME",
+  "target_artifacts": [
+    {
+      "dataset": "georgia",
+      "feature_sha256": "580c0aede93ed22301b9038d4c9754cd4f6217cd057835941e6796558dd53e06",
+      "n": 10292,
+      "roster_sha256": "9706a054cd9b14fb7b038a0ce2ea8796188641dfcfb345bb643d9d3aa45db103",
+      "score_sha256": "53e1c9da2c4eb05ddbaca18ef1a8ace69f96ba93fcf79fb707e6fbb8f81610df"
+    },
+    {
+      "dataset": "cpsc_2018",
+      "feature_sha256": "40e806e86ef46de43c62c5b3680cd8e4960a97b0f317ddd1ceb1f4ab270aad66",
+      "n": 6877,
+      "roster_sha256": "648785c18805c168a0469a58329552de42d7437801615253ca22674010f2eadf",
+      "score_sha256": "37f84929a3800a5616c75b36657681157c8d0998a0843ff633fbbb53ba64bd62"
+    }
+  ],
+  "targets": [
+    "georgia",
+    "cpsc_2018"
+  ],
+  "task": {
+    "label": "AF present vs absent",
+    "primary_estimand": "fixed-threshold accuracy",
+    "snomed_ct": "164889003"
+  }
+}

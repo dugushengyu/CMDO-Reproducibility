@@ -1,0 +1,9 @@
+﻿{
+    "schema":  "CMDO_U10_FINAL_FREEZE_SUMMARY_v0.1.1_PS51",
+    "created_utc":  "2026-08-23T14:07:21.0217758Z",
+    "evidence_capsule_manifest_sha256":  "f91164514012192883208f01c579077010cffaa5bd2ef160889ed8773a082503",
+    "evidence_capsule_zip":  "CMDO_U10_FINAL_EVIDENCE_CAPSULE_v0.1.1.zip",
+    "evidence_capsule_zip_sha256":  "773047301c940ca2aeb26ce4f72a118feeddf0ec65ff66b3fbb7ba59c45e88b7",
+    "deep_raw_data_hashing":  false,
+    "prospective_primary_verdict":  "MECHANISM_NOT_CONFIRMED"
+}
