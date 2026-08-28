@@ -1,5 +1,13 @@
 # CMDO reproducibility
 
+> **Final submission science freeze (28 August 2026).** The final manuscript figure architecture is **Figure 1–5 plus Extended Data Figures 1–2**, organized as **IDENTIFY → REUSE → PRESERVE**. The submission-specific MATLAB entry point is `RUN_SUBMISSION_FIGURES.m`. Figure 1 is reproducibly rendered from the tracked frozen asset `source_data/figure1_assets/Figure1_assets_selected_v1.mat`; its frozen SHA-256 is `30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7`. The older `RUN_REVIEWER.py figures56` and `RUN_REVIEWER.py frozen` routes are retained as historical/reviewer-engineering audit paths and do not define the final manuscript figure numbering.
+
+Final submission figures can be regenerated in MATLAB after `SETUP_CMDO` with:
+
+    RUN_SUBMISSION_FIGURES('Strict', true);
+
+The seven historical U4C–U7 canonical ZIP archives remain intentionally outside Git and are distributed in the byte-verified companion bundle `CMDO-Reviewer-Assets-v1.0.zip`, as specified by `provenance/canonical_archives_manifest.csv`.
+
 This repository is the reviewer-facing reproducibility package for **Cross-Modal Diagnostic Observability (CMDO)**.
 
 > **Current manuscript status (22 August 2026).** The independently validated seven-archive U4C–U7 baseline remains frozen and historically unchanged. The current manuscript additionally contains completed U8 and U9 Open Clinical operational extensions plus the final evidence-admissibility synthesis. Figure 5 reports the U8 temporal natural-prevalence confirmation together with the U9A/U9B external-system operational boundary. Figure 6 synthesizes all 185 frozen U6/U7/U8/U9A/U9B states under the evidence-admissibility law and includes the U9B strict-split mechanistic control. The earlier credentialed eICU pre-outcome branch is preserved separately as deferred independent confirmation and has not been overwritten.

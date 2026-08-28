@@ -41,3 +41,6 @@ Thumbs.db
 
 # Large byte-verified historical replay bootstraps ship only in the reviewer portable bundle.
 bootstrap_inputs/portable/
+
+# Frozen submission Figure 1 asset
+!source_data/figure1_assets/Figure1_assets_selected_v1.mat

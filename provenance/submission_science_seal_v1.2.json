@@ -1,0 +1,112 @@
+{
+    "schema_version":  2,
+    "classification":  "CMDO_FINAL_SUBMISSION_SCIENCE_FREEZE",
+    "generated_local":  "2026-08-28T16:54:21.6476971+08:00",
+    "parent_commit":  "8871b46446aa687948564d506f2ccfa62050fe31",
+    "architecture":  "IDENTIFY -\u003e REUSE -\u003e PRESERVE",
+    "final_main_figures":  5,
+    "final_extended_data_figures":  2,
+    "figure1_asset_sha256":  "30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7",
+    "admissibility_state_count":  185,
+    "admissibility_state_sha256":  "4ef09304a0dbb4110130b9543b05bd8a7d0f34f22dd0ecef1cb6ef758c6174c4",
+    "required_verdicts":  {
+                              "U11_identification_witness":  "PASS",
+                              "U10_mechanism_generality":  "NOT_CONFIRMED",
+                              "final_submission_figures":  "7_OF_7_PASS",
+                              "repository_integrity":  "PASS",
+                              "reviewer_engineering":  "PASS",
+                              "matlab_tests":  "PASS"
+                          },
+    "files":  [
+                  {
+                      "path":  "RUN_SUBMISSION_FIGURES.m",
+                      "size_bytes":  4877,
+                      "sha256":  "0d728a2fac29cb04989fce6c9bafef83c9cfb72c64297d1a8e57945e606e06f5"
+                  },
+                  {
+                      "path":  "matlab/figures/main/Figure1_IDA_RealData_Final.m",
+                      "size_bytes":  34625,
+                      "sha256":  "9b42c0307beca918b23c00a0f06ffad56482f7dee0330dfc0d6248c0b620f7b5"
+                  },
+                  {
+                      "path":  "matlab/figures/main/Figure2_IDA_v4.m",
+                      "size_bytes":  29853,
+                      "sha256":  "10ef0665b50d5f33328fb3bf5e7ef50b59f8374cd7f2a402f8f3e1d083b2732b"
+                  },
+                  {
+                      "path":  "matlab/figures/main/Figure3_FrozenReuse_v8.m",
+                      "size_bytes":  22770,
+                      "sha256":  "ac1a4ef9201412873a4945efe739a5670511882d93a8b5aadd1b8355a73ecd23"
+                  },
+                  {
+                      "path":  "matlab/figures/main/Figure4_OperationalBoundary_v3.m",
+                      "size_bytes":  30234,
+                      "sha256":  "945b4a91c295ca5780def1acea10400d1505217ec5ee86c7e6cba91e878d2294"
+                  },
+                  {
+                      "path":  "matlab/figures/main/Figure5_InformationClosure_Composability_v8.m",
+                      "size_bytes":  29992,
+                      "sha256":  "3695d1c9268e26b2865fe05784b66c838739e07ffe237a80ea679b9f3a130b66"
+                  },
+                  {
+                      "path":  "matlab/figures/extended/ED1_OutcomeFreeBoundary_v9.m",
+                      "size_bytes":  26826,
+                      "sha256":  "3d99fd342885ed264267024b02b12003ef8e4a578a39d8c8a645141ced74ddaf"
+                  },
+                  {
+                      "path":  "matlab/figures/extended/ED2_IntegrityControls_v2.m",
+                      "size_bytes":  26855,
+                      "sha256":  "0eca7d907d9a0978881114b725410b5100a718e13b18c6592bdc9b6557ff1e42"
+                  },
+                  {
+                      "path":  "source_data/figure1_assets/Figure1_assets_selected_v1.mat",
+                      "size_bytes":  3002456,
+                      "sha256":  "30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7"
+                  },
+                  {
+                      "path":  "provenance/canonical_archives_manifest.csv",
+                      "size_bytes":  953,
+                      "sha256":  "f39d990d2da931b07ca60dd2c0521bb293fa8afe4113763825e253fd52547f91"
+                  },
+                  {
+                      "path":  "source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv",
+                      "size_bytes":  17950,
+                      "sha256":  "4ef09304a0dbb4110130b9543b05bd8a7d0f34f22dd0ecef1cb6ef758c6174c4"
+                  },
+                  {
+                      "path":  "source_data/figure6_admissibility/U9B_external_composability_decomposition.csv",
+                      "size_bytes":  151,
+                      "sha256":  "80757812c294aadcc7349636aae2ad40dab7f90d09cfc13828faefcb9f980855"
+                  },
+                  {
+                      "path":  "U10_Prospective_ECG/01_Prospective_Result/U10_PRIMARY_RESULT.json",
+                      "size_bytes":  1496,
+                      "sha256":  "dd2624ba443c69ef2dd276f40eefdff8dadb97612e9838c77b019a4e15c9b090"
+                  },
+                  {
+                      "path":  "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+                      "size_bytes":  5782,
+                      "sha256":  "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc"
+                  },
+                  {
+                      "path":  "U11_Information_Closure/01_Result/U11_WORLD_PLUS_georgia_v0.1.csv",
+                      "size_bytes":  325474,
+                      "sha256":  "797dcc54a9d02df88a5d27f31dfaff793a199d5b68b46bde11d94441bef1bdd4"
+                  },
+                  {
+                      "path":  "U11_Information_Closure/01_Result/U11_WORLD_MINUS_georgia_v0.1.csv",
+                      "size_bytes":  325474,
+                      "sha256":  "11dc3d3ed83335ee4ad1936e7f3d82915ca6a577217fed99a9ae7a93144c4986"
+                  },
+                  {
+                      "path":  "U11_Information_Closure/01_Result/U11_WORLD_PLUS_cpsc_2018_v0.1.csv",
+                      "size_bytes":  208070,
+                      "sha256":  "65d8b6979325bcb31564f89cf2b99cd6fa4eb40f59196c0349095c743397ccb9"
+                  },
+                  {
+                      "path":  "U11_Information_Closure/01_Result/U11_WORLD_MINUS_cpsc_2018_v0.1.csv",
+                      "size_bytes":  208070,
+                      "sha256":  "b22bdcb8bfa1eb4327c83b267713795975f80d04a34319c2b2a20179c056c540"
+                  }
+              ]
+}
