@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-10",
+  "generated": "2026-08-29",
   "stages": [
     {
       "stage": "U0-U1",
@@ -126,6 +126,28 @@
       "matlab_status": "NATIVE_PREOUTCOME_WORKFLOW",
       "sealed": true,
       "default_action": "Self-test safe; ADAPT/PREPARE/UNSEAL remain ordered stage-local actions"
+    },
+    {
+      "stage": "U10",
+      "authority": "Prospective external ECG falsification with locked post-hoc diagnostics",
+      "runtime": "Python / tracked frozen result records",
+      "repository_status": "FINAL_FROZEN",
+      "matlab_status": "CONSUME_TRACKED_FROZEN_RESULTS",
+      "sealed": true,
+      "evidence_role": "LOCKED_EXTERNAL_MECHANISM_CHALLENGE_AND_POST_COMPLETION_DIAGNOSTICS",
+      "primary_verdict": "MECHANISM_NOT_CONFIRMED",
+      "default_action": "Preserve the locked prospective verdict; post-completion diagnostics may not redefine the gate"
+    },
+    {
+      "stage": "U11",
+      "authority": "Information-Closure Constructive Demonstration v0.1.1",
+      "runtime": "Protocol-locked tracked result records",
+      "repository_status": "FINAL_FROZEN",
+      "matlab_status": "CONSUME_TRACKED_FROZEN_RESULTS",
+      "sealed": true,
+      "evidence_role": "PROTOCOL_LOCKED_INFORMATION_CLOSURE_WITNESS",
+      "primary_verdict": "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+      "default_action": "Use as a constructive identification witness only; not as an estimate of real clinical performance"
     }
   ]
 }

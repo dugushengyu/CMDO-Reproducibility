@@ -185,7 +185,7 @@ draw_world_roc( ...
     fig, axB, W, false, ...
     [0.171 0.205 0.118 0.255], S);
 
-% Constructed observationally equivalent worlds.
+% Constructed outcome states with identical observed model outputs.
 text(axB,0.102,0.470,'World +', ...
     'HorizontalAlignment','center', ...
     'VerticalAlignment','bottom', ...
@@ -354,63 +354,136 @@ end
 %  ========================================================================
 
 function [A, matPath] = load_frozen_assets()
-% Load the unique repository-frozen submission asset.
-%
-% Canonical location:
-%   source_data/figure1_assets/Figure1_assets_selected_v1.mat
-%
-% No recursive filesystem search is used in the submission renderer.
 
-thisFile = mfilename('fullpath');
 
-if isempty(thisFile)
-    error( ...
-        'CMDO:Figure1PathResolution', ...
-        'Could not resolve Figure1_IDA_RealData_Final.m path.');
+start = pwd;
+
+parents = {start};
+
+p = fileparts(start);
+
+
+for k = 1:4
+
+    if isempty(p) || strcmp(p,parents{end})
+
+        break;
+
+    end
+
+    parents{end+1} = p; %#ok<AGROW>
+
+    p = fileparts(p);
+
 end
 
-mainDir    = fileparts(thisFile);
-figuresDir = fileparts(mainDir);
-matlabDir  = fileparts(figuresDir);
-repoRoot   = fileparts(matlabDir);
 
-matPath = fullfile( ...
-    repoRoot, ...
-    'source_data', ...
-    'figure1_assets', ...
-    'Figure1_assets_selected_v1.mat');
+candidates = {};
 
-if ~isfile(matPath)
-    error( ...
-        'CMDO:Figure1AssetMissing', ...
-        'Frozen Figure 1 asset is missing: %s', ...
-        matPath);
+
+for i = 1:numel(parents)
+
+    r = parents{i};
+
+    candidates{end+1} = fullfile( ...
+        r, ...
+        'Figure1_assets_selected_v1', ...
+        'Figure1_assets_selected_v1.mat'); %#ok<AGROW>
+
+    candidates{end+1} = fullfile( ...
+        r, ...
+        'Figure1_assets_selected_v1.mat'); %#ok<AGROW>
+
 end
 
-q = whos( ...
-    '-file', ...
-    matPath);
 
-vars = string({q.name});
+for i = 1:min(numel(parents),2)
 
-if ~any(vars == "Assets")
-    error( ...
-        'CMDO:Figure1AssetInvalid', ...
-        'Frozen Figure 1 asset does not contain variable Assets: %s', ...
-        matPath);
+    r = parents{i};
+
+    try
+
+        d = dir( ...
+            fullfile( ...
+            r, ...
+            '**', ...
+            'Figure1_assets_selected_v1.mat'));
+
+
+        for j = 1:min(numel(d),10)
+
+            candidates{end+1} = fullfile( ...
+                d(j).folder, ...
+                d(j).name); %#ok<AGROW>
+
+        end
+
+    catch
+
+    end
+
 end
+
+
+if ~isempty(candidates)
+
+    candidates = unique( ...
+        candidates, ...
+        'stable');
+
+end
+
+
+matPath = '';
+
+
+for k = 1:numel(candidates)
+
+    if isfile(candidates{k})
+
+        q = whos( ...
+            '-file', ...
+            candidates{k});
+
+
+        vars = string({q.name});
+
+
+        if any(vars == "Assets")
+
+            matPath = candidates{k};
+
+            break;
+
+        end
+
+    end
+
+end
+
+
+if isempty(matPath)
+
+    error([ ...
+        'Could not find the modern frozen Figure 1 asset package containing variable Assets.' newline ...
+        'Expected: Figure1_assets_selected_v1/Figure1_assets_selected_v1.mat' newline ...
+        'The older Figure1_local_asset_cache_v5.mat is not sufficient for Panel B,' newline ...
+        'because it does not contain the frozen U11 witness worlds.']);
+
+end
+
 
 Q = load( ...
     matPath, ...
     'Assets');
 
+
 A = Q.Assets;
 
-fprintf( ...
-    'Figure 1 frozen asset:\n%s\n', ...
-    matPath);
 
 end
+
+
 %% ========================================================================
 %  STYLE
 %  ========================================================================
@@ -1170,7 +1243,7 @@ if withTitle
 
     title( ...
         a, ...
-        'Frozen score stream', ...
+        'Observed model scores', ...
         'FontName',S.font, ...
         'FontSize',F(S,7.2), ...
         'FontWeight','normal', ...
@@ -1667,7 +1740,7 @@ text( ...
     ax, ...
     p(1)+0.50*p(3), ...
     p(2)+0.20*p(4), ...
-    'm \uparrow   V \downarrow', ...
+    'audit size m \uparrow   V \downarrow', ...
     'Interpreter','tex', ...
     'HorizontalAlignment','center', ...
     'FontName',S.font, ...

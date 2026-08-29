@@ -1,0 +1,65 @@
+{
+    "schema_version":  1,
+    "classification":  "CMDO_FINAL_SUBMISSION_SOURCE_MANIFEST",
+    "version":  "v1.3",
+    "generated_date":  "2026-08-29",
+    "parent_commit_before_final_freeze":  "7566e6bc08034ac434e97bf607305d7cd5ac7a91",
+    "scientific_order":  [
+                             "IDENTIFY",
+                             "REUSE",
+                             "PRESERVE"
+                         ],
+    "manuscript_architecture":  {
+                                    "main_figures":  5,
+                                    "extended_data_figures":  2,
+                                    "final_roles":  {
+                                                        "Figure1":  "Conceptual evidential order",
+                                                        "Figure2":  "Ordered theory and mechanism",
+                                                        "Figure3":  "IDENTIFY",
+                                                        "Figure4":  "REUSE",
+                                                        "Figure5":  "PRESERVE",
+                                                        "ED1":  "Developmental falsification",
+                                                        "ED2":  "Coupling-pathway diagnostics"
+                                                    }
+                                },
+    "final_renderers":  {
+                            "Figure1":  {
+                                            "path":  "matlab/figures/main/Figure1_IDA_RealData_Final.m",
+                                            "sha256":  "fc3238a20e214b92c37fca89e18d18fb2ca7da4a9f0da46e3622056953278488"
+                                        },
+                            "Figure2":  {
+                                            "path":  "matlab/figures/main/Figure2_IDA_v4.m",
+                                            "sha256":  "10ef0665b50d5f33328fb3bf5e7ef50b59f8374cd7f2a402f8f3e1d083b2732b"
+                                        },
+                            "Figure3":  {
+                                            "path":  "matlab/figures/main/Figure3_FrozenReuse_v8.m",
+                                            "sha256":  "1a60c5a7a9fad9d760544a1508a7c67d67cf40ed325c423a13d0318239984242"
+                                        },
+                            "Figure4":  {
+                                            "path":  "matlab/figures/main/Figure4_OperationalBoundary_v3.m",
+                                            "sha256":  "3b71127367e270fe66ad73563fe761e8c03343b4f6e61c194999e8ea39b73f8f"
+                                        },
+                            "Figure5":  {
+                                            "path":  "matlab/figures/main/Figure5_InformationClosure_Composability_v8.m",
+                                            "sha256":  "a46040811d09064fcf47675a6059dd77a1eafbeb7dc13fd927c103fe163dcd9c"
+                                        },
+                            "ED1":  {
+                                        "path":  "matlab/figures/extended/ED1_OutcomeFreeBoundary_v9.m",
+                                        "sha256":  "a37f83dbc0bdd8fa668513410918ceef3d3bd5a90e2ee771d440eac24afd125f"
+                                    },
+                            "ED2":  {
+                                        "path":  "matlab/figures/extended/ED2_IntegrityControls_v2.m",
+                                        "sha256":  "2862e706a65481baf225e366ea3e5df67c74d62feb80e6daab56b94e8ad3ea14"
+                                    }
+                        },
+    "figure1_frozen_asset":  {
+                                 "path":  "source_data/figure1_assets/Figure1_assets_selected_v1.mat",
+                                 "sha256":  "30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7"
+                             },
+    "interpretation_boundaries":  [
+                                      "U11 is a constructive identification witness, not an estimate of real clinical performance.",
+                                      "U10 did not confirm shared-audit coupling as a general mechanism across both external cohorts.",
+                                      "Post-completion diagnostics do not overwrite locked prospective verdicts.",
+                                      "U0-U5 are retained as developmental lineage rather than promoted into the final confirmatory chain."
+                                  ]
+}
