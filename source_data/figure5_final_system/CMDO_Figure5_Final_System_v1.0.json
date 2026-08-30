@@ -1,0 +1,98 @@
+{
+  "schema": "CMDO_FIGURE5_FINAL_SYSTEM_v1.0",
+  "status": "INTEGRATION_SUMMARY_FOR_FINAL_FIGURE5_DESIGN",
+  "scientific_role": "Bind the final CMDO evidence chain through REUSE, PRESERVE and information closure before redesigning Figure 5. This file is a summary of frozen upstream results, not a new experiment.",
+  "claim_boundary": {
+    "u10_prospective": "MECHANISM_NOT_CONFIRMED",
+    "u10_hac": "Post-completion mechanism analysis. Do not replace the prospective U10 verdict with the posthoc frontier result.",
+    "u11": "Constructive identification witness only; not a claim about the real clinical outcomes of either cohort."
+  },
+  "sources": {
+    "u8_temporal_source": "source_data/SourceData_Figure5_U7_U8_and_ED7_U8.xlsx",
+    "u9b_summary": "source_data/figure6_u8_u9/U9B_summary.json",
+    "u9b_composability": "source_data/figure6_admissibility/U9B_external_composability_decomposition.csv",
+    "u10_primary": "U10_Prospective_ECG/01_Prospective_Result/U10_PRIMARY_RESULT.json",
+    "u10_dependence_csv": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+    "u10_dependence_json": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.json",
+    "u11_result": "U11_Information_Closure/01_Result/U11_INFORMATION_CLOSURE_RESULT_v0.1.json",
+    "u11_sha256_manifest": "U11_Information_Closure/01_Result/U11_RESULT_SHA256_MANIFEST_v0.1.csv"
+  },
+  "source_integrity": {
+    "u10_dependence_csv_sha256": "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc",
+    "u11_result_sha256": "b6d6cd62c83819fb4687567758cef0045d16986322741c327b23f114e609d07c",
+    "u9b_summary_git_blob_sha": "d143562efaab2d769773bac86a25c21ad792c548",
+    "u9b_composability_git_blob_sha": "e2fbae7fdd0d6171b4058f49a60b1b87c147f773",
+    "u10_primary_git_blob_sha": "1a18a4ad93db6170ef48bcc4f0c78a32336aca63",
+    "u10_dependence_json_git_blob_sha": "a2fe38ab1a793050270fc64bcb9088eb7e7d9fd0",
+    "u11_result_git_blob_sha": "e1d4e08dcb7d1a0ba7fa4a6097b3a37bf51cc46a"
+  },
+  "preserve_u9b": {
+    "role": "External-system composability stress test",
+    "pooled_observer_gain_pct": -3.665883893231158,
+    "worst_state_regret": 0.0010474783257509634,
+    "decision": "PARTIAL_EXTERNAL_CERTIFICATION_EFFICIENCY_NOT_CONFIRMED",
+    "budget_rows": [
+      {"budget": 128, "fixed_scalar_gain_pct": 7.872, "observed_adaptive_gain_pct": -1.896, "xi_downward_pp": 9.768},
+      {"budget": 256, "fixed_scalar_gain_pct": 2.414, "observed_adaptive_gain_pct": -9.211, "xi_downward_pp": 11.625},
+      {"budget": 512, "fixed_scalar_gain_pct": -0.876, "observed_adaptive_gain_pct": -7.826, "xi_downward_pp": 6.95},
+      {"budget": 1024, "fixed_scalar_gain_pct": -2.643, "observed_adaptive_gain_pct": -15.9, "xi_downward_pp": 13.257}
+    ]
+  },
+  "preserve_u10_prospective": {
+    "primary_verdict": "MECHANISM_NOT_CONFIRMED",
+    "georgia_per_target_gate_pass": true,
+    "cpsc_2018_per_target_gate_pass": false,
+    "pooled_strict_median_abs_coupling_reduction_pct": 60.36745275756314,
+    "pooled_crossfit_median_abs_coupling_reduction_pct": 10.818248126275654
+  },
+  "preserve_u10_hac_postcompletion": {
+    "H": 0.08614018,
+    "A": 0.01403814,
+    "C_shared": 0.21760208,
+    "C_permuted": 0.03214915,
+    "C_role_separated_prediction": 0.03136104,
+    "A_plus_C_shared": 0.23164022,
+    "A_plus_C_permuted": 0.04618729,
+    "A_plus_C_role_separated_prediction": 0.04539918,
+    "margin_H_minus_A_plus_C_shared": -0.14550004,
+    "margin_H_minus_A_plus_C_permuted": 0.03995289,
+    "margin_H_minus_A_plus_C_role_separated_prediction": 0.040741,
+    "C_reduction_permuted_pct": 85.22571567330607,
+    "C_reduction_role_separated_prediction_pct": 85.58789511570845,
+    "interpretation": "Shared adaptive composition lies on the fixed-rule-preferable side of H > A + C. Removing shared composition dependence in post-completion controls reduces C enough to cross the HAC frontier. This is mechanistic/posthoc evidence, not prospective confirmation of generality."
+  },
+  "identify_u11_information_closure": {
+    "primary_verdict": "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+    "source_outcomes_read": false,
+    "true_u10_labels_used": false,
+    "retraining_performed": false,
+    "reinference_performed": false,
+    "cohorts": {
+      "georgia": {
+        "n": 10292,
+        "telemetry_byte_identity_claim": true,
+        "matched_prevalence": true,
+        "world_plus_auc": 1.0,
+        "world_minus_auc": 0.0,
+        "primary_auc_gap": 1.0,
+        "primary_success": true
+      },
+      "cpsc_2018": {
+        "n": 6877,
+        "telemetry_byte_identity_claim": true,
+        "matched_prevalence": true,
+        "world_plus_auc": 1.0,
+        "world_minus_auc": 0.0,
+        "primary_auc_gap": 1.0,
+        "primary_success": true
+      }
+    }
+  },
+  "figure5_design_guardrails": [
+    "Do not stop the final system story at U5F/U6/U7; PRESERVE requires U9/U10 evidence.",
+    "Do not claim that the original shared-adaptive observer prospectively satisfies H > A + C; shared H-(A+C) is negative.",
+    "Do not promote the role-separated post-completion prediction to prospective confirmation; U10 primary verdict remains MECHANISM_NOT_CONFIRMED.",
+    "Use U11 only for the IDENTIFY information-closure boundary; the constructed outcome worlds are not real clinical outcomes.",
+    "Local MATLAB should be a renderer of frozen GitHub evidence, not a place to invent or refreeze scientific values."
+  ]
+}
