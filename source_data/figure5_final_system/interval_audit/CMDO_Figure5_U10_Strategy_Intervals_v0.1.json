@@ -1,0 +1,29 @@
+{
+  "budgets": [
+    128,
+    256,
+    512,
+    1024
+  ],
+  "ci_percentiles": [
+    2.5,
+    97.5
+  ],
+  "csv_sha256": "8fae13d19da21238e9542ca35ed513b16cf06f66076886d6dc68407c0e4ac501",
+  "datasets": [
+    "georgia",
+    "cpsc_2018"
+  ],
+  "interpretation": "Intervals quantify frozen Monte-Carlo audit-sampling variability. They are not population-level clinical confidence intervals and are not prospective confirmation.",
+  "n_bootstrap": 10000,
+  "n_frozen_replicates": 200,
+  "prospective_verdict": "MECHANISM_NOT_CONFIRMED",
+  "schema": "CMDO_FIGURE5_U10_STRATEGY_INTERVALS_v0.1",
+  "status": "POSTHOC_DESCRIPTIVE_UNCERTAINTY_DO_NOT_REPLACE_PROSPECTIVE_VERDICT",
+  "strategies": [
+    "shared_adaptive",
+    "fixed_weight_reuse",
+    "permuted_weight_control",
+    "crossfit_adaptive"
+  ]
+}
