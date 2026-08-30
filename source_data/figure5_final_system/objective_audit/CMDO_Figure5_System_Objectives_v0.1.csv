@@ -1,0 +1,11 @@
+panel,metric,scenario,value,direction,status,note
+A,certified_utility_pct,CMDO,2.31354852612,higher,eligible_winner,Largest pooled gain among U5F frozen eligible candidates.
+B,generalization_breadth_pct,development,87.5,higher,14/16,pooled_gain_pct=2.31354852612
+B,generalization_breadth_pct,cross_domain_U6,100,higher,16/16,pooled_gain_pct=3.05375614474
+B,generalization_breadth_pct,clinical_U7_AUC,100,higher,16/16,pooled_gain_pct=3.74429908584
+C,composition_cost_C,shared_adaptive,0.217602076688,lower,observed_postcompletion,shared composition
+C,composition_cost_C,permuted_control,0.0321491544818,lower,mechanistic_control,reduction_pct=85.2257133888
+C,composition_cost_C,role_separated_prediction,0.0313610422096,lower,postcompletion_prediction,reduction_pct=85.5878938809
+D,composability_margin_H_minus_A_plus_C,shared_adaptive,-0.145500038921,higher,FAIL,negative = fixed-rule-preferable side
+D,composability_margin_H_minus_A_plus_C,permuted_control,0.0399528832851,higher,PASS,post-completion mechanistic control
+D,composability_margin_H_minus_A_plus_C,role_separated_prediction,0.0407409955573,higher,PASS,post-completion prediction; not prospective confirmation

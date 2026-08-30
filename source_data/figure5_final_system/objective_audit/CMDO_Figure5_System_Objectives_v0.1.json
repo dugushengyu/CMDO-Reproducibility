@@ -1,0 +1,55 @@
+{
+  "breadth": {
+    "clinical_U7_AUC": {
+      "breadth_pct": 100.0,
+      "improved": 16,
+      "pooled_gain_pct": 3.74429908583819,
+      "total": 16
+    },
+    "cross_domain_U6": {
+      "breadth_pct": 100.0,
+      "improved": 16,
+      "pooled_gain_pct": 3.0537561447421773,
+      "total": 16
+    },
+    "development": {
+      "breadth_pct": 87.5,
+      "improved": 14,
+      "pooled_gain_pct": 2.31354852611682,
+      "total": 16
+    }
+  },
+  "certified_utility": {
+    "cmdo_certified_utility_pct": 2.31354852611682,
+    "eligible_methods": [
+      "PC_PAIRED_HOEFFDING",
+      "PC_USTAT_MCDIARMID"
+    ],
+    "winner": "PC_PAIRED_HOEFFDING"
+  },
+  "claim_boundary": {
+    "breadth": "Frozen U5F development, U6 cross-domain and U7 clinical AUC target summaries.",
+    "certified_utility": "U5F frozen development selection objective; not an unrestricted-MAE claim.",
+    "hac": "Post-completion mechanistic analysis; does not replace U10 prospective MECHANISM_NOT_CONFIRMED verdict.",
+    "role_separated": "Prediction/control only; not prospectively validated final CMDO implementation."
+  },
+  "files": {
+    "candidate_csv": "source_data/figure5_final_system/objective_audit/CMDO_Figure5_Certified_Utility_Candidates_v0.1.csv",
+    "objectives_csv": "source_data/figure5_final_system/objective_audit/CMDO_Figure5_System_Objectives_v0.1.csv"
+  },
+  "hac": {
+    "A": 0.014038144808296255,
+    "C_permuted": 0.032149154481817134,
+    "C_reduction_permuted_pct": 85.22571338882564,
+    "C_reduction_role_separated_prediction_pct": 85.58789388093075,
+    "C_role_separated_prediction": 0.031361042209636036,
+    "C_shared": 0.21760207668843723,
+    "H": 0.08614018257526133,
+    "margin_permuted": 0.03995288328514794,
+    "margin_role_separated_prediction": 0.040740995557329046,
+    "margin_shared": -0.14550003892147217
+  },
+  "prospective_verdict": "MECHANISM_NOT_CONFIRMED",
+  "schema": "CMDO_FIGURE5_SYSTEM_OBJECTIVES_v0.1",
+  "status": "DESCRIPTIVE_AUDIT_OF_FROZEN_SYSTEM_OBJECTIVES"
+}

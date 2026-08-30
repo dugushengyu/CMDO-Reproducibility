@@ -1,0 +1,11 @@
+method,raw_pooled_gain_pct,eligible,certified_utility_pct,positive_targets,target_count,worst_target_budget_regret,inadmissibility_reason
+DIRECT_FULL,0,False,,0,16,0,not_strict_candidate;mean_coverage;minimum_coverage;no_harm_geometry;nonpositive_gain;breadth;inactive_borrowing
+ORACLE_FULL,10.3888662729,False,,13,16,0.00233095607855,not_strict_candidate;mean_coverage;minimum_coverage;no_harm_geometry
+PC_DELONG,4.51596260853,False,,13,16,0.00369099934095,not_strict_candidate;mean_coverage;minimum_coverage
+PC_DELONG_VARGATE,0.632262524121,False,,11,16,0.00530807889857,not_strict_candidate;mean_coverage;minimum_coverage;worst_regret
+PC_ORACLE,8.95397440761,False,,14,16,0.000615140446088,not_strict_candidate
+PC_PAIRED_HOEFFDING,2.31354852612,True,2.31354852612,14,16,0.000455665365217,PASS
+PC_PLUGIN,8.39473790789,False,,14,16,0.00531954230293,not_strict_candidate;mean_coverage;minimum_coverage;worst_regret
+PC_PLUGIN_VARGATE,2.01151665732,False,,11,16,0.00322873812494,not_strict_candidate;mean_coverage;minimum_coverage
+PC_USTAT_MCDIARMID,2.05417176261,True,2.05417176261,14,16,0.000263829168511,PASS
+PLUGIN_FULL,9.35474893665,False,,13,16,0.00367616921816,not_strict_candidate;mean_coverage;minimum_coverage;no_harm_geometry
