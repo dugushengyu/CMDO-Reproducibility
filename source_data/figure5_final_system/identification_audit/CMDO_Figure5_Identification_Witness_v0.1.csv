@@ -1,0 +1,3 @@
+information_class,cohort,n,matched_prevalence,telemetry_identical,auc_world_plus,auc_world_minus,auc_identified_diameter_witness,minimax_abs_auc_error_lower_bound,status
+outcome_independent_telemetry,georgia,10292,True,True,1.0,0.0,1.0,0.5,WITNESS_CONFIRMED
+outcome_independent_telemetry,cpsc_2018,6877,True,True,1.0,0.0,1.0,0.5,WITNESS_CONFIRMED

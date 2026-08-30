@@ -1,0 +1,76 @@
+{
+  "claim_boundary": {
+    "minimax": "Lower bound applies to estimators restricted to the same outcome-independent telemetry information class.",
+    "slope": "Descriptive root-budget scaling evidence, not a new asymptotic theorem.",
+    "u11": "Constructive information-class witness; not a claim about the true clinical outcomes of either cohort.",
+    "u8": "Empirical finite-budget direct-audit contraction on the frozen temporal reserve; not the same-cohort numerical counterpart of the U11 lower bound."
+  },
+  "definition": {
+    "formula": "R_id = 0.5 * |psi_plus - psi_minus| for two observationally identical worlds",
+    "minimax_statement": "For any estimator T measurable with respect to the same outcome-independent telemetry O, max(|T(O)-psi_plus|, |T(O)-psi_minus|) >= R_id.",
+    "name": "performance identification radius witness",
+    "symbol": "R_id"
+  },
+  "files": {
+    "contraction_csv": "source_data/figure5_final_system/identification_audit/CMDO_Figure5_Outcome_Audit_Contraction_v0.1.csv",
+    "witness_csv": "source_data/figure5_final_system/identification_audit/CMDO_Figure5_Identification_Witness_v0.1.csv"
+  },
+  "schema": "CMDO_FIGURE5_IDENTIFICATION_RADIUS_v0.1",
+  "status": "FROZEN_DATA_IDENTIFICATION_AUDIT_PASS",
+  "u11": {
+    "cohorts": [
+      {
+        "auc_identified_diameter_witness": 1.0,
+        "auc_world_minus": 0.0,
+        "auc_world_plus": 1.0,
+        "cohort": "georgia",
+        "information_class": "outcome_independent_telemetry",
+        "matched_prevalence": true,
+        "minimax_abs_auc_error_lower_bound": 0.5,
+        "n": 10292,
+        "status": "WITNESS_CONFIRMED",
+        "telemetry_identical": true
+      },
+      {
+        "auc_identified_diameter_witness": 1.0,
+        "auc_world_minus": 0.0,
+        "auc_world_plus": 1.0,
+        "cohort": "cpsc_2018",
+        "information_class": "outcome_independent_telemetry",
+        "matched_prevalence": true,
+        "minimax_abs_auc_error_lower_bound": 0.5,
+        "n": 6877,
+        "status": "WITNESS_CONFIRMED",
+        "telemetry_identical": true
+      }
+    ],
+    "common_minimax_abs_auc_error_lower_bound": 0.5,
+    "primary_verdict": "INFORMATION_CLOSURE_WITNESS_CONFIRMED",
+    "result_sha256": "b6d6cd62c83819fb4687567758cef0045d16986322741c327b23f114e609d07c"
+  },
+  "u8_current_outcome_audit": {
+    "budgets": [
+      128,
+      256,
+      512,
+      1024
+    ],
+    "frozen_loglog_slope": -0.531444237112,
+    "loglog_slope": -0.5314442371124428,
+    "mae_times_sqrt_m": [
+      0.3652927757333573,
+      0.362039632030056,
+      0.3329157476998039,
+      0.3493248491702336
+    ],
+    "mae_times_sqrt_m_cv_pct": 4.17137509800604,
+    "mean_direct_mae": [
+      0.032287624854939204,
+      0.0226274770018785,
+      0.014712936422645068,
+      0.0109164015365698
+    ],
+    "source": "matlab/figures/main/Figure5.m",
+    "temporal_cycles": 3
+  }
+}
