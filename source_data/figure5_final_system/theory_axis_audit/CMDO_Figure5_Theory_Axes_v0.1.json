@@ -1,0 +1,47 @@
+{
+  "Lambda": {
+    "corr_wstar_observed_fixed_weight": 0.9209449257091485,
+    "definition": "B^2 / V",
+    "interpretation": "larger Lambda means historical bias dominates current-audit variance more strongly, so the ideal borrowing weight shrinks",
+    "max": 22.572466342928685,
+    "mean": 7.078465103867327,
+    "min": 1.0297183624066542,
+    "name": "bias-to-variance ratio",
+    "oracle_weight": "w*=1/(1+Lambda)",
+    "quadratic_risk": "R(w)/V=(1-w)^2+Lambda*w^2"
+  },
+  "R_id": {
+    "meaning": "algorithm-independent minimax absolute AUC-error lower-bound witness within the same outcome-independent telemetry information class",
+    "source": "source_data/figure5_final_system/identification_audit/CMDO_Figure5_Identification_Radius_v0.1.json",
+    "value": 0.5
+  },
+  "claim_boundary": {
+    "Lambda": "Post-completion U10 bias-to-variance geometry; the oracle quadratic weight is a theory reference, not a deployed estimator.",
+    "R_id": "U11 constructive information-class witness; not real clinical outcomes.",
+    "kappa": "Post-completion mechanistic summary. The role-separated value is a prediction/control only.",
+    "prospective": "U10 prospective verdict remains MECHANISM_NOT_CONFIRMED."
+  },
+  "files": {
+    "kappa_csv": "source_data/figure5_final_system/theory_axis_audit/CMDO_Figure5_Kappa_v0.1.csv",
+    "lambda_csv": "source_data/figure5_final_system/theory_axis_audit/CMDO_Figure5_Lambda_By_State_v0.1.csv"
+  },
+  "kappa": {
+    "definition": "H/(A+C)",
+    "interpretation": "kappa>1 is algebraically equivalent to the HAC frontier H>A+C",
+    "name": "adaptive benefit-to-cost ratio",
+    "permuted_control": 1.8650188233391694,
+    "role_separated_prediction": 1.8973948265028777,
+    "shared_adaptive": 0.37187057592446676,
+    "threshold": 1.0
+  },
+  "schema": "CMDO_FIGURE5_THEORY_AXES_v0.1",
+  "source_integrity": {
+    "u10_dependence_csv_sha256": "580a0480391ea40cad021fc0264350f6eba357d24a219a670687163159470bcc"
+  },
+  "status": "FROZEN_DATA_THEORY_AXIS_AUDIT_PASS",
+  "theory_chain": [
+    "IDENTIFY:R_id",
+    "REUSE:Lambda=B^2/V",
+    "PRESERVE:kappa=H/(A+C)"
+  ]
+}
