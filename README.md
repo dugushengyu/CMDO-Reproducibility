@@ -18,25 +18,51 @@ with:
 - Extended Data Figure 1 — developmental falsification of a universal outcome-free route
 - Extended Data Figure 2 — role-separation and coupling-pathway diagnostics
 
-The canonical MATLAB entry point is:
+## Reviewer entry points
+
+### Strongest portable reviewer audit
+
+From a fresh clone, run:
 
 ```matlab
-SETUP_CMDO;
-RUN_SUBMISSION_FIGURES('Strict', true);
+RUN_REVIEWER_END_TO_END('Strict',true,'RunStressReplay',true)
 ```
 
-The runner writes the final figure set and a machine-readable report under:
+This verifies all tracked frozen reviewer inputs by SHA-256, runs the deterministic reconstructed synthetic stress replay, regenerates Figure 1-5 plus Extended Data Figure 1-2, and performs path/output/Git-clean checks.
+
+Detailed scope and environment requirements are documented in:
 
 ```text
-outputs/submission_figures/
+docs/REVIEWER_END_TO_END.md
+provenance/reviewer_reexecution_contract_v1.json
+```
+
+### Final figures only
+
+```matlab
+RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)
+```
+
+By default, reviewer outputs are written under the operating-system temporary directory rather than into tracked repository paths.
+
+## What 'end-to-end' means here
+
+A generic reviewer computer can reproduce the complete **reviewer evidence-to-figure pathway** from a fresh GitHub clone: byte-verify the frozen derived evidence package, regenerate the fully synthetic diagnostic stress replay, and render the complete final figure set without any author-machine path.
+
+It is **not** claimed that every historical prospective stage can be re-run from raw patient-level data on an arbitrary computer. Several stages are sealed and some underlying clinical datasets require controlled access. For those stages, the scientifically correct reviewer action is to verify and consume the tracked frozen derived records rather than silently replace a sealed prospective analysis with a new post-completion rerun.
+
+The machine-readable stage-by-stage policy is:
+
+```text
+provenance/reviewer_reexecution_contract_v1.json
 ```
 
 ## Final source manifest
 
-Exact final renderer paths and SHA-256 fingerprints are recorded in:
+Reviewer-facing frozen inputs and their SHA-256 fingerprints are recorded in:
 
 ```text
-provenance/final_submission_v1.3_manifest.json
+provenance/submission_github_native_v4_manifest.csv
 ```
 
 The central stage inventory through U11 is:
@@ -59,21 +85,25 @@ SHA-256:
 30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7
 ```
 
-## Historical canonical reviewer assets
+## Figure 5 source and replay separation
 
-Seven historical U4C-U7 canonical archives remain outside Git and are distributed in the byte-verified companion bundle:
-
-```text
-CMDO-Reviewer-Assets-v1.0.zip
-```
-
-Their expected filenames, sizes and SHA-256 values are defined in:
+The authoritative manuscript Figure 5 reads only:
 
 ```text
-provenance/canonical_archives_manifest.csv
+source_data/figure5_submission/CMDO_SystemStress_AUC_StateSummary_v1_1.csv
 ```
 
-No raw PhysioNet patient waveforms are redistributed.
+The reconstructed executable stress test is kept separately under:
+
+```text
+scripts/stress_replay/
+```
+
+It is a deterministic diagnostic reconstruction of the lost stress-test program and must never overwrite the frozen manuscript Figure-5 source.
+
+## Restricted and sealed data
+
+No raw restricted PhysioNet/eICU patient-level records are redistributed. The repository instead tracks the frozen derived records required for the final reviewer-facing figure pathway. Authorized stage-specific reruns remain separate from the default reviewer command.
 
 ## Scientific interpretation boundaries
 
@@ -82,21 +112,9 @@ No raw PhysioNet patient waveforms are redistributed.
 - Post-completion permutation and role-separation analyses are diagnostics and do not overwrite the locked U10 prospective verdict.
 - U0-U5 are retained as developmental lineage and are not promoted into the final confirmatory chain.
 
-## Historical routes
-
-Older reviewer commands, legacy Figure 5/6 renderers and older Extended Data renderers are retained for provenance and historical reproducibility.
-
-They do not define the final manuscript figure numbering.
-
-The final manuscript figure route is exclusively:
-
-```text
-RUN_SUBMISSION_FIGURES.m
-```
-
 ## Repository policy
 
 - Frozen protocols and locked prospective verdicts must not be overwritten.
 - New post-completion analyses must remain explicitly labelled as such.
-- Generated outputs, local caches, raw patient data and binary reviewer bundles remain outside Git unless explicitly tracked by policy.
-- The immutable submission tag is created only after a fresh-clone clean-room reproduction passes.
+- Generated outputs, local caches and raw patient data remain outside Git unless explicitly tracked by policy.
+- Final submission tagging should occur only after a fresh-clone reviewer run passes.
