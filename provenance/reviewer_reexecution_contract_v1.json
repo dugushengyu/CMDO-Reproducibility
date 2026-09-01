@@ -1,0 +1,62 @@
+{
+  "name": "CMDO reviewer re-execution contract v1",
+  "purpose": "Define what a portable reviewer may regenerate from executable code and what must be verified as frozen derived evidence because of prospective sealing, restricted data, or historical lineage.",
+  "portable_claim": "A fresh GitHub clone can verify all tracked final inputs, run the deterministic reconstructed synthetic stress replay, and regenerate Figure 1-5 plus Extended Data Figure 1-2 without author-machine files.",
+  "not_claimed": "A generic reviewer computer can re-run every historical prospective stage from raw patient-level data.",
+  "stages": [
+    {
+      "stage": "U4C",
+      "reviewer_action": "VERIFY_FROZEN_DERIVED_RECORDS",
+      "reason": "sealed prospective lineage; canonical outputs are the evidentiary object used by the final figures"
+    },
+    {
+      "stage": "U5B",
+      "reviewer_action": "VERIFY_FROZEN_DERIVED_RECORDS",
+      "reason": "sealed sentinel reserve; no generic automatic rerun"
+    },
+    {
+      "stage": "U6",
+      "reviewer_action": "VERIFY_FROZEN_DERIVED_RECORDS",
+      "reason": "sealed independent reserve; final figures consume canonical outputs"
+    },
+    {
+      "stage": "U7",
+      "reviewer_action": "VERIFY_FROZEN_DERIVED_RECORDS",
+      "reason": "sealed deployment evaluation; final figures consume canonical outputs"
+    },
+    {
+      "stage": "U8",
+      "reviewer_action": "OPTIONAL_AUTHORIZED_RERUN",
+      "reason": "NHANES is public, but the stage is sealed and its v1.1 rerun is explicitly disclosed rather than silently folded into the generic reviewer command"
+    },
+    {
+      "stage": "U9",
+      "reviewer_action": "VERIFY_FROZEN_DERIVED_RECORDS_OR_CREDENTIALED_STAGE_RERUN",
+      "reason": "eICU patient-level data require authorized access; a public GitHub clone cannot redistribute or universally regenerate those raw-data analyses"
+    },
+    {
+      "stage": "U10",
+      "reviewer_action": "VERIFY_TRACKED_FINAL_RECORDS",
+      "reason": "locked external ECG prospective verdict and post-completion diagnostics are preserved as tracked final records"
+    },
+    {
+      "stage": "U11",
+      "reviewer_action": "VERIFY_TRACKED_FINAL_RECORDS",
+      "reason": "protocol-locked information-closure witness is consumed as a tracked final result record"
+    },
+    {
+      "stage": "Figure5 synthetic stress replay",
+      "reviewer_action": "REGENERATE_DIAGNOSTIC_REPLAY",
+      "reason": "fully synthetic deterministic reconstruction; replay is an audit of the design and is intentionally separated from the frozen manuscript Figure-5 source"
+    },
+    {
+      "stage": "Final submission figures",
+      "reviewer_action": "REGENERATE_FROM_TRACKED_FROZEN_INPUTS",
+      "reason": "all final renderer inputs are repository-relative and SHA-256 verifiable"
+    }
+  ],
+  "reviewer_entry_points": {
+    "strongest_portable_audit": "RUN_REVIEWER_END_TO_END('Strict',true,'RunStressReplay',true)",
+    "final_figures_only": "RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)"
+  }
+}

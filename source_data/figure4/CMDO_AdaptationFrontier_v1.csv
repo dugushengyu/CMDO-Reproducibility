@@ -1,0 +1,9 @@
+cohort,budget,predicted_adaptive_advantage,observed_adaptive_advantage
+Georgia,128,0.065953,0.079285
+Georgia,256,-0.046493,-0.047034
+Georgia,512,-0.259004,-0.265122
+Georgia,1024,-0.256578,-0.253994
+CPSC2018,128,-0.14846,-0.121781
+CPSC2018,256,-0.297085,-0.278424
+CPSC2018,512,-0.233287,-0.232492
+CPSC2018,1024,0.010954,-0.069003

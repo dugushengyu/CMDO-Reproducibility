@@ -1,0 +1,55 @@
+{
+  "validation_date_utc": "2026-09-01T04:53:00Z",
+  "platform": "PCWIN64",
+  "matlab": {
+    "version": "24.2.0.2863752",
+    "release": "R2024b Update 5"
+  },
+  "python": {
+    "major_minor": "3.11",
+    "packages": ["numpy", "pandas", "scipy"],
+    "package_preflight": "PASS"
+  },
+  "fresh_clone": {
+    "branch": "codex/github-native-submission-20260901",
+    "from_github": true,
+    "author_specific_path_scan": "PASS"
+  },
+  "frozen_input_sha256_audit": {
+    "verified": 12,
+    "total": 12,
+    "pass": true
+  },
+  "diagnostic_stress_replay": {
+    "status": "PASS",
+    "note": "faithful deterministic reconstruction, not the authoritative manuscript Figure-5 source",
+    "lambda_le_1_cmdo_minus_ustat_advantage_pp": 1.0929,
+    "lambda_le_1_fraction_cmdo_gt_ustat": 0.80,
+    "qualitative_check": true
+  },
+  "authoritative_figure5": {
+    "source": "source_data/figure5_submission/CMDO_SystemStress_AUC_StateSummary_v1_1.csv",
+    "lambda_le_1_cmdo_minus_ustat_advantage_pp": 1.0817,
+    "lambda_le_1_fraction_cmdo_gt_ustat": 0.80,
+    "critical_lambda_by_budget": {
+      "8":   {"CMDO": 1.0, "Ustat": 1.0, "DeLong": 0.25, "Plugin": 0.75},
+      "16":  {"CMDO": 2.0, "Ustat": 4.0, "DeLong": 0.75, "Plugin": 2.0},
+      "32":  {"CMDO": 4.0, "Ustat": 4.0, "DeLong": 1.5, "Plugin": 2.0},
+      "64":  {"CMDO": 4.0, "Ustat": 4.0, "DeLong": 2.0, "Plugin": 2.0},
+      "128": {"CMDO": 4.0, "Ustat": 4.0, "DeLong": 2.0, "Plugin": 2.0}
+    }
+  },
+  "final_figure_renderers": {
+    "passed": 7,
+    "total": 7,
+    "pass": true
+  },
+  "portability": {
+    "external_repository_dependencies": 0,
+    "external_data_paths": 0,
+    "network_access_during_figure_rendering": 0,
+    "git_clean": true,
+    "portable_reviewer_audit": true
+  },
+  "scope_note": "This validates the reviewer evidence-to-figure pathway from a fresh GitHub clone. It does not claim unrestricted raw-patient-data reruns for sealed or controlled-access stages."
+}
