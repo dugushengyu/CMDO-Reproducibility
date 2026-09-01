@@ -10,11 +10,11 @@ The final manuscript is organized as:
 
 with:
 
-- Figure 1 — conceptual evidential order
-- Figure 2 — ordered theory and mechanism
-- Figure 3 — IDENTIFY
-- Figure 4 — REUSE
-- Figure 5 — PRESERVE
+- Figure 1 — conceptual evidential order and system information flow
+- Figure 2 — IDENTIFY: performance non-identifiability and outcome restoration
+- Figure 3 — REUSE: evidence admissibility across frozen deployment states
+- Figure 4 — PRESERVE: adaptive composability and the adaptation frontier
+- Figure 5 — system advantage: budget-dependent robustness–efficiency operating region
 - Extended Data Figure 1 — developmental falsification of a universal outcome-free route
 - Extended Data Figure 2 — role-separation and coupling-pathway diagnostics
 
