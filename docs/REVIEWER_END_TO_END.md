@@ -19,6 +19,36 @@ The command performs six checks/actions:
 
 Outputs are written under the operating system temporary directory by default, so a successful run does not modify tracked repository files.
 
+## Recorded fresh-clone acceptance
+
+A complete clean-room run passed on 1 September 2026 using:
+
+- Windows / `PCWIN64`
+- MATLAB R2024b Update 5
+- Python 3.11 with NumPy, pandas and SciPy
+- a new temporary clone created directly from GitHub
+
+Recorded acceptance results:
+
+```text
+Frozen tracked inputs verified  : 12/12
+Diagnostic stress replay        : PASS
+Authoritative final figures     : true
+External repository dependencies: 0
+External data paths             : 0
+Network during figure rendering : 0
+Git clean                       : true
+PORTABLE REVIEWER AUDIT         : true
+```
+
+The machine-readable validation record is:
+
+```text
+provenance/reviewer_end_to_end_validation_windows_r2024b_20260901.json
+```
+
+The recorded test establishes fresh-clone/path independence on the stated environment. Cross-platform launchers are included for Windows and macOS/Linux, but compatibility with every possible operating-system/MATLAB/Python combination is not claimed.
+
 ## Required environment
 
 The final figure pathway is MATLAB-based. The strongest end-to-end audit additionally uses Python for the synthetic stress replay.
@@ -72,6 +102,8 @@ scripts/stress_replay/CMDO_SYSTEM_STRESS_AUC_V1_1_DENSELAMBDA_RECONSTRUCTED.py
 
 is a deterministic reconstruction of the lost stress-test program. It generates synthetic data from scratch and provides an independent diagnostic replay, but it is **not** claimed to be byte-identical to the lost 2026-08-31 program and it never overwrites the manuscript Figure-5 source.
 
+The recorded reconstructed replay produced a positive shared-Lambda<=1 CMDO-versus-U-stat advantage (1.0929 percentage points) with CMDO higher in 80% of paired states. The authoritative frozen manuscript Figure-5 source remains the separately locked 1.0817-percentage-point / 80% result.
+
 ## Minimal figure-only route
 
 If a reviewer only wants to regenerate the final figures from the frozen evidence package:
@@ -96,7 +128,3 @@ PORTABLE REVIEWER AUDIT          : true
 ```
 
 The exact platform-dependent local clone path is irrelevant: a GitHub repository must exist somewhere on the reviewer's filesystem after cloning. The portability criterion is that no file outside the clone is required.
-
-## Stronger testing recommendation before submission
-
-The author should execute the command from a second fresh clone and, if possible, on a second operating-system installation or a clean virtual machine. This tests environment portability in addition to path independence. Passing on one Windows installation proves fresh-clone isolation; it does not logically prove compatibility with every possible MATLAB/Python version or every operating system.
