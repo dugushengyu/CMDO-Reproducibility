@@ -11,7 +11,7 @@ function ED2_IntegrityControls_v2(outputDir, repoRoot)
 %   C  Role separation carries a finite-audit cost
 %   D  Locked external mechanism challenge
 %
-% Main Fig. 5 establishes PRESERVE / adaptive composability.
+% Main Fig. 4 establishes PRESERVE / adaptive composability.
 % ED2 provides the detailed mechanistic evidence behind one candidate
 % coupling pathway without treating that pathway as a universal mechanism.
 %
