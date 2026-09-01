@@ -45,6 +45,18 @@ RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)
 
 By default, reviewer outputs are written under the operating-system temporary directory rather than into tracked repository paths.
 
+## Recorded clean-room validation
+
+A fresh GitHub clone was validated on Windows (PCWIN64) with MATLAB R2024b Update 5 and Python 3.11. The run verified all 12 tracked reviewer inputs by SHA-256, regenerated the deterministic synthetic stress replay, rendered all seven final figure targets, used zero external repository/data paths during rendering, and finished Git-clean.
+
+Machine-readable record:
+
+```text
+provenance/reviewer_end_to_end_validation_windows_r2024b_20260901.json
+```
+
+The repository also includes Windows and macOS/Linux fresh-clone launchers under `reviewer_portability/`. Cross-platform launchers are provided by design; the recorded empirical acceptance environment above is Windows R2024b.
+
 ## What 'end-to-end' means here
 
 A generic reviewer computer can reproduce the complete **reviewer evidence-to-figure pathway** from a fresh GitHub clone: byte-verify the frozen derived evidence package, regenerate the fully synthetic diagnostic stress replay, and render the complete final figure set without any author-machine path.
