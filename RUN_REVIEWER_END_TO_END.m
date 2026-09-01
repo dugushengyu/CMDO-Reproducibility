@@ -34,7 +34,7 @@ strict = logical(opt.Strict);
 thisFile = mfilename('fullpath');
 repoRoot = fileparts(thisFile);
 assert(isfolder(fullfile(repoRoot,'.git')) || isfile(fullfile(repoRoot,'README.md')), ...
-    'RUN_REVIEWER_END_TO_END must be run from a CMDO repository clone.');
+    'RUN_REVIEWER_END_TO_END must be run from a CMDO repository clone/archive.');
 
 if strlength(string(opt.OutDir)) == 0
     auditRoot = fullfile(tempdir,'CMDO_reviewer_end_to_end');
@@ -87,7 +87,7 @@ if strict
         strjoin(missingFunctions,', '));
 end
 
-local_scan_active_code(repoRoot,strict);
+local_scan_active_renderers(repoRoot,strict);
 fprintf('  author-specific path scan : PASS\n');
 
 %% 2. Verify tracked frozen records byte-for-byte
@@ -97,7 +97,9 @@ assert(isfile(manifestPath),'Missing reviewer input manifest: %s',manifestPath);
 M = readtable(manifestPath,'TextType','string','VariableNamingRule','preserve');
 verified = false(height(M),1);
 for i = 1:height(M)
-    rel = strrep(char(M.path(i)),'\\',filesep);
+    rel = char(M.path(i));
+    rel = strrep(rel,'\',filesep);
+    rel = strrep(rel,'/',filesep);
     pth = fullfile(repoRoot,rel);
     verified(i) = isfile(pth) && strcmpi(local_sha256(pth),char(M.sha256(i)));
     fprintf('  %-72s %s\n',rel,string(verified(i)));
@@ -123,12 +125,12 @@ fprintf('  synthetic stress replay        : OPTIONAL diagnostic regeneration\n')
 fprintf('\n[4/6] Deterministic stress-test replay\n');
 replay = struct('requested',logical(opt.RunStressReplay),'status','SKIPPED');
 if logical(opt.RunStressReplay)
-    pyExe = local_find_python(char(opt.PythonExecutable));
-    replay.python = pyExe;
+    pyCmd = local_find_python_command(char(opt.PythonExecutable));
+    replay.python = pyCmd;
     scriptPath = fullfile(repoRoot,'scripts','stress_replay', ...
         'CMDO_SYSTEM_STRESS_AUC_V1_1_DENSELAMBDA_RECONSTRUCTED.py');
     assert(isfile(scriptPath),'Missing reconstructed stress replay script.');
-    cmd = sprintf('"%s" "%s" --outdir "%s"',pyExe,scriptPath,replayOut);
+    cmd = sprintf('%s "%s" --outdir "%s"',pyCmd,scriptPath,replayOut);
     [status,out] = system(cmd);
     fprintf('%s\n',out);
     replay.exitStatus = status;
@@ -201,37 +203,35 @@ local_write_json(reportPath,report);
 fprintf('\n============================================================\n');
 fprintf(' CMDO REVIEWER END-TO-END SUMMARY\n');
 fprintf('============================================================\n');
-fprintf('Frozen tracked inputs verified : %d/%d\n', ...
+fprintf('Frozen tracked inputs verified  : %d/%d\n', ...
     report.frozenInputVerified,report.frozenInputCount);
-fprintf('Diagnostic stress replay       : %s\n',string(report.stressReplay.status));
-fprintf('Authoritative final figures    : %s\n',string(report.figurePass));
+fprintf('Diagnostic stress replay        : %s\n',string(report.stressReplay.status));
+fprintf('Authoritative final figures     : %s\n',string(report.figurePass));
 fprintf('External repository dependencies: 0\n');
 fprintf('External data paths             : 0\n');
 fprintf('Network during figure rendering : 0\n');
-fprintf('Git clean                        : %s\n',string(report.gitClean));
-fprintf('PORTABLE REVIEWER AUDIT          : %s\n',string(report.fullPortableAuditPass));
-fprintf('Report                           : %s\n',reportPath);
+fprintf('Git clean                       : %s\n',string(report.gitClean));
+fprintf('PORTABLE REVIEWER AUDIT         : %s\n',string(report.fullPortableAuditPass));
+fprintf('Report                          : %s\n',reportPath);
 fprintf('============================================================\n\n');
 
 end
 
-function local_scan_active_code(repoRoot,strict)
-files = { ...
-    fullfile(repoRoot,'RUN_SUBMISSION_FIGURES.m'); ...
-    fullfile(repoRoot,'RUN_REVIEWER_END_TO_END.m')};
+function local_scan_active_renderers(repoRoot,strict)
+% Scan only active renderer implementation files. Do not scan the audit
+% scripts themselves because the forbidden strings are intentionally listed
+% there as detection patterns.
 subDir = fullfile(repoRoot,'matlab','submission_figures');
 d = dir(fullfile(subDir,'*.m'));
-for i = 1:numel(d)
-    files{end+1,1} = fullfile(d(i).folder,d(i).name); %#ok<AGROW>
-end
-forbidden = {'C:\\Users\\zyx\\','F:\\manuscript manual\\', ...
+forbidden = {'C:\Users\zyx\','F:\manuscript manual\', ...
     'CMDO-U6-WSL-REPLAY','uigetfile(','getenv(''USERPROFILE'')'};
 violations = strings(0,1);
-for i = 1:numel(files)
-    txt = fileread(files{i});
+for i = 1:numel(d)
+    pth = fullfile(d(i).folder,d(i).name);
+    txt = fileread(pth);
     for j = 1:numel(forbidden)
         if contains(txt,forbidden{j})
-            violations(end+1,1) = string(files{i}) + " :: " + string(forbidden{j}); %#ok<AGROW>
+            violations(end+1,1) = string(pth) + " :: " + string(forbidden{j}); %#ok<AGROW>
         end
     end
 end
@@ -240,21 +240,23 @@ if strict
 end
 end
 
-function pyExe = local_find_python(requested)
+function pyCmd = local_find_python_command(requested)
 if strlength(string(requested))>0
-    pyExe = requested;
-    [st,~] = system(sprintf('"%s" --version',pyExe));
-    assert(st==0,'Requested Python executable is not runnable: %s',pyExe);
+    requested = strtrim(requested);
+    [st,~] = system(sprintf('%s --version',requested));
+    assert(st==0,'Requested Python command is not runnable: %s',requested);
+    pyCmd = requested;
     return;
 end
-candidates = {'python3','python'};
 if ispc
     candidates = {'python','py -3'};
+else
+    candidates = {'python3','python'};
 end
 for i = 1:numel(candidates)
     [st,~] = system(sprintf('%s --version',candidates{i}));
     if st==0
-        pyExe = candidates{i};
+        pyCmd = candidates{i};
         return;
     end
 end
