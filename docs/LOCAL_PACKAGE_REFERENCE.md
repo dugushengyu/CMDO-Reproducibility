@@ -1,0 +1,1 @@
+Companion local acceptance package: `CMDO_All_Figures_OneClick_v3.0.zip`. It regenerates stress, passes the generated CSV directly to Figure 5, and then renders the seven current manuscript/ED figures.
