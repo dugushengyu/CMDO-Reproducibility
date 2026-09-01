@@ -1,0 +1,25 @@
+name: reviewer-portability
+
+on:
+  pull_request:
+  push:
+    branches:
+      - codex/reviewer-e2e-portability-20260901
+      - cmdo-submission-reviewer-v1.0-candidate
+
+jobs:
+  static-portability:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python syntax
+        run: python -m py_compile scripts/verify_submission_portability.py reproduction/smoke.py
+      - name: Reviewer submission portability audit
+        run: python scripts/verify_submission_portability.py
