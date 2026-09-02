@@ -38,6 +38,8 @@ FINAL_SCOPE = [
     # Active reviewer-facing renderers and audit entry points
     "RUN_SUBMISSION_FIGURES.m",
     "RUN_REVIEWER_END_TO_END.m",
+    "RUN_P0_FINAL_FREEZE.m",
+    "VERIFY_P0_SUBMISSION_INPUTS.m",
     "matlab/submission_figures/Figure1_IDA_RealData_Final.m",
     "matlab/submission_figures/Figure2_IDENTIFY_Validation.m",
     "matlab/submission_figures/Figure3_REUSE_Validation.m",
@@ -48,6 +50,7 @@ FINAL_SCOPE = [
     "matlab/submission_figures/cmdo_submission_load.m",
     "scripts/stress_replay/CMDO_SYSTEM_STRESS_AUC_V1_1_DENSELAMBDA_RECONSTRUCTED.py",
     "scripts/stress_replay/run_figure5_mc_stability.py",
+    "scripts/build_submission_final_manifest.py",
 ]
 
 
