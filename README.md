@@ -45,6 +45,37 @@ RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)
 
 By default, reviewer outputs are written under the operating-system temporary directory rather than into tracked repository paths.
 
+## Final P0 reproducibility freeze
+
+The final submission freeze adds explicit checks for the manuscript-state changes made after the previous submission tags: the data-driven Figure 4 adaptation frontier, the 185-state admissibility synthesis, and the five-block post-completion Figure 5 Monte Carlo stability diagnostic.
+
+Before creating a new submission tag:
+
+1. Generate the final-scope SHA-256 manifest once:
+
+```powershell
+python scripts/build_submission_final_manifest.py
+```
+
+2. Commit `provenance/submission_final_manifest_v1.csv`.
+3. From a clean checkout of that exact commit, run:
+
+```matlab
+RUN_P0_FINAL_FREEZE('Strict',true,'RunStressReplay',true)
+```
+
+4. Create the submission tag only if the final gate reports `FINAL P0 FREEZE : true` and the worktree remains clean.
+
+`VERIFY_P0_SUBMISSION_INPUTS.m` checks the final scientific-source fingerprints. The final gate also verifies the final SHA-256 manifest and invokes the full reviewer evidence-to-figure audit. The exact commit that passes this gate—not an earlier tag—is the commit that should be cited by the manuscript and Supplementary Information.
+
+The five-block Figure 5 replay is explicitly a post-completion Monte Carlo stability diagnostic. Its tracked summary is under:
+
+```text
+source_data/figure5_submission/diagnostics/
+```
+
+It does not replace the frozen authoritative Figure 5 state summary.
+
 ## Recorded clean-room validation
 
 A fresh GitHub clone was validated on Windows (PCWIN64) with MATLAB R2024b Update 5 and Python 3.11. The run verified all 12 tracked reviewer inputs by SHA-256, regenerated the deterministic synthetic stress replay, rendered all seven final figure targets, used zero external repository/data paths during rendering, and finished Git-clean.
@@ -54,6 +85,8 @@ Machine-readable record:
 ```text
 provenance/reviewer_end_to_end_validation_windows_r2024b_20260901.json
 ```
+
+This record predates the final P0 freeze and therefore remains evidence for the earlier reviewer pathway rather than a substitute for the new `RUN_P0_FINAL_FREEZE` acceptance run.
 
 The repository also includes Windows and macOS/Linux fresh-clone launchers under `reviewer_portability/`. Cross-platform launchers are provided by design; the recorded empirical acceptance environment above is Windows R2024b.
 
@@ -69,13 +102,21 @@ The machine-readable stage-by-stage policy is:
 provenance/reviewer_reexecution_contract_v1.json
 ```
 
-## Final source manifest
+## Final source manifests
 
-Reviewer-facing frozen inputs and their SHA-256 fingerprints are recorded in:
+The earlier reviewer-facing frozen-input manifest is:
 
 ```text
 provenance/submission_github_native_v4_manifest.csv
 ```
+
+The final P0 freeze uses the broader manifest:
+
+```text
+provenance/submission_final_manifest_v1.csv
+```
+
+The latter is generated only after all final-scope source and renderer edits are complete, then committed before the clean-checkout acceptance run.
 
 The central stage inventory through U11 is:
 
@@ -97,6 +138,16 @@ SHA-256:
 30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7
 ```
 
+## Figure 4 source
+
+The reviewer-facing Figure 4 renderer reads the tracked source:
+
+```text
+source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv
+```
+
+The corresponding provenance file records the definitions and aggregate fingerprints used by the adaptation-frontier panel. The renderer no longer embeds the earlier 7-of-8 winner-classification logic.
+
 ## Figure 5 source and replay separation
 
 The authoritative manuscript Figure 5 reads only:
@@ -113,6 +164,12 @@ scripts/stress_replay/
 
 It is a deterministic diagnostic reconstruction of the lost stress-test program and must never overwrite the frozen manuscript Figure-5 source.
 
+The five-block Monte Carlo stability diagnostic is regenerated separately by:
+
+```powershell
+python scripts/stress_replay/run_figure5_mc_stability.py --outdir <OUTPUT_DIRECTORY>
+```
+
 ## Restricted and sealed data
 
 No raw restricted PhysioNet/eICU patient-level records are redistributed. The repository instead tracks the frozen derived records required for the final reviewer-facing figure pathway. Authorized stage-specific reruns remain separate from the default reviewer command.
@@ -122,6 +179,7 @@ No raw restricted PhysioNet/eICU patient-level records are redistributed. The re
 - U11 is a protocol-locked constructive information-closure witness, not an estimate of the real clinical performance of Georgia or CPSC 2018.
 - U10 did not confirm shared-audit coupling as a general mechanism across both external ECG cohorts.
 - Post-completion permutation and role-separation analyses are diagnostics and do not overwrite the locked U10 prospective verdict.
+- The five-block Figure 5 Monte Carlo replay characterizes finite-replicate stability and does not replace or retune the authoritative frozen stress-test summary.
 - U0-U5 are retained as developmental lineage and are not promoted into the final confirmatory chain.
 
 ## Repository policy
@@ -129,4 +187,4 @@ No raw restricted PhysioNet/eICU patient-level records are redistributed. The re
 - Frozen protocols and locked prospective verdicts must not be overwritten.
 - New post-completion analyses must remain explicitly labelled as such.
 - Generated outputs, local caches and raw patient data remain outside Git unless explicitly tracked by policy.
-- Final submission tagging should occur only after a fresh-clone reviewer run passes.
+- Final submission tagging should occur only after a fresh-clone P0 acceptance run passes on the exact commit to be tagged.
