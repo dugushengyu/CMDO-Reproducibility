@@ -17,6 +17,7 @@ T = readtable(src,'VariableNamingRule','preserve');
 FONT='Arial'; FS_AXIS=11.2; FS_TICK=9.6;
 DARK=[0.18 0.18 0.18]; GREY=[0.45 0.45 0.45];
 GREEN=[0.00 0.50 0.18]; RED=[0.88 0.07 0.06]; PURPLE=[0.45 0.18 0.78];
+GROUPCOLORS={PURPLE,GREEN,RED};
 
 %% Panel A data
 order = {'u9b','georgia','cpsc_2018'};
@@ -67,7 +68,7 @@ hR=scatter(axA,xAll,riskAdapt,62,'o','filled','MarkerFaceColor',RED,'MarkerEdgeC
 for g=1:3
     xx=(g-1)*5+(1:4);
     text(axA,mean(xx),1.265,labels{g},'HorizontalAlignment','center','FontName',FONT, ...
-        'FontSize',9.7,'FontWeight','bold','Color',g==1*PURPLE + g==2*GREEN + g==3*RED);
+        'FontSize',9.7,'FontWeight','bold','Color',GROUPCOLORS{g});
 end
 text(axA,13.7,.62,sprintf('adaptive worse: %d/12',adaptiveWorse),'HorizontalAlignment','right', ...
     'FontName',FONT,'FontSize',9.8,'FontWeight','bold','Color',PURPLE);
@@ -90,10 +91,9 @@ plot(axB,[0 mx],[0 mx],'--','Color',GREY,'LineWidth',1.1,'HandleVisibility','off
 G=strcmp(string(B.dataset),'georgia'); P=strcmp(string(B.dataset),'cpsc_2018');
 hG=scatter(axB,Cost(G),Hc(G),62,'s','filled','MarkerFaceColor',GREEN,'MarkerEdgeColor','w','LineWidth',.7);
 hP=scatter(axB,Cost(P),Hc(P),62,'o','filled','MarkerFaceColor',RED,'MarkerEdgeColor','w','LineWidth',.7);
-% aggregate shared-adaptive point
 hAgg=scatter(axB,sharedCost,H,95,'^','MarkerFaceColor','none','MarkerEdgeColor',DARK,'LineWidth',1.7);
-% post-completion pairing-disruption diagnostic: H and A fixed; C reduced
-quiver(axB,sharedCost,H,permCost-sharedCost,0,0,'Color',PURPLE,'LineWidth',1.6,'MaxHeadSize',.35,'HandleVisibility','off');
+quiver(axB,sharedCost,H,permCost-sharedCost,0,0,'Color',PURPLE,'LineWidth',1.6, ...
+    'MaxHeadSize',.35,'HandleVisibility','off');
 hPerm=scatter(axB,permCost,H,78,'d','filled','MarkerFaceColor',PURPLE,'MarkerEdgeColor','w','LineWidth',.7);
 set(axB,'XLim',[0 mx],'YLim',[0 mx],'FontName',FONT,'FontSize',FS_TICK,'TickDir','out','LineWidth',.95);
 axis(axB,'square');
