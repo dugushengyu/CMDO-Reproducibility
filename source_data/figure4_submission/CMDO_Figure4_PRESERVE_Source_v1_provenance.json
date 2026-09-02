@@ -1,0 +1,32 @@
+{
+  "purpose": "Reviewer-facing tracked source for manuscript Figure 4 (PRESERVE)",
+  "panel_A": {
+    "content": "Matched fixed-reuse and adaptive normalized risks for U9B, Georgia and CPSC 2018 across four audit budgets",
+    "fingerprints": {
+      "adaptive_worse_than_matched_fixed": "12/12",
+      "fixed_benefit_to_adaptive_harm": "7/12"
+    },
+    "status": "derived figure-source values retained from the frozen completed analyses"
+  },
+  "panel_B": {
+    "content": "State-wise contributions to heterogeneity opportunity H and allocation-plus-composition cost A+C for eight U10 cohort-budget states",
+    "primary_source": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+    "definitions": {
+      "lambda_i": "B_i^2 / V_i",
+      "w_i_star": "1 / (1 + lambda_i)",
+      "w_global_star": "K / sum_i(1 + lambda_i)",
+      "H_i": "(1 + lambda_i) * (w_i_star - w_global_star)^2",
+      "A_i": "(1 + lambda_i) * (mean_adaptive_weight_i - w_i_star)^2",
+      "C_i": "(adaptive_MSE_i - matched_fixed_mean_weight_MSE_i) / V_i"
+    },
+    "aggregate_fingerprints": {
+      "H": 0.08614018,
+      "A": 0.01403814,
+      "C_shared": 0.21760208,
+      "shared_margin_H_minus_A_minus_C": -0.14550004,
+      "C_pairing_disrupted": 0.03214915,
+      "pairing_disrupted_margin_H_minus_A_minus_C": 0.03995289
+    },
+    "claim_boundary": "Pairing disruption is post-completion mechanism localization, not a prospectively validated repair."
+  }
+}
