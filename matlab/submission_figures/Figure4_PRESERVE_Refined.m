@@ -1,6 +1,6 @@
 function Figure4_PRESERVE_Refined(outputDir)
 %FIGURE4_PRESERVE_REFINED Reviewer-facing Figure 4 renderer.
-% All plotted values are read from a tracked repository source CSV.
+% All plotted scientific values are derived from tracked repository sources.
 
 close all;
 thisFile = mfilename('fullpath');
@@ -9,10 +9,14 @@ repoRoot = fileparts(fileparts(scriptDir));
 if nargin < 1 || isempty(outputDir), outputDir = fullfile(scriptDir,'output'); end
 if ~exist(outputDir,'dir'), mkdir(outputDir); end
 
-src = fullfile(repoRoot,'source_data','figure4_submission', ...
+srcF4 = fullfile(repoRoot,'source_data','figure4_submission', ...
     'CMDO_Figure4_PRESERVE_Source_v1.csv');
-assert(isfile(src),'Missing tracked Figure 4 source CSV: %s',src);
-T = readtable(src,'VariableNamingRule','preserve');
+srcU10 = fullfile(repoRoot,'U10_Prospective_ECG','02_Posthoc_Diagnostics', ...
+    'U10_DEPENDENCE_DECOMPOSITION.csv');
+assert(isfile(srcF4),'Missing tracked Figure 4 source CSV: %s',srcF4);
+assert(isfile(srcU10),'Missing tracked U10 decomposition CSV: %s',srcU10);
+T = readtable(srcF4,'VariableNamingRule','preserve');
+U = readtable(srcU10,'VariableNamingRule','preserve');
 
 FONT='Arial'; FS_AXIS=11.2; FS_TICK=9.6;
 DARK=[0.18 0.18 0.18]; GREY=[0.45 0.45 0.45];
@@ -42,11 +46,24 @@ Hc=double(B.H_contribution); Ac=double(B.A_contribution);
 Cc=double(B.C_contribution); Cost=double(B.cost_contribution);
 assert(max(abs(Cost-(Ac+Cc)))<1e-10,'Figure 4B state-cost closure failed.');
 H=mean(Hc); A=mean(Ac); C=mean(Cc); sharedCost=A+C;
-Cperm=0.03214915; permCost=A+Cperm;
+
+% Pairing-disruption diagnostic is derived directly from the tracked U10
+% decomposition rather than embedded as a plotting constant.
+Up=U(ismember(string(U.dataset),["georgia","cpsc_2018"]),:);
+assert(height(Up)==8,'Expected eight U10 cohort-budget rows for Figure 4B.');
+for g=1:2
+    if g==1, ds="georgia"; else, ds="cpsc_2018"; end
+    S=Up(string(Up.dataset)==ds,:);
+    assert(isequal(sort(double(S.budget(:)))',budgets),'U10 budget mismatch for %s.',ds);
+end
+Cperm=mean((double(Up.shared_permuted_weight_mse) - ...
+            double(Up.shared_constant_mean_mse)) ./ double(Up.direct_mse));
+permCost=A+Cperm;
+
 assert(abs(H-0.08614018)<5e-7,'H fingerprint mismatch.');
 assert(abs(A-0.01403814)<5e-7,'A fingerprint mismatch.');
 assert(abs(C-0.21760208)<5e-7,'C fingerprint mismatch.');
-assert(abs(Cperm-0.03214915)<1e-12,'Pairing-disruption C fingerprint mismatch.');
+assert(abs(Cperm-0.03214915)<5e-7,'Pairing-disruption C fingerprint mismatch.');
 
 %% Figure
 fig=figure('Color','w','Units','pixels','Position',[45 45 1080 420], ...
@@ -116,7 +133,8 @@ drawnow; savefig(fig,figPath);
 exportgraphics(fig,pngPath,'Resolution',300,'BackgroundColor','white');
 exportgraphics(fig,pdfPath,'ContentType','vector','BackgroundColor','white');
 fprintf('\nFIGURE 4 — PRESERVE\n');
-fprintf('Source CSV : %s\n',src);
+fprintf('Figure 4 source : %s\n',srcF4);
+fprintf('U10 source      : %s\n',srcU10);
 fprintf('Adaptive worse than matched fixed : %d/12\n',adaptiveWorse);
 fprintf('Fixed benefit -> adaptive harm    : %d/12\n',benefitToHarm);
 fprintf('H=%.8f  A=%.8f  C=%.8f  H-A-C=%.8f\n',H,A,C,H-A-C);
