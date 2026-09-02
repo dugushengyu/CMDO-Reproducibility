@@ -1,0 +1,14 @@
+{
+  "analysis_type": "post-completion Monte Carlo stability diagnostic",
+  "authoritative_figure5_replaced": false,
+  "reconstructed_script": "scripts/stress_replay/CMDO_SYSTEM_STRESS_AUC_V1_1_DENSELAMBDA_RECONSTRUCTED.py",
+  "source_commit_for_replay": "9594b0ea72d5aa2283525617fc8d01a394f77610",
+  "calibration_replicates_per_cell": 500,
+  "evaluation_replicates_per_state_per_block": 200,
+  "blocks": 5,
+  "evaluation_seed_offsets": [10000000000,20000000000,30000000000,40000000000,50000000000],
+  "calibration_seed_schedule_held_fixed": true,
+  "result_summary_csv": "CMDO_Figure5_MC_Stability_5x200.csv",
+  "conclusion": "Exact complete-non-inferiority boundaries varied across replay blocks; CMDO and U-stat had identical all-budget boundaries in all five blocks, while the CMDO-U-stat efficiency advantage was 1.0918-1.1010 percentage points and CMDO was more efficient in 80% of matched states in each block.",
+  "claim_boundary": "Diagnostic replay only; does not overwrite or redefine the frozen authoritative Figure 5 state summary."
+}
