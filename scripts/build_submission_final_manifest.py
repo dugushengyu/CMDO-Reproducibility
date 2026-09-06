@@ -21,9 +21,11 @@ FINAL_SCOPE = [
     "source_data/submission_frozen/StageU7_Metric_Summary_v1.0.csv",
     # Figure 3 admissibility synthesis
     "source_data/figure6_admissibility/CMDO_Admissibility_State_MSE_Audit.csv",
-    # Figure 4 PRESERVE
+    # Figure 4 PRESERVE and exact-U10 Supplementary check
     "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv",
     "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1_provenance.json",
+    "source_data/figure4_submission/U10_ExactFiniteCohort_Check_v1.csv",
+    "source_data/figure4_submission/U10_ExactFiniteCohort_Check_v1_provenance.json",
     "U10_Prospective_ECG/01_Prospective_Result/U10_PRIMARY_RESULT.json",
     "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
     # Figure 5 authoritative and stability diagnostic
@@ -37,6 +39,8 @@ FINAL_SCOPE = [
     "U11_Information_Closure/01_Result/U11_WORLD_MINUS_cpsc_2018_v0.1.csv",
     # Active reviewer-facing renderers and audit entry points
     "RUN_SUBMISSION_FIGURES.m",
+    "RUN_SUBMISSION_REPRO_CHECKS.m",
+    "RUN_U10_EXACT_FINITE_COHORT_CHECK.m",
     "RUN_REVIEWER_END_TO_END.m",
     "RUN_P0_FINAL_FREEZE.m",
     "VERIFY_P0_SUBMISSION_INPUTS.m",
