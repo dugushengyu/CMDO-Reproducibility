@@ -20,15 +20,23 @@ with:
 
 ## Reviewer entry points
 
-### Strongest portable reviewer audit
+### Combined submission check
 
-From a fresh clone, run:
+From a fresh clone of the frozen submission tag, run:
+
+```matlab
+RUN_SUBMISSION_REPRO_CHECKS('Strict',true)
+```
+
+This regenerates all seven manuscript/Extended Data figure targets and verifies the exact finite-cohort U10 diagnostic reported in Supplementary Note 6.
+
+### Strongest portable reviewer audit
 
 ```matlab
 RUN_REVIEWER_END_TO_END('Strict',true,'RunStressReplay',true)
 ```
 
-This verifies all tracked frozen reviewer inputs by SHA-256, runs the deterministic reconstructed synthetic stress replay, regenerates Figure 1-5 plus Extended Data Figure 1-2, and performs path/output/Git-clean checks.
+This verifies the tracked frozen reviewer inputs by SHA-256, runs the deterministic reconstructed synthetic stress replay, regenerates Figure 1-5 plus Extended Data Figure 1-2, and performs path/output/Git-clean checks.
 
 Detailed scope and environment requirements are documented in:
 
@@ -45,9 +53,17 @@ RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)
 
 By default, reviewer outputs are written under the operating-system temporary directory rather than into tracked repository paths.
 
+### Exact U10 finite-cohort Supplementary diagnostic only
+
+```matlab
+RUN_U10_EXACT_FINITE_COHORT_CHECK('VerifyOnly',true,'Strict',true)
+```
+
+This check is conditional on the frozen U10 binary correctness rosters and locked scalar shared-audit rule. It is a post-completion diagnostic and does not alter the prespecified U10 mechanism verdict.
+
 ## Final P0 reproducibility freeze
 
-The final submission freeze adds explicit checks for the manuscript-state changes made after the previous submission tags: the data-driven Figure 4 adaptation frontier, the 185-state admissibility synthesis, and the five-block post-completion Figure 5 Monte Carlo stability diagnostic.
+The final submission freeze adds explicit checks for the manuscript-state changes made after the previous submission tags: the corrected common-empirical-risk Figure 4 adaptation frontier, the 185-state admissibility synthesis, the exact finite-cohort U10 Supplementary diagnostic, and the five-block post-completion Figure 5 Monte Carlo stability diagnostic.
 
 Before creating a new submission tag:
 
@@ -58,13 +74,19 @@ python scripts/build_submission_final_manifest.py
 ```
 
 2. Commit `provenance/submission_final_manifest_v1.csv`.
-3. From a clean checkout of that exact commit, run:
+3. From a clean checkout of that exact commit, first run the combined submission check:
+
+```matlab
+RUN_SUBMISSION_REPRO_CHECKS('Strict',true)
+```
+
+4. Then run the full final gate:
 
 ```matlab
 RUN_P0_FINAL_FREEZE('Strict',true,'RunStressReplay',true)
 ```
 
-4. Create the submission tag only if the final gate reports `FINAL P0 FREEZE : true` and the worktree remains clean.
+5. Create the submission tag only if the combined submission check passes, the final gate reports `FINAL P0 FREEZE : true`, and the worktree remains clean.
 
 `VERIFY_P0_SUBMISSION_INPUTS.m` checks the final scientific-source fingerprints. The final gate also verifies the final SHA-256 manifest and invokes the full reviewer evidence-to-figure audit. The exact commit that passes this gate—not an earlier tag—is the commit that should be cited by the manuscript and Supplementary Information.
 
@@ -78,7 +100,7 @@ It does not replace the frozen authoritative Figure 5 state summary.
 
 ## Recorded clean-room validation
 
-A fresh GitHub clone was validated on Windows (PCWIN64) with MATLAB R2024b Update 5 and Python 3.11. The run verified all 12 tracked reviewer inputs by SHA-256, regenerated the deterministic synthetic stress replay, rendered all seven final figure targets, used zero external repository/data paths during rendering, and finished Git-clean.
+A previous fresh GitHub clone was validated on Windows (PCWIN64) with MATLAB R2024b Update 5 and Python 3.11. That earlier run verified 12 tracked reviewer inputs by SHA-256, regenerated the deterministic synthetic stress replay, rendered all seven final figure targets, used zero external repository/data paths during rendering, and finished Git-clean.
 
 Machine-readable record:
 
@@ -86,7 +108,7 @@ Machine-readable record:
 provenance/reviewer_end_to_end_validation_windows_r2024b_20260901.json
 ```
 
-This record predates the final P0 freeze and therefore remains evidence for the earlier reviewer pathway rather than a substitute for the new `RUN_P0_FINAL_FREEZE` acceptance run.
+This record predates the final P0 freeze and the exact-U10 addition. It remains evidence for the earlier reviewer pathway rather than a substitute for the new final acceptance run.
 
 The repository also includes Windows and macOS/Linux fresh-clone launchers under `reviewer_portability/`. Cross-platform launchers are provided by design; the recorded empirical acceptance environment above is Windows R2024b.
 
@@ -116,7 +138,7 @@ The final P0 freeze uses the broader manifest:
 provenance/submission_final_manifest_v1.csv
 ```
 
-The latter is generated only after all final-scope source and renderer edits are complete, then committed before the clean-checkout acceptance run.
+The latter is generated only after all final-scope source and renderer edits are complete, then committed before the clean-checkout acceptance run. The current manifest builder includes 42 final-scope entries, including the exact-U10 result/provenance and its reviewer-facing verification entry points.
 
 The central stage inventory through U11 is:
 
@@ -138,15 +160,38 @@ SHA-256:
 30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7
 ```
 
-## Figure 4 source
+## Figure 4 authoritative inputs and audit snapshot
 
-The reviewer-facing Figure 4 renderer reads the tracked source:
+The reviewer-facing Figure 4 renderer recomputes Panel A/B from tracked frozen completed-analysis records, principally:
+
+```text
+source_data/figure6_admissibility/U9B_external_composability_decomposition.csv
+U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv
+```
+
+The corrected reviewer-facing audit snapshot and provenance are retained at:
 
 ```text
 source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv
+source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1_provenance.json
 ```
 
-The corresponding provenance file records the definitions and aggregate fingerprints used by the adaptation-frontier panel. The renderer no longer embeds the earlier 7-of-8 winner-classification logic.
+The provenance records the common empirical-risk definition and corrected aggregate fingerprints used by the adaptation-frontier panel.
+
+## Exact U10 finite-cohort diagnostic
+
+The tracked exact statewise calculation and provenance are:
+
+```text
+source_data/figure4_submission/U10_ExactFiniteCohort_Check_v1.csv
+source_data/figure4_submission/U10_ExactFiniteCohort_Check_v1_provenance.json
+```
+
+The reviewer-facing calculation is regenerated and checked against those records by:
+
+```matlab
+RUN_U10_EXACT_FINITE_COHORT_CHECK('VerifyOnly',true,'Strict',true)
+```
 
 ## Figure 5 source and replay separation
 
@@ -178,7 +223,7 @@ No raw restricted PhysioNet/eICU patient-level records are redistributed. The re
 
 - U11 is a protocol-locked constructive information-closure witness, not an estimate of the real clinical performance of Georgia or CPSC 2018.
 - U10 did not confirm shared-audit coupling as a general mechanism across both external ECG cohorts.
-- Post-completion permutation and role-separation analyses are diagnostics and do not overwrite the locked U10 prospective verdict.
+- Post-completion permutation, role-separation and exact finite-cohort analyses are diagnostics and do not overwrite the locked U10 prospective verdict.
 - The five-block Figure 5 Monte Carlo replay characterizes finite-replicate stability and does not replace or retune the authoritative frozen stress-test summary.
 - U0-U5 are retained as developmental lineage and are not promoted into the final confirmatory chain.
 
