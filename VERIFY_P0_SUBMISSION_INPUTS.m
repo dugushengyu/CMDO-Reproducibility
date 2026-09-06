@@ -39,24 +39,70 @@ report.u10Rows=height(U);
 report.u10RowCountPass=(height(U)==8);
 fprintf('U10 decomposition rows              : %d\n',height(U));
 
+% Panel-A 12-state fingerprints come from the tracked snapshot.
 fixed=double(T.fixed_risk); adaptive=double(T.adaptive_risk);
 report.figure4AdaptiveWorse=nnz(adaptive>fixed);
 report.figure4BenefitToHarm=nnz((fixed<1)&(adaptive>1));
 
-Btab=T(ismember(string(T.dataset),["georgia","cpsc_2018"]),:);
-H=mean(double(Btab.H_contribution));
-A=mean(double(Btab.A_contribution));
-C=mean(double(Btab.C_contribution));
+% Recompute the corrected empirical Panel-B frontier directly from the
+% authoritative U10 decomposition, using exactly the same common empirical
+% risk measure as the final renderer.
+u10B=double(U.B);
+u10V=double(U.direct_mse);
+u10MeanW=double(U.shared_constant_mean_weight);
+u10FixedMSE=double(U.shared_constant_mean_mse);
+
+u10Lambda=(u10B.^2)./u10V;
+fixedRiskAtMean=u10FixedMSE./u10V;
+denQ=2.*u10MeanW.*(1-u10MeanW);
+assert(all(abs(denQ)>1e-12),'Cannot reconstruct Figure 4 empirical cross-term.');
+
+u10Q=(fixedRiskAtMean-(1-u10MeanW).^2-u10Lambda.*u10MeanW.^2)./denQ;
+quadTerm=1+u10Lambda-2*u10Q;
+linearGain=1-u10Q;
+assert(all(isfinite(quadTerm)&quadTerm>0), ...
+    'Figure 4 empirical fixed-risk quadratic is not convex in all U10 states.');
+
+u10Wstar=min(1,max(0,linearGain./quadTerm));
+wGlobal=min(1,max(0,mean(linearGain,'omitnan')/mean(quadTerm,'omitnan')));
+riskEmp=@(w) (1-w).^2 + u10Lambda.*w.^2 + 2.*w.*(1-w).*u10Q;
+
+riskStar=riskEmp(u10Wstar);
+riskGlobal=riskEmp(wGlobal.*ones(size(u10MeanW)));
+riskMeanW=riskEmp(u10MeanW);
+
+Hi=riskGlobal-riskStar;
+Ai=riskMeanW-riskStar;
+Ci=(double(U.shared_adaptive_mse)-u10FixedMSE)./u10V;
+
+H=mean(Hi,'omitnan');
+A=mean(Ai,'omitnan');
+C=mean(Ci,'omitnan');
 report.H=H; report.A=A; report.C=C;
 report.sharedMargin=H-A-C;
 
-% Reconstruct pairing-disruption composition excess directly from the
+% Reconstruct pairing-disruption composition excess directly from the same
 % authoritative tracked U10 post-completion decomposition.
-Up=U(ismember(string(U.dataset),["georgia","cpsc_2018"]),:);
-assert(height(Up)==8,'Expected eight U10 cohort-budget rows.');
-report.pairingDisruptedC=mean((double(Up.shared_permuted_weight_mse) - ...
-    double(Up.shared_constant_mean_mse)) ./ double(Up.direct_mse));
+report.pairingDisruptedC=mean((double(U.shared_permuted_weight_mse) - ...
+    u10FixedMSE)./u10V,'omitnan');
 report.pairingDisruptedMargin=H-A-report.pairingDisruptedC;
+
+% The tracked Figure-4 audit snapshot must agree statewise with the
+% authoritative reconstruction for all eight Georgia/CPSC states.
+Btab=T(ismember(string(T.dataset),["georgia","cpsc_2018"]),:);
+Btab=sortrows(Btab,{'dataset','budget'});
+Us=table(string(U.dataset),double(U.budget),Hi,Ai,Ci,Ai+Ci, ...
+    'VariableNames',{'dataset','budget','H','A','C','cost'});
+Us=sortrows(Us,{'dataset','budget'});
+
+snapH=double(Btab.H_contribution);
+snapA=double(Btab.A_contribution);
+snapC=double(Btab.C_contribution);
+snapCost=double(Btab.cost_contribution);
+report.figure4SnapshotResidual=max([ ...
+    abs(snapH-Us.H); abs(snapA-Us.A); abs(snapC-Us.C); abs(snapCost-Us.cost)], ...
+    [],'all','omitnan');
+report.figure4SnapshotPass=report.figure4SnapshotResidual<5e-10;
 
 okF4 = report.figure4AdaptiveWorse==12 && ...
        report.figure4BenefitToHarm==7 && ...
@@ -65,11 +111,13 @@ okF4 = report.figure4AdaptiveWorse==12 && ...
        abs(C-0.21760208)<5e-7 && ...
        abs(report.sharedMargin+0.14982008)<5e-7 && ...
        abs(report.pairingDisruptedC-0.03214915)<5e-7 && ...
-       abs(report.pairingDisruptedMargin-0.03563284)<5e-7;
+       abs(report.pairingDisruptedMargin-0.03563284)<5e-7 && ...
+       report.figure4SnapshotPass;
 report.figure4FingerprintPass=okF4;
 fprintf('Figure 4 corrected fingerprints     : %s\n',string(okF4));
 fprintf('Figure 4 H / A / C                  : %.8f / %.8f / %.8f\n',H,A,C);
 fprintf('Pairing-disruption C from U10       : %.8f\n',report.pairingDisruptedC);
+fprintf('Figure 4 snapshot max residual      : %.3e\n',report.figure4SnapshotResidual);
 
 %% Exact finite-cohort U10 Supplementary diagnostic
 try
