@@ -1,19 +1,24 @@
 {
-  "purpose": "Reviewer-facing tracked provenance for manuscript Figure 4 (PRESERVE)",
+  "purpose": "Reviewer-facing tracked audit snapshot and provenance for manuscript Figure 4 (PRESERVE)",
   "analysis_revision": "common-empirical-risk correction adopted after post-completion consistency audit",
+  "renderer": "matlab/submission_figures/Figure4_PRESERVE_Refined.m",
   "panel_A": {
     "content": "Matched fixed-reuse and adaptive normalized risks for U9B, Georgia and CPSC 2018 across four audit budgets",
-    "primary_source": "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv",
+    "authoritative_renderer_inputs": [
+      "source_data/figure6_admissibility/U9B_external_composability_decomposition.csv",
+      "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv"
+    ],
+    "audit_snapshot": "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv",
     "fingerprints": {
       "adaptive_worse_than_matched_fixed": "12/12",
       "fixed_benefit_to_adaptive_harm": "7/12"
     },
-    "status": "derived figure-source values retained from the frozen completed analyses"
+    "status": "derived from frozen completed analyses; the audit snapshot is retained for review but the renderer recomputes from the authoritative tracked inputs"
   },
   "panel_B": {
     "content": "State-wise contributions to heterogeneity opportunity H and allocation-plus-composition cost A+C for eight U10 cohort-budget states, plus post-completion pairing-disruption and role-separated diagnostics",
-    "frontier_source": "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv",
-    "pairing_diagnostic_source": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+    "authoritative_renderer_input": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+    "audit_snapshot": "source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv",
     "risk_measure": "All fixed and adaptive risks use the same frozen 200-replicate empirical measure. For state k, V_k is the empirical second moment of direct-estimation error, mu_k is its empirical mean error, B_k is historical-minus-current target performance, and fixed-weight normalized risk is r_emp,k(w)=[(1-w)^2 V_k + w^2 B_k^2 + 2w(1-w)B_k mu_k]/V_k.",
     "definitions": {
       "lambda_k": "B_k^2 / V_k",
