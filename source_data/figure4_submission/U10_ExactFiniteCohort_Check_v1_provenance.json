@@ -1,0 +1,25 @@
+{
+  "purpose": "Reviewer-facing exact finite-cohort check for the locked U10 scalar shared-audit rule reported in Supplementary Note 6",
+  "authoritative_input": "U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv",
+  "reproduction_entry_point": "RUN_U10_EXACT_FINITE_COHORT_CHECK('VerifyOnly',true,'Strict',true)",
+  "sampling_model": "For each frozen cohort-budget state, X follows the exact hypergeometric distribution Hypergeom(N,K,m) with K=round(N*theta), and D=X/m.",
+  "locked_rule": {
+    "variance_proxy": "Vhat=max(D*(1-D)/m,1e-8)",
+    "adaptive_weight": "W=min(0.35,Vhat/(Vhat+(D-H)^2))",
+    "adaptive_estimator": "(1-W)*D + W*H"
+  },
+  "fixed_comparator": "Uses the exact marginal mean adaptive weight in each state but does not adapt to the realized audit draw.",
+  "cross_state_decomposition": "Exact fixed-weight risk uses the finite-population direct variance V=theta*(1-theta)/m*(N-m)/(N-1), B=H-theta, state-specific w*=1/(1+B^2/V), and the best equal-state global fixed weight. H, A and C are then evaluated on the same normalized exact-risk scale.",
+  "aggregate_fingerprints": {
+    "H": 0.0893981749753321,
+    "A": 0.0136448603600676,
+    "C_shared": 0.219749173064403,
+    "shared_margin_H_minus_A_minus_C": -0.143995858449139,
+    "adaptive_worse_than_matched_fixed": "8/8",
+    "fixed_benefit_to_adaptive_harm": "5/8",
+    "C_independent_weight": 0.0310440794801617,
+    "independent_weight_margin_H_minus_A_minus_C": 0.0447092351351028
+  },
+  "independent_weight_control": "Preserves each state's exact marginal weight distribution while making the weight independent of direct-estimation error; this is an idealized mechanism-localization calculation, not a prospective repaired observer.",
+  "claim_boundary": "This conditional exact calculation applies only to the frozen U10 binary correctness rosters and locked scalar shared-audit rule. It does not change the prespecified U10 mechanism verdict and is not a universal adaptive-safety result."
+}
