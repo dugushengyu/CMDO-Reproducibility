@@ -1,50 +1,77 @@
-# Manuscript reframing trigger
+# Manuscript reframing trigger — v2 status
 
-This branch must not create an endless sequence of incremental manuscript upgrades. The current submission manuscript remains the baseline unless the theory crosses the threshold below.
+This branch must not create an endless sequence of incremental manuscript upgrades. The current submission manuscript remains the frozen baseline unless the theory changes the scientific identity of PRESERVE.
 
-## Do NOT reframe the manuscript if the branch ends with only
+## Do NOT reframe the manuscript for additive results only
+
+Do not reopen the paper merely for:
 
 - the ordinary fixed-weight bias–variance identity;
-- the role-separated safe cap `2/(1+Lambda)`;
+- the role-separated cap `2/(1+Lambda)`;
 - a post-completion explanation of U10 coupling;
 - another simulation showing that adaptive weights can hurt;
-- a certificate that is formally valid but operationally vacuous at realistic budgets.
+- sample splitting by itself;
+- a formally valid but operationally vacuous certificate.
 
-Those are useful supporting results, but they would be additive rather than identity-changing.
+Those would be supporting material, not a new novelty identity.
 
-## Reframe PRESERVE if both A and B are established
+## Threshold A — structural same-audit impossibility
 
-### A. Structural impossibility
+Required result:
 
-A general theorem establishes that no non-zero borrowing-magnitude cap alone can guarantee MSE non-inferiority under unrestricted same-audit adaptation, even when every fixed weight under the same cap is non-inferior.
+> a general theorem showing that borrowing-magnitude control alone cannot guarantee finite-sample MSE no-harm under unrestricted same-audit adaptation, even when all corresponding fixed weights are safe.
 
-Current status: **proved in THEORY_RESULT_V1, pending literature audit**.
+**Status: passed.** `THEORY_RESULT_V2.md` gives a bounded construction valid for every `0<omega<=1`, and in that construction every fixed convex weight `0<w<=1` is beneficial while the same-audit `{0,omega}` rule is harmful.
 
-### B. Constructive finite-sample certifiability
+## Threshold B — constructive finite-sample possibility
 
-An observable, non-oracle certificate is proved from current evidence, with a clearly stated finite-sample probability guarantee and without target-truth leakage.
+Required result:
 
-Current status: **proved under honest role separation in THEORY_RESULT_V1; operational non-vacuity remains unresolved**.
+> an observable non-oracle finite-sample certificate based on current evidence, with no target-truth leakage.
 
-## Reframe the whole paper only if C is also established
+**Status: passed in principle, but not as a practical full-budget method.** Honest role separation plus a finite-sample confidence set yields a `1-alpha` conditional MSE certificate relative to evaluation-only direct estimation.
 
-### C. Same-total-budget boundary with practical content
+## Threshold C — fair same-total-budget boundary
 
-Either:
+Required result:
 
-1. the full-budget certifiability boundary is shown to be non-vacuous for a meaningful range of realistic deployment states; or
-2. a stronger impossibility result shows that the safety–information trade-off itself is fundamental, and a dependence-controlled construction is provided that materially reduces the simple split tax.
+> a theorem characterizing when the protection mechanism itself destroys the information gain needed to beat a direct estimator using the full current-outcome budget.
 
-Current status: **analytic boundary proved; simple exact-confidence-set split appears potentially too conservative and requires explicit probe**.
+**Status: passed analytically.** In the iid sample-mean problem, full-budget role-separated convex reuse is feasible iff historical bias lies within one decision-audit standard error. The maximally tolerant weight is `w=m_s/M`.
 
-## Potential revised novelty if A+B+C survive
+## Threshold D — demonstrate that the boundary is scientifically consequential, not a quadratic curiosity
 
-The paper would no longer end at the statement that fixed-use evidence value can be lost under adaptation. The final novelty would become:
+Required result:
 
-> Post-deployment evaluation has an evidential order, and adaptive historical evidence has a finite-sample certifiability boundary: magnitude control alone cannot guarantee safe reuse under same-audit adaptation; finite-sample certification becomes possible only when the information supporting reuse is separated or otherwise dependence-controlled, and only when the certified historical-information gain is large enough to pay the information cost of that protection.
+> show that high-confidence certification of the full-budget-safe region is genuinely information-limited.
 
-This would turn PRESERVE from a failure diagnosis into an impossibility/possibility theory.
+**Status: passed in a canonical benchmark.** In the exact Gaussian decision-audit model, every level-5% certification rule has perfect-match certification probability at most about 8.23%. The simple exact-binomial 95% confidence-set construction also had zero trigger probability across the U10-like probe grid.
 
-## Stop rule
+## Current manuscript decision
 
-If the non-oracle full-budget certificate is vacuous over realistic regimes and no sharper dependence-controlled construction can be proved, do not reopen the manuscript narrative. Keep the result as a theory note / Supplementary possibility boundary and submit the existing manuscript.
+The branch has now crossed the **scientific reframing threshold** for PRESERVE. The remaining question is editorial/architectural, not whether another theorem is needed:
+
+> Can the certifiability trilemma replace and deepen the existing PRESERVE theory without introducing a fourth conceptual stage or overwhelming the main text?
+
+If yes, reopen the manuscript and rewrite PRESERVE around the finite-sample certifiability boundary.
+
+If no, keep v2 as a Supplementary/theory note and submit the current manuscript unchanged.
+
+## Protected revised novelty
+
+If integrated, the novelty should be framed as:
+
+> Post-deployment evaluation has an evidential order. After current performance becomes identifiable and historical evidence is shown to have fixed-use value, adaptive reuse faces a finite-sample certifiability boundary: magnitude control alone cannot protect same-audit adaptation, while creating independent evidence for safety consumes current-outcome information and can make fair full-budget reuse statistically uncertifiable.
+
+This is an upgrade of **PRESERVE**, not a fourth stage.
+
+## Priority-language constraint
+
+Even after integration, do not claim:
+
+- the first finite-sample theory of adaptive borrowing;
+- the first historical-borrowing safety result;
+- universal impossibility for all data-fusion estimators;
+- universal no-harm.
+
+The defensible novelty is the combined certifiability boundary for completed historical performance evidence in post-deployment evaluation.
