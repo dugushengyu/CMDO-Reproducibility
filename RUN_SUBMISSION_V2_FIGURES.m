@@ -1,4 +1,4 @@
-function RUN_CMDO_PCC_FIGURES(varargin)
+function RUN_SUBMISSION_V2_FIGURES(varargin)
 p=inputParser;
 addParameter(p,'RepoRoot',fullfile(getenv('USERPROFILE'),'CMDO-Reproducibility'),@(x)ischar(x)||isstring(x));
 addParameter(p,'OutDir','',@(x)ischar(x)||isstring(x));
