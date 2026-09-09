@@ -72,6 +72,7 @@ V2_SCOPE = [
     # Submission-v2 audit/provenance/documentation controls
     "scripts/verify_submission_v2_science.py",
     "scripts/build_submission_v2_manifest.py",
+    "scripts/verify_submission_v2_manifest.py",
     "provenance/stage_registry.json",
     "docs/SUBMISSION_V2_FREEZE_SCOPE_20260909.md",
     "README.md",
