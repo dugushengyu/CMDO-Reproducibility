@@ -76,6 +76,8 @@ V2_SCOPE = [
     "provenance/stage_registry.json",
     "docs/SUBMISSION_V2_FREEZE_SCOPE_20260909.md",
     "README.md",
+    ".gitattributes",
+    ".github/workflows/static-integrity.yml",
 ]
 
 
