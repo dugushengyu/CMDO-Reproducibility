@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Static scientific-integrity checks for the CMDO submission-v2 freeze.
 
-This verifier is intentionally independent of MATLAB.  It checks frozen
-source/provenance records and claim boundaries before the graphical
-fresh-clone acceptance run.  It does not re-run sealed prospective stages.
+This verifier is intentionally independent of MATLAB. It checks frozen
+source/provenance records, submission-v2 display wiring and claim boundaries
+before the graphical fresh-clone acceptance run. It does not re-run sealed
+prospective stages.
 """
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import math
 from collections import Counter
@@ -25,6 +27,26 @@ EXPECTED_FAILED_GATES = {
     "stable_decision_cost_reduction",
     "max_budget_correct_resolution_noninferiority",
 }
+EXPECTED_PCC_SHA256 = {
+    "matlab/submission_figures/Figure1_Evidential_Order_PCC.m": "f89e5bdd36307fc08d0b0b9fd0fc08d0b07bd62409156c1aaacbc0ca1df76a76",
+    "source_data/pcc/CMDO_185_realized_projection.csv": "90d391bb0a2656ed780f516deb3d85037620a150cca94e1af05fcc0c97a902d3",
+    "source_data/pcc/PCC_frontier_classified.csv": "f707921c346375d99ea1520d3f5cb756091882c50714399bf865f44e16d8bc7d",
+}
+REQUIRED_SUBMISSION_V2_FILES = [
+    "RUN_SUBMISSION_V2_FIGURES.m",
+    "matlab/submission_figures/Figure1_Evidential_Order_PCC.m",
+    "matlab/submission_figures/Figure2_IDENTIFY_Validation.m",
+    "matlab/submission_figures/Figure3_REUSE_Refined.m",
+    "matlab/submission_figures/Figure4_CERTIFY.m",
+    "matlab/submission_figures/Figure5_PRESERVE_PCC.m",
+    "matlab/submission_figures/ED1_OutcomeFreeBoundary_v9.m",
+    "matlab/submission_figures/ED2_IntegrityControls_v2.m",
+    "matlab/submission_figures/ED3_RobustnessEfficiency_v1.m",
+    "source_data/pcc/CMDO_185_realized_projection.csv",
+    "source_data/pcc/PCC_frontier_classified.csv",
+    "source_data/pcc/PCC_scaling_summary_v12.csv",
+    "source_data/pcc/CMDO_U9_REUSE_PRESERVE_bridge.csv",
+]
 
 
 def fail(msg: str) -> None:
@@ -35,6 +57,14 @@ def close(a: float, b: float, tol: float = 1e-10) -> bool:
     return math.isclose(float(a), float(b), rel_tol=0.0, abs_tol=tol)
 
 
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def read_csv(path: Path) -> list[dict[str, str]]:
     if not path.is_file():
         fail(f"missing required CSV: {path.relative_to(ROOT)}")
@@ -42,20 +72,24 @@ def read_csv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(fh))
 
 
-def check_185_state_freeze() -> None:
-    path = ROOT / "source_data" / "figure6_admissibility" / "CMDO_Admissibility_State_MSE_Audit.csv"
-    rows = read_csv(path)
+def assert_185_stage_counts(rows: list[dict[str, str]], label: str) -> None:
     if len(rows) != 185:
-        fail(f"185-state synthesis changed: expected 185 rows, found {len(rows)}")
-    if "stage" not in rows[0]:
-        fail("185-state synthesis has no stage column")
+        fail(f"{label} changed: expected 185 rows, found {len(rows)}")
+    if not rows or "stage" not in rows[0]:
+        fail(f"{label} has no stage column")
     counts = Counter(r["stage"].strip() for r in rows)
     for stage, n in EXPECTED_185_COUNTS.items():
         if counts.get(stage, 0) != n:
-            fail(f"185-state stage count changed for {stage}: expected {n}, found {counts.get(stage, 0)}")
+            fail(f"{label} stage count changed for {stage}: expected {n}, found {counts.get(stage, 0)}")
     unexpected = {k: v for k, v in counts.items() if k not in EXPECTED_185_COUNTS}
     if unexpected:
-        fail(f"unexpected stages in frozen 185-state synthesis: {unexpected}")
+        fail(f"unexpected stages in {label}: {unexpected}")
+
+
+def check_185_state_freeze() -> None:
+    path = ROOT / "source_data" / "figure6_admissibility" / "CMDO_Admissibility_State_MSE_Audit.csv"
+    rows = read_csv(path)
+    assert_185_stage_counts(rows, "185-state synthesis")
     print("PASS 185-state synthesis: 80 U6 + 80 U7 + 12 U8 + 9 U9A + 4 U9B = 185")
 
 
@@ -153,12 +187,71 @@ def check_u10_lock() -> None:
     print(f"PASS U10 locked verdict: {EXPECTED_U10_VERDICT}")
 
 
+def check_pcc_and_display_wiring() -> None:
+    missing = [rel for rel in REQUIRED_SUBMISSION_V2_FILES if not (ROOT / rel).is_file()]
+    if missing:
+        fail("missing submission-v2 file(s): " + ", ".join(missing))
+
+    for rel, expected in EXPECTED_PCC_SHA256.items():
+        actual = sha256(ROOT / rel)
+        if actual != expected:
+            fail(f"frozen PCC file SHA changed for {rel}: {actual}")
+
+    projection = read_csv(ROOT / "source_data" / "pcc" / "CMDO_185_realized_projection.csv")
+    assert_185_stage_counts(projection, "PCC completed-state projection")
+
+    frontier = read_csv(ROOT / "source_data" / "pcc" / "PCC_frontier_classified.csv")
+    if not frontier:
+        fail("PCC frontier is empty")
+    required_frontier_columns = {
+        "AUC_true", "h_hist", "mismatch", "m_application", "C_labels",
+        "max_labels_tested", "Vmin", "rho", "robust_oracle_cap", "status",
+    }
+    if not required_frontier_columns.issubset(frontier[0].keys()):
+        fail("PCC frontier columns changed")
+    statuses = {r["status"] for r in frontier}
+    if "finite_within_grid" not in statuses:
+        fail("PCC frontier has no finite_within_grid states")
+
+    runner = (ROOT / "RUN_SUBMISSION_V2_FIGURES.m").read_text(encoding="utf-8")
+    expected_calls = [
+        "Figure1_Evidential_Order_PCC",
+        "Figure2_IDENTIFY_Validation",
+        "Figure3_REUSE_Refined",
+        "Figure4_CERTIFY",
+        "Figure5_PRESERVE_PCC",
+        "ED1_OutcomeFreeBoundary_v9",
+        "ED2_IntegrityControls_v2",
+        "ED3_RobustnessEfficiency_v1",
+    ]
+    for call in expected_calls:
+        if call not in runner:
+            fail(f"submission-v2 runner is missing display call: {call}")
+    if "8/8 PASS" not in runner and "%d/8 PASS" not in runner:
+        fail("submission-v2 runner is missing the eight-display acceptance summary")
+
+    fig5 = (ROOT / "matlab" / "submission_figures" / "Figure5_PRESERVE_PCC.m").read_text(encoding="utf-8")
+    frozen_ticks = "{'128','256','512','1024','128','256','512','1024'}"
+    if frozen_ticks not in fig5:
+        fail("Figure 5 panel B no longer contains the frozen 8 budget tick labels")
+    if "Georgia" not in fig5 or "CPSC 2018" not in fig5:
+        fail("Figure 5 panel B cohort labels changed")
+
+    fig4 = (ROOT / "matlab" / "submission_figures" / "Figure4_CERTIFY.m").read_text(encoding="utf-8")
+    for source_name in ("PCC_frontier_classified.csv", "PCC_scaling_summary_v12.csv", "CMDO_185_realized_projection.csv"):
+        if source_name not in fig4:
+            fail(f"Figure 4 CERTIFY renderer no longer reads {source_name}")
+
+    print("PASS PCC/display wiring: frozen 185-state PCC projection, frozen Figure 5 budgets, 8 submission displays")
+
+
 def main() -> int:
     print("CMDO submission-v2 static scientific-integrity audit")
     print(f"repo: {ROOT}")
     check_185_state_freeze()
     check_eicu()
     check_u10_lock()
+    check_pcc_and_display_wiring()
     print("PASS STATIC SCIENTIFIC INTEGRITY")
     print("NOTE: this is not the final fresh-clone graphical acceptance gate.")
     return 0
