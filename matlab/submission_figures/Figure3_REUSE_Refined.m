@@ -241,7 +241,7 @@ lgd.FontSize=7.7;
 
 grid(ax,'on');
 local_style(ax,FONT);
-local_letter(fig,ax,'C',gree);
+local_letter(fig,ax,'C',green);
 
 % --------------------------------------------------------------------------
 % D: NEW — sealed 20-hospital eICU replication
