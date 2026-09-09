@@ -6,8 +6,9 @@ function ED1_OutcomeFreeBoundary_v9(outputDir, repoRoot)
 %
 % Scientific role after main-figure reorganization:
 %
-%   Main Fig. 3  IDENTIFY  -> constructive observability witness
-%   Main Fig. 4  REUSE     -> frozen admissibility evidence
+%   Main Fig. 2  IDENTIFY  -> constructive observability witness
+%   Main Fig. 3  REUSE     -> frozen admissibility evidence
+%   Main Fig. 4  CERTIFY   -> prospective certifiability
 %   Main Fig. 5  PRESERVE  -> adaptive composability
 %
 % ED1 therefore retains only the developmental evidence showing why a
@@ -39,12 +40,12 @@ close all;
 
 FONT = 'Arial';
 
-FS_LETTER = 18;
-FS_TITLE  = 12;
-FS_AXIS   = 10;
-FS_TICK   = 10;
-FS_SMALL  = 10;
-FS_TINY   = 10;
+FS_LETTER = 16;
+FS_TITLE  = 10.8;
+FS_AXIS   = 9.2;
+FS_TICK   = 8.8;
+FS_SMALL  = 8.8;
+FS_TINY   = 8.0;
 
 navy   = [0.03 0.27 0.67];
 blue   = [0.02 0.33 0.78];
@@ -150,7 +151,7 @@ fprintf('Sentinel mismatch / borrowing rho = %.6f\n',rhoBiasWeight);
 
 fig = figure( ...
     'Color','w', ...
-    'Position',[50 30 1280 900], ...
+    'Position',[50 30 1180 780], ...
     'Renderer','painters', ...
     'Name','CMDO Extended Data Figure 1', ...
     'NumberTitle','off');

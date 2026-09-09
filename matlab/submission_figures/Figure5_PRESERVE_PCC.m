@@ -6,9 +6,9 @@ function Figure5_PRESERVE_PCC(outputDir, repoRoot, pccDataDir)
 
 close all;
 thisFile=mfilename('fullpath'); if isempty(thisFile), scriptDir=pwd; else, scriptDir=fileparts(thisFile); end
-if nargin<2 || isempty(repoRoot), repoRoot=fullfile(getenv('USERPROFILE'),'CMDO-Reproducibility'); end
+if nargin<2 || isempty(repoRoot), repoRoot=fileparts(fileparts(scriptDir)); end
 if nargin<1 || isempty(outputDir), outputDir=fullfile(scriptDir,'output'); end
-if nargin<3 || isempty(pccDataDir), pccDataDir=fullfile(fileparts(scriptDir),'source_data','pcc'); end
+if nargin<3 || isempty(pccDataDir), pccDataDir=fullfile(repoRoot,'source_data','pcc'); end
 if ~isfolder(outputDir), mkdir(outputDir); end
 
 B=readtable(fullfile(pccDataDir,'CMDO_U9_REUSE_PRESERVE_bridge.csv'),'VariableNamingRule','preserve'); B=B(string(B.stage)=="U9B",:); [~,oo]=sort(double(B.budget)); B=B(oo,:);
@@ -30,8 +30,8 @@ rStar=risk(wstar); rGlob=risk(wg*ones(size(mw))); rMean=risk(mw);
 Hi=rGlob-rStar; Ai=rMean-rStar; Xi=(double(U10.shared_adaptive_mse)-fixedMSE)./V; XiP=(double(U10.shared_permuted_weight_mse)-fixedMSE)./V;
 H=mean(Hi); A=mean(Ai); C=mean(Xi); Cp=mean(XiP); stateCost=Ai+Xi;
 
-fig=figure('Color','w','Position',[35 35 1260 500],'Renderer','painters','Name','CMDO Figure 5 — PRESERVE','NumberTitle','off');
-t=tiledlayout(fig,1,3,'TileSpacing','compact','Padding','loose');
+fig=figure('Color','w','Position',[35 35 1280 500],'Renderer','painters','Name','CMDO Figure 5 — PRESERVE','NumberTitle','off');
+t=tiledlayout(fig,1,3,'TileSpacing','loose','Padding','loose');
 
 % A bridge
 ax=nexttile(t,1); hold(ax,'on'); x=double(B.rho_realized_actual_meanweight); y=double(B.observed_adaptive_MSE_gain_pct); bud=double(B.budget);
@@ -42,19 +42,63 @@ xlim(ax,[0.58 1.22]); ylim(ax,[-16.5 0.2]);
 local_style(ax,FONT); local_letter(fig,ax,'A',red);
 
 % B U10 pairs
-ax=nexttile(t,2); hold(ax,'on'); rf=[fixG fixC]; ra=[adG adC]; xx=[1:4 6:9];
+ax=nexttile(t,2); hold(ax,'on');
+
+rf=[fixG fixC];
+ra=[adG adC];
+xx=[1:4 6:9];
+budLabels={'128','256','512','1024','128','256','512','1024'};
+
 for i=1:numel(xx)
-    plot(ax,[xx(i) xx(i)],[rf(i) ra(i)],'-','Color',[.72 .72 .72],'LineWidth',1.5,'HandleVisibility','off');
+    plot(ax,[xx(i) xx(i)],[rf(i) ra(i)],'-', ...
+        'Color',[.72 .72 .72], ...
+        'LineWidth',1.5, ...
+        'HandleVisibility','off');
 end
-hFix = scatter(ax,xx,rf,55,green,'s','filled','DisplayName','Matched fixed');
-hAd  = scatter(ax,xx,ra,55,red,'o','filled','DisplayName','Adaptive');
+
+hFix=scatter(ax,xx,rf,55,green,'s','filled', ...
+    'DisplayName','Matched fixed');
+
+hAd=scatter(ax,xx,ra,55,red,'o','filled', ...
+    'DisplayName','Adaptive');
+
 yline(ax,1,'k--','LineWidth',1.1,'HandleVisibility','off');
-set(ax,'XTick',xx,'XTickLabel',{'128','256','512','1024','128','256','512','1024'});
+
+set(ax,'XTick',xx, ...
+       'XTickLabel',budLabels);
+
 xlim(ax,[0.4 9.6]);
-text(ax,0.275,0.055,'Georgia','Units','normalized','HorizontalAlignment','center','VerticalAlignment','bottom','FontName',FONT,'FontSize',9.1,'FontWeight','bold','Color',dark);
-text(ax,0.765,0.055,'CPSC 2018','Units','normalized','HorizontalAlignment','center','VerticalAlignment','bottom','FontName',FONT,'FontSize',9.1,'FontWeight','bold','Color',dark);
-ylabel(ax,'Normalized risk, R/V'); title(ax,'Adaptive risk > matched fixed in 8/8 states','FontSize',11.5); legend(ax,[hFix hAd],'Location','northwest','Box','off'); grid(ax,'on');
-local_style(ax,FONT); local_letter(fig,ax,'B',red);
+ylim(ax,[0.50 1.20]);
+
+xlabel(ax,'Audit budget, m');
+ylabel(ax,'Normalized risk, R/V');
+
+title(ax,'Adaptive risk > matched fixed in 8/8 states', ...
+    'FontSize',11.5);
+
+legend(ax,[hFix hAd], ...
+    'Location','northwest', ...
+    'Box','off');
+
+grid(ax,'on');
+local_style(ax,FONT);
+
+% cohort labels inside the lower part of the axes
+text(ax,0.255,0.12,'Georgia', ...
+    'Units','normalized', ...
+    'FontName',FONT, ...
+    'FontSize',9.0, ...
+    'HorizontalAlignment','center', ...
+    'VerticalAlignment','middle');
+
+text(ax,0.745,0.12,'CPSC 2018', ...
+    'Units','normalized', ...
+    'FontName',FONT, ...
+    'FontSize',9.0, ...
+    'HorizontalAlignment','center', ...
+    'VerticalAlignment','middle');
+
+local_letter(fig,ax,'B',red);
 
 % C adaptation frontier
 ax=nexttile(t,3); hold(ax,'on');
@@ -74,9 +118,9 @@ function local_letter(fig,ax,s,c)
 drawnow;
 p=ax.Position;
 x=max(0.006,p(1)-0.030);
-y=min(0.945,p(2)+p(4)+0.010);
+y=min(0.938,p(2)+p(4)+0.004);
 annotation(fig,'textbox',[x y 0.030 0.035], ...
     'String',s,'LineStyle','none','FitBoxToText','on', ...
-    'FontName','Arial','FontSize',15,'FontWeight','bold', ...
+    'FontName','Arial','FontSize',14,'FontWeight','bold', ...
     'Color',c,'HorizontalAlignment','left','VerticalAlignment','bottom');
 end

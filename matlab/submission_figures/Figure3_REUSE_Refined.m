@@ -236,14 +236,14 @@ xlabel(ax,'Post-completion evidence-admissibility coordinate, \Lambda = B^2/V');
 ylabel(ax,'Mean historical borrowing weight');
 title(ax,'Fixed-use geometry across 185 completed states','FontSize',11.5);
 
-lgd=legend(ax,'Location','northeast','Box','off');
+lgd=legend(ax,'Location','northwest','Box','off');
 lgd.FontSize=7.7;
 
 grid(ax,'on');
 local_style(ax,FONT);
 local_letter(fig,ax,'C',green);
 
-% --------------------------------------------------------------------------
+% -------------------------------------------------------------------------
 % D: NEW — sealed 20-hospital eICU replication
 % -------------------------------------------------------------------------
 ax=nexttile(t,4);

@@ -8,7 +8,7 @@ function Figure4_CERTIFY(outputDir, pccDataDir)
 close all;
 thisFile=mfilename('fullpath'); if isempty(thisFile), scriptDir=pwd; else, scriptDir=fileparts(thisFile); end
 if nargin<1 || isempty(outputDir), outputDir=fullfile(scriptDir,'output'); end
-if nargin<2 || isempty(pccDataDir), pccDataDir=fullfile(fileparts(scriptDir),'source_data','pcc'); end
+if nargin<2 || isempty(pccDataDir), pccDataDir=fullfile(fileparts(fileparts(scriptDir)),'source_data','pcc'); end
 if ~isfolder(outputDir), mkdir(outputDir); end
 
 F=readtable(fullfile(pccDataDir,'PCC_frontier_classified.csv'),'VariableNamingRule','preserve');
@@ -18,8 +18,8 @@ A=readtable(fullfile(pccDataDir,'CMDO_185_realized_projection.csv'),'VariableNam
 FONT='Arial'; purple=[.44 .20 .72]; blue=[.04 .30 .75]; green=[.02 .48 .20]; red=[.82 .08 .06]; orange=[.92 .48 .07]; grey=[.48 .48 .48]; dark=[.18 .18 .18];
 w0=.05; tauw=2/w0-1;
 
-fig=figure('Color','w','Position',[35 30 1120 780],'Renderer','painters','Name','CMDO Figure 4 — CERTIFY','NumberTitle','off');
-t=tiledlayout(fig,2,2,'TileSpacing','compact','Padding','loose');
+fig=figure('Color','w','Position',[35 30 1120 800],'Renderer','painters','Name','CMDO Figure 4 — CERTIFY','NumberTitle','off');
+t=tiledlayout(fig,2,2,'TileSpacing','loose','Padding','loose');
 
 % A theoretical boundary
 ax=nexttile(t,1); hold(ax,'on');
@@ -51,7 +51,7 @@ v=isfinite(y)&y>0; errorbar(ax,x(v),y(v),y(v)-lo(v),hi(v)-y(v),'o-','Color',purp
 idx=find(v & x>=32,1); anchor=y(idx)/x(idx); plot(ax,x(v),anchor*x(v),'k--','LineWidth',1.3);
 set(ax,'XScale','log','YScale','log'); xlabel(ax,'Future audit size per class, m'); ylabel(ax,'Verified certification outcomes'); title(ax,'Certification-cost scaling','FontSize',11.5); grid(ax,'on');
 vv=v & x>=32; p=polyfit(log(x(vv)),log(y(vv)),1); text(ax,.04,.90,sprintf('observed slope = %.2f',p(1)),'Units','normalized','FontName',FONT,'FontSize',10,'FontWeight','bold','Color',purple);
-text(ax,.04,.80,'theory: C^* = \Theta(m) in locally matched balanced AUC','Units','normalized','FontName',FONT,'FontSize',9,'Color',dark);
+text(ax,.04,.80,'theory: C^* = \Theta(m) in locally matched balanced AUC','Units','normalized','FontName',FONT,'FontSize',7,'Color',dark);
 local_style(ax,FONT); local_letter(fig,ax,'C',purple);
 
 % D completed CMDO projection
@@ -85,9 +85,9 @@ function local_letter(fig,ax,s,c)
 drawnow;
 p=ax.Position;
 x=max(0.006,p(1)-0.033);
-y=min(0.945,p(2)+p(4)+0.010);
+y=min(0.938,p(2)+p(4)+0.004);
 annotation(fig,'textbox',[x y 0.030 0.035], ...
     'String',s,'LineStyle','none','FitBoxToText','on', ...
-    'FontName','Arial','FontSize',15,'FontWeight','bold', ...
+    'FontName','Arial','FontSize',14,'FontWeight','bold', ...
     'Color',c,'HorizontalAlignment','left','VerticalAlignment','bottom');
 end

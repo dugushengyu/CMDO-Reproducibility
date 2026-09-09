@@ -27,12 +27,12 @@ close all;
 
 FONT = 'Arial';
 
-FS_LETTER = 22;
-FS_TITLE  = 11.5;
-FS_AXIS   = 9.5;
-FS_TICK   = 9.0;
-FS_SMALL  = 9.2;
-FS_TINY   = 8.2;
+FS_LETTER = 18;
+FS_TITLE  = 10.5;
+FS_AXIS   = 9.0;
+FS_TICK   = 8.5;
+FS_SMALL  = 8.6;
+FS_TINY   = 7.6;
 
 navy  = [0.02 0.24 0.63];
 blue  = [0.02 0.29 0.70];
@@ -244,20 +244,20 @@ fprintf('U7 direct-audit slope = %.6f\n',u7Slope);
 
 fig = figure( ...
     'Color','w', ...
-    'Position',[55 35 1000 960], ...
+    'Position',[55 35 1060 830], ...
     'Renderer','painters', ...
     'Name','CMDO Figure 2 — IDENTIFY', ...
     'NumberTitle','off');
 
 % One wide monitoring panel, two compatible-world panels,
 % and one wide empirical audit-convergence panel.
-PA = [0.025 0.705 0.950 0.265];
+PA = [0.025 0.715 0.950 0.245];
 
-PB = [0.025 0.360 0.460 0.315];
+PB = [0.025 0.390 0.460 0.290];
 
-PC = [0.515 0.360 0.460 0.315];
+PC = [0.515 0.390 0.460 0.290];
 
-PD = [0.025 0.050 0.950 0.270];
+PD = [0.025 0.055 0.950 0.285];
 
 %% ========================================================================
 % PANEL A — SAME MONITORED EVIDENCE
@@ -915,7 +915,7 @@ try
     exportgraphics( ...
         fig, ...
         pngPath, ...
-        'Resolution',600, ...
+        'Resolution',300, ...
         'BackgroundColor','white');
 
     exportgraphics( ...

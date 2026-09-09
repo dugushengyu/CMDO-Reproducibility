@@ -23,7 +23,7 @@ close all;
 thisFile = mfilename('fullpath');
 if isempty(thisFile), scriptDir=pwd; else, scriptDir=fileparts(thisFile); end
 if nargin < 2 || isempty(repoRoot)
-    repoRoot = fullfile(getenv('USERPROFILE'),'CMDO-Reproducibility');
+    repoRoot = fileparts(fileparts(scriptDir));
 end
 assert(isfolder(repoRoot),'CMDO repository not found: %s',repoRoot);
 if nargin < 1 || isempty(outputDir), outputDir=fullfile(scriptDir,'output'); end
