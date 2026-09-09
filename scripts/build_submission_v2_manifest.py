@@ -118,7 +118,11 @@ def main() -> int:
 
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", newline="", encoding="utf-8") as fh:
-        writer = csv.DictWriter(fh, fieldnames=["path", "bytes", "sha256"])
+        writer = csv.DictWriter(
+            fh,
+            fieldnames=["path", "bytes", "sha256"],
+            lineterminator="\n",
+        )
         writer.writeheader()
         writer.writerows(rows)
 
