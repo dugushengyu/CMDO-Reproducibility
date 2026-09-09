@@ -1,0 +1,7 @@
+m_application,states,finite_states,structural_noncertifiable,safe_grid_censored,finite_fraction,median_cost_finite,zero_mismatch_median,zero_mismatch_q25,zero_mismatch_q75,zero_mismatch_median_over_m
+16,79,79,0,0,1,64,64,64,128,4
+32,79,79,0,0,1,128,64,64,128,2
+64,79,77,0,2,0.974683544303797,256,128,128,256,2
+128,79,74,2,3,0.936708860759494,512,256,256,256,2
+256,79,63,8,8,0.79746835443038,1024,512,512,512,2
+512,79,41,18,20,0.518987341772152,2048,1024,1024,1024,2
