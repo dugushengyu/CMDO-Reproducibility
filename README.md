@@ -1,190 +1,171 @@
 # CMDO reproducibility
 
-This repository contains the frozen reproducibility record for the final CMDO manuscript.
+This repository contains the frozen reproducibility record for the CMDO submission candidate.
 
-## Final scientific architecture
+## Scientific architecture
 
-The final manuscript is organized as:
+The manuscript is organized as the non-propagating evidential order:
 
-**IDENTIFY -> REUSE -> PRESERVE**
+**IDENTIFY -> REUSE -> CERTIFY -> PRESERVE**
 
 with:
 
-- Figure 1 — conceptual evidential order and system information flow
-- Figure 2 — IDENTIFY: performance non-identifiability and outcome restoration
-- Figure 3 — REUSE: evidence admissibility across frozen deployment states
-- Figure 4 — PRESERVE: adaptive composability and the adaptation frontier
-- Figure 5 — system advantage: budget-dependent robustness–efficiency operating region
-- Extended Data Figure 1 — developmental falsification of a universal outcome-free route
-- Extended Data Figure 2 — role-separation and coupling-pathway diagnostics
+- Figure 1 — evidential order and information roles.
+- Figure 2 — IDENTIFY: outcome-free non-identifiability and restoration by representative current outcomes.
+- Figure 3 — REUSE: frozen U6/U7 confirmation, mismatch sensing, the frozen 185-state post-completion geometry, and a deferred sealed 20-hospital eICU replication.
+- Figure 4 — CERTIFY: prospective composability certification (PCC), exact finite-sample certification cost, information-cost scaling, and retrospective projection of the completed 185-state CMDO pool.
+- Figure 5 — PRESERVE: fixed-use value versus adaptive implementation, matched fixed/adaptive risk on Georgia and CPSC 2018, and the adaptation frontier.
+- Extended Data Figure 1 — developmental falsification of a universal outcome-free route.
+- Extended Data Figure 2 — role separation and the locked U10 mechanism challenge.
+- Extended Data Figure 3 — controlled robustness-efficiency operating region under historical misspecification.
 
-## Reviewer entry points
+## Submission-v2 reviewer figure pathway
 
-### Strongest portable reviewer audit
-
-From a fresh clone, run:
+From a fresh clone of the exact candidate commit, run:
 
 ```matlab
-RUN_REVIEWER_END_TO_END('Strict',true,'RunStressReplay',true)
+RUN_SUBMISSION_V2_FIGURES('RepoRoot',pwd,'Strict',true)
 ```
 
-This verifies all tracked frozen reviewer inputs by SHA-256, runs the deterministic reconstructed synthetic stress replay, regenerates Figure 1-5 plus Extended Data Figure 1-2, and performs path/output/Git-clean checks.
-
-Detailed scope and environment requirements are documented in:
+The submission-v2 runner renders eight displays:
 
 ```text
-docs/REVIEWER_END_TO_END.md
-provenance/reviewer_reexecution_contract_v1.json
+Figure1
+Figure2_IDENTIFY
+Figure3_REUSE
+Figure4_CERTIFY
+Figure5_PRESERVE
+ED1
+ED2
+ED3
 ```
 
-### Final figures only
+A freeze candidate is not accepted until this reports `8/8 PASS` from a fresh clone and the Git worktree remains clean.
 
-```matlab
-RUN_SUBMISSION_FIGURES('Batch',true,'Strict',true)
-```
-
-By default, reviewer outputs are written under the operating-system temporary directory rather than into tracked repository paths.
-
-## Final P0 reproducibility freeze
-
-The final submission freeze adds explicit checks for the manuscript-state changes made after the previous submission tags: the data-driven Figure 4 adaptation frontier, the 185-state admissibility synthesis, and the five-block post-completion Figure 5 Monte Carlo stability diagnostic.
-
-Before creating a new submission tag:
-
-1. Generate the final-scope SHA-256 manifest once:
+Before the graphical run, the static scientific-integrity gate is:
 
 ```powershell
-python scripts/build_submission_final_manifest.py
+python scripts/verify_submission_v2_science.py
 ```
 
-2. Commit `provenance/submission_final_manifest_v1.csv`.
-3. From a clean checkout of that exact commit, run:
+This gate does not re-run any sealed prospective stage. It verifies frozen scientific invariants and claim boundaries only.
 
-```matlab
-RUN_P0_FINAL_FREEZE('Strict',true,'RunStressReplay',true)
-```
+## Frozen scientific constraints
 
-4. Create the submission tag only if the final gate reports `FINAL P0 FREEZE : true` and the worktree remains clean.
+The following are immutable for the submission-v2 freeze:
 
-`VERIFY_P0_SUBMISSION_INPUTS.m` checks the final scientific-source fingerprints. The final gate also verifies the final SHA-256 manifest and invokes the full reviewer evidence-to-figure audit. The exact commit that passes this gate—not an earlier tag—is the commit that should be cited by the manuscript and Supplementary Information.
-
-The five-block Figure 5 replay is explicitly a post-completion Monte Carlo stability diagnostic. Its tracked summary is under:
+1. The post-completion synthesis remains exactly:
 
 ```text
-source_data/figure5_submission/diagnostics/
+80 U6 + 80 U7 + 12 U8 + 9 U9A + 4 U9B = 185 states
 ```
 
-It does not replace the frozen authoritative Figure 5 state summary.
-
-## Recorded clean-room validation
-
-A fresh GitHub clone was validated on Windows (PCWIN64) with MATLAB R2024b Update 5 and Python 3.11. The run verified all 12 tracked reviewer inputs by SHA-256, regenerated the deterministic synthetic stress replay, rendered all seven final figure targets, used zero external repository/data paths during rendering, and finished Git-clean.
-
-Machine-readable record:
+2. The deferred eICU replication is separate from that pool. It must not be added to the 185-state synthesis and must not revise the retrospective PCC projection.
+3. The locked U10 prospective verdict remains `MECHANISM_NOT_CONFIRMED`. Post-completion localization does not overwrite that verdict.
+4. The eICU canonical shareable execution record is immutable. Its canonical ZIP SHA-256 is:
 
 ```text
-provenance/reviewer_end_to_end_validation_windows_r2024b_20260901.json
+815bbc9a575a3e2eca5e227ad24d6d4f4e210eedac086f09287dac22c950b701
 ```
 
-This record predates the final P0 freeze and therefore remains evidence for the earlier reviewer pathway rather than a substitute for the new `RUN_P0_FINAL_FREEZE` acceptance run.
-
-The repository also includes Windows and macOS/Linux fresh-clone launchers under `reviewer_portability/`. Cross-platform launchers are provided by design; the recorded empirical acceptance environment above is Windows R2024b.
-
-## What 'end-to-end' means here
-
-A generic reviewer computer can reproduce the complete **reviewer evidence-to-figure pathway** from a fresh GitHub clone: byte-verify the frozen derived evidence package, regenerate the fully synthetic diagnostic stress replay, and render the complete final figure set without any author-machine path.
-
-It is **not** claimed that every historical prospective stage can be re-run from raw patient-level data on an arbitrary computer. Several stages are sealed and some underlying clinical datasets require controlled access. For those stages, the scientifically correct reviewer action is to verify and consume the tracked frozen derived records rather than silently replace a sealed prospective analysis with a new post-completion rerun.
-
-The machine-readable stage-by-stage policy is:
+5. The executed eICU Amendment A1 code SHA-256 is:
 
 ```text
-provenance/reviewer_reexecution_contract_v1.json
+5f72a5aba7650bc7ac51ac48c72db8e5d7ede19d856a75d29b8367387da43352
 ```
 
-## Final source manifests
+Amendment A1 changed only official-field matching and Windows case-insensitive duplicate-path handling before reserve-outcome access; no scientific estimand, threshold, budget, seed, borrowing rule or gate was changed.
+6. No raw credentialed eICU/PhysioNet patient-level records are redistributed in the default reviewer pathway.
+7. The PPI++-style method is retained as an auxiliary point-estimation comparator. Its lower eICU pooled MAE is not converted into an estimator-superiority claim for CMDO.
 
-The earlier reviewer-facing frozen-input manifest is:
+## Deferred sealed eICU replication
+
+The reviewer-facing Figure 3 renderer reads only share-safe aggregate outputs under:
 
 ```text
-provenance/submission_github_native_v4_manifest.csv
+source_data/figure3_eicu/
 ```
 
-The final P0 freeze uses the broader manifest:
+The frozen reserve contains 20 hospitals. The one-shot verdict is:
 
 ```text
-provenance/submission_final_manifest_v1.csv
+INTEGRITY_SUPPORTED_EMPIRICAL_SAFETY_NOT_CONFIRMED
 ```
 
-The latter is generated only after all final-scope source and renderer edits are complete, then committed before the clean-checkout acceptance run.
+Key frozen results include:
 
-The central stage inventory through U11 is:
+- direct pooled MAE = 0.027772293
+- CMDO pooled MAE = 0.026762245
+- relative pooled MAE gain = +3.64%
+- hospital breadth = 14/20 = 70%, below the prespecified 75% gate
+- formal gates passed = 10/13
+- PPI++-style pooled MAE = 0.016252
+- matched outcome-free telemetry witness maximum later true-accuracy gap = 0.08053
+
+The eICU blockwise/covered-event certificate diagnostics are implementation diagnostics and are distinct from the manuscript's PCC prospective-certification analysis.
+
+## PCC source data
+
+Figure 4 reads the frozen PCC products under:
 
 ```text
-provenance/stage_registry.json
+source_data/pcc/PCC_frontier_classified.csv
+source_data/pcc/PCC_scaling_summary_v12.csv
+source_data/pcc/CMDO_185_realized_projection.csv
 ```
 
-## Figure 1 frozen asset
-
-Figure 1 is rendered from the tracked frozen asset:
+Figure 5 additionally reads:
 
 ```text
-source_data/figure1_assets/Figure1_assets_selected_v1.mat
+source_data/pcc/CMDO_U9_REUSE_PRESERVE_bridge.csv
+U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv
 ```
 
-SHA-256:
+The retrospective completed-state PCC projection contains exactly 185 rows and remains restricted to U6, U7, U8, U9A and U9B.
+
+## Submission-v2 figure renderers
+
+The active reviewer-facing renderers are:
 
 ```text
-30490a2586a9394fad868159ccd1f0248b0d9afc17d9bc970456c425c63925e7
+matlab/submission_figures/Figure1_Evidential_Order_PCC.m
+matlab/submission_figures/Figure2_IDENTIFY_Validation.m
+matlab/submission_figures/Figure3_REUSE_Refined.m
+matlab/submission_figures/Figure4_CERTIFY.m
+matlab/submission_figures/Figure5_PRESERVE_PCC.m
+matlab/submission_figures/ED1_OutcomeFreeBoundary_v9.m
+matlab/submission_figures/ED2_IntegrityControls_v2.m
+matlab/submission_figures/ED3_RobustnessEfficiency_v1.m
 ```
 
-## Figure 4 source
-
-The reviewer-facing Figure 4 renderer reads the tracked source:
-
-```text
-source_data/figure4_submission/CMDO_Figure4_PRESERVE_Source_v1.csv
-```
-
-The corresponding provenance file records the definitions and aggregate fingerprints used by the adaptation-frontier panel. The renderer no longer embeds the earlier 7-of-8 winner-classification logic.
-
-## Figure 5 source and replay separation
-
-The authoritative manuscript Figure 5 reads only:
-
-```text
-source_data/figure5_submission/CMDO_SystemStress_AUC_StateSummary_v1_1.csv
-```
-
-The reconstructed executable stress test is kept separately under:
-
-```text
-scripts/stress_replay/
-```
-
-It is a deterministic diagnostic reconstruction of the lost stress-test program and must never overwrite the frozen manuscript Figure-5 source.
-
-The five-block Monte Carlo stability diagnostic is regenerated separately by:
-
-```powershell
-python scripts/stress_replay/run_figure5_mc_stability.py --outdir <OUTPUT_DIRECTORY>
-```
+Figure 5 panel B is frozen to the four audit budgets `128, 256, 512, 1024` in each of Georgia and CPSC 2018.
 
 ## Restricted and sealed data
 
-No raw restricted PhysioNet/eICU patient-level records are redistributed. The repository instead tracks the frozen derived records required for the final reviewer-facing figure pathway. Authorized stage-specific reruns remain separate from the default reviewer command.
+The default reviewer pathway consumes tracked frozen derived records and does not re-run sealed patient-level analyses. Authorized stage-specific reruns, where legally and scientifically permitted, remain separate from the portable submission pathway.
 
-## Scientific interpretation boundaries
-
-- U11 is a protocol-locked constructive information-closure witness, not an estimate of the real clinical performance of Georgia or CPSC 2018.
-- U10 did not confirm shared-audit coupling as a general mechanism across both external ECG cohorts.
-- Post-completion permutation and role-separation analyses are diagnostics and do not overwrite the locked U10 prospective verdict.
-- The five-block Figure 5 Monte Carlo replay characterizes finite-replicate stability and does not replace or retune the authoritative frozen stress-test summary.
-- U0-U5 are retained as developmental lineage and are not promoted into the final confirmatory chain.
+This separation is deliberate: a post-completion rerun must not silently replace the result of a locked prospective or sealed one-shot stage.
 
 ## Repository policy
 
-- Frozen protocols and locked prospective verdicts must not be overwritten.
+- Frozen protocols, sealed execution records and locked prospective verdicts must not be overwritten.
 - New post-completion analyses must remain explicitly labelled as such.
-- Generated outputs, local caches and raw patient data remain outside Git unless explicitly tracked by policy.
-- Final submission tagging should occur only after a fresh-clone P0 acceptance run passes on the exact commit to be tagged.
+- Generated outputs, local caches, credentials and raw patient data remain outside Git unless explicitly permitted by policy.
+- The eICU canonical ZIP must never be rebuilt merely to satisfy repository packaging.
+- Final submission tagging occurs only after all submission-v2 sources/renderers are frozen, a final SHA-256 manifest is committed, CI is green, and an exact fresh clone passes the eight-display MATLAB acceptance run while remaining Git-clean.
+
+## Submission-v2 freeze status
+
+The working freeze branch is:
+
+```text
+submission-v2-freeze-20260909
+```
+
+The intended immutable submission tag is:
+
+```text
+cmdo-submission-v2.0.0
+```
+
+That tag must point to the exact commit that passes the final fresh-clone acceptance gate. Until that acceptance is recorded, the branch is a candidate freeze rather than the final tagged submission record.
