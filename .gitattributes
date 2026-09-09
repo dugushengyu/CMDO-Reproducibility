@@ -21,3 +21,8 @@ U10_Prospective_ECG/99_Freeze/U10_FINAL_EVIDENCE_LEDGER.json -text
 U10_Prospective_ECG/99_Freeze/U10_FINAL_FREEZE_SUMMARY.json -text
 U10_Prospective_ECG/99_Freeze/U10_SCIENTIFIC_CHRONOLOGY.txt -text
 U10_Prospective_ECG/99_Freeze/U10_EVIDENCE_CAPSULE_SHA256_MANIFEST.csv -text
+
+# Deferred eICU share-safe aggregate records are copied from the immutable
+# one-shot record. Preserve their committed bytes (including line endings)
+# rather than normalizing them on Windows checkout.
+source_data/figure3_eicu/*.csv -text
