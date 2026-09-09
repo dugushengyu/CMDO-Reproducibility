@@ -27,6 +27,9 @@ jobs:
           python -m py_compile scripts/build_portable_bundle.py
           python -m py_compile scripts/build_submission_candidate.py
           python -m py_compile scripts/run_cleanroom_reviewer_test.py
+          python -m py_compile scripts/verify_submission_v2_science.py
+      - name: Verify submission-v2 frozen scientific invariants
+        run: python scripts/verify_submission_v2_science.py
       - name: Verify clean-room and submission plans
         run: |
           python scripts/build_submission_candidate.py --plan
