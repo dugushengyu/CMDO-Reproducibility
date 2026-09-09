@@ -4,7 +4,7 @@ addParameter(p,'RepoRoot',fullfile(getenv('USERPROFILE'),'CMDO-Reproducibility')
 addParameter(p,'OutDir','',@(x)ischar(x)||isstring(x));
 addParameter(p,'Strict',true,@(x)islogical(x)||isnumeric(x));
 parse(p,varargin{:}); opt=p.Results;
-thisFile=mfilename('fullpath'); root=fileparts(thisFile); matdir=fullfile(root,'matlab'); pccdir=fullfile(root,'source_data','pcc'); addpath(matdir);
+thisFile=mfilename('fullpath'); root=fileparts(thisFile); matdir=fullfile(root,'matlab'); subfigdir=fullfile(matdir,'submission_figures'); pccdir=fullfile(root,'source_data','pcc'); addpath(matdir); addpath(subfigdir);
 repo=char(opt.RepoRoot); assert(isfolder(repo),'CMDO repository not found: %s',repo);
 if strlength(string(opt.OutDir))==0, out=fullfile(root,'output'); else, out=char(opt.OutDir); end
 if isfolder(out), try, rmdir(out,'s'); catch, end; end; if ~isfolder(out), mkdir(out); end
