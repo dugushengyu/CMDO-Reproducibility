@@ -28,7 +28,7 @@ EXPECTED_FAILED_GATES = {
     "max_budget_correct_resolution_noninferiority",
 }
 EXPECTED_PCC_SHA256 = {
-    "matlab/submission_figures/Figure1_Evidential_Order_PCC.m": "f89e5bdd36307fc08d0b0b9fd0fc08d0b07bd62409156c1aaacbc0ca1df76a76",
+    "matlab/submission_figures/Figure1_Evidential_Order_PCC.m": "dcdf139ad12e0f0bc237744f30ad19f3208e9b50f3add4cd19eeec729101be8d",
     "source_data/pcc/CMDO_185_realized_projection.csv": "90d391bb0a2656ed780f516deb3d85037620a150cca94e1af05fcc0c97a902d3",
     "source_data/pcc/PCC_frontier_classified.csv": "f707921c346375d99ea1520d3f5cb756091882c50714399bf865f44e16d8bc7d",
 }
