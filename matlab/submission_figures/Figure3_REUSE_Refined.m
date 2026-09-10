@@ -217,7 +217,7 @@ scatter(ax,lam(benefit),w(benefit),28,green,'filled', ...
 scatter(ax,lam(~benefit),w(~benefit),54,red,'filled', ...
     'DisplayName','Observed harm');
 
-L=logspace(-3,3,500);
+L=logspace(-5,3,500);
 wcrit=2./(1+L);
 
 plot(ax,L,wcrit,'k--','LineWidth',1.45, ...
@@ -226,7 +226,7 @@ plot(ax,L,wcrit,'k--','LineWidth',1.45, ...
 set(ax,'XScale','log');
 
 positiveLam=lam(isfinite(lam) & lam>0);
-xlo=max(1e-3,min(positiveLam)*0.7);
+xlo=max(1e-5,min(positiveLam)*0.7);
 xhi=max(400,max(lam(isfinite(lam)))*1.1);
 
 xlim(ax,[xlo xhi]);
