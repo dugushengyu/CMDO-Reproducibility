@@ -41,7 +41,7 @@ if any(cens), scatter(ax,double(q.m_application(cens)),double(q.mismatch(cens)),
 if any(structural), scatter(ax,double(q.m_application(structural)),double(q.mismatch(structural)),75,red,'x','LineWidth',1.6,'DisplayName','Structurally non-certifiable'); end
 mFine=logspace(log10(16),log10(512),300); dc=arrayfun(@(mm)sqrt(tauw*auc_var_lower_bound(.75,max(2,round(mm)),max(2,round(mm)))),mFine);
 plot(ax,mFine,dc,'k--','LineWidth',1.3,'HandleVisibility','off'); plot(ax,mFine,-dc,'k--','LineWidth',1.3,'HandleVisibility','off');
-set(ax,'XScale','log'); xlabel(ax,'Future audit size per class, m'); ylabel(ax,'Historical mismatch, h-\theta'); title(ax,'Exact certification cost at AUC 0.75','FontSize',11.5); grid(ax,'on');
+set(ax,'XScale','log'); xlabel(ax,'Future audit size per class, m'); ylabel(ax,'Historical mismatch, h-\theta'); title(ax,'Certification cost on tested grid (AUC 0.75)','FontSize',11.5); grid(ax,'on');
 cb=colorbar(ax); cb.Label.String='log_2 outcomes'; cb.FontName=FONT; cb.FontSize=10;
 local_style(ax,FONT); local_letter(fig,ax,'B',purple);
 
