@@ -1,9 +1,6 @@
 param(
     [string]$Workspace = "",
-    [switch]$SkipNetwork,
-    [switch]$SkipEnvironmentInstall,
-    [switch]$SkipFrozen,
-    [switch]$SkipMatlab
+    [string]$Matlab = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -27,50 +24,56 @@ if (-not (Test-Path -LiteralPath $py)) {
 }
 
 Write-Host "===================================================================================================="
-Write-Host " CMDO FINAL SUBMISSION BUILD + CLEAN-ROOM REVIEWER TEST"
-Write-Host " Fresh clone; exact reviewer assets; new minimal reviewer venv by default"
-Write-Host " Windows clone path policy: short workspace + core.longpaths=true"
+Write-Host " CMDO SUBMISSION-V2 BUILD + CLEAN-ROOM REVIEWER TEST"
+Write-Host " Static frozen-science audit + current 8-display MATLAB acceptance only"
+Write-Host " Historical deep/full-claim/archival replay is not a reviewer requirement"
 Write-Host "===================================================================================================="
 
-Write-Host "`n[1/3] Build final submission candidate artifacts"
+Write-Host "`n[1/3] Build lean reviewer submission candidate"
 & $py .\scripts\build_submission_candidate.py
-if ($LASTEXITCODE -ne 0) { throw "Submission candidate build failed" }
+if ($LASTEXITCODE -ne 0) { throw "Submission-v2 candidate build failed" }
 
-$asset = Join-Path $repo "dist\CMDO-Reviewer-Assets-v1.0.zip"
-if (-not (Test-Path -LiteralPath $asset)) { throw "Reviewer asset bundle was not built: $asset" }
+$portable = Join-Path $repo "dist\CMDO-Reproducibility-Reviewer-Portable-v2.1.1.zip"
+if (-not (Test-Path -LiteralPath $portable)) {
+    throw "Portable reviewer package was not built: $portable"
+}
 
 $origin = (git remote get-url origin).Trim()
 $ref = (git rev-parse HEAD).Trim()
 
-Write-Host "`n[2/3] Run stranger-style clean-room clone/reproduction"
+Write-Host "`n[2/3] Fresh-clone stranger-style submission-v2 acceptance"
 Write-Host "Clean-room workspace: $Workspace"
+
 $cleanArgs = @(
     ".\scripts\run_cleanroom_reviewer_test.py",
     "--repository-url", $origin,
     "--ref", $ref,
-    "--asset-bundle", $asset,
     "--workspace", $Workspace,
     "--force"
 )
-if (-not $SkipNetwork) { $cleanArgs += "--allow-network" } else { $cleanArgs += "--skip-smoke" }
-if ($SkipEnvironmentInstall) { $cleanArgs += "--skip-environment-install" }
-if ($SkipFrozen) { $cleanArgs += "--skip-frozen" }
-if ($SkipMatlab) { $cleanArgs += "--skip-matlab" }
+
+if (-not [string]::IsNullOrWhiteSpace($Matlab)) {
+    $cleanArgs += @("--matlab", $Matlab)
+}
 
 & $py @cleanArgs
-if ($LASTEXITCODE -ne 0) { throw "Clean-room reviewer acceptance failed" }
+if ($LASTEXITCODE -ne 0) { throw "Submission-v2 clean-room acceptance failed" }
 
 Write-Host "`n[3/3] Final artifact inventory"
 Get-ChildItem -LiteralPath (Join-Path $repo "dist") -File |
-    Where-Object { $_.Name -like "CMDO-*v1.0*" -or $_.Name -like "CMDO-Submission-Candidate-v1.0*" } |
+    Where-Object {
+        $_.Name -like "CMDO-Reproducibility-Reviewer-Portable-v2.1.1*" -or
+        $_.Name -like "CMDO-Submission-Candidate-v2.1.1*"
+    } |
     Select-Object Name, Length, LastWriteTime
 
 Write-Host ""
 Write-Host "===================================================================================================="
-Write-Host " CMDO FINAL CLEAN-ROOM REVIEWER CANDIDATE: PASS"
+Write-Host " CMDO SUBMISSION-V2 CLEAN-ROOM REVIEWER CANDIDATE: PASS"
 Write-Host "===================================================================================================="
 Write-Host "Canonical Git commit : $ref"
 Write-Host "Clean-room workspace : $Workspace"
 Write-Host "Report               : $(Join-Path $Workspace 'CMDO_CLEANROOM_REVIEWER_REPORT.json')"
+Write-Host "Rendered figures     : $(Join-Path $Workspace 'rendered')"
 Write-Host "Submission artifacts : $(Join-Path $repo 'dist')"
 Write-Host "===================================================================================================="
