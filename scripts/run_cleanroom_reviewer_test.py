@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Run a clean-room reviewer acceptance from a fresh clone or portable bundle."""
+"""Run the lean submission-v2 reviewer acceptance in a clean room."""
+
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import io
 import json
 import os
 import shutil
@@ -15,11 +18,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+PREFIX = "CMDO-Reproducibility"
 if os.name == "nt":
     _system_drive = os.environ.get("SystemDrive", "C:")
     DEFAULT_WORKSPACE = Path(_system_drive + "\\") / "CMDO-CR"
 else:
     DEFAULT_WORKSPACE = Path.home() / "CMDO-Reviewer-Cleanroom"
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
 
 def sha256(path: Path) -> str:
@@ -38,8 +46,12 @@ def git_command(*args: str) -> list[str]:
 
 def git(*args: str, cwd: Path = ROOT, check: bool = True) -> str:
     process = subprocess.run(
-        git_command(*args), cwd=cwd, text=True, stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE, check=False,
+        git_command(*args),
+        cwd=cwd,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
     )
     if check and process.returncode:
         raise RuntimeError(
@@ -48,11 +60,9 @@ def git(*args: str, cwd: Path = ROOT, check: bool = True) -> str:
     return process.stdout.strip()
 
 
-def venv_python(venv: Path) -> Path:
-    return venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
-
-
-def run_logged(command: list[str], *, cwd: Path, log_path: Path) -> dict[str, object]:
+def run_logged(
+    command: list[str], *, cwd: Path, log_path: Path
+) -> dict[str, object]:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     started = time.time()
     print("\n$", " ".join(command), flush=True)
@@ -80,82 +90,112 @@ def run_logged(command: list[str], *, cwd: Path, log_path: Path) -> dict[str, ob
     }
 
 
-def extract_portable(bundle: Path, destination: Path) -> tuple[Path, dict[str, object]]:
+def verify_portable_archive(bundle: Path) -> dict[str, object]:
     with zipfile.ZipFile(bundle) as archive:
         broken = archive.testzip()
         if broken:
             raise RuntimeError(f"portable bundle has corrupt member: {broken}")
-        info_name = "CMDO-Reproducibility/PORTABLE_PACKAGE_INFO.json"
+        manifest_name = f"{PREFIX}/PORTABLE_MANIFEST_SHA256.csv"
+        info_name = f"{PREFIX}/PORTABLE_PACKAGE_INFO.json"
+        rows = list(
+            csv.DictReader(
+                io.StringIO(archive.read(manifest_name).decode("utf-8"))
+            )
+        )
+        for row in rows:
+            member = f"{PREFIX}/{row['relative_path']}"
+            data = archive.read(member)
+            if len(data) != int(row["size_bytes"]):
+                raise RuntimeError(f"portable size mismatch: {member}")
+            if sha256_bytes(data) != row["sha256"]:
+                raise RuntimeError(f"portable SHA mismatch: {member}")
         info = json.loads(archive.read(info_name))
+        if info.get("historical_deep_replay_required") is not False:
+            raise RuntimeError("portable package incorrectly requires deep replay")
+        if info.get("submission_v2_displays") != 8:
+            raise RuntimeError("portable package does not declare 8 displays")
+        if info.get("raw_restricted_data_included") is not False:
+            raise RuntimeError("portable package incorrectly contains restricted raw data")
+    return {
+        "bundle_sha256": sha256(bundle),
+        "verified_members": len(rows),
+        "package_info": info,
+    }
+
+
+def extract_portable(
+    bundle: Path, destination: Path
+) -> tuple[Path, dict[str, object]]:
+    verified = verify_portable_archive(bundle)
+    with zipfile.ZipFile(bundle) as archive:
         archive.extractall(destination)
-    repo = destination / "CMDO-Reproducibility"
+    repo = destination / PREFIX
     if not (repo / "RUN_REVIEWER.py").is_file():
         raise RuntimeError("portable bundle did not materialize RUN_REVIEWER.py")
-    return repo, info
+    return repo, verified
 
 
 def source_preflight() -> dict[str, object]:
     required = [
         ROOT / "RUN_REVIEWER.py",
-        ROOT / "environment/requirements-reviewer.txt",
-        ROOT / "environment/requirements-replay.txt",
-        ROOT / "environment/replay-constraints.txt",
-        ROOT / "scripts/install_reviewer_asset_bundle.py",
-        ROOT / "scripts/build_reviewer_asset_bundle.py",
+        ROOT / "RUN_SUBMISSION_V2_FIGURES.m",
+        ROOT / "scripts/verify_submission_v2_science.py",
+        ROOT / "scripts/build_portable_bundle.py",
     ]
     missing = [str(path.relative_to(ROOT)) for path in required if not path.is_file()]
     if missing:
         raise RuntimeError(f"clean-room source preflight missing files: {missing}")
     result: dict[str, object] = {
         "required_files": len(required),
-        "reviewer_requirements": "environment/requirements-reviewer.txt",
+        "reviewer_path": "submission-v2 static science + eight graphical displays",
+        "historical_deep_replay_required": False,
         "windows_longpaths_enabled_for_git": os.name == "nt",
     }
     if (ROOT / ".git").exists():
         result["source_head"] = git("rev-parse", "HEAD")
-        result["source_status_clean"] = not bool(git("status", "--porcelain"))
+        result["source_status_clean"] = not bool(
+            git("status", "--porcelain", "--untracked-files=all")
+        )
     return result
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="CMDO clean-room reviewer acceptance")
+    parser = argparse.ArgumentParser(
+        description="CMDO submission-v2 clean-room reviewer acceptance"
+    )
     delivery = parser.add_mutually_exclusive_group()
     delivery.add_argument("--repository-url", help="fresh-clone delivery route")
-    delivery.add_argument("--portable-bundle", type=Path, help="offline portable ZIP delivery route")
+    delivery.add_argument(
+        "--portable-bundle", type=Path, help="offline portable ZIP delivery route"
+    )
     parser.add_argument("--ref", help="exact Git ref/commit for clone mode")
-    parser.add_argument("--asset-bundle", type=Path, help="CMDO-Reviewer-Assets-v1.0.zip")
     parser.add_argument("--workspace", type=Path, default=DEFAULT_WORKSPACE)
     parser.add_argument("--python", dest="python_exe", default=sys.executable)
-    parser.add_argument("--allow-network", action="store_true")
-    parser.add_argument("--skip-environment-install", action="store_true")
-    parser.add_argument("--skip-smoke", action="store_true")
-    parser.add_argument("--skip-matlab", action="store_true")
-    parser.add_argument("--skip-frozen", action="store_true")
+    parser.add_argument("--matlab", help="optional MATLAB executable path")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--selftest", action="store_true")
     args = parser.parse_args(argv)
 
     preflight = source_preflight()
     if args.selftest:
-        print(json.dumps({
-            "classification": "CMDO_CLEANROOM_REVIEWER_TOOL_SELFTEST",
-            "source_preflight": preflight,
-            "default_workspace": str(DEFAULT_WORKSPACE),
-            "required_python_major_minor": "3.11",
-            "windows_clone_policy": "git -c core.longpaths=true" if os.name == "nt" else "native",
-            "standard_sequence": [
-                "fresh delivery materialization",
-                "new Python 3.11 venv + pinned minimal reviewer dependencies",
-                "RUN_REVIEWER.py check",
-                "install exact seven-archive reviewer asset bundle",
-                "RUN_REVIEWER.py deep-plan",
-                "RUN_REVIEWER.py figures56",
-                "RUN_REVIEWER.py smoke --allow-network",
-                "RUN_REVIEWER.py frozen",
-                "post-run clean delivery check",
-            ],
-        }, indent=2, sort_keys=True))
-        print("=== CMDO CLEANROOM TOOL SELFTEST PASS ===")
+        print(
+            json.dumps(
+                {
+                    "classification": "CMDO_SUBMISSION_V2_CLEANROOM_TOOL_SELFTEST",
+                    "source_preflight": preflight,
+                    "default_workspace": str(DEFAULT_WORKSPACE),
+                    "standard_sequence": [
+                        "fresh clone or byte-verified portable delivery",
+                        "python RUN_REVIEWER.py all",
+                        "verify 8 PNG + 8 PDF",
+                        "verify clean Git worktree when Git metadata is present",
+                    ],
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+        print("=== CMDO SUBMISSION-V2 CLEANROOM TOOL SELFTEST PASS ===")
         return 0
 
     if not args.repository_url and not args.portable_bundle:
@@ -163,20 +203,25 @@ def main(argv: list[str] | None = None) -> int:
             parser.error("provide --repository-url or --portable-bundle")
         args.repository_url = git("remote", "get-url", "origin")
     if args.repository_url and not args.ref:
-        args.ref = git("rev-parse", "HEAD") if (ROOT / ".git").exists() else "main"
+        args.ref = (
+            git("rev-parse", "HEAD") if (ROOT / ".git").exists() else "main"
+        )
 
     workspace = args.workspace.expanduser().resolve()
     if workspace.exists():
         if not args.force:
-            raise SystemExit(f"workspace already exists; use --force to replace it: {workspace}")
+            raise SystemExit(
+                f"workspace already exists; use --force to replace it: {workspace}"
+            )
         shutil.rmtree(workspace)
     workspace.mkdir(parents=True)
+
     logs = workspace / "logs"
     report_path = workspace / "CMDO_CLEANROOM_REVIEWER_REPORT.json"
     commands: list[dict[str, object]] = []
     report: dict[str, object] = {
-        "schema_version": 1,
-        "classification": "CMDO_CLEANROOM_REVIEWER_ACCEPTANCE",
+        "schema_version": 2,
+        "classification": "CMDO_SUBMISSION_V2_CLEANROOM_REVIEWER_ACCEPTANCE",
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "workspace": str(workspace),
         "source_preflight": preflight,
@@ -189,23 +234,25 @@ def main(argv: list[str] | None = None) -> int:
             bundle = args.portable_bundle.expanduser().resolve()
             if not bundle.is_file():
                 raise RuntimeError(f"portable bundle not found: {bundle}")
-            repo, info = extract_portable(bundle, workspace)
+            repo, verified = extract_portable(bundle, workspace)
             report["delivery"] = {
                 "mode": "portable_bundle",
                 "bundle": str(bundle),
-                "bundle_sha256": sha256(bundle),
-                "package_info": info,
+                **verified,
             }
         else:
-            repo = workspace / "CMDO-Reproducibility"
+            repo = workspace / PREFIX
             clone = run_logged(
-                git_command("clone", "--no-local", str(args.repository_url), str(repo)),
+                git_command(
+                    "clone", "--no-local", str(args.repository_url), str(repo)
+                ),
                 cwd=workspace,
                 log_path=logs / "01_clone.log",
             )
             commands.append(clone)
             if clone["returncode"]:
                 raise RuntimeError("fresh git clone failed")
+
             if os.name == "nt":
                 git("config", "core.longpaths", "true", cwd=repo)
             checkout = run_logged(
@@ -215,132 +262,99 @@ def main(argv: list[str] | None = None) -> int:
             )
             commands.append(checkout)
             if checkout["returncode"]:
-                raise RuntimeError(f"could not checkout requested ref {args.ref}")
+                raise RuntimeError(
+                    f"could not checkout requested ref {args.ref}"
+                )
+
             cloned_head = git("rev-parse", "HEAD", cwd=repo)
-            expected_head = git("rev-parse", f"{args.ref}^{{commit}}", cwd=repo)
+            expected_head = git(
+                "rev-parse", f"{args.ref}^{{commit}}", cwd=repo
+            )
             if cloned_head != expected_head:
-                raise RuntimeError(f"clean-room HEAD mismatch: requested {args.ref} -> {expected_head}, got {cloned_head}")
-            if git("status", "--porcelain", cwd=repo):
-                raise RuntimeError("fresh clone is unexpectedly dirty before reviewer execution")
+                raise RuntimeError(
+                    "clean-room HEAD mismatch: "
+                    f"requested {args.ref} -> {expected_head}, got {cloned_head}"
+                )
+            if git(
+                "status", "--porcelain", "--untracked-files=all", cwd=repo
+            ):
+                raise RuntimeError(
+                    "fresh clone is unexpectedly dirty before reviewer execution"
+                )
             report["delivery"] = {
                 "mode": "fresh_clone",
                 "repository_url": args.repository_url,
                 "requested_ref": args.ref,
                 "cloned_head": cloned_head,
-                "windows_longpaths": os.name == "nt",
             }
 
-        base_python = Path(args.python_exe).expanduser().resolve()
-        version = subprocess.run(
-            [str(base_python), "-c", "import sys; print('.'.join(map(str, sys.version_info[:3])))"],
-            text=True, stdout=subprocess.PIPE, check=True,
-        ).stdout.strip()
-        if tuple(map(int, version.split(".")[:2])) != (3, 11):
-            raise RuntimeError(f"clean-room requires Python 3.11; selected interpreter is {version}")
-        report["python_base"] = {"path": str(base_python), "version": version}
+        python_exe = str(Path(args.python_exe).expanduser().resolve())
+        rendered = workspace / "rendered"
+        reviewer_command = [
+            python_exe,
+            "RUN_REVIEWER.py",
+            "all",
+            "--output-dir",
+            str(rendered),
+        ]
+        if args.matlab:
+            reviewer_command.extend(["--matlab", args.matlab])
 
-        venv = repo / ".venv-cleanroom"
-        py = venv_python(venv)
-        if args.skip_environment_install:
-            py = base_python
-            report["environment_install"] = "SKIPPED_BY_REQUEST"
-        else:
-            create = run_logged(
-                [str(base_python), "-m", "venv", str(venv)], cwd=repo,
-                log_path=logs / "03_create_venv.log",
+        acceptance = run_logged(
+            reviewer_command,
+            cwd=repo,
+            log_path=logs / "03_submission_v2_acceptance.log",
+        )
+        commands.append(acceptance)
+        if acceptance["returncode"]:
+            raise RuntimeError("submission-v2 reviewer acceptance failed")
+
+        png_count = len(list(rendered.glob("*.png")))
+        pdf_count = len(list(rendered.glob("*.pdf")))
+        if png_count != 8 or pdf_count != 8:
+            raise RuntimeError(
+                f"render inventory mismatch: {png_count} PNG, {pdf_count} PDF"
             )
-            commands.append(create)
-            if create["returncode"]:
-                raise RuntimeError("clean-room venv creation failed")
-            reviewer_requirements = repo / "environment" / "requirements-reviewer.txt"
-            install = run_logged(
-                [str(py), "-m", "pip", "install", "-c", "environment/replay-constraints.txt", "-r", "environment/requirements-reviewer.txt"],
-                cwd=repo, log_path=logs / "04_install_environment.log",
-            )
-            commands.append(install)
-            if install["returncode"]:
-                raise RuntimeError("clean-room reviewer dependency installation failed")
-            report["environment_install"] = {
-                "classification": "PINNED_MINIMAL_REVIEWER_REQUIREMENTS_INSTALLED",
-                "requirements": "environment/requirements-reviewer.txt",
-                "requirements_sha256": sha256(reviewer_requirements),
-            }
-
-        def reviewer(label: str, *reviewer_args: str) -> None:
-            record = run_logged(
-                [str(py), "RUN_REVIEWER.py", *reviewer_args],
-                cwd=repo, log_path=logs / f"{label}.log",
-            )
-            commands.append(record)
-            if record["returncode"]:
-                raise RuntimeError(f"reviewer step failed: {label}")
-
-        reviewer("05_check", "check")
-
-        if args.asset_bundle:
-            asset = args.asset_bundle.expanduser().resolve()
-            if not asset.is_file():
-                raise RuntimeError(f"reviewer asset bundle not found: {asset}")
-            report["asset_bundle"] = {
-                "path": str(asset),
-                "size_bytes": asset.stat().st_size,
-                "sha256": sha256(asset),
-            }
-            reviewer("06_install_assets", "install-assets", "--bundle", str(asset))
-        else:
-            canonical = repo / "data" / "canonical_records"
-            if not canonical.is_dir():
-                raise RuntimeError("no --asset-bundle supplied and portable delivery lacks canonical records")
-
-        reviewer("07_deep_plan", "deep-plan")
-
-        matlab = shutil.which("matlab")
-        report["matlab"] = matlab
-        if args.skip_matlab:
-            report["figures56"] = "SKIPPED_BY_REQUEST"
-        else:
-            if not matlab:
-                raise RuntimeError("MATLAB is required for standard clean-room acceptance but is not on PATH")
-            reviewer("08_figures56", "figures56", "--output-root", str(repo / "outputs" / "cleanroom-reviewer"))
-
-        if args.skip_smoke:
-            report["smoke"] = "SKIPPED_BY_REQUEST"
-        else:
-            if not args.allow_network:
-                raise RuntimeError("public smoke requires --allow-network (or use --skip-smoke)")
-            reviewer(
-                "09_smoke", "smoke", "--allow-network", "--run-prefix", "CLEANROOM",
-                "--output-root", str(repo / "outputs" / "cleanroom-reviewer"),
-            )
-
-        if args.skip_frozen:
-            report["frozen"] = "SKIPPED_BY_REQUEST"
-        else:
-            if not matlab:
-                raise RuntimeError("frozen figure regeneration requires MATLAB on PATH")
-            reviewer(
-                "10_frozen", "frozen", "--run-prefix", "CLEANROOM",
-                "--output-root", str(repo / "outputs" / "cleanroom-reviewer"),
-            )
+        report["render_inventory"] = {
+            "png": png_count,
+            "pdf": pdf_count,
+            "directory": str(rendered),
+        }
 
         if (repo / ".git").exists():
-            post_status = git("status", "--porcelain", cwd=repo)
+            post_status = git(
+                "status", "--porcelain", "--untracked-files=all", cwd=repo
+            )
             if post_status:
-                raise RuntimeError(f"clean-room clone became dirty after reviewer execution:\n{post_status}")
+                raise RuntimeError(
+                    "clean-room clone became dirty after reviewer execution:\n"
+                    + post_status
+                )
             report["post_run_git_status"] = "CLEAN"
 
         report["status"] = "PASS"
         report["completed_utc"] = datetime.now(timezone.utc).isoformat()
-        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-        print("\n=== CMDO CLEANROOM REVIEWER ACCEPTANCE PASS ===")
+        report_path.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+        print("\n=== CMDO SUBMISSION-V2 CLEANROOM REVIEWER PASS ===")
         print("Report:", report_path)
         return 0
     except Exception as exc:
         report["status"] = "FAIL"
         report["error"] = str(exc)
         report["completed_utc"] = datetime.now(timezone.utc).isoformat()
-        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-        print(f"\nCMDO clean-room reviewer acceptance FAILED: {exc}", file=sys.stderr)
+        report_path.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+        print(
+            f"\nCMDO submission-v2 clean-room reviewer FAILED: {exc}",
+            file=sys.stderr,
+        )
         print("Report:", report_path, file=sys.stderr)
         return 1
 
