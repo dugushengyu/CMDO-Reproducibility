@@ -1,12 +1,13 @@
-# CMDO submission v2 freeze scope — 2026-09-09
+# CMDO submission-v2 freeze scope — reviewer-slim v2.1.1
 
-This branch synchronizes the reproducibility repository with the manuscript architecture frozen on 9 September 2026.
+This candidate keeps the manuscript scientific architecture frozen while narrowing the reviewer acceptance path to the evidence actually used by the current submission.
 
 ## Scientific architecture
 
 `IDENTIFY -> REUSE -> CERTIFY -> PRESERVE`
 
 Submission displays:
+
 1. Figure 1 — evidential order and information roles.
 2. Figure 2 — IDENTIFY: outcome-free non-identifiability and outcome restoration.
 3. Figure 3 — REUSE: frozen confirmation, mismatch sensing, 185-state post-completion geometry, and the deferred sealed 20-hospital eICU replication.
@@ -21,10 +22,34 @@ Submission displays:
 - The 185-state synthesis remains exactly `80 U6 + 80 U7 + 12 U8 + 9 U9A + 4 U9B = 185`.
 - Deferred eICU is reported separately and is not retroactively added to the 185-state synthesis or PCC projection.
 - U10's prospective mechanism verdict remains `MECHANISM_NOT_CONFIRMED`; post-completion localization does not overwrite it.
-- The eICU canonical shareable ZIP remains immutable and is not rebuilt by this repository update.
-- No raw credentialed eICU/PhysioNet patient-level data are added to Git.
-- PPI++-style results are retained as a point-estimation comparator and do not redefine CMDO as an estimator-superiority claim.
+- The eICU canonical shareable record remains immutable and restricted patient-level eICU/PhysioNet data are not redistributed.
+- PPI++-style results remain a point-estimation comparator and do not redefine CMDO as an estimator-superiority claim.
+
+## Reviewer acceptance scope
+
+The reviewer-facing gate is:
+
+```text
+submission-v2 static scientific-integrity verification
+-> current 5 main + 3 Extended Data displays
+-> exactly 8 PNG + 8 PDF outputs
+-> clean Git worktree
+```
+
+Historical developmental DAG replay, full-claim replay, archival continuation, network smoke, legacy Figure 5/6 rendering and the seven-canonical-archive asset bundle are not reviewer acceptance requirements.
+
+They remain available only as maintainer/provenance material.
 
 ## Freeze procedure
 
-This branch is not a final submission tag until all current renderer/source changes are complete, a v2 SHA-256 manifest is committed, and a fresh clone of the exact candidate commit passes the v2 acceptance gate on the author workstation. Only that exact tested commit may be moved to `main` and tagged `cmdo-submission-v2.0.0`.
+The existing v2.1.0 freeze/tag is immutable and is not moved.
+
+A v2.1.1 candidate may be merged/tagged only after:
+
+1. the submission-v2 SHA-256 manifest verifies;
+2. GitHub static integrity passes;
+3. a fresh clone of the exact candidate commit passes `python RUN_REVIEWER.py all`;
+4. the graphical run produces exactly eight PNG and eight PDF displays; and
+5. the fresh-clone Git worktree remains clean.
+
+Only the exact tested commit should receive the v2.1.1 submission tag.
