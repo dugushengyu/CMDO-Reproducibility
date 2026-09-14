@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build the final CMDO reviewer submission artifacts after strict preflight."""
+"""Build the lean CMDO submission-v2 reviewer package after strict preflight."""
+
 from __future__ import annotations
 
 import argparse
@@ -12,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
+VERSION = "v2.1.1"
 
 
 def sha256(path: Path) -> str:
@@ -26,109 +28,152 @@ def run(command: list[str]) -> None:
     print("\n$", " ".join(command), flush=True)
     process = subprocess.run(command, cwd=ROOT)
     if process.returncode:
-        raise RuntimeError(f"command failed ({process.returncode}): {' '.join(command)}")
+        raise RuntimeError(
+            f"command failed ({process.returncode}): {' '.join(command)}"
+        )
 
 
 def git(*args: str) -> str:
-    process = subprocess.run(["git", *args], cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.run(
+        ["git", *args],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
     if process.returncode:
         raise RuntimeError(process.stderr)
     return process.stdout.strip()
 
 
 def artifact(path: Path) -> dict[str, object]:
-    return {"file": path.name, "size_bytes": path.stat().st_size, "sha256": sha256(path)}
+    return {
+        "file": path.name,
+        "size_bytes": path.stat().st_size,
+        "sha256": sha256(path),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="CMDO final reviewer submission builder")
+    parser = argparse.ArgumentParser(
+        description="CMDO submission-v2 reviewer package builder"
+    )
     parser.add_argument("--output-dir", type=Path, default=DIST)
     parser.add_argument("--plan", action="store_true")
     args = parser.parse_args(argv)
     output_dir = args.output_dir.expanduser().resolve()
 
     plan = {
-        "classification": "CMDO_FINAL_REVIEWER_SUBMISSION_BUILD",
+        "classification": "CMDO_SUBMISSION_V2_REVIEWER_BUILD",
         "preflight": [
-            "HEAD equals origin/main and the full visible worktree is clean",
-            "RUN_REVIEWER.py check",
-            "seven canonical archives byte-verify",
-            "minimal standard reviewer environment is versioned",
+            "build from a Git checkout with a fully clean visible worktree",
+            "run submission-v2 static scientific-integrity gate",
+            "package repository-tracked reviewer files only",
+            "byte-verify the portable ZIP and emit SHA-256 manifest",
         ],
-        "artifacts": [
-            "CMDO-Reviewer-Assets-v1.0.zip",
-            "CMDO-Reproducibility-Reviewer-Portable-v1.0.zip",
-            "CMDO-Submission-Candidate-v1.0_MANIFEST.json",
-            "CMDO-Submission-Candidate-v1.0_SHA256.txt",
+        "reviewer_acceptance": [
+            "python RUN_REVIEWER.py all",
+            "8 submission-v2 PNG + 8 submission-v2 PDF outputs",
+            "Git worktree remains clean",
         ],
-        "scope": "No restricted raw data and no deferred eICU data are distributed.",
+        "excluded_from_reviewer_requirements": [
+            "historical developmental DAG replay",
+            "full-claim/deep-plan/archival-continuation",
+            "legacy seven-canonical-archive asset bundle",
+            "restricted raw eICU/PhysioNet patient-level data",
+        ],
     }
     if args.plan:
         print(json.dumps(plan, indent=2, sort_keys=True))
-        print("=== CMDO SUBMISSION BUILDER PLAN PASS ===")
+        print("=== CMDO SUBMISSION-V2 BUILDER PLAN PASS ===")
         return 0
 
     if not (ROOT / ".git").exists():
-        raise RuntimeError("submission artifacts must be built from the canonical Git checkout")
+        raise RuntimeError(
+            "submission artifacts must be built from the canonical Git checkout"
+        )
+
     head = git("rev-parse", "HEAD")
-    origin = git("rev-parse", "origin/main")
-    if head != origin:
-        raise RuntimeError(f"HEAD {head} does not equal origin/main {origin}")
-    status = git("status", "--porcelain")
+    status = git("status", "--porcelain", "--untracked-files=all")
     if status:
         raise RuntimeError(f"worktree is not clean before packaging:\n{status}")
 
-    reviewer_requirements = ROOT / "environment/requirements-reviewer.txt"
-    if not reviewer_requirements.is_file():
-        raise RuntimeError("missing environment/requirements-reviewer.txt")
-
     run([sys.executable, "RUN_REVIEWER.py", "check"])
-    run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    asset = output_dir / "CMDO-Reviewer-Assets-v1.0.zip"
-    portable = output_dir / "CMDO-Reproducibility-Reviewer-Portable-v1.0.zip"
-    run([sys.executable, "scripts/build_reviewer_asset_bundle.py", "--output", str(asset)])
-    run([sys.executable, "scripts/build_portable_bundle.py", "--output", str(portable), "--require-reviewer-assets"])
+    portable = output_dir / f"CMDO-Reproducibility-Reviewer-Portable-{VERSION}.zip"
+    run(
+        [
+            sys.executable,
+            "scripts/build_portable_bundle.py",
+            "--output",
+            str(portable),
+        ]
+    )
 
     manifest = {
-        "schema_version": 1,
-        "classification": "CMDO_FINAL_REVIEWER_SUBMISSION_CANDIDATE",
+        "schema_version": 2,
+        "classification": "CMDO_SUBMISSION_V2_REVIEWER_CANDIDATE",
         "built_utc": datetime.now(timezone.utc).isoformat(),
         "git_commit": head,
         "git_worktree_clean": True,
         "raw_restricted_data_included": False,
-        "u9_eicu_data_included": False,
-        "standard_reviewer_entrypoint": "python RUN_REVIEWER.py all --allow-network",
-        "standard_reviewer_environment": "environment/requirements-reviewer.txt",
-        "deep_replay_environment": "environment/requirements-replay.txt",
-        "cleanroom_maintainer_entrypoint": "powershell -ExecutionPolicy Bypass -File .\\RUN_CLEANROOM_REVIEWER.ps1",
-        "artifacts": [artifact(asset), artifact(portable)],
+        "restricted_eicu_patient_level_data_included": False,
+        "share_safe_eicu_aggregate_records_included": True,
+        "submission_v2_displays": 8,
+        "standard_reviewer_entrypoint": "python RUN_REVIEWER.py all",
+        "historical_deep_replay_required": False,
+        "legacy_canonical_archive_bundle_required": False,
+        "artifacts": [artifact(portable)],
         "binding_records": {
-            "canonical_archives_manifest_sha256": sha256(ROOT / "provenance/canonical_archives_manifest.csv"),
-            "final_figure56_seal_sha256": sha256(ROOT / "provenance/final_figure56_seal.json"),
-            "reviewer_requirements_sha256": sha256(reviewer_requirements),
-            "replay_constraints_sha256": sha256(ROOT / "environment/replay-constraints.txt"),
+            "submission_v2_science_verifier_sha256": sha256(
+                ROOT / "scripts/verify_submission_v2_science.py"
+            ),
+            "submission_v2_matlab_runner_sha256": sha256(
+                ROOT / "RUN_SUBMISSION_V2_FIGURES.m"
+            ),
+            "reviewer_entrypoint_sha256": sha256(ROOT / "RUN_REVIEWER.py"),
         },
         "interpretation_boundary": (
-            "The standard package reproduces engineering acceptance, public smoke, byte-verified frozen manuscript assets, "
-            "and figure regeneration. It does not reinterpret the disclosed fresh T2-D scientific divergence or claim a fresh U9/eICU replay."
+            "The reviewer package verifies the frozen scientific invariants and "
+            "regenerates the eight displays used by the current manuscript from "
+            "tracked share-safe source data. Historical developmental replay is "
+            "retained in the repository for provenance but is not a reviewer "
+            "acceptance requirement."
         ),
     }
-    manifest_path = output_dir / "CMDO-Submission-Candidate-v1.0_MANIFEST.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
-    sha_path = output_dir / "CMDO-Submission-Candidate-v1.0_SHA256.txt"
+
+    manifest_path = (
+        output_dir / f"CMDO-Submission-Candidate-{VERSION}_MANIFEST.json"
+    )
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    sha_path = output_dir / f"CMDO-Submission-Candidate-{VERSION}_SHA256.txt"
     targets = [
-        asset,
-        asset.with_suffix(asset.suffix + ".sha256.txt"),
         portable,
         portable.with_suffix(portable.suffix + ".sha256"),
         manifest_path,
     ]
-    sha_path.write_text("".join(f"{sha256(path)}  {path.name}\n" for path in targets), encoding="utf-8", newline="\n")
+    sha_path.write_text(
+        "".join(f"{sha256(path)}  {path.name}\n" for path in targets),
+        encoding="utf-8",
+        newline="\n",
+    )
 
-    print("\n=== CMDO FINAL REVIEWER SUBMISSION BUILD PASS ===")
+    final_status = git("status", "--porcelain", "--untracked-files=all")
+    # dist/ may be ignored; any visible source-worktree change is still forbidden.
+    if final_status:
+        raise RuntimeError(
+            f"worktree changed while building reviewer package:\n{final_status}"
+        )
+
+    print("\n=== CMDO SUBMISSION-V2 REVIEWER BUILD PASS ===")
     print("Commit:", head)
+    print("Portable:", portable)
     print("Manifest:", manifest_path)
     print("SHA list:", sha_path)
     return 0
