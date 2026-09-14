@@ -1,6 +1,11 @@
-# Minimal pinned environment for the standard reviewer path.
-# This deliberately excludes Jupyter, PyTorch and deep-replay data tooling.
-# It is sufficient for RUN_REVIEWER.py check/smoke/install-assets/figures56/frozen.
+# Legacy/maintainer convenience environment.
+#
+# The current submission-v2 reviewer path does NOT install or require this
+# file: RUN_REVIEWER.py uses the Python standard library plus MATLAB and reads
+# tracked frozen source data directly.
+#
+# These pins are retained only for older maintainer utilities that may still
+# use the former smoke/frozen reviewer profiles.
 numpy==1.26.4
 pandas==2.2.3
 scipy==1.13.1
