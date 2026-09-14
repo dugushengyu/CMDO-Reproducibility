@@ -1,124 +1,203 @@
 #!/usr/bin/env python3
-"""Single reviewer-facing entry point for CMDO."""
+"""Reviewer-facing acceptance for the current CMDO submission-v2 evidence package.
+
+This entry point intentionally does not execute the historical developmental DAG.
+It verifies the frozen submission-v2 science invariants and renders the eight
+figures/Extended Data displays used by the manuscript.
+"""
 from __future__ import annotations
-import argparse, os, shutil, subprocess, sys
+
+import argparse
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
 from pathlib import Path
+
 ROOT = Path(__file__).resolve().parent
-RUNNER = ROOT / "RUN_REPRODUCTION.py"
-ACCEPT = ROOT / "scripts" / "final_reviewer_acceptance.py"
-INSTALL_ASSETS = ROOT / "scripts" / "install_reviewer_asset_bundle.py"
-FIGURE56_AUDIT = ROOT / "scripts" / "audit_final_figure56.py"
+SCIENCE_CHECK = ROOT / "scripts" / "verify_submission_v2_science.py"
+
+EXPECTED_STEMS = (
+    "Figure1_Evidential_Order_PCC",
+    "Figure2_IDENTIFY_Validation",
+    "Figure3_REUSE_Refined",
+    "Figure4_CERTIFY",
+    "Figure5_PRESERVE_PCC",
+    "ED1_OutcomeFreeBoundary_v9",
+    "ED2_IntegrityControls_v2",
+    "ED3_RobustnessEfficiency_v1",
+)
+
 
 def run(command: list[str]) -> int:
     print("\n$", " ".join(command), flush=True)
     return subprocess.run(command, cwd=ROOT).returncode
 
-def audit_final_figures() -> int:
-    return run([sys.executable, str(FIGURE56_AUDIT)])
 
-def render_final_figures56(output_root: Path) -> int:
-    if audit_final_figures():
-        return 1
-    matlab = shutil.which("matlab")
-    if not matlab:
-        print("\nMATLAB is not on PATH. Add MATLAB to PATH, then rerun:\n"
-              "  python RUN_REVIEWER.py figures56\n")
-        return 4
-    output_root = output_root.expanduser().resolve()
-    output_root.mkdir(parents=True, exist_ok=True)
-    env = os.environ.copy()
-    env["CMDO_OUTPUT_ROOT"] = str(output_root)
-    env["CMDO_BATCH_MODE"] = "1"
-    matlab_expr = (
-        "addpath(genpath(fullfile(pwd,'matlab'))); "
-        "Figure5(); Figure6();"
+def git_status() -> str | None:
+    if not (ROOT / ".git").exists():
+        return None
+    process = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=all"],
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
     )
-    print("\n$ matlab -batch <sealed Figure5/6 render>", flush=True)
-    rc = subprocess.run([matlab, "-batch", matlab_expr], cwd=ROOT, env=env).returncode
+    if process.returncode:
+        raise RuntimeError(process.stderr.strip() or "git status failed")
+    return process.stdout.strip()
+
+
+def require_clean(label: str) -> None:
+    status = git_status()
+    if status is None:
+        print(f"Git cleanliness ({label}): portable package, no .git metadata")
+        return
+    if status:
+        raise RuntimeError(f"Git worktree is not clean ({label}):\n{status}")
+    print(f"Git cleanliness ({label}): PASS")
+
+
+def resolve_matlab(explicit: str | None) -> str | None:
+    candidates: list[Path] = []
+    if explicit:
+        candidates.append(Path(explicit).expanduser())
+    env_matlab = os.environ.get("CMDO_MATLAB", "").strip()
+    if env_matlab:
+        candidates.append(Path(env_matlab).expanduser())
+    on_path = shutil.which("matlab")
+    if on_path:
+        candidates.append(Path(on_path))
+    if os.name == "nt":
+        program_files = Path(os.environ.get("ProgramFiles", r"C:\Program Files"))
+        matlab_root = program_files / "MATLAB"
+        if matlab_root.is_dir():
+            candidates.extend(
+                sorted(matlab_root.glob("R20*/bin/matlab.exe"), reverse=True)
+            )
+    for candidate in candidates:
+        if candidate.is_file():
+            return str(candidate.resolve())
+    return None
+
+
+def matlab_quote(value: Path) -> str:
+    return str(value).replace("'", "''")
+
+
+def verify_rendered_outputs(output_dir: Path) -> None:
+    missing: list[str] = []
+    for stem in EXPECTED_STEMS:
+        for suffix in (".png", ".pdf"):
+            path = output_dir / f"{stem}{suffix}"
+            if not path.is_file() or path.stat().st_size == 0:
+                missing.append(path.name)
+    if missing:
+        raise RuntimeError(
+            "submission-v2 graphical run completed but required outputs are "
+            f"missing/empty: {missing}"
+        )
+
+    png = sorted(output_dir.glob("*.png"))
+    pdf = sorted(output_dir.glob("*.pdf"))
+    if len(png) != 8 or len(pdf) != 8:
+        raise RuntimeError(
+            f"expected exactly 8 PNG and 8 PDF outputs, found {len(png)} PNG "
+            f"and {len(pdf)} PDF"
+        )
+    print("PASS graphical inventory: 8 PNG + 8 PDF")
+
+
+def static_check() -> int:
+    require_clean("before static check")
+    rc = run([sys.executable, str(SCIENCE_CHECK)])
     if rc:
         return rc
-    figure_dir = output_root / "figures" / "main"
-    expected = [
-        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.png",
-        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.pdf",
-        figure_dir / "Figure5_Operational_External_Admissibility_Boundary.fig",
-        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.png",
-        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.pdf",
-        figure_dir / "Figure6_Evidence_Admissibility_FINAL_4panel.fig",
-    ]
-    missing = [p for p in expected if not p.is_file() or p.stat().st_size == 0]
-    if missing:
-        print("\nFigure 5/6 render finished but required outputs are missing/empty:")
-        for p in missing:
-            print("  ", p)
-        return 1
-    print("\nVerified sealed Figure 5/6 outputs:")
-    for p in expected:
-        print(f"  {p} ({p.stat().st_size} bytes)")
-    print("=== CMDO FIGURE 5/6 RENDER PASS ===")
+    require_clean("after static check")
+    print("=== CMDO SUBMISSION-V2 STATIC REVIEWER PASS ===")
     return 0
 
-def require_assets() -> int:
-    rc = run([sys.executable, "scripts/verify_repository.py", "--require-canonical"])
+
+def figures(output_dir: Path, matlab_exe: str | None) -> int:
+    require_clean("before graphical run")
+    matlab = resolve_matlab(matlab_exe)
+    if not matlab:
+        print(
+            "MATLAB was not found. Put matlab on PATH, set CMDO_MATLAB, or pass "
+            "--matlab <path>.",
+            file=sys.stderr,
+        )
+        return 4
+
+    output_dir = output_dir.expanduser().resolve()
+    try:
+        output_dir.relative_to(ROOT.resolve())
+    except ValueError:
+        pass
+    else:
+        raise RuntimeError(
+            "Reviewer outputs must be outside the repository so the fresh-clone "
+            "worktree remains clean."
+        )
+
+    if output_dir.exists():
+        shutil.rmtree(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    repo_q = matlab_quote(ROOT.resolve())
+    out_q = matlab_quote(output_dir)
+    expression = (
+        f"cd('{repo_q}'); "
+        f"RUN_SUBMISSION_V2_FIGURES('RepoRoot',pwd,'OutDir','{out_q}',"
+        "'Strict',true)"
+    )
+    print("\n$ matlab -batch <RUN_SUBMISSION_V2_FIGURES Strict=true>", flush=True)
+    rc = subprocess.run([matlab, "-batch", expression], cwd=ROOT).returncode
     if rc:
-        print("\nCanonical reviewer assets are not installed.\n"
-              "Install the submission asset ZIP first:\n"
-              "  python RUN_REVIEWER.py install-assets --bundle <CMDO-Reviewer-Assets-v1.0.zip>\n")
-    return rc
+        return rc
+
+    verify_rendered_outputs(output_dir)
+    require_clean("after graphical run")
+    print("=== CMDO SUBMISSION-V2 GRAPHICAL REVIEWER PASS ===")
+    print("Output:", output_dir)
+    return 0
+
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="CMDO manuscript-reviewer quick path")
-    parser.add_argument("command", choices=["check","install-assets","smoke","figures56","frozen","all","deep-plan"])
-    parser.add_argument("--bundle", type=Path)
-    parser.add_argument("--output-root", type=Path, default=ROOT / "outputs" / "reviewer")
-    parser.add_argument("--run-prefix", default="CMDO-REVIEWER")
-    parser.add_argument("--allow-network", action="store_true")
+    parser = argparse.ArgumentParser(
+        description="CMDO submission-v2 reviewer acceptance"
+    )
+    parser.add_argument("command", choices=["check", "figures", "all"])
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path(tempfile.gettempdir()) / "CMDO_submission_v2_reviewer",
+        help="render directory outside the Git checkout",
+    )
+    parser.add_argument(
+        "--matlab",
+        help="optional path to MATLAB executable; otherwise CMDO_MATLAB/PATH/standard Windows installs are searched",
+    )
     args = parser.parse_args(argv)
 
     if args.command == "check":
-        return run([sys.executable, str(ACCEPT), "--skip-runtime"])
-    if args.command == "install-assets":
-        if args.bundle is None:
-            parser.error("install-assets requires --bundle <zip>")
-        return run([sys.executable, str(INSTALL_ASSETS), "--bundle", str(args.bundle)])
-    if args.command == "smoke":
-        command = [sys.executable, str(RUNNER), "smoke", "--run-id", f"{args.run_prefix}-SMOKE",
-                   "--output-root", str(args.output_root)]
-        if args.allow_network:
-            command.append("--allow-network")
-        return run(command)
-    if args.command == "figures56":
-        return render_final_figures56(args.output_root)
-    if args.command == "frozen":
-        if audit_final_figures():
-            return 1
-        if require_assets():
-            return 3
-        return run([sys.executable, str(RUNNER), "frozen", "--run-id", f"{args.run_prefix}-FROZEN",
-                    "--output-root", str(args.output_root)])
+        return static_check()
+    if args.command == "figures":
+        return figures(args.output_dir, args.matlab)
     if args.command == "all":
-        rc = run([sys.executable, str(ACCEPT), "--skip-runtime"])
+        rc = static_check()
         if rc:
             return rc
-        smoke = [sys.executable, str(RUNNER), "smoke", "--run-id", f"{args.run_prefix}-SMOKE",
-                 "--output-root", str(args.output_root)]
-        if args.allow_network:
-            smoke.append("--allow-network")
-        rc = run(smoke)
+        rc = figures(args.output_dir, args.matlab)
         if rc:
             return rc
-        if require_assets():
-            return 3
-        return run([sys.executable, str(RUNNER), "frozen", "--run-id", f"{args.run_prefix}-FROZEN",
-                    "--output-root", str(args.output_root)])
-    if args.command == "deep-plan":
-        rc = run([sys.executable, str(RUNNER), "full-claim", "--plan", "--run-id",
-                  f"{args.run_prefix}-FULL-PLAN"])
-        if rc:
-            return rc
-        return run([sys.executable, str(RUNNER), "archival-continuation", "--plan", "--run-id",
-                    f"{args.run_prefix}-ARCHIVAL-PLAN"])
+        print("\n=== CMDO SUBMISSION-V2 REVIEWER ACCEPTANCE: PASS ===")
+        return 0
     raise AssertionError(args.command)
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
