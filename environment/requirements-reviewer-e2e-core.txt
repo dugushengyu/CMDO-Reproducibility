@@ -1,0 +1,6 @@
+# Core dependencies for the optional end-to-end reviewer audit.
+# Install current stable torch + torchvision separately for the local platform/GPU.
+numpy==1.26.4
+scikit-learn==1.5.2
+matplotlib==3.9.2
+Pillow==11.0.0
