@@ -541,6 +541,7 @@ def main() -> int:
     fresh = {str(r["target"]): r for r in fresh_rows}
     failures: list[str] = []
     comparisons: list[dict[str, object]] = []
+    metric_failures: list[dict[str, object]] = []
 
     if set(frozen) != set(fresh):
         failures.append("target roster mismatch")
@@ -571,9 +572,20 @@ def main() -> int:
                 }
             )
             if not passed:
-                failures.append(
+                message = (
                     f"{target} {metric}: frozen={a:.8g} fresh={b:.8g} "
                     f"abs={absolute:.6g} rel={relative:.6g}"
+                )
+                failures.append(message)
+                metric_failures.append(
+                    {
+                        "target": target,
+                        "metric": metric,
+                        "frozen": a,
+                        "fresh": b,
+                        "absolute_difference": absolute,
+                        "relative_difference": relative,
+                    }
                 )
 
     write_csv(
@@ -649,6 +661,24 @@ def main() -> int:
         or ": n mismatch" in item
         or ": prevalence mismatch" in item
     ]
+    core_metric_failures = [
+        item for item in metric_failures
+        if item["metric"] in {"auc", "auprc", "balanced_accuracy", "brier"}
+    ]
+    calibration_metric_failures = [
+        item for item in metric_failures
+        if item["metric"] == "log_loss"
+    ]
+    numeric_advisory_class = (
+        "NONE"
+        if not metric_failures
+        else "CALIBRATION_ONLY"
+        if calibration_metric_failures and not core_metric_failures
+        else "CORE_METRIC"
+    )
+    total_metric_comparisons = len(comparisons)
+    passed_metric_comparisons = sum(int(row["passed"]) for row in comparisons)
+
     report = {
         "classification": "CMDO_REVIEWER_E2E_FRESH_U2_TRAINING",
         "status": (
@@ -656,6 +686,7 @@ def main() -> int:
             else "STRUCTURAL_FAIL" if structural_failures
             else "REVIEW_REQUIRED"
         ),
+        "numeric_advisory_class": numeric_advisory_class,
         "model_byte_identity_required": False,
         "fresh_training": True,
         "public_data_acquisition": True,
@@ -666,6 +697,11 @@ def main() -> int:
             "absolute": rule["absolute_tolerance"],
             "relative": rule["relative_tolerance"],
         },
+        "metric_comparisons_total": total_metric_comparisons,
+        "metric_comparisons_passed": passed_metric_comparisons,
+        "metric_comparisons_failed": len(metric_failures),
+        "core_metric_failures": core_metric_failures,
+        "calibration_metric_failures": calibration_metric_failures,
         "failed_comparisons": failures[:100],
         "duration_seconds": round(time.time() - started, 3),
         "fresh_metrics_sha256": sha256(fresh_metrics_path),
@@ -673,12 +709,49 @@ def main() -> int:
         "environment": environment,
     }
     write_json(out / "fresh_u2_report.json", report)
+
+    advisory_lines = [
+        "# Fresh U2 numeric replay advisory",
+        "",
+        f"Strict replay status: {report['status']}",
+        f"Advisory class: {numeric_advisory_class}",
+        f"Metric comparisons: {passed_metric_comparisons}/{total_metric_comparisons} within the predeclared tolerance.",
+        "",
+        "The original absolute/relative replay tolerances were not changed.",
+        "Structural mismatches remain failures. AUC, AUPRC, balanced accuracy and Brier are treated as core replay metrics; log-loss is reported separately as a calibration-sensitive metric.",
+        "",
+    ]
+    if calibration_metric_failures and not core_metric_failures and not structural_failures:
+        advisory_lines += [
+            "This run completed with calibration-only deviations: every failed metric comparison was log-loss.",
+            "No structural or core-metric tolerance failure was observed.",
+            "",
+            "Calibration-only deviations:",
+        ]
+        advisory_lines += [
+            f"- {item['target']}: frozen={item['frozen']:.8g}, fresh={item['fresh']:.8g}, "
+            f"abs={item['absolute_difference']:.6g}, rel={item['relative_difference']:.6g}"
+            for item in calibration_metric_failures
+        ]
+    elif core_metric_failures:
+        advisory_lines += ["Core-metric tolerance failures require investigation."]
+    elif structural_failures:
+        advisory_lines += ["Structural mismatch detected; this is a reproduction failure."]
+    else:
+        advisory_lines += ["All numeric comparisons are within tolerance."]
+    (out / "NUMERIC_REPLAY_ADVISORY.md").write_text(
+        "\n".join(advisory_lines) + "\n", encoding="utf-8"
+    )
+
     print(json.dumps(report, indent=2), flush=True)
     if structural_failures:
         print("FRESH U2 TRAINING REPLAY: STRUCTURAL FAIL", file=sys.stderr)
         return 2
     if failures:
-        print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (numeric tolerance) ===")
+        if numeric_advisory_class == "CALIBRATION_ONLY":
+            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (calibration-only log-loss advisory) ===")
+        else:
+            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (core numeric tolerance) ===")
         return 0
     print("=== FRESH U2 TRAINING REPLAY: PASS ===")
     return 0
