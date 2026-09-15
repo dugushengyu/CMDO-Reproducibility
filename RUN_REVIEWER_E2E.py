@@ -144,10 +144,10 @@ def main() -> int:
     reviewer_readiness = (
         "READY"
         if u2_report["status"] == "PASS"
-        else "READY_WITH_CALIBRATION_ADVISORY"
+        else "READY_WITH_LOGLOSS_ADVISORY"
         if (
             u2_report["status"] == "REVIEW_REQUIRED"
-            and u2_report.get("numeric_advisory_class") == "CALIBRATION_ONLY"
+            and u2_report.get("numeric_advisory_class") == "LOGLOSS_ONLY"
         )
         else "READY_WITH_CORE_NUMERIC_ADVISORY"
         if u2_report["status"] == "REVIEW_REQUIRED"
