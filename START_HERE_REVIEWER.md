@@ -43,7 +43,8 @@ The script automatically:
 - installs the remaining pinned dependencies;
 - detects MATLAB from PATH or a standard Windows MATLAB installation;
 - uses a persistent public-data cache; and
-- rebuilds every generated reviewer result from scratch.
+- rebuilds every generated reviewer result from scratch; and
+- automatically runs an independent no-retrain final verification before reporting the final reviewer status.
 
 Default persistent public-data cache:
 
