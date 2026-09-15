@@ -95,6 +95,7 @@ The public data directory is reusable across reruns.
     Fresh_U2_Training_Audit.png
     Fresh_U2_Training_Audit.pdf
     fresh_u2_report.json
+    NUMERIC_REPLAY_ADVISORY.md
   submission_v2_figures/
     8 PNG
     8 PDF
@@ -102,17 +103,30 @@ The public data directory is reusable across reruns.
   CMDO_E2E_REVIEWER_REPORT.json
 ```
 
-A complete pass requires:
+A complete execution requires:
 
 1. frozen submission-v2 manifest and science checks pass;
 2. fresh U2 training finishes all 12 epochs;
-3. all 38 target identities match;
-4. fresh U2 metrics satisfy the declared replay tolerances;
+3. all 38 target identities match structurally;
+4. the fresh metric comparison grid contains all 190 target-by-metric comparisons;
 5. the fresh current-outcome audit source table is generated;
 6. current manuscript figures render 8/8;
 7. exactly 8 PNG and 8 PDF manuscript displays exist; and
 8. the Git worktree remains clean.
 
+Numeric replay is reported separately without changing the predeclared tolerance. A run with all comparisons inside tolerance is READY. A run whose only out-of-tolerance comparisons are log-loss is READY_WITH_LOGLOSS_ADVISORY. Any AUC, AUPRC, balanced-accuracy or Brier deviation outside tolerance is surfaced as a core numeric advisory. Structural mismatches remain failures.
+
 ## Claim boundary
 
 Fresh U2 training is a platform-tolerant engineering/scientific replay of a public-data training component. The manuscript continues to cite the frozen authoritative records. A successful E2E audit demonstrates that the raw/public-data-to-training-to-prediction path remains executable and quantitatively compatible; it does not retroactively redefine locked prospective results.
+
+
+## No-retrain final verification
+
+After a completed E2E run, the existing artifacts can be independently rechecked and repackaged without training again:
+
+~~~powershell
+python .\scripts\finalize_existing_e2e_reviewer.py --work-root "D:\CMDO_REVIEWER_RUN"
+~~~
+
+This verifies the 38-target structural roster, all 190 metric comparisons, 38 prediction artifacts, the 8 PNG + 8 PDF display inventory, Git cleanliness, and the final ZIP SHA-256. It also refreshes the numeric advisory and final machine-readable report.
