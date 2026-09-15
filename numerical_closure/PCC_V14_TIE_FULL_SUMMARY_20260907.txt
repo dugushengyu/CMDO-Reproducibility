@@ -1,0 +1,44 @@
+PCC-v1.4 tie-robust AUC validation
+=================================
+Mode: FULL
+Random discrete states: 120000
+Certification pairs: 128 (= 256 verified outcomes)
+delta: 0.050000 (theta 0.025000 + tie 0.025000)
+
+CORE TIE-ROBUST LOWER ENVELOPE
+V_tie(theta,tau;m,n) = max(0, V_BK(theta;m,n) - (m+n+1)*tau/(12*m*n)).
+Sharper identity uses A=sum pX*pY^2 and B=sum pY*pX^2:
+V_mid >= V_BK - ((n-1)A+(m-1)B)/(12*m*n) - tau/(4*m*n).
+
+NECESSITY CHECKS
+All-tie theta=0.5: true V=0 | continuous BK=0.00262451171875 | tie-LB=0
+3-point example: theta=0.770000 | tau=0.260000 | true V=0.00154545898437 | continuous BK=0.00161502966977 | tie-LB=0.0009326566229
+
+RANDOM DISCRETE AUDIT
+Continuous-BK violations under ties: 26205/120000 (21.837500%)
+Min trueV - tau-only tieLB: 4.9183853433e-06
+Min trueV - sharp tieLB: 2.33067211364e-11
+Max de-atomization identity residual: 5.20417042793e-18
+BK monotonicity minimum first difference: 6.10349122588e-11
+
+CONTROLLED QUANTIZED-SCORE PROFILE (m=n=64)
+levels=4 | median tau=0.499389 | median tieLB/BK=0.410800 | median trueV/BK=0.686784
+levels=8 | median tau=0.288391 | median tieLB/BK=0.607002 | median trueV/BK=0.877694
+levels=16 | median tau=0.127454 | median tieLB/BK=0.812631 | median trueV/BK=1.005228
+levels=32 | median tau=0.059824 | median tieLB/BK=0.910621 | median trueV/BK=1.033134
+levels=64 | median tau=0.028983 | median tieLB/BK=0.956544 | median trueV/BK=1.039883
+levels=128 | median tau=0.014266 | median tieLB/BK=0.978593 | median trueV/BK=1.041723
+
+FINITE-SAMPLE CERTIFICATE MONTE CARLO
+Max empirical false-cert rate: 0.000000
+Median empirical false-cert rate: 0.000000
+Median mean tie-robust cap: 0.029397
+Median Pr(cap>=0.05): 0.120750
+Median Pr(cap>=0.10): 0.000000
+
+VALIDATION GATES
+De-atomization identity: PASS
+Tie-robust lower-bound audit: PASS
+Continuous-assumption necessity counterexamples: PASS
+BK endpoint monotonicity numerical audit: PASS
+OVERALL MATHEMATICAL VALIDATION: PASS

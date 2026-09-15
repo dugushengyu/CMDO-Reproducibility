@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
-VERSION = "v2.1.1"
+VERSION = "v2.1.4"
 
 
 def sha256(path: Path) -> str:

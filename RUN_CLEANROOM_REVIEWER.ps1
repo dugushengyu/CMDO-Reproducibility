@@ -33,7 +33,7 @@ Write-Host "`n[1/3] Build lean reviewer submission candidate"
 & $py .\scripts\build_submission_candidate.py
 if ($LASTEXITCODE -ne 0) { throw "Submission-v2 candidate build failed" }
 
-$portable = Join-Path $repo "dist\CMDO-Reproducibility-Reviewer-Portable-v2.1.1.zip"
+$portable = Join-Path $repo "dist\CMDO-Reproducibility-Reviewer-Portable-v2.1.4.zip"
 if (-not (Test-Path -LiteralPath $portable)) {
     throw "Portable reviewer package was not built: $portable"
 }
@@ -62,8 +62,8 @@ if ($LASTEXITCODE -ne 0) { throw "Submission-v2 clean-room acceptance failed" }
 Write-Host "`n[3/3] Final artifact inventory"
 Get-ChildItem -LiteralPath (Join-Path $repo "dist") -File |
     Where-Object {
-        $_.Name -like "CMDO-Reproducibility-Reviewer-Portable-v2.1.1*" -or
-        $_.Name -like "CMDO-Submission-Candidate-v2.1.1*"
+        $_.Name -like "CMDO-Reproducibility-Reviewer-Portable-v2.1.4*" -or
+        $_.Name -like "CMDO-Submission-Candidate-v2.1.4*"
     } |
     Select-Object Name, Length, LastWriteTime
 

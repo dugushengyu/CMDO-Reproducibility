@@ -163,6 +163,18 @@ U10_Prospective_ECG/02_Posthoc_Diagnostics/U10_DEPENDENCE_DECOMPOSITION.csv
 
 The retrospective completed-state PCC projection remains restricted to U6, U7, U8, U9A and U9B.
 
+### Additive numerical closure
+
+The submission candidate also contains an explicit reproduction layer for post-completion numerical analyses that are reported in the manuscript/Supplementary Information but are not part of the historical stage replay:
+
+```powershell
+python numerical_closure/RUN_NUMERICAL_CLOSURE.py
+```
+
+It regenerates the 474-state PCC certification grid and scaling summary, evaluates the locked U10 binary-roster risk exactly by hypergeometric enumeration, and verifies the archived 120,000-state tie-robust audit fingerprint together with an independent executable Python cross-check. See `numerical_closure/README.md`.
+
+This additive closure does not alter `RUN_REVIEWER.py all`, any frozen U6-U11 result, or the locked U10 prospective verdict.
+
 ## Portable reviewer package
 
 Maintainers can build the lean portable package with:
@@ -213,10 +225,10 @@ For the current submission, reviewer reproducibility means that the frozen share
 
 ## Candidate branch
 
-The reviewer-slim submission candidate is developed on:
+The numerical-closure submission candidate is developed on:
 
 ```text
-submission-v2.1.1-reviewer-slim
+submission-v2.1.4-numerical-closure
 ```
 
-The existing v2.1.0 freeze/tag is not rewritten. A v2.1.1 tag should be created only after the lean reviewer workflow has passed the final clean-room test.
+The frozen `cmdo-submission-v2.1.3` tag is not rewritten. A successor submission tag should be created only after the numerical-closure checks and the final fresh-clone reviewer clean-room acceptance both pass.
