@@ -79,13 +79,13 @@ $env:CMDO_DATA_ROOT = "D:\path\to\existing\CIFAR_External_v0.1"
 ## Optional explicit locations
 
 ~~~powershell
-RUN_REVIEWER_FROM_ZERO.cmd \
-    -FreshEnvironment \
-    -DataRoot "D:\CMDO_PUBLIC_DATA" \
-    -WorkRoot "D:\CMDO_REVIEWER_RUN" \
-    -Device auto \
-    -Epochs 12 \
-    -WitnessReps 100 \
+.\RUN_REVIEWER_FROM_ZERO.cmd `
+    -FreshEnvironment `
+    -DataRoot "D:\CMDO_PUBLIC_DATA" `
+    -WorkRoot "D:\CMDO_REVIEWER_RUN" `
+    -Device auto `
+    -Epochs 12 `
+    -WitnessReps 100 `
     -Matlab "C:\Program Files\MATLAB\R2024b\bin\matlab.exe"
 ~~~
 
@@ -106,7 +106,11 @@ Exact deviations are written to:
 <WorkRoot>\u2_fresh\fresh_u2_report.json
 ~~~
 
-Structural mismatches remain failures.
+For a completed run, the no-retrain final verifier can be used to rebuild the advisory/report/package without repeating training:
+
+~~~powershell
+python .\scripts\finalize_existing_e2e_reviewer.py --work-root "D:\CMDO_REVIEWER_RUN"
+~~~
 
 ## Required final artifacts
 
@@ -125,6 +129,7 @@ A successful complete execution produces:
     Fresh_U2_Training_Audit.png
     Fresh_U2_Training_Audit.pdf
     fresh_u2_report.json
+    NUMERIC_REPLAY_ADVISORY.md
 
   submission_v2_figures\
     8 PNG
