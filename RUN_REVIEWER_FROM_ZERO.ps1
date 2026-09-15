@@ -35,8 +35,9 @@ $WorkRoot = [System.IO.Path]::GetFullPath($WorkRoot)
 $DataRoot = [System.IO.Path]::GetFullPath($DataRoot)
 $EnvRoot = [System.IO.Path]::GetFullPath($EnvRoot)
 
-if ($WorkRoot -eq $DataRoot) {
-    throw "WorkRoot and DataRoot must be different. WorkRoot is deleted at the start of each clean reviewer run; DataRoot is the persistent public-data cache."
+$WorkPrefix = $WorkRoot.TrimEnd("\\") + "\\"
+if ($WorkRoot -eq $DataRoot -or $DataRoot.StartsWith($WorkPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "DataRoot must be outside WorkRoot. WorkRoot is deleted at the start of each clean reviewer run; DataRoot is the persistent public-data cache."
 }
 
 Write-Host "============================================================"
