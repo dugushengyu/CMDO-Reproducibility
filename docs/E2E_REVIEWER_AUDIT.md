@@ -95,6 +95,7 @@ The public data directory is reusable across reruns.
     Fresh_U2_Training_Audit.png
     Fresh_U2_Training_Audit.pdf
     fresh_u2_report.json
+    frozen_threshold_balanced_accuracy.csv
     NUMERIC_REPLAY_ADVISORY.md
   submission_v2_figures/
     8 PNG
@@ -114,7 +115,11 @@ A complete execution requires:
 7. exactly 8 PNG and 8 PDF manuscript displays exist; and
 8. the Git worktree remains clean.
 
-Numeric replay is reported separately without changing the predeclared tolerance. A run with all comparisons inside tolerance is READY. A run whose only out-of-tolerance comparisons are log-loss is READY_WITH_LOGLOSS_ADVISORY. Any AUC, AUPRC, balanced-accuracy or Brier deviation outside tolerance is surfaced as a core numeric advisory. Structural mismatches remain failures.
+Numeric replay is reported separately without changing the predeclared tolerance. A run with all comparisons inside tolerance is READY. A run whose only out-of-tolerance comparisons are log-loss is READY_WITH_LOGLOSS_ADVISORY.
+
+For a native-threshold balanced-accuracy deviation, the audit also applies the pre-existing frozen U2 threshold already stored in provenance to the same saved fresh predictions. This is a diagnostic only: it does not replace the native-threshold strict comparison and does not optimize a threshold after seeing the run. If AUC, AUPRC and Brier are within tolerance and all 38 balanced-accuracy values are within tolerance at the frozen threshold, readiness is READY_WITH_THRESHOLD_SELECTION_ADVISORY while strict numeric status remains REVIEW_REQUIRED.
+
+Any remaining unexplained AUC, AUPRC, Brier or balanced-accuracy deviation is READY_WITH_CORE_NUMERIC_ADVISORY. Structural mismatches remain failures.
 
 ## Claim boundary
 
