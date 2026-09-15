@@ -1,0 +1,128 @@
+# CMDO reviewer: start here
+
+This is the shortest end-to-end reviewer route for the current CMDO submission.
+
+## What this command rebuilds
+
+The reviewer run starts from a clean generated-output state and performs:
+
+1. frozen submission manifest and scientific-integrity checks;
+2. public CIFAR data verification/reuse (download only when missing);
+3. fresh 12-epoch model training;
+4. fresh prediction on all 38 U2 targets;
+5. fresh metric and current-outcome-audit source-data generation;
+6. comparison with the frozen U2 reference metrics;
+7. strict regeneration of all 5 main + 3 Extended Data displays;
+8. final 8 PNG + 8 PDF inventory check;
+9. clean-worktree verification; and
+10. creation of a results ZIP and SHA-256 sidecar.
+
+Historical developmental T2/T3 replay is intentionally not part of the reviewer path.
+
+## Windows: one command
+
+Open PowerShell in the repository root and run:
+
+~~~powershell
+.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment
+~~~
+
+The script automatically:
+
+- locates Python 3.11;
+- creates a reviewer-only virtual environment outside the repository;
+- selects a compatible PyTorch build for the detected NVIDIA driver when possible, otherwise CPU;
+- installs the remaining pinned dependencies;
+- detects MATLAB from PATH or a standard Windows MATLAB installation;
+- uses a persistent public-data cache; and
+- rebuilds every generated reviewer result from scratch.
+
+Default persistent public-data cache:
+
+~~~text
+%USERPROFILE%\.cmdo\public_data
+~~~
+
+Default generated-output directory:
+
+~~~text
+%USERPROFILE%\CMDO_REVIEWER_RUN
+~~~
+
+The generated-output directory is deleted and rebuilt on every run. The public-data cache is not.
+
+## Reuse an existing public-data cache
+
+If CIFAR-10, CIFAR-10.1 v6 and the selected CIFAR-10-C arrays already exist, point the runner at that directory:
+
+~~~powershell
+.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment -DataRoot "D:\path\to\existing\CIFAR_External_v0.1"
+~~~
+
+Existing data are checked and reused. Missing data are downloaded. Model checkpoints, predictions, metrics, audit tables and manuscript figures are never reused from a previous WorkRoot.
+
+The cache can also be set once:
+
+~~~powershell
+$env:CMDO_DATA_ROOT = "D:\path\to\existing\CIFAR_External_v0.1"
+.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment
+~~~
+
+## Optional explicit locations
+
+~~~powershell
+.\RUN_REVIEWER_FROM_ZERO.ps1 \
+    -FreshEnvironment \
+    -DataRoot "D:\CMDO_PUBLIC_DATA" \
+    -WorkRoot "D:\CMDO_REVIEWER_RUN" \
+    -Device auto \
+    -Epochs 12 \
+    -WitnessReps 100 \
+    -Matlab "C:\Program Files\MATLAB\R2024b\bin\matlab.exe"
+~~~
+
+## How to read the final status
+
+The final report separates three concepts:
+
+- **Execution**: whether the complete data/training/inference/audit/figure pipeline finished successfully.
+- **Reviewer readiness**: whether the complete reviewer artifact is available; a numeric advisory does not mean the pipeline failed.
+- **U2 numeric comparison**: whether every fresh metric falls inside the predeclared platform-tolerant replay tolerance.
+
+The runner does not silently relax numeric tolerances. If a fresh run completes but one or more metrics exceed the declared tolerance, the package is labeled READY_WITH_NUMERIC_ADVISORY and the exact deviations are written to:
+
+~~~text
+<WorkRoot>\u2_fresh\u2_metric_comparison.csv
+<WorkRoot>\u2_fresh\fresh_u2_report.json
+~~~
+
+Structural mismatches remain failures.
+
+## Required final artifacts
+
+A successful complete execution produces:
+
+~~~text
+<WorkRoot>\
+  u2_fresh\
+    training_history.csv
+    checkpoint_latest.pt
+    validation_metrics.json
+    predictions\                 # 38 fresh prediction files
+    StageU2_External_Target_True_Metrics_v0.1.csv
+    u2_metric_comparison.csv
+    fresh_current_outcome_audit.csv
+    Fresh_U2_Training_Audit.png
+    Fresh_U2_Training_Audit.pdf
+    fresh_u2_report.json
+
+  submission_v2_figures\
+    8 PNG
+    8 PDF
+
+  CMDO_E2E_REVIEWER_REPORT.json
+  CMDO_E2E_REVIEWER_RESULTS.zip
+  CMDO_E2E_REVIEWER_RESULTS.zip.sha256.txt
+~~~
+
+The manuscript continues to use the frozen authoritative records. Fresh training is an additional reviewer replay and does not rewrite sealed prospective results.
