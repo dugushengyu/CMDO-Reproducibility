@@ -21,6 +21,8 @@ import shutil
 import subprocess
 import sys
 import time
+import zipfile
+import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -49,6 +51,34 @@ def git_head() -> str | None:
     if not (ROOT / ".git").exists():
         return None
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+
+
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def package_results(work: Path) -> tuple[Path, str]:
+    package = work / "CMDO_E2E_REVIEWER_RESULTS.zip"
+    if package.exists():
+        package.unlink()
+    include_roots = [work / "u2_fresh", work / "submission_v2_figures"]
+    with zipfile.ZipFile(package, "w", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as zf:
+        for root in include_roots:
+            for path in sorted(root.rglob("*")):
+                if path.is_file():
+                    zf.write(path, arcname=path.relative_to(work).as_posix())
+        report = work / "CMDO_E2E_REVIEWER_REPORT.json"
+        if report.is_file():
+            zf.write(report, arcname=report.name)
+    digest = sha256(package)
+    (work / "CMDO_E2E_REVIEWER_RESULTS.zip.sha256.txt").write_text(
+        f"{digest}  {package.name}\n", encoding="utf-8"
+    )
+    return package, digest
 
 
 def main() -> int:
@@ -126,9 +156,23 @@ def main() -> int:
             "It does not replace frozen manuscript records or sealed prospective verdicts."
         ),
     }
-    (work / "CMDO_E2E_REVIEWER_REPORT.json").write_text(
+    report_path = work / "CMDO_E2E_REVIEWER_REPORT.json"
+    report_path.write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    package, package_sha = package_results(work)
+    report["results_package"] = str(package)
+    report["results_package_sha256"] = package_sha
+    report_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    # Rebuild once so the ZIP contains the final report including its package metadata.
+    package, package_sha = package_results(work)
+    report["results_package_sha256"] = package_sha
+    report_path.write_text(
+        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+
     print("\n=== CMDO END-TO-END REVIEWER AUDIT: PASS ===")
     print(json.dumps(report, indent=2), flush=True)
     return 0
