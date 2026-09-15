@@ -2,6 +2,16 @@
 
 This audit supplements the frozen `cmdo-submission-v2.1.1` reviewer package. It does **not** replace frozen manuscript records or sealed prospective verdicts.
 
+## Recommended reviewer entry point
+
+For a from-zero reviewer run on Windows, use the root-level wrapper:
+
+~~~powershell
+.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment
+~~~
+
+This creates the reviewer Python environment, selects a compatible PyTorch build, reuses verified public-data caches when available, runs fresh training/inference/audit generation, regenerates all eight manuscript displays, and packages the final results. See START_HERE_REVIEWER.md.
+
 ## Scope
 
 The optional E2E route executes:
