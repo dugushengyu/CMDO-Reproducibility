@@ -97,17 +97,62 @@ def download(url: str, path: Path, min_bytes: int = 1) -> None:
         raise RuntimeError(f"download incomplete: {path}")
 
 
-def ensure_cifar10c(data_root: Path) -> Path:
-    archive = data_root / "CIFAR-10-C" / "CIFAR-10-C.tar"
-    archive.parent.mkdir(parents=True, exist_ok=True)
-    if not archive.is_file() or md5(archive) != CIFAR10C_MD5:
+def validate_cifar10c_arrays(extracted: Path) -> bool:
+    needed = ["labels.npy", *[f"{c}.npy" for c in CORRUPTIONS]]
+    if any(not (extracted / name).is_file() for name in needed):
+        return False
+    try:
+        labels = np.load(extracted / "labels.npy", mmap_mode="r")
+        if labels.shape[0] != 50000:
+            return False
+        for corr in CORRUPTIONS:
+            arr = np.load(extracted / f"{corr}.npy", mmap_mode="r")
+            if arr.shape != (50000, 32, 32, 3):
+                return False
+    except Exception:
+        return False
+    return True
+
+
+def ensure_cifar10c(data_root: Path) -> tuple[Path, dict[str, object]]:
+    extracted_candidates = [
+        data_root / "CIFAR-10-C_Official_Selected" / "CIFAR-10-C",
+        data_root / "CIFAR-10-C" / "selected" / "CIFAR-10-C",
+    ]
+    for extracted in extracted_candidates:
+        if validate_cifar10c_arrays(extracted):
+            print(f"REUSE EXISTING CIFAR-10-C ARRAYS: PASS: {extracted}", flush=True)
+            return extracted, {
+                "mode": "reused_preexisting_selected_arrays",
+                "selected_root": str(extracted),
+                "shape_validation": "PASS",
+                "archive_md5_checked_this_run": False,
+            }
+
+    archive_candidates = [
+        data_root / "CIFAR-10-C_Official_Archive" / "CIFAR-10-C.tar",
+        data_root / "CIFAR-10-C" / "CIFAR-10-C.tar",
+    ]
+    archive = None
+    for candidate in archive_candidates:
+        if candidate.is_file():
+            got = md5(candidate)
+            if got == CIFAR10C_MD5:
+                archive = candidate
+                print(f"REUSE EXISTING CIFAR-10-C ARCHIVE: MD5 PASS: {candidate}", flush=True)
+                break
+            print(f"IGNORE CIFAR-10-C ARCHIVE WITH BAD MD5: {candidate} ({got})", flush=True)
+
+    if archive is None:
+        archive = data_root / "CIFAR-10-C" / "CIFAR-10-C.tar"
+        archive.parent.mkdir(parents=True, exist_ok=True)
         if archive.exists():
             archive.unlink()
         download(CIFAR10C_URL, archive, min_bytes=2_000_000_000)
         got = md5(archive)
         if got != CIFAR10C_MD5:
             raise RuntimeError(f"CIFAR-10-C MD5 mismatch: {got}")
-    print(f"CIFAR-10-C MD5 PASS: {CIFAR10C_MD5}")
+        print(f"CIFAR-10-C DOWNLOAD MD5 PASS: {CIFAR10C_MD5}", flush=True)
 
     extracted = data_root / "CIFAR-10-C" / "selected" / "CIFAR-10-C"
     extracted.mkdir(parents=True, exist_ok=True)
@@ -127,7 +172,68 @@ def ensure_cifar10c(data_root: Path) -> Path:
                     raise RuntimeError(f"could not read archive member: {member_name}")
                 with (extracted / name).open("wb") as dst:
                     shutil.copyfileobj(src, dst, length=8 * 1024 * 1024)
-    return extracted
+
+    if not validate_cifar10c_arrays(extracted):
+        raise RuntimeError("CIFAR-10-C selected-array validation failed after extraction")
+    return extracted, {
+        "mode": "archive_verified_and_extracted",
+        "selected_root": str(extracted),
+        "archive": str(archive),
+        "archive_md5": CIFAR10C_MD5,
+        "shape_validation": "PASS",
+        "archive_md5_checked_this_run": True,
+    }
+
+
+def resolve_cifar10_root(data_root: Path, CIFAR10) -> tuple[Path, str]:
+    candidates = [
+        data_root / "torchvision",
+        data_root / "cifar10",
+    ]
+    for candidate in candidates:
+        try:
+            _ = CIFAR10(root=str(candidate), train=True, download=False)
+            _ = CIFAR10(root=str(candidate), train=False, download=False)
+            print(f"REUSE EXISTING CIFAR-10: PASS: {candidate}", flush=True)
+            return candidate, "reused_preexisting"
+        except Exception:
+            pass
+
+    target = data_root / "cifar10"
+    print(f"CIFAR-10 cache not found under known layouts; downloading to {target}", flush=True)
+    _ = CIFAR10(root=str(target), train=True, download=True)
+    _ = CIFAR10(root=str(target), train=False, download=True)
+    return target, "downloaded_or_torchvision_verified"
+
+
+def resolve_cifar101(data_root: Path) -> tuple[Path, Path, str]:
+    candidates = [
+        data_root / "CIFAR-10.1",
+        data_root / "cifar10.1",
+    ]
+    for directory in candidates:
+        data = directory / "cifar10.1_v6_data.npy"
+        labels = directory / "cifar10.1_v6_labels.npy"
+        if data.is_file() and labels.is_file():
+            try:
+                x = np.load(data, mmap_mode="r")
+                y = np.load(labels, mmap_mode="r")
+                if x.shape == (2000, 32, 32, 3) and y.shape == (2000,):
+                    print(f"REUSE EXISTING CIFAR-10.1: PASS: {directory}", flush=True)
+                    return data, labels, "reused_preexisting"
+            except Exception:
+                pass
+
+    directory = data_root / "cifar10.1"
+    data = directory / "cifar10.1_v6_data.npy"
+    labels = directory / "cifar10.1_v6_labels.npy"
+    download(CIFAR101_DATA_URL, data, min_bytes=5_000_000)
+    download(CIFAR101_LABELS_URL, labels, min_bytes=5_000)
+    x = np.load(data, mmap_mode="r")
+    y = np.load(labels, mmap_mode="r")
+    if x.shape != (2000, 32, 32, 3) or y.shape != (2000,):
+        raise RuntimeError("CIFAR-10.1 validation failed")
+    return data, labels, "downloaded_or_existing_current_layout"
 
 
 def set_seed(torch) -> None:
@@ -207,32 +313,37 @@ def main() -> int:
     write_json(out / "environment.json", environment)
     print(json.dumps(environment, indent=2), flush=True)
 
-    # Public data acquisition.
-    cifar_root = data_root / "cifar10"
-    print("Acquiring/reusing CIFAR-10 via torchvision", flush=True)
-    train_base = CIFAR10(root=str(cifar_root), train=True, download=True)
-    test_base = CIFAR10(root=str(cifar_root), train=False, download=True)
+    # Public data acquisition/reuse. Prefer verified legacy CMDO cache layouts.
+    print("Resolving existing public CIFAR caches before any download", flush=True)
+    cifar_root, cifar10_mode = resolve_cifar10_root(data_root, CIFAR10)
+    train_base = CIFAR10(root=str(cifar_root), train=True, download=False)
+    test_base = CIFAR10(root=str(cifar_root), train=False, download=False)
 
-    c101 = data_root / "cifar10.1"
-    c101_data = c101 / "cifar10.1_v6_data.npy"
-    c101_labels = c101 / "cifar10.1_v6_labels.npy"
-    download(CIFAR101_DATA_URL, c101_data, min_bytes=5_000_000)
-    download(CIFAR101_LABELS_URL, c101_labels, min_bytes=5_000)
-    c10c_root = ensure_cifar10c(data_root)
+    c101_data, c101_labels, c101_mode = resolve_cifar101(data_root)
+    c10c_root, c10c_meta = ensure_cifar10c(data_root)
 
     acquisition = {
-        "CIFAR10": {"source": "torchvision.datasets.CIFAR10", "root": str(cifar_root)},
+        "CIFAR10": {
+            "source": "torchvision.datasets.CIFAR10",
+            "root": str(cifar_root),
+            "mode": cifar10_mode,
+        },
         "CIFAR10_1_V6": {
             "data_url": CIFAR101_DATA_URL,
             "labels_url": CIFAR101_LABELS_URL,
+            "data_path": str(c101_data),
+            "labels_path": str(c101_labels),
             "data_sha256": sha256(c101_data),
             "labels_sha256": sha256(c101_labels),
+            "mode": c101_mode,
+            "shape_validation": "PASS",
         },
         "CIFAR10_C": {
             "source": CIFAR10C_URL,
-            "archive_md5": CIFAR10C_MD5,
+            "official_archive_md5": CIFAR10C_MD5,
             "selected_corruptions": list(CORRUPTIONS),
             "severities": [1, 3, 5],
+            **c10c_meta,
         },
     }
     write_json(out / "acquisition.json", acquisition)
