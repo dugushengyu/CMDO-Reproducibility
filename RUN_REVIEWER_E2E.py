@@ -134,13 +134,32 @@ def main() -> int:
         raise RuntimeError(f"repository became dirty after E2E run:\n{status}")
 
     u2_report = json.loads((work / "u2_fresh" / "fresh_u2_report.json").read_text(encoding="utf-8"))
+    acquisition = json.loads((work / "u2_fresh" / "acquisition.json").read_text(encoding="utf-8"))
+    data_modes = {
+        key: value.get("mode", "unspecified")
+        for key, value in acquisition.items()
+        if isinstance(value, dict)
+    }
+    all_data_reused = bool(data_modes) and all(str(v).startswith("reused_") for v in data_modes.values())
+    reviewer_readiness = (
+        "READY"
+        if u2_report["status"] == "PASS"
+        else "READY_WITH_NUMERIC_ADVISORY"
+        if u2_report["status"] == "REVIEW_REQUIRED"
+        else "FAIL"
+    )
     report = {
         "schema_version": 1,
         "classification": "CMDO_OPTIONAL_END_TO_END_REVIEWER_AUDIT",
         "status": "PASS" if u2_report["status"] == "PASS" else u2_report["status"],
+        "execution_status": "PASS",
+        "reviewer_readiness": reviewer_readiness,
         "git_commit": git_head(),
         "historical_t2_t3_replay_executed": False,
-        "fresh_public_data_acquisition": True,
+        "fresh_public_data_acquisition": not all_data_reused,
+        "public_data_resolution_completed": True,
+        "public_data_cache_reused_for_all_inputs": all_data_reused,
+        "public_data_modes": data_modes,
         "fresh_model_training": True,
         "fresh_external_prediction_targets": u2_report["targets"],
         "fresh_u2_tolerance_comparison": u2_report["status"],
@@ -166,7 +185,9 @@ def main() -> int:
     )
     package, package_sha = package_results(work)
 
-    print(f"\n=== CMDO END-TO-END REVIEWER AUDIT: {report['status']} ===")
+    print(f"\n=== CMDO END-TO-END REVIEWER EXECUTION: PASS ===")
+    print(f"=== REVIEWER READINESS: {report['reviewer_readiness']} ===")
+    print(f"=== FRESH U2 NUMERIC COMPARISON: {report['fresh_u2_tolerance_comparison']} ===")
     print(json.dumps(report, indent=2), flush=True)
     print("Results package:", package)
     print("Results package SHA256:", package_sha)
