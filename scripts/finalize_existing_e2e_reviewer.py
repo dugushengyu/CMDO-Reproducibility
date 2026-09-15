@@ -90,6 +90,9 @@ def main() -> int:
 
     fresh_report_path = u2 / "fresh_u2_report.json"
     fresh_report = load_json(fresh_report_path)
+    existing_report_path = work / "CMDO_E2E_REVIEWER_REPORT.json"
+    existing_report = load_json(existing_report_path) if existing_report_path.is_file() else {}
+    artifact_generation_commit = existing_report.get("git_commit")
     fresh_metrics = read_csv(u2 / "StageU2_External_Target_True_Metrics_v0.1.csv")
     comparisons = read_csv(u2 / "u2_metric_comparison.csv")
     frozen_metrics = read_csv(ROOT / "provenance" / "u2_frozen_metrics.csv")
@@ -246,7 +249,9 @@ def main() -> int:
         ),
         "execution_status": "PASS",
         "reviewer_readiness": readiness,
-        "git_commit": git_head(),
+        "git_commit": artifact_generation_commit or git_head(),
+        "artifact_generation_git_commit": artifact_generation_commit or git_head(),
+        "finalizer_git_commit": git_head(),
         "historical_t2_t3_replay_executed": False,
         "fresh_public_data_acquisition": not all_data_reused,
         "public_data_resolution_completed": True,
