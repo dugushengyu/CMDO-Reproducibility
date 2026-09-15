@@ -94,10 +94,12 @@ RUN_REVIEWER_FROM_ZERO.cmd \
 The final report separates three concepts:
 
 - **Execution**: whether the complete data/training/inference/audit/figure pipeline finished successfully.
-- **Reviewer readiness**: whether the complete reviewer artifact is available; a numeric advisory does not mean the pipeline failed.
+- **Reviewer readiness**: whether the complete reviewer artifact is available. Calibration-only deviations are labeled separately from structural or core-metric failures.
 - **U2 numeric comparison**: whether every fresh metric falls inside the predeclared platform-tolerant replay tolerance.
 
-The runner does not silently relax numeric tolerances. If a fresh run completes but one or more metrics exceed the declared tolerance, the package is labeled READY_WITH_NUMERIC_ADVISORY and the exact deviations are written to:
+The runner does not silently relax numeric tolerances. If a fresh run completes and the only out-of-tolerance comparisons are log-loss, the package is labeled READY_WITH_CALIBRATION_ADVISORY. If AUC, AUPRC, balanced accuracy or Brier exceed tolerance, it is labeled READY_WITH_CORE_NUMERIC_ADVISORY. Structural mismatches remain failures. The original tolerance itself is never changed after seeing a fresh run.
+
+Exact deviations are written to:
 
 ~~~text
 <WorkRoot>\u2_fresh\u2_metric_comparison.csv
