@@ -21,7 +21,15 @@ Historical developmental T2/T3 replay is intentionally not part of the reviewer 
 
 ## Windows: one command
 
-Open PowerShell in the repository root and run:
+Open Command Prompt or PowerShell in the repository root and run:
+
+~~~text
+RUN_REVIEWER_FROM_ZERO.cmd -FreshEnvironment
+~~~
+
+The CMD launcher uses a process-local PowerShell execution-policy bypass for this run only. It does not change the machine-wide or user-wide PowerShell execution policy.
+
+If PowerShell scripts are already allowed, this direct form is equivalent:
 
 ~~~powershell
 .\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment
@@ -56,7 +64,7 @@ The generated-output directory is deleted and rebuilt on every run. The public-d
 If CIFAR-10, CIFAR-10.1 v6 and the selected CIFAR-10-C arrays already exist, point the runner at that directory:
 
 ~~~powershell
-.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment -DataRoot "D:\path\to\existing\CIFAR_External_v0.1"
+RUN_REVIEWER_FROM_ZERO.cmd -FreshEnvironment -DataRoot "D:\path\to\existing\CIFAR_External_v0.1"
 ~~~
 
 Existing data are checked and reused. Missing data are downloaded. Model checkpoints, predictions, metrics, audit tables and manuscript figures are never reused from a previous WorkRoot.
@@ -65,13 +73,13 @@ The cache can also be set once:
 
 ~~~powershell
 $env:CMDO_DATA_ROOT = "D:\path\to\existing\CIFAR_External_v0.1"
-.\RUN_REVIEWER_FROM_ZERO.ps1 -FreshEnvironment
+.\RUN_REVIEWER_FROM_ZERO.cmd -FreshEnvironment
 ~~~
 
 ## Optional explicit locations
 
 ~~~powershell
-.\RUN_REVIEWER_FROM_ZERO.ps1 \
+RUN_REVIEWER_FROM_ZERO.cmd \
     -FreshEnvironment \
     -DataRoot "D:\CMDO_PUBLIC_DATA" \
     -WorkRoot "D:\CMDO_REVIEWER_RUN" \
