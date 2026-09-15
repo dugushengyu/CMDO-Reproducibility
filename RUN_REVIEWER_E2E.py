@@ -157,24 +157,19 @@ def main() -> int:
         ),
     }
     report_path = work / "CMDO_E2E_REVIEWER_REPORT.json"
+    report["results_package"] = str(work / "CMDO_E2E_REVIEWER_RESULTS.zip")
+    report["results_package_sha256_sidecar"] = str(
+        work / "CMDO_E2E_REVIEWER_RESULTS.zip.sha256.txt"
+    )
     report_path.write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     package, package_sha = package_results(work)
-    report["results_package"] = str(package)
-    report["results_package_sha256"] = package_sha
-    report_path.write_text(
-        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    # Rebuild once so the ZIP contains the final report including its package metadata.
-    package, package_sha = package_results(work)
-    report["results_package_sha256"] = package_sha
-    report_path.write_text(
-        json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
 
     print("\n=== CMDO END-TO-END REVIEWER AUDIT: PASS ===")
     print(json.dumps(report, indent=2), flush=True)
+    print("Results package:", package)
+    print("Results package SHA256:", package_sha)
     return 0
 
 
