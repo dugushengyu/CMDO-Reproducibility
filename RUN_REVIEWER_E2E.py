@@ -144,6 +144,11 @@ def main() -> int:
     reviewer_readiness = (
         "READY"
         if u2_report["status"] == "PASS"
+        else "READY_WITH_THRESHOLD_SELECTION_ADVISORY"
+        if (
+            u2_report["status"] == "REVIEW_REQUIRED"
+            and u2_report.get("numeric_advisory_class") == "THRESHOLD_SELECTION"
+        )
         else "READY_WITH_LOGLOSS_ADVISORY"
         if (
             u2_report["status"] == "REVIEW_REQUIRED"
@@ -172,6 +177,11 @@ def main() -> int:
         "fresh_u2_metric_comparisons_total": u2_report.get("metric_comparisons_total"),
         "fresh_u2_metric_comparisons_passed": u2_report.get("metric_comparisons_passed"),
         "fresh_u2_metric_comparisons_failed": u2_report.get("metric_comparisons_failed"),
+        "fresh_u2_native_validation_threshold": u2_report.get("native_validation_threshold"),
+        "fresh_u2_frozen_reference_threshold": u2_report.get("frozen_reference_threshold"),
+        "fresh_u2_threshold_selection_diagnostic": u2_report.get("threshold_selection_diagnostic"),
+        "fresh_u2_frozen_threshold_balanced_accuracy_passed": u2_report.get("frozen_threshold_balanced_accuracy_passed"),
+        "fresh_u2_frozen_threshold_balanced_accuracy_total": u2_report.get("frozen_threshold_balanced_accuracy_total"),
         "fresh_current_outcome_audit_generated": True,
         "manuscript_figures_regenerated": 8,
         "final_png_count": len(list(figures.glob("*.png"))),
