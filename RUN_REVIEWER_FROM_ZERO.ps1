@@ -105,16 +105,19 @@ if ($Device -ne "cpu") {
     $smi = Get-Command nvidia-smi.exe -ErrorAction SilentlyContinue
     if ($smi) {
         $smiText = (& $smi.Source 2>&1 | Out-String)
+        $gpuNames = (& $smi.Source --query-gpu=name --format=csv,noheader 2>$null | Out-String)
         $cudaMatch = [regex]::Match($smiText, "CUDA Version:\s*([0-9]+\.[0-9]+)")
         if ($cudaMatch.Success) {
             $driverCuda = [version]$cudaMatch.Groups[1].Value
-            if ($driverCuda -ge [version]"12.8") {
+            $NeedsCuda128 = $gpuNames -match "RTX 50|Blackwell|B200|B100|GB200|GB300"
+            if ($NeedsCuda128 -and $driverCuda -ge [version]"12.8") {
                 $TorchLabel = "cu128"
                 $TorchIndex = "https://download.pytorch.org/whl/cu128"
             } elseif ($driverCuda -ge [version]"12.6") {
                 $TorchLabel = "cu126"
                 $TorchIndex = "https://download.pytorch.org/whl/cu126"
             }
+            Write-Host "NVIDIA GPU(s): $($gpuNames.Trim())"
             Write-Host "NVIDIA driver CUDA capability: $driverCuda"
         }
     }
