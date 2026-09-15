@@ -18,6 +18,8 @@ import subprocess
 import zipfile
 from pathlib import Path
 
+import numpy as np
+
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED_METRICS = ("auc", "auprc", "balanced_accuracy", "brier", "log_loss")
 CORE_METRICS = {"auc", "auprc", "balanced_accuracy", "brier"}
@@ -74,6 +76,22 @@ def git_head() -> str | None:
 
 def boolish(value: str) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes"}
+
+
+def within(a: float, b: float, abs_tol: float, rel_tol: float) -> bool:
+    absolute = abs(a - b)
+    relative = absolute / max(abs(a), abs(b), 1e-15)
+    return absolute <= abs_tol or relative <= rel_tol
+
+
+def balanced_accuracy(labels: np.ndarray, scores: np.ndarray, threshold: float) -> float:
+    y = np.asarray(labels).astype(int)
+    pred = (np.asarray(scores) >= threshold).astype(int)
+    pos = y == 1
+    neg = y == 0
+    if not pos.any() or not neg.any():
+        raise RuntimeError("balanced accuracy requires both classes")
+    return 0.5 * (float((pred[pos] == 1).mean()) + float((pred[neg] == 0).mean()))
 
 
 def main() -> int:
@@ -136,11 +154,68 @@ def main() -> int:
 
     failed_rows = [row for row in comparisons if not boolish(row["passed"])]
     core_failures = [row for row in failed_rows if row["metric"] in CORE_METRICS]
+    threshold_free_core_failures = [
+        row for row in core_failures if row["metric"] in {"auc", "auprc", "brier"}
+    ]
+    native_balanced_accuracy_failures = [
+        row for row in core_failures if row["metric"] == "balanced_accuracy"
+    ]
     logloss_failures = [row for row in failed_rows if row["metric"] == "log_loss"]
+
+    if len(failed_rows) != len(core_failures) + len(logloss_failures):
+        raise RuntimeError("unexpected metric name among failed comparisons")
+
+    prediction_files = sorted((u2 / "predictions").glob("*.npz"))
+    if len(prediction_files) != 38:
+        raise RuntimeError(f"expected 38 fresh prediction files, found {len(prediction_files)}")
+
+    frozen_thresholds = sorted({float(row["threshold"]) for row in frozen_metrics})
+    if len(frozen_thresholds) != 1:
+        raise RuntimeError(f"expected one frozen U2 threshold, found {frozen_thresholds}")
+    frozen_threshold = frozen_thresholds[0]
+    native_thresholds = sorted({float(row["threshold"]) for row in fresh_metrics})
+    if len(native_thresholds) != 1:
+        raise RuntimeError(f"expected one native fresh threshold, found {native_thresholds}")
+    native_threshold = native_thresholds[0]
+
+    abs_tol = float(fresh_report.get("tolerance", {}).get("absolute", 0.03))
+    rel_tol = float(fresh_report.get("tolerance", {}).get("relative", 0.05))
+    frozen_threshold_ba_rows: list[dict[str, object]] = []
+    for target in sorted(frozen):
+        pred_path = u2 / "predictions" / f"{target}.npz"
+        with np.load(pred_path) as z:
+            scores = np.asarray(z["scores"], dtype=float)
+            labels = np.asarray(z["labels"], dtype=int)
+        ba = balanced_accuracy(labels, scores, frozen_threshold)
+        ref = float(frozen[target]["balanced_accuracy"])
+        absolute = abs(ref - ba)
+        relative = absolute / max(abs(ref), abs(ba), 1e-15)
+        passed = within(ref, ba, abs_tol, rel_tol)
+        frozen_threshold_ba_rows.append(
+            {
+                "target": target,
+                "frozen_reference_threshold": frozen_threshold,
+                "native_fresh_threshold": native_threshold,
+                "frozen_balanced_accuracy": ref,
+                "fresh_balanced_accuracy_at_frozen_threshold": ba,
+                "absolute_difference": absolute,
+                "relative_difference": relative,
+                "passed": int(passed),
+            }
+        )
+
+    frozen_threshold_ba_passed = sum(int(row["passed"]) for row in frozen_threshold_ba_rows)
+    threshold_selection_supported = bool(native_balanced_accuracy_failures) and (
+        not threshold_free_core_failures
+        and frozen_threshold_ba_passed == len(frozen_threshold_ba_rows)
+    )
 
     if structural_failures:
         advisory_class = "STRUCTURAL_FAIL"
         readiness = "FAIL"
+    elif threshold_selection_supported:
+        advisory_class = "THRESHOLD_SELECTION"
+        readiness = "READY_WITH_THRESHOLD_SELECTION_ADVISORY"
     elif core_failures:
         advisory_class = "CORE_METRIC"
         readiness = "READY_WITH_CORE_NUMERIC_ADVISORY"
@@ -151,12 +226,15 @@ def main() -> int:
         advisory_class = "NONE"
         readiness = "READY"
 
-    if len(failed_rows) != len(core_failures) + len(logloss_failures):
-        raise RuntimeError("unexpected metric name among failed comparisons")
-
-    prediction_files = sorted((u2 / "predictions").glob("*.npz"))
-    if len(prediction_files) != 38:
-        raise RuntimeError(f"expected 38 fresh prediction files, found {len(prediction_files)}")
+    write_fields = [
+        "target", "frozen_reference_threshold", "native_fresh_threshold",
+        "frozen_balanced_accuracy", "fresh_balanced_accuracy_at_frozen_threshold",
+        "absolute_difference", "relative_difference", "passed",
+    ]
+    with (u2 / "frozen_threshold_balanced_accuracy.csv").open("w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=write_fields, lineterminator="\n")
+        w.writeheader()
+        w.writerows(frozen_threshold_ba_rows)
 
     if not (u2 / "fresh_current_outcome_audit.csv").is_file():
         raise RuntimeError("missing fresh_current_outcome_audit.csv")
@@ -188,7 +266,26 @@ def main() -> int:
         "Log-loss is reported separately as a probability-sensitive metric.",
         "",
     ]
-    if readiness == "READY_WITH_LOGLOSS_ADVISORY":
+    if readiness == "READY_WITH_THRESHOLD_SELECTION_ADVISORY":
+        advisory_lines += [
+            "Native-threshold balanced-accuracy deviation(s) were observed, while AUC, AUPRC and Brier remained within the predeclared tolerance.",
+            f"The pre-existing frozen U2 threshold ({frozen_threshold:.12f}) was applied without re-optimization to the same saved fresh predictions.",
+            f"Balanced accuracy at that frozen threshold was within tolerance for {frozen_threshold_ba_passed}/{len(frozen_threshold_ba_rows)} targets.",
+            "This supports a threshold-selection sensitivity advisory; the strict native-threshold replay status remains REVIEW_REQUIRED.",
+            "",
+            "Native balanced-accuracy deviations:",
+        ]
+        for row in native_balanced_accuracy_failures:
+            advisory_lines.append(
+                "- {target}: frozen={frozen}, native fresh={fresh}, abs={absolute_difference}, rel={relative_difference}".format(**row)
+            )
+        if logloss_failures:
+            advisory_lines += ["", "Additional log-loss deviations:"]
+            for row in logloss_failures:
+                advisory_lines.append(
+                    "- {target}: frozen={frozen}, fresh={fresh}, abs={absolute_difference}, rel={relative_difference}".format(**row)
+                )
+    elif readiness == "READY_WITH_LOGLOSS_ADVISORY":
         advisory_lines += [
             f"{len(logloss_failures)} out-of-tolerance comparison(s) were observed, all confined to log-loss.",
             "No structural or core-metric tolerance failure was observed.",
@@ -201,7 +298,7 @@ def main() -> int:
             )
     elif readiness == "READY_WITH_CORE_NUMERIC_ADVISORY":
         advisory_lines += [
-            "One or more core replay metrics exceeded tolerance and require investigation.",
+            "One or more core replay metrics exceeded tolerance and the frozen-threshold diagnostic did not fully explain the deviation.",
             "",
             "Core-metric deviations:",
         ]
@@ -225,7 +322,14 @@ def main() -> int:
             "metric_comparisons_passed": passed_count,
             "metric_comparisons_failed": len(failed_rows),
             "core_metric_failures": core_failures,
+            "threshold_free_core_failures": threshold_free_core_failures,
+            "native_balanced_accuracy_failures": native_balanced_accuracy_failures,
             "logloss_metric_failures": logloss_failures,
+            "frozen_reference_threshold": frozen_threshold,
+            "native_validation_threshold": native_threshold,
+            "threshold_selection_diagnostic": "SUPPORTED" if threshold_selection_supported else "NOT_ESTABLISHED",
+            "frozen_threshold_balanced_accuracy_passed": frozen_threshold_ba_passed,
+            "frozen_threshold_balanced_accuracy_total": len(frozen_threshold_ba_rows),
             "structural_failures": structural_failures,
         }
     )
@@ -266,6 +370,11 @@ def main() -> int:
         "fresh_u2_metric_comparisons_passed": passed_count,
         "fresh_u2_metric_comparisons_failed": len(failed_rows),
         "fresh_u2_structural_failures": structural_failures,
+        "fresh_u2_native_validation_threshold": native_threshold,
+        "fresh_u2_frozen_reference_threshold": frozen_threshold,
+        "fresh_u2_threshold_selection_diagnostic": "SUPPORTED" if threshold_selection_supported else "NOT_ESTABLISHED",
+        "fresh_u2_frozen_threshold_balanced_accuracy_passed": frozen_threshold_ba_passed,
+        "fresh_u2_frozen_threshold_balanced_accuracy_total": len(frozen_threshold_ba_rows),
         "fresh_current_outcome_audit_generated": True,
         "manuscript_figures_regenerated": 8,
         "final_png_count": 8,
@@ -306,6 +415,8 @@ def main() -> int:
     print(f"Execution      : PASS")
     print(f"Readiness      : {readiness}")
     print(f"Numeric class  : {advisory_class}")
+    print(f"Threshold diag : {'SUPPORTED' if threshold_selection_supported else 'NOT_ESTABLISHED'}")
+    print(f"Frozen-thr BA  : {frozen_threshold_ba_passed}/{len(frozen_threshold_ba_rows)} within tolerance")
     print(f"U2 comparisons : {passed_count}/190 within tolerance")
     print(f"Predictions    : 38/38")
     print(f"Figures        : 8 PNG + 8 PDF")
