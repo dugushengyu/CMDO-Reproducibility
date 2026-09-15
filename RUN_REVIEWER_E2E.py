@@ -144,7 +144,12 @@ def main() -> int:
     reviewer_readiness = (
         "READY"
         if u2_report["status"] == "PASS"
-        else "READY_WITH_NUMERIC_ADVISORY"
+        else "READY_WITH_CALIBRATION_ADVISORY"
+        if (
+            u2_report["status"] == "REVIEW_REQUIRED"
+            and u2_report.get("numeric_advisory_class") == "CALIBRATION_ONLY"
+        )
+        else "READY_WITH_CORE_NUMERIC_ADVISORY"
         if u2_report["status"] == "REVIEW_REQUIRED"
         else "FAIL"
     )
@@ -163,6 +168,10 @@ def main() -> int:
         "fresh_model_training": True,
         "fresh_external_prediction_targets": u2_report["targets"],
         "fresh_u2_tolerance_comparison": u2_report["status"],
+        "fresh_u2_numeric_advisory_class": u2_report.get("numeric_advisory_class", "UNKNOWN"),
+        "fresh_u2_metric_comparisons_total": u2_report.get("metric_comparisons_total"),
+        "fresh_u2_metric_comparisons_passed": u2_report.get("metric_comparisons_passed"),
+        "fresh_u2_metric_comparisons_failed": u2_report.get("metric_comparisons_failed"),
         "fresh_current_outcome_audit_generated": True,
         "manuscript_figures_regenerated": 8,
         "final_png_count": len(list(figures.glob("*.png"))),
@@ -188,6 +197,7 @@ def main() -> int:
     print(f"\n=== CMDO END-TO-END REVIEWER EXECUTION: PASS ===")
     print(f"=== REVIEWER READINESS: {report['reviewer_readiness']} ===")
     print(f"=== FRESH U2 NUMERIC COMPARISON: {report['fresh_u2_tolerance_comparison']} ===")
+    print(f"=== FRESH U2 ADVISORY CLASS: {report['fresh_u2_numeric_advisory_class']} ===")
     print(json.dumps(report, indent=2), flush=True)
     print("Results package:", package)
     print("Results package SHA256:", package_sha)
