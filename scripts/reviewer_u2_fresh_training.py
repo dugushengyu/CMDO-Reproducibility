@@ -672,7 +672,7 @@ def main() -> int:
     numeric_advisory_class = (
         "NONE"
         if not metric_failures
-        else "CALIBRATION_ONLY"
+        else "LOGLOSS_ONLY"
         if calibration_metric_failures and not core_metric_failures
         else "CORE_METRIC"
     )
@@ -718,15 +718,15 @@ def main() -> int:
         f"Metric comparisons: {passed_metric_comparisons}/{total_metric_comparisons} within the predeclared tolerance.",
         "",
         "The original absolute/relative replay tolerances were not changed.",
-        "Structural mismatches remain failures. AUC, AUPRC, balanced accuracy and Brier are treated as core replay metrics; log-loss is reported separately as a calibration-sensitive metric.",
+        "Structural mismatches remain failures. AUC, AUPRC, balanced accuracy and Brier are treated as core replay metrics; log-loss is reported separately as a probability-sensitive metric.",
         "",
     ]
     if calibration_metric_failures and not core_metric_failures and not structural_failures:
         advisory_lines += [
-            "This run completed with calibration-only deviations: every failed metric comparison was log-loss.",
+            "This run completed with log-loss-only deviations: every failed metric comparison was log-loss.",
             "No structural or core-metric tolerance failure was observed.",
             "",
-            "Calibration-only deviations:",
+            "Log-loss-only deviations:",
         ]
         advisory_lines += [
             f"- {item['target']}: frozen={item['frozen']:.8g}, fresh={item['fresh']:.8g}, "
@@ -748,8 +748,8 @@ def main() -> int:
         print("FRESH U2 TRAINING REPLAY: STRUCTURAL FAIL", file=sys.stderr)
         return 2
     if failures:
-        if numeric_advisory_class == "CALIBRATION_ONLY":
-            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (calibration-only log-loss advisory) ===")
+        if numeric_advisory_class == "LOGLOSS_ONLY":
+            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (log-loss-only log-loss advisory) ===")
         else:
             print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (core numeric tolerance) ===")
         return 0
