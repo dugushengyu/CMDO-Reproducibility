@@ -169,6 +169,13 @@ if ($LASTEXITCODE -ne 0) {
     throw "CMDO E2E reviewer run failed with exit code $LASTEXITCODE"
 }
 
+Write-Host ""
+Write-Host "Running independent no-retrain final verification..."
+& $VenvPython (Join-Path $RepoRoot "scripts\finalize_existing_e2e_reviewer.py") --work-root $WorkRoot
+if ($LASTEXITCODE -ne 0) {
+    throw "CMDO final reviewer verification failed with exit code $LASTEXITCODE"
+}
+
 $ReportPath = Join-Path $WorkRoot "CMDO_E2E_REVIEWER_REPORT.json"
 if (-not (Test-Path $ReportPath)) {
     throw "Final reviewer report not found: $ReportPath"
