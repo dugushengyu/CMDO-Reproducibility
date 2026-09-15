@@ -95,16 +95,21 @@ $env:CMDO_DATA_ROOT = "D:\path\to\existing\CIFAR_External_v0.1"
 The final report separates three concepts:
 
 - **Execution**: whether the complete data/training/inference/audit/figure pipeline finished successfully.
-- **Reviewer readiness**: whether the complete reviewer artifact is available. Log-loss-only deviations are labeled separately from structural or core-metric failures.
+- **Reviewer readiness**: whether the complete reviewer artifact is available. Log-loss-only deviations and operating-threshold sensitivity are labeled separately from unexplained core-metric failures.
 - **U2 numeric comparison**: whether every fresh metric falls inside the predeclared platform-tolerant replay tolerance.
 
-The runner does not silently relax numeric tolerances. If a fresh run completes and the only out-of-tolerance comparisons are log-loss, the package is labeled READY_WITH_LOGLOSS_ADVISORY. If AUC, AUPRC, balanced accuracy or Brier exceed tolerance, it is labeled READY_WITH_CORE_NUMERIC_ADVISORY. Structural mismatches remain failures. The original tolerance itself is never changed after seeing a fresh run.
+The runner does not silently relax numeric tolerances. Strict native-threshold replay remains REVIEW_REQUIRED whenever any original comparison exceeds the predeclared tolerance.
+
+If the only non-log-loss deviation is balanced accuracy, the runner performs an additional diagnostic using the pre-existing frozen U2 operating threshold already stored in provenance. No threshold is re-optimized after seeing the fresh run. If AUC, AUPRC and Brier remain within tolerance and balanced accuracy at that frozen threshold is within tolerance for all 38 targets, the package is labeled READY_WITH_THRESHOLD_SELECTION_ADVISORY. This label explains the deviation; it does not convert the strict replay to PASS.
+
+If the only deviations are log-loss, the package is labeled READY_WITH_LOGLOSS_ADVISORY. Any unexplained AUC, AUPRC, Brier, or balanced-accuracy deviation remains READY_WITH_CORE_NUMERIC_ADVISORY. Structural mismatches remain failures. The original tolerance itself is never changed after seeing a fresh run.
 
 Exact deviations are written to:
 
 ~~~text
 <WorkRoot>\u2_fresh\u2_metric_comparison.csv
 <WorkRoot>\u2_fresh\fresh_u2_report.json
+<WorkRoot>\u2_fresh\frozen_threshold_balanced_accuracy.csv
 ~~~
 
 For a completed run, the no-retrain final verifier can be used to rebuild the advisory/report/package without repeating training:
@@ -130,6 +135,7 @@ A successful complete execution produces:
     Fresh_U2_Training_Audit.png
     Fresh_U2_Training_Audit.pdf
     fresh_u2_report.json
+    frozen_threshold_balanced_accuracy.csv
     NUMERIC_REPLAY_ADVISORY.md
 
   submission_v2_figures\
