@@ -1,0 +1,36 @@
+name: E2E reviewer static
+
+on:
+  push:
+    branches:
+      - reviewer-e2e-v2.1.2
+  pull_request:
+    paths:
+      - "RUN_REVIEWER_E2E.py"
+      - "scripts/reviewer_u2_fresh_training.py"
+      - "environment/requirements-reviewer-e2e-core.txt"
+      - ".github/workflows/e2e-reviewer-static.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile E2E reviewer entrypoints
+        run: |
+          python -m py_compile RUN_REVIEWER_E2E.py
+          python -m py_compile scripts/reviewer_u2_fresh_training.py
+      - name: Verify frozen reviewer baseline still passes static science
+        run: |
+          python scripts/verify_submission_v2_manifest.py
+          python scripts/verify_submission_v2_science.py
