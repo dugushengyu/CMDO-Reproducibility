@@ -594,6 +594,46 @@ def main() -> int:
         ["target", "metric", "frozen", "fresh", "absolute_difference", "relative_difference", "passed"],
     )
 
+    # Independent operating-threshold diagnostic.
+    # This uses the threshold already present in the frozen pre-existing U2
+    # provenance. It does NOT optimize a new threshold after seeing this run.
+    frozen_thresholds = sorted({float(r["threshold"]) for r in frozen_rows})
+    if len(frozen_thresholds) != 1:
+        raise RuntimeError(f"expected one frozen U2 threshold, found {frozen_thresholds}")
+    frozen_threshold = frozen_thresholds[0]
+    frozen_threshold_ba_rows: list[dict[str, object]] = []
+    for target in sorted(frozen):
+        s, y = prediction_payload[target]
+        ba = float(balanced_accuracy_score(y, (s >= frozen_threshold).astype(int)))
+        ref = float(frozen[target]["balanced_accuracy"])
+        absolute = abs(ref - ba)
+        relative = absolute / max(abs(ref), abs(ba), 1e-15)
+        passed = (
+            absolute <= float(rule["absolute_tolerance"])
+            or relative <= float(rule["relative_tolerance"])
+        )
+        frozen_threshold_ba_rows.append(
+            {
+                "target": target,
+                "frozen_reference_threshold": frozen_threshold,
+                "native_fresh_threshold": threshold,
+                "frozen_balanced_accuracy": ref,
+                "fresh_balanced_accuracy_at_frozen_threshold": ba,
+                "absolute_difference": absolute,
+                "relative_difference": relative,
+                "passed": int(passed),
+            }
+        )
+    write_csv(
+        out / "frozen_threshold_balanced_accuracy.csv",
+        frozen_threshold_ba_rows,
+        [
+            "target", "frozen_reference_threshold", "native_fresh_threshold",
+            "frozen_balanced_accuracy", "fresh_balanced_accuracy_at_frozen_threshold",
+            "absolute_difference", "relative_difference", "passed",
+        ],
+    )
+
     # Representative current-outcome audit generated from the fresh predictions.
     rng = np.random.default_rng(SEED + 303)
     audit_rows: list[dict[str, object]] = []
@@ -665,15 +705,30 @@ def main() -> int:
         item for item in metric_failures
         if item["metric"] in {"auc", "auprc", "balanced_accuracy", "brier"}
     ]
-    calibration_metric_failures = [
+    threshold_free_core_failures = [
+        item for item in core_metric_failures
+        if item["metric"] in {"auc", "auprc", "brier"}
+    ]
+    native_balanced_accuracy_failures = [
+        item for item in core_metric_failures
+        if item["metric"] == "balanced_accuracy"
+    ]
+    logloss_metric_failures = [
         item for item in metric_failures
         if item["metric"] == "log_loss"
     ]
+    frozen_threshold_ba_passed = sum(int(row["passed"]) for row in frozen_threshold_ba_rows)
+    threshold_selection_supported = bool(native_balanced_accuracy_failures) and (
+        not threshold_free_core_failures
+        and frozen_threshold_ba_passed == len(frozen_threshold_ba_rows)
+    )
     numeric_advisory_class = (
         "NONE"
         if not metric_failures
+        else "THRESHOLD_SELECTION"
+        if threshold_selection_supported
         else "LOGLOSS_ONLY"
-        if calibration_metric_failures and not core_metric_failures
+        if logloss_metric_failures and not core_metric_failures
         else "CORE_METRIC"
     )
     total_metric_comparisons = len(comparisons)
@@ -693,6 +748,11 @@ def main() -> int:
         "targets": len(fresh_rows),
         "epochs": args.epochs,
         "threshold": threshold,
+        "native_validation_threshold": threshold,
+        "frozen_reference_threshold": frozen_threshold,
+        "threshold_selection_diagnostic": "SUPPORTED" if threshold_selection_supported else "NOT_ESTABLISHED",
+        "frozen_threshold_balanced_accuracy_passed": frozen_threshold_ba_passed,
+        "frozen_threshold_balanced_accuracy_total": len(frozen_threshold_ba_rows),
         "tolerance": {
             "absolute": rule["absolute_tolerance"],
             "relative": rule["relative_tolerance"],
@@ -701,7 +761,9 @@ def main() -> int:
         "metric_comparisons_passed": passed_metric_comparisons,
         "metric_comparisons_failed": len(metric_failures),
         "core_metric_failures": core_metric_failures,
-        "calibration_metric_failures": calibration_metric_failures,
+        "threshold_free_core_failures": threshold_free_core_failures,
+        "native_balanced_accuracy_failures": native_balanced_accuracy_failures,
+        "logloss_metric_failures": logloss_metric_failures,
         "failed_comparisons": failures[:100],
         "duration_seconds": round(time.time() - started, 3),
         "fresh_metrics_sha256": sha256(fresh_metrics_path),
@@ -721,7 +783,28 @@ def main() -> int:
         "Structural mismatches remain failures. AUC, AUPRC, balanced accuracy and Brier are treated as core replay metrics; log-loss is reported separately as a probability-sensitive metric.",
         "",
     ]
-    if calibration_metric_failures and not core_metric_failures and not structural_failures:
+    if threshold_selection_supported and not structural_failures:
+        advisory_lines += [
+            "Native-threshold balanced-accuracy deviation(s) were observed, while AUC, AUPRC and Brier remained within the predeclared tolerance.",
+            f"The pre-existing frozen U2 threshold ({frozen_threshold:.12f}) was then applied without re-optimization to the same saved fresh predictions.",
+            f"Balanced accuracy at that frozen threshold was within tolerance for {frozen_threshold_ba_passed}/{len(frozen_threshold_ba_rows)} targets.",
+            "This supports a threshold-selection sensitivity advisory; the strict native-threshold replay status remains REVIEW_REQUIRED.",
+            "",
+            "Native balanced-accuracy deviations:",
+        ]
+        advisory_lines += [
+            f"- {item['target']}: frozen={item['frozen']:.8g}, native fresh={item['fresh']:.8g}, "
+            f"abs={item['absolute_difference']:.6g}, rel={item['relative_difference']:.6g}"
+            for item in native_balanced_accuracy_failures
+        ]
+        if logloss_metric_failures:
+            advisory_lines += ["", "Additional log-loss deviations:"]
+            advisory_lines += [
+                f"- {item['target']}: frozen={item['frozen']:.8g}, fresh={item['fresh']:.8g}, "
+                f"abs={item['absolute_difference']:.6g}, rel={item['relative_difference']:.6g}"
+                for item in logloss_metric_failures
+            ]
+    elif logloss_metric_failures and not core_metric_failures and not structural_failures:
         advisory_lines += [
             "This run completed with log-loss-only deviations: every failed metric comparison was log-loss.",
             "No structural or core-metric tolerance failure was observed.",
@@ -731,7 +814,7 @@ def main() -> int:
         advisory_lines += [
             f"- {item['target']}: frozen={item['frozen']:.8g}, fresh={item['fresh']:.8g}, "
             f"abs={item['absolute_difference']:.6g}, rel={item['relative_difference']:.6g}"
-            for item in calibration_metric_failures
+            for item in logloss_metric_failures
         ]
     elif core_metric_failures:
         advisory_lines += ["Core-metric tolerance failures require investigation."]
@@ -748,8 +831,10 @@ def main() -> int:
         print("FRESH U2 TRAINING REPLAY: STRUCTURAL FAIL", file=sys.stderr)
         return 2
     if failures:
-        if numeric_advisory_class == "LOGLOSS_ONLY":
-            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (log-loss-only log-loss advisory) ===")
+        if numeric_advisory_class == "THRESHOLD_SELECTION":
+            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (threshold-selection advisory) ===")
+        elif numeric_advisory_class == "LOGLOSS_ONLY":
+            print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (log-loss-only advisory) ===")
         else:
             print("=== FRESH U2 TRAINING REPLAY: REVIEW REQUIRED (core numeric tolerance) ===")
         return 0
