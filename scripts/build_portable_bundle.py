@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "CMDO-Reproducibility"
-DEFAULT_NAME = "CMDO-Reproducibility-Reviewer-Portable-v2.1.1.zip"
+DEFAULT_NAME = "CMDO-Reproducibility-Reviewer-Portable-v2.1.4.zip"
 FIXED_TIME = (2026, 9, 14, 0, 0, 0)
 
 
