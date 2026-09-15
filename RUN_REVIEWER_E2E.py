@@ -137,7 +137,7 @@ def main() -> int:
     report = {
         "schema_version": 1,
         "classification": "CMDO_OPTIONAL_END_TO_END_REVIEWER_AUDIT",
-        "status": "PASS",
+        "status": "PASS" if u2_report["status"] == "PASS" else u2_report["status"],
         "git_commit": git_head(),
         "historical_t2_t3_replay_executed": False,
         "fresh_public_data_acquisition": True,
@@ -166,7 +166,7 @@ def main() -> int:
     )
     package, package_sha = package_results(work)
 
-    print("\n=== CMDO END-TO-END REVIEWER AUDIT: PASS ===")
+    print(f"\n=== CMDO END-TO-END REVIEWER AUDIT: {report['status']} ===")
     print(json.dumps(report, indent=2), flush=True)
     print("Results package:", package)
     print("Results package SHA256:", package_sha)
