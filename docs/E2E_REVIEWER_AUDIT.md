@@ -10,7 +10,7 @@ For a from-zero reviewer run on Windows, use the root-level wrapper:
 RUN_REVIEWER_FROM_ZERO.cmd -FreshEnvironment
 ~~~
 
-This creates the reviewer Python environment, selects a compatible PyTorch build, reuses verified public-data caches when available, runs fresh training/inference/audit generation, regenerates all eight manuscript displays, and packages the final results. See START_HERE_REVIEWER.md.
+This creates the reviewer Python environment, selects a compatible PyTorch build, reuses verified public-data caches when available, runs fresh training/inference/audit generation, regenerates all eight manuscript displays, then automatically performs the independent no-retrain final verification and packages the final results. See START_HERE_REVIEWER.md.
 
 ## Scope
 
