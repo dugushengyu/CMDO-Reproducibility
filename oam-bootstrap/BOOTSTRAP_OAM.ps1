@@ -30,12 +30,18 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
     }
 }
 if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
+    $ghDir = Join-Path $env:ProgramFiles 'GitHub CLI'
+    if (Test-Path (Join-Path $ghDir 'gh.exe')) { $env:Path = $env:Path + ';' + $ghDir }
+}
+if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
     throw 'GitHub CLI (gh) is required. Install it, then rerun this block.'
 }
 
-try { gh auth status *> $null } catch {
+gh auth status *> $null
+if ($LASTEXITCODE -ne 0) {
     Write-Host '[SETUP] GitHub login required; browser login will open.'
     gh auth login --web --git-protocol https
+    if ($LASTEXITCODE -ne 0) { throw 'GitHub authentication failed.' }
 }
 
 # Fresh local clean-room. Never touch the old delta-map/DL folders.
@@ -102,7 +108,7 @@ try {
     gh repo view $repoFull *> $null
     if ($LASTEXITCODE -ne 0) {
         Write-Host "[GITHUB] Creating private repo $repoFull ..."
-        gh repo create $repoFull --private --description 'Melanin-anchored Delta-map OAM reproducibility pipeline' --confirm
+        gh repo create $repoFull --private --description 'Melanin-anchored Delta-map OAM reproducibility pipeline'
     }
     $remote = "https://github.com/$repoFull.git"
     if ((git remote) -contains 'origin') { git remote set-url origin $remote } else { git remote add origin $remote }
